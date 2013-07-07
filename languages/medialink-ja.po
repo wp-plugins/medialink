@@ -1,0 +1,150 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Medialink\n"
+"POT-Creation-Date: 2013-05-27 21:10+0900\n"
+"PO-Revision-Date: 2013-07-07 03:04+0900\n"
+"Last-Translator: dodesyo312 <dodesyoswift312@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+
+msgid "prev"
+msgstr "前のページ"
+
+msgid "next"
+msgstr "次のページ"
+
+msgid "New"
+msgstr "新着順"
+
+msgid "Old"
+msgstr "古い順"
+
+msgid "Des"
+msgstr "文字降順"
+
+msgid "Asc"
+msgstr "文字昇順"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "all"
+msgstr "全てのファイル"
+
+msgid "Select"
+msgstr "選択"
+
+msgid "(In the case of image) Easy use"
+msgstr "簡単な使い方（画像の場合）"
+
+msgid ""
+"Please add new Page. Please write a short code in the text field of the "
+"Page. Please go in Text mode this task."
+msgstr ""
+"固定ページを新規に追加します。本文欄に以下のショートコードを書きます。この作"
+"業はテキストモードで行ってください。"
+
+msgid ""
+"When you view this Page, it is displayed in album mode. This is the result "
+"of the search of the media library. The Settings> Media, determine the size "
+"of the thumbnail. The default value of MediaLink, width 80, height 80. "
+"Please set its value. In the Media> Add New, please drag and drop the image. "
+"You view the Page again. Should see the image to the Page."
+msgstr ""
+"この固定ページを更新し表示すると、アルバムモードで表示されます。これは、メ"
+"ディアライブラリを検索した結果です"
+
+msgid ""
+"In addition, you want to place add an attribute like this in the short code."
+msgstr "また、以下の様にショートコードに属性値を追加してみます。"
+
+msgid "When you view this Page, it is displayed in slideshow mode."
+msgstr "この固定ページを更新し表示すると、スライドショーモードで表示されます。"
+
+msgid "Customization 1"
+msgstr "カスタマイズ１"
+
+msgid ""
+"MediaLink is also handles video and music. If you are dealing with music and "
+"video, please add the following attributes to the short code."
+msgstr ""
+"MediaLinkは、動画や音楽も扱えます。動画や音楽を扱う場合は、ショートコードに以"
+"下の属性を付加してください。"
+
+msgid "Video set = 'movie'"
+msgstr "動画 set= 'movie'"
+
+msgid "Music set = 'music'"
+msgstr "音楽 set= 'music'"
+
+msgid ""
+"* (WordPress > Settings > General Timezone) Please specify your area other "
+"than UTC. For accurate time display of RSS feed."
+msgstr ""
+"※（ワードプレス > 設定 > 一般 タイムゾーン）でUTC以外のお住まいの地域を指定し"
+"てください。 RSSフィードの正確な時刻表示のためです。"
+
+msgid "Customization 2"
+msgstr "カスタマイズ２"
+
+msgid ""
+"Below, I shows the default values and various attributes of the short code."
+msgstr "以下に、ショートコードの各種属性とデフォルト値を示します。"
+
+msgid "Attribute"
+msgstr "属性"
+
+msgid "Next only three. album(image), movie(video), music(music)"
+msgstr "album（画像）,movie（動画）,music（音楽）の３つのみ"
+
+msgid "Special effects nivoslider(slideshow)"
+msgstr "特殊効果 nivoslider(スライドショー)"
+
+msgid "Full path to the top directory containing the data"
+msgstr "データのあるトップディレクトリのフルパス"
+
+msgid "extension of PC"
+msgstr "PCの拡張子"
+
+msgid "second extension on the PC. Second candidate when working with html5"
+msgstr "PCの第２拡張子。動画や音楽をhtml5で扱う場合の第２候補。"
+
+msgid "extension of Smartphone"
+msgstr "スマートフォンの拡張子"
+
+msgid "extension of Japanese mobile phone"
+msgstr "携帯の拡張子"
+
+msgid "File Display per page(PC)"
+msgstr "１ページの表示数PC"
+
+msgid "File Display per page(Smartphone)"
+msgstr "１ページの表示数スマートフォン"
+
+msgid "File Display per page(Japanese mobile phone)"
+msgstr "１ページの表示数携帯"
+
+msgid ""
+"(album) default thumbnail suffix name of WordPress. (movie, music) specify "
+"an extension for the thumbnail of the title the same name as the file you "
+"want to view, but if the thumbnail is not found, display the icon of "
+"WordPress standard, the thumbnail display if you do not specify anything."
+msgstr ""
+"albumはWordPressのデフォルトサムネイル接尾名。movie,musicは、表示するファイル"
+"と同じタイトル名のサムネイルの拡張子を指定するが、サムネイルが見つからない場"
+"合は、WordPress標準のアイコンを表示し、何も指定しなければサムネイル表示をしな"
+"い。"
+
+msgid "Category you want to exclude"
+msgstr "除外するカテゴリ"
+
+msgid "The name of the RSS feed file"
+msgstr "RSSフィードファイルの名前"
+
+msgid "Syndication feeds show the most recent"
+msgstr "RSSフィードの表示数"
