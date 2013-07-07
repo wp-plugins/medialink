@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,7 +41,7 @@ Bundled software and function
 5. For pictures `[medialink]`. For video `[medialink set='movie']`. For music `[medialink set='music']`.
 6. Please read. (Settings > MediaLink)
 
-    [Settings](http://wordpress.org/plugins/gallerylink/other_notes/)
+    [Settings](http://wordpress.org/plugins/medialink/other_notes/)
 
 == Frequently Asked Questions ==
 
@@ -53,10 +53,14 @@ none
 
 == Changelog ==
 
+= 1.1 =
+Change readme.txt
+
 = 1.0 =
 
 == Upgrade Notice ==
 
+= 1.1 =
 = 1.0 =
 
 == Settings ==
