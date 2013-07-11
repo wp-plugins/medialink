@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.1
+Version: 1.2
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -26,10 +26,451 @@ Domain Path: /languages
 
 	load_plugin_textdomain('medialink', false, basename( dirname( __FILE__ ) ) . '/languages' );
 	// Add action hooks
+	add_action('admin_init', 'medialink_register_settings');
+
 	add_filter( 'plugin_action_links', 'medialink_settings_link', 10, 2 );
-	add_action( 'admin_menu', 'medialink_plugin_menu' );
+
 	add_action( 'wp_head', wp_enqueue_script('jquery') );
+	add_action( 'admin_menu', 'medialink_plugin_menu' );
 	add_shortcode( 'medialink', 'medialink_func' );
+
+/* ==================================================
+ * Settings register
+ * @since	1.1
+ */
+function medialink_register_settings(){
+	register_setting( 'medialink-settings-group', 'medialink_album_suffix_pc');
+	register_setting( 'medialink-settings-group', 'medialink_album_suffix_sp');
+	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc');
+	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc2');
+	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_sp');
+	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc');
+	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc2');
+	register_setting( 'medialink-settings-group', 'medialink_music_suffix_sp');
+	register_setting( 'medialink-settings-group', 'medialink_display_pc', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
+	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
+	register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
+	register_setting( 'medialink-settings-group', 'medialink_rssmax', 'medialink_pos_intval');
+	add_option('medialink_album_suffix_pc', '.jpg');
+	add_option('medialink_album_suffix_sp', '.jpg');
+	add_option('medialink_movie_suffix_pc', '.mp4');
+	add_option('medialink_movie_suffix_pc2', '.ogv');
+	add_option('medialink_movie_suffix_sp', '.mp4');
+	add_option('medialink_music_suffix_pc', '.mp3');
+	add_option('medialink_music_suffix_pc2', '.ogg');
+	add_option('medialink_music_suffix_sp', '.mp3');
+	add_option('medialink_display_pc', 20); 	
+	add_option('medialink_display_sp', 9); 	
+	add_option('medialink_movie_suffix_thumbnail', '.gif');
+	add_option('medialink_music_suffix_thumbnail', '.gif');
+	add_option('medialink_exclude_cat', '');
+	add_option('medialink_rssmax', 10); 
+
+}
+
+/* ==================================================
+ * @param	bool	$v
+ * @return	bool	$v
+ * @since	1.1
+ */
+function medialink_bool_intval($v){
+	return $v == 1 ? '1' : '0';
+}
+
+/* ==================================================
+ * @param	int		$v
+ * @return	int		$v
+ * @since	1.1
+ */
+function medialink_pos_intval($v){
+	return abs(intval($v));
+}
+
+/* ==================================================
+ * Add a "Settings" link to the plugins page
+ * @since	1.0
+ */
+function medialink_settings_link( $links, $file ) {
+	static $this_plugin;
+	if ( empty($this_plugin) ) {
+		$this_plugin = plugin_basename(__FILE__);
+	}
+	if ( $file == $this_plugin ) {
+		$links[] = '<a href="'.admin_url('options-general.php?page=MediaLink').'">'.__( 'Settings').'</a>';
+	}
+		return $links;
+}
+
+/* ==================================================
+ * Settings page
+ * @since	1.0
+ */
+function medialink_plugin_menu() {
+	add_options_page( 'MediaLink Options', 'MediaLink', 'manage_options', 'MediaLink', 'medialink_plugin_options' );
+}
+
+/* ==================================================
+ * Settings page
+ * @since	1.0
+ */
+function medialink_plugin_options() {
+
+	if ( !current_user_can( 'manage_options' ) )  {
+		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+	}
+
+	$pluginurl = plugins_url($path='',$scheme=null);
+
+	wp_enqueue_style( 'jquery-ui-tabs', $pluginurl.'/medialink/css/jquery-ui.css' );
+	wp_enqueue_script( 'jquery-ui-tabs' );
+	wp_enqueue_script( 'jquery-ui-tabs-in', $pluginurl.'/medialink/js/jquery-ui-tabs-in.js' );
+
+	?>
+
+	<div class="wrap">
+	<div id="icon-options-general" class="icon32"><br /></div><h2>MediaLink</h2>
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1"><?php _e('How to use', 'medialink'); ?></a></li>
+    <li><a href="#tabs-2"><?php _e('Settings'); ?></a></li>
+<!--
+	<li><a href="#tabs-3">FAQ</a></li>
+ -->
+  </ul>
+  <div id="tabs-1">
+	<h2><?php _e('(In the case of image) Easy use', 'medialink'); ?></h2>
+	<p><?php _e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink'); ?></p>
+	<p>&#91;medialink&#93;</p>
+	<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
+	<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
+	<p>&#91;medialink effect='nivoslider'&#93</p>
+	<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
+	
+	<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
+	<?php _e('MediaLink is also handles video and music. If you are dealing with music and video, please add the following attributes to the short code.', 'medialink'); ?>
+	<p><div><?php _e("Video set = 'movie'", 'medialink'); ?></div>
+	<div><?php _e("Music set = 'music'", 'medialink'); ?></div>
+	<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div></p>
+
+	<table border="1"><strong><?php _e('Customization 2', 'medialink'); ?></strong>
+	<tbody>
+	<tr>
+	<td colspan="5" align="center" valign="middle">
+	<?php _e('Below, I shows the default values and various attributes of the short code.', 'medialink'); ?>
+	</td>
+	</tr>
+	<tr>
+	<td align="center" valign="middle">
+	<?php _e('Attribute', 'medialink'); ?>
+	</td>
+	<td colspan="3" align="center" valign="middle">
+	<?php _e('Default'); ?>
+	</td>
+	<td align="center" valign="middle">
+	<?php _e('Description'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>set</b></td>
+	<td align="center" valign="middle">album</td>
+	<td align="center" valign="middle">movie</td>
+	<td align="center" valign="middle">music</td>
+	<td align="left" valign="middle">
+	<?php _e('Next only three. album(image), movie(video), music(music)', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>effect</b></td>
+	<td colspan="3" align="center" valign="middle"></td>
+	<td align="left" valign="middle">
+	<?php _e('Special effects nivoslider(slideshow)', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>suffix_pc</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_pc') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('extension of PC', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>suffix_pc2</b></td>
+	<td align="center" valign="middle"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc2') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>suffix_sp</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_sp') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_sp') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_sp') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('extension of Smartphone', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>display_pc</b></td>
+	<td colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_display_pc')) ?></td>
+	<td align="left" valign="middle">
+	<?php _e('File Display per page(PC)', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>display_sp</b></td>
+	<td  colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_display_sp')) ?></td>
+	<td align="left" valign="middle">
+	<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>thumbnail</b></td>
+	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_h') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_thumbnail') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_thumbnail') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>exclude_cat</b></td>
+	<td colspan="3" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>rssname</b></td>
+	<td align="center" valign="middle">medialink_album_feed</td>
+	<td align="center" valign="middle">medialink_movie_feed</td>
+	<td align="center" valign="middle">medialink_music_feed</td>
+	<td align="left" valign="middle">
+	<?php _e('The name of the RSS feed file', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>rssmax</b></td>
+	<td colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_rssmax')) ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Syndication feeds show the most recent', 'medialink'); ?>
+	</td>
+	</tr>
+
+	</tbody>
+	</table>
+  </div>
+
+  <div id="tabs-2">
+	<div class="wrap">
+	<h2><?php _e('The default value for the short code attribute', 'medialink') ?></h2>	
+	<form method="post" action="options.php">
+		<table border="1">
+		<tbody>
+		<?php settings_fields('medialink-settings-group'); ?>
+			<tr>
+				<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+				<td align="center" valign="middle" colspan=3><?php _e('Default'); ?></td>
+				<td align="center" valign="middle"><?php _e('Description'); ?></td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>set</b></td>
+				<td align="center" valign="middle">album</td>
+				<td align="center" valign="middle">movie</td>
+				<td align="center" valign="middle">music</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>suffix_pc</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_suffix_pc = get_option('medialink_album_suffix_pc'); ?>
+				<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
+					<option <?php if ('.jpg' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.gif' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.bmp' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_suffix_pc = get_option('medialink_movie_suffix_pc'); ?>
+				<select id="medialink_movie_suffix_pc" name="medialink_movie_suffix_pc">
+					<option <?php if ('.mp4' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.mp4</option>
+					<option <?php if ('.ogv' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.ogv</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_suffix_pc = get_option('medialink_music_suffix_pc'); ?>
+				<select id="medialink_music_suffix_pc" name="medialink_music_suffix_pc">
+					<option <?php if ('.mp3' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.mp3</option>
+					<option <?php if ('.ogg' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.ogg</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('extension of PC', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>suffix_pc2</b></td>
+				<td>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_suffix_pc2 = get_option('medialink_movie_suffix_pc2'); ?>
+				<select id="medialink_movie_suffix_pc2" name="medialink_movie_suffix_pc2">
+					<option <?php if ('.ogv' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.ogv</option>
+					<option <?php if ('.mp4' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.mp4</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_suffix_pc2 = get_option('medialink_music_suffix_pc2'); ?>
+				<select id="medialink_music_suffix_pc2" name="medialink_music_suffix_pc2">
+					<option <?php if ('.ogg' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.ogg</option>
+					<option <?php if ('.mp3' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.mp3</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>suffix_sp</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_suffix_sp = get_option('medialink_album_suffix_sp'); ?>
+				<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
+					<option <?php if ('.jpg' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.gif' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.bmp' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_suffix_sp = get_option('medialink_movie_suffix_sp'); ?>
+				<select id="medialink_movie_suffix_sp" name="medialink_movie_suffix_sp">
+					<option <?php if ('.mp4' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.mp4</option>
+					<option <?php if ('.ogv' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.ogv</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_suffix_sp = get_option('medialink_music_suffix_sp'); ?>
+				<select id="medialink_music_suffix_sp" name="medialink_music_suffix_sp">
+					<option <?php if ('.mp3' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.mp3</option>
+					<option <?php if ('.ogg' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.ogg</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('extension of Smartphone', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>display_pc</b></td>
+				<td align="center" valign="middle"colspan="3">
+					<input type="text" id="medialink_display_pc" name="medialink_display_pc" value="<?php echo intval(get_option('medialink_display_pc')) ?>" size="3" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('File Display per page(PC)', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>display_sp</b></td>
+				<td align="center" valign="middle" colspan="3">
+					<input type="text" id="medialink_display_sp" name="medialink_display_sp" value="<?php echo intval(get_option('medialink_display_sp')) ?>" size="3" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('File Display per page(Smartphone)', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>thumbnail</b></td>
+				<td>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_suffix_thumbnail = get_option('medialink_movie_suffix_thumbnail'); ?>
+				<select id="medialink_movie_suffix_thumbnail" name="medialink_movie_suffix_thumbnail">
+					<option <?php if ('.gif' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.jpg' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.bmp' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_suffix_thumbnail = get_option('medialink_music_suffix_thumbnail'); ?>
+				<select id="medialink_music_suffix_thumbnail" name="medialink_music_suffix_thumbnail">
+					<option <?php if ('.gif' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.jpg' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.bmp' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>exclude_cat</b></td>
+				<td align="center" valign="middle" colspan="3">
+					<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="40" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>rssmax</b></td>
+				<td align="center" valign="middle" colspan="3">
+					<input type="text" id="medialink_rssmax" name="medialink_rssmax" value="<?php echo intval(get_option('medialink_rssmax')) ?>" size="3" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Syndication feeds show the most recent', 'medialink') ?>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+		<p class="submit">
+		  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+		</p>
+	</form>
+
+<h3><?php _e('The to playback of video and music, that such as the next, .htaccess may be required to the directory containing the data file by the environment.', 'medialink') ?></h3>
+<textarea rows="5" cols="30">AddType video/mp4 .mp4
+AddType video/ogg .ogv
+AddType audio/mpeg .mp3
+AddType audio/ogg .ogg
+</textarea>
+
+	</div>
+  </div>
+
+<!--
+  <div id="tabs-3">
+	<div class="wrap">
+	<h2>FAQ</h2>
+
+	</div>
+  </div>
+-->
+
+</div>
+
+	</div>
+	<?
+}
+
 
 /* ==================================================
  * @param	string	$catparam
@@ -284,12 +725,12 @@ function medialink_func( $atts ) {
         'suffix_pc' => '',
         'suffix_pc2' => '',
         'suffix_sp' => '',
-        'display_pc' => 20,
-        'display_sp' => 9,
+        'display_pc' => intval(get_option('medialink_display_pc')),
+        'display_sp' => intval(get_option('medialink_display_sp')),
         'thumbnail'  => '',
-        'exclude_cat' => '',
+        'exclude_cat' => get_option('medialink_exclude_cat'),
         'rssname' => '',
-        'rssmax'  => 10
+        'rssmax'  => intval(get_option('medialink_rssmax'))
 	), $atts));
 
 	$wp_uploads = wp_upload_dir();
@@ -304,16 +745,18 @@ function medialink_func( $atts ) {
 	}
 
 	if ( $set === 'album' ){
-		if( empty($suffix_pc) ) { $suffix_pc = '.jpg'; }
-		if( empty($suffix_sp) ) { $suffix_sp = '.jpg'; }
+		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_album_suffix_pc'); }
+		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_album_suffix_sp'); }
 	} else if ( $set === 'movie' ){
-		if( empty($suffix_pc) ) { $suffix_pc = '.mp4'; }
-		if( empty($suffix_pc2) ) { $suffix_pc2 = '.ogv'; }
-		if( empty($suffix_sp) ) { $suffix_sp = '.mp4'; }
+		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
+		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_movie_suffix_sp'); }
+		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_movie_suffix_thumbnail'); }
 	} else if ( $set === 'music' ){
-		if( empty($suffix_pc) ) { $suffix_pc = '.mp3'; }
-		if( empty($suffix_pc2) ) { $suffix_pc2 = '.ogg'; }
-		if( empty($suffix_sp) ) { $suffix_sp = '.mp3'; }
+		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
+		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_music_suffix_sp'); }
+		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_music_suffix_thumbnail'); }
 	}
 
 	$mode = NULL;
@@ -434,40 +877,40 @@ function medialink_func( $atts ) {
 					$loops = TRUE;
 				}
 			}
-		if( $loops === TRUE ) {
-			if ( !empty($caption) ) {
-				$categories[$categorycount] = $caption;
-				++$categorycount;
-			}
-			$thumblink = NULL;
-			if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
-				$thumb_src = wp_get_attachment_image_src($attachment->ID);
-				$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
-			} else {
-				if( !empty($thumbnail) ) {
-					if ( preg_match( "/jpg|png|gif|bmp/i", $thumbnail) ) {
-						if( file_exists(str_replace($suffix, "", str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid) ).$thumbnail) ){
-							$thumblink = '<img src = "'.str_replace($suffix, "", $attachment->guid).'.gif'.'">';
-						} else {
-							$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+			if( $loops === TRUE ) {
+				if ( !empty($caption) ) {
+					$categories[$categorycount] = $caption;
+					++$categorycount;
+				}
+				$thumblink = NULL;
+				if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+					$thumb_src = wp_get_attachment_image_src($attachment->ID);
+					$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
+				} else {
+					if( !empty($thumbnail) ) {
+						if ( preg_match( "/jpg|png|gif|bmp/i", $thumbnail) ) {
+							if( file_exists(str_replace($suffix, "", str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid) ).$thumbnail) ){
+								$thumblink = '<img src = "'.str_replace($suffix, "", $attachment->guid).'.gif'.'">';
+							} else {
+								$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+							}
 						}
 					}
 				}
+				$attachment = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid);
+				$attachment = str_replace($document_root, "", $attachment);
+				if ( $sort_order === 'DESC' && empty($search) ) {
+					$rssfiles[$rsscount] = $attachment;
+					$rssthumblinks [$rsscount] = $thumblink;
+					++$rsscount;
+				}
+				if ( $caption === $catparam || empty($catparam) ) {
+					$files[$filecount] = $attachment;
+					$titles[$filecount] = $title;
+					$thumblinks [$filecount] = $thumblink;
+					++$filecount;
+				}
 			}
-			$attachment = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid);
-			$attachment = str_replace($document_root, "", $attachment);
-			if ( $sort_order === 'DESC' && empty($search) ) {
-				$rssfiles[$rsscount] = $attachment;
-				$rssthumblinks [$rsscount] = $thumblink;
-				++$rsscount;
-			}
-			if ( $caption === $catparam || empty($catparam) ) {
-				$files[$filecount] = $attachment;
-				$titles[$filecount] = $title;
-				$thumblinks [$filecount] = $thumblink;
-				++$filecount;
-			}
-		}
 		}
 	}
 
@@ -917,204 +1360,6 @@ XMLEND;
 	}
 
 
-}
-
-/* ==================================================
- * Add a "Settings" link to the plugins page
- * @since	1.0
- */
-function medialink_settings_link( $links, $file ) {
-	static $this_plugin;
-	if ( empty($this_plugin) ) {
-		$this_plugin = plugin_basename(__FILE__);
-	}
-	if ( $file == $this_plugin ) {
-		$links[] = '<a href="'.admin_url('options-general.php?page=MediaLink').'">'.__( 'Settings').'</a>';
-	}
-		return $links;
-}
-
-/* ==================================================
- * Settings page
- * @since	1.0
- */
-function medialink_plugin_menu() {
-	add_options_page( 'MediaLink Options', 'MediaLink', 'manage_options', 'MediaLink', 'medialink_plugin_options' );
-}
-
-/* ==================================================
- * Settings page
- * @since	1.0
- */
-function medialink_plugin_options() {
-	if ( !current_user_can( 'manage_options' ) )  {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-	}
-
-	echo '<div class="wrap">';
-	echo '<div id="icon-options-general" class="icon32"><br /></div><h2>MediaLink</h2>';
-	echo '<h3>';
-	_e('(In the case of image) Easy use', 'medialink');
-	echo '</h3>';
-	echo '<p>';
-	_e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink');
-	echo '</p>';
-	echo '<p>';
-	echo '&#91;medialink&#93;';
-	echo '</p>';
-	echo '<p>';
-	_e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink');
-	echo '</p>';
-	echo '<p>';
-	_e('In addition, you want to place add an attribute like this in the short code.', 'medialink');
-	echo '</p>';
-	echo '<p>';
-	echo "&#91;medialink effect='nivoslider'&#93;";
-	echo '</p>';
-	_e('When you view this Page, it is displayed in slideshow mode.', 'medialink');
-	echo '</p>';
-
-	echo '<p>';
-	echo '<div><strong>';
-	_e('Customization 1', 'medialink');
-	echo '</strong></div>';
-	_e('MediaLink is also handles video and music. If you are dealing with music and video, please add the following attributes to the short code.', 'medialink');
-	echo '<p>';
-	echo '<div>';
-	_e("Video set = 'movie'", 'medialink');
-	echo '</div>';
-	echo '<div>';
-	_e("Music set = 'music'", 'medialink');
-	echo '</div>';
-	echo '<p>';
-	echo '<div>';
-	_e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink');
-	echo '</div>';
-	echo '</p>';
-
-	echo '<table border="1"><strong>';
-	_e('Customization 2', 'medialink');
-	echo '</strong>';
-	echo '<tbody>';
-
-	echo '<tr>';
-	echo '<td colspan="5" align="center" valign="middle">';
-	_e('Below, I shows the default values and various attributes of the short code.', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
-	echo '<td align="center" valign="middle">';
-	_e('Attribute', 'medialink');
-	echo '</td>';
-	echo '<td colspan="3" align="center" valign="middle">';
-	_e('Default');
-	echo '</td>';
-	echo '<td align="center" valign="middle">';
-	_e('Description');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>set</b></td>';
-	echo '<td align="center" valign="middle">album</td>';
-	echo '<td align="center" valign="middle">movie</td>';
-	echo '<td align="center" valign="middle">music</td>';
-	echo '<td align="left" valign="middle">';
-	_e('Next only three. album(image), movie(video), music(music)', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>effect</b></td>';
-	echo '<td colspan="3" align="center" valign="middle"></td>';
-	echo '<td align="left" valign="middle">';
-	_e('Special effects nivoslider(slideshow)', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>suffix_pc</b></td>';
-	echo '<td align="center" valign="middle">.jpg</td>';
-	echo '<td align="center" valign="middle">.mp4</td>';
-	echo '<td align="center" valign="middle">.mp3</td>';
-	echo '<td align="left" valign="middle">';
-	_e('extension of PC', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>suffix_pc2</b></td>';
-	echo '<td align="center" valign="middle"></td>';
-	echo '<td align="center" valign="middle">.ogv</td>';
-	echo '<td align="center" valign="middle">.ogg</td>';
-	echo '<td align="left" valign="middle">';
-	_e('second extension on the PC. Second candidate when working with html5', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>suffix_sp</b></td>';
-	echo '<td align="center" valign="middle">.jpg</td>';
-	echo '<td align="center" valign="middle">.mp4</td>';
-	echo '<td align="center" valign="middle">.mp3</td>';
-	echo '<td align="left" valign="middle">';
-	_e('extension of Smartphone', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>display_pc</b></td>';
-	echo '<td colspan="3" align="center" valign="middle">20</td>';
-	echo '<td align="left" valign="middle">';
-	_e('File Display per page(PC)', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>display_sp</b></td>';
-	echo '<td  colspan="3" align="center" valign="middle">9</td>';
-	echo '<td align="left" valign="middle">';
-	_e('File Display per page(Smartphone)', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>thumbnail</b></td>';
-	echo '<td colspan="4" align="left" valign="middle">';
-	_e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>exclude_cat</b></td>';
-	echo '<td colspan="3" align="center" valign="middle"></td>';
-	echo '<td align="left" valign="middle">';
-	_e('Category you want to exclude', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>rssname</b></td>';
-	echo '<td align="center" valign="middle">medialink_album_feed</td>';
-	echo '<td align="center" valign="middle">medialink_movie_feed</td>';
-	echo '<td align="center" valign="middle">medialink_music_feed</td>';
-	echo '<td align="left" valign="middle">';
-	_e('The name of the RSS feed file', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td align="center" valign="middle"><b>rssmax</b></td>';
-	echo '<td colspan="3" align="center" valign="middle">10</td>';
-	echo '<td align="left" valign="middle">';
-	_e('Syndication feeds show the most recent', 'medialink');
-	echo '</td>';
-	echo '</tr>';
-
-	echo '</tbody>';
-	echo '</table>';
-
-	echo '</div>';
 }
 
 ?>
