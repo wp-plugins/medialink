@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.2
+Version: 1.3
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -47,8 +47,12 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc2');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_sp');
-	register_setting( 'medialink-settings-group', 'medialink_display_pc', 'medialink_pos_intval');
-	register_setting( 'medialink-settings-group', 'medialink_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_album_display_pc', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_album_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_movie_display_pc', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_movie_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_music_display_pc', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_music_display_sp', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
@@ -61,8 +65,12 @@ function medialink_register_settings(){
 	add_option('medialink_music_suffix_pc', '.mp3');
 	add_option('medialink_music_suffix_pc2', '.ogg');
 	add_option('medialink_music_suffix_sp', '.mp3');
-	add_option('medialink_display_pc', 20); 	
-	add_option('medialink_display_sp', 9); 	
+	add_option('medialink_album_display_pc', 20); 	
+	add_option('medialink_album_display_sp', 9); 	
+	add_option('medialink_movie_display_pc', 8); 	
+	add_option('medialink_movie_display_sp', 6); 	
+	add_option('medialink_music_display_pc', 8); 	
+	add_option('medialink_music_display_sp', 6); 	
 	add_option('medialink_movie_suffix_thumbnail', '.gif');
 	add_option('medialink_music_suffix_thumbnail', '.gif');
 	add_option('medialink_exclude_cat', '');
@@ -225,7 +233,9 @@ function medialink_plugin_options() {
 
 	<tr>
 	<td align="center" valign="middle"><b>display_pc</b></td>
-	<td colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_display_pc')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_display_pc')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_pc')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_pc')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('File Display per page(PC)', 'medialink'); ?>
 	</td>
@@ -233,7 +243,9 @@ function medialink_plugin_options() {
 
 	<tr>
 	<td align="center" valign="middle"><b>display_sp</b></td>
-	<td  colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_display_sp')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_display_sp')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_sp')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_sp')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
 	</td>
@@ -283,7 +295,7 @@ function medialink_plugin_options() {
 	<div class="wrap">
 	<h2><?php _e('The default value for the short code attribute', 'medialink') ?></h2>	
 	<form method="post" action="options.php">
-		<table border="1">
+		<table border="1" bgcolor="#dddddd">
 		<tbody>
 		<?php settings_fields('medialink-settings-group'); ?>
 			<tr>
@@ -379,8 +391,14 @@ function medialink_plugin_options() {
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>display_pc</b></td>
-				<td align="center" valign="middle"colspan="3">
-					<input type="text" id="medialink_display_pc" name="medialink_display_pc" value="<?php echo intval(get_option('medialink_display_pc')) ?>" size="3" />
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_album_display_pc" name="medialink_album_display_pc" value="<?php echo intval(get_option('medialink_album_display_pc')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_movie_display_pc" name="medialink_movie_display_pc" value="<?php echo intval(get_option('medialink_movie_display_pc')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_music_display_pc" name="medialink_music_display_pc" value="<?php echo intval(get_option('medialink_music_display_pc')) ?>" size="3" />
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('File Display per page(PC)', 'medialink') ?>
@@ -388,8 +406,14 @@ function medialink_plugin_options() {
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>display_sp</b></td>
-				<td align="center" valign="middle" colspan="3">
-					<input type="text" id="medialink_display_sp" name="medialink_display_sp" value="<?php echo intval(get_option('medialink_display_sp')) ?>" size="3" />
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_album_display_sp" name="medialink_album_display_sp" value="<?php echo intval(get_option('medialink_album_display_sp')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_movie_display_sp" name="medialink_movie_display_sp" value="<?php echo intval(get_option('medialink_movie_display_sp')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_music_display_sp" name="medialink_music_display_sp" value="<?php echo intval(get_option('medialink_music_display_sp')) ?>" size="3" />
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('File Display per page(Smartphone)', 'medialink') ?>
@@ -725,8 +749,8 @@ function medialink_func( $atts ) {
         'suffix_pc' => '',
         'suffix_pc2' => '',
         'suffix_sp' => '',
-        'display_pc' => intval(get_option('medialink_display_pc')),
-        'display_sp' => intval(get_option('medialink_display_sp')),
+        'display_pc' => '',
+        'display_sp' => '',
         'thumbnail'  => '',
         'exclude_cat' => get_option('medialink_exclude_cat'),
         'rssname' => '',
@@ -747,15 +771,21 @@ function medialink_func( $atts ) {
 	if ( $set === 'album' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_album_suffix_pc'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_album_suffix_sp'); }
+		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
+		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_album_display_sp')); }
 	} else if ( $set === 'movie' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_movie_suffix_sp'); }
+		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_movie_display_pc')); }
+		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_movie_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_movie_suffix_thumbnail'); }
 	} else if ( $set === 'music' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_music_suffix_sp'); }
+		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_music_display_pc')); }
+		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_music_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_music_suffix_thumbnail'); }
 	}
 

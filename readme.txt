@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,9 +49,13 @@ none
 
 == Screenshots ==
 
-1. screenshot-1.jpg
+none
 
 == Changelog ==
+
+= 1.3 =
+Subdivision of the "Default settings".
+Change readme.txt
 
 = 1.2 =
 Add "Default settings"
@@ -64,6 +68,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.3 =
 = 1.2 =
 = 1.1 =
 = 1.0 =
@@ -94,5 +99,8 @@ Music set='music'
 
 * (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.
 
-[Customization 2](http://wordpress.org/plugins/medialink/screenshots/)
+Customization 2
 
+Specify various attributes value to the short code, MediaLink can change the representation.
+
+* (WordPress > Settings > MediaLink > How to use)
