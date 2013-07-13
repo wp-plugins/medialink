@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.3
+Version: 1.4
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -57,6 +57,7 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
 	register_setting( 'medialink-settings-group', 'medialink_rssmax', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_movie_container');
 	add_option('medialink_album_suffix_pc', '.jpg');
 	add_option('medialink_album_suffix_sp', '.jpg');
 	add_option('medialink_movie_suffix_pc', '.mp4');
@@ -75,6 +76,7 @@ function medialink_register_settings(){
 	add_option('medialink_music_suffix_thumbnail', '.gif');
 	add_option('medialink_exclude_cat', '');
 	add_option('medialink_rssmax', 10); 
+	add_option('medialink_movie_container', '512x384');
 
 }
 
@@ -465,6 +467,39 @@ function medialink_plugin_options() {
 			</tr>
 		</tbody>
 		</table>
+
+		<h2><?php _e('The default value for other.', 'medialink') ?></h2>	
+		<table>
+		<tbody>
+			<tr>
+				<td align="center" valign="middle">
+				<?php _e('Size of the movie container.', 'medialink') ?>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_container = get_option('medialink_movie_container'); ?>
+				<select id="medialink_movie_container" name="medialink_movie_container">
+					<option <?php if ('256x144' == $target_movie_container)echo 'selected="selected"'; ?>>256x144</option>
+					<option <?php if ('320x240' == $target_movie_container)echo 'selected="selected"'; ?>>320x240</option>
+					<option <?php if ('384x288' == $target_movie_container)echo 'selected="selected"'; ?>>384x288</option>
+					<option <?php if ('448x336' == $target_movie_container)echo 'selected="selected"'; ?>>448x336</option>
+					<option <?php if ('512x288' == $target_movie_container)echo 'selected="selected"'; ?>>512x288</option>
+					<option <?php if ('512x384' == $target_movie_container)echo 'selected="selected"'; ?>>512x384</option>
+					<option <?php if ('576x432' == $target_movie_container)echo 'selected="selected"'; ?>>576x432</option>
+					<option <?php if ('640x480' == $target_movie_container)echo 'selected="selected"'; ?>>640x480</option>
+					<option <?php if ('704x528' == $target_movie_container)echo 'selected="selected"'; ?>>704x528</option>
+					<option <?php if ('768x432' == $target_movie_container)echo 'selected="selected"'; ?>>768x432</option>
+					<option <?php if ('768x576' == $target_movie_container)echo 'selected="selected"'; ?>>768x576</option>
+					<option <?php if ('832x624' == $target_movie_container)echo 'selected="selected"'; ?>>832x624</option>
+					<option <?php if ('896x672' == $target_movie_container)echo 'selected="selected"'; ?>>896x672</option>
+					<option <?php if ('960x720' == $target_movie_container)echo 'selected="selected"'; ?>>960x720</option>
+					<option <?php if ('1024x576' == $target_movie_container)echo 'selected="selected"'; ?>>1024x576</option>
+					<option <?php if ('1280x720' == $target_movie_container)echo 'selected="selected"'; ?>>1280x720</option>
+				</select>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+
 		<p class="submit">
 		  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
 		</p>
@@ -1086,17 +1121,19 @@ SEARCHFORM;
 
 $pluginurl = plugins_url($path='',$scheme=null);
 
+list($movie_container_w, $movie_container_h) = explode( 'x', get_option('medialink_movie_container') );
+
 //MoviePlayerContainer
 $movieplayercontainer = <<<MOVIEPLAYERCONTAINER
 <div id="PlayerContainer">
-<video controls style="border" height="375" width="500" autoplay onclick="this.play()">
+<video controls style="border" height="{$movie_container_h}" width="{$movie_container_w}" autoplay onclick="this.play()">
 <source src="{$prevfile}">
 <source src="{$prevfile_nosuffix}{$suffix_pc2}">
 <object>
 <embed
   type="application/x-shockwave-flash"
-  width="500"
-  height="375"
+  width="{$movie_container_w}"
+  height="{$movie_container_h}"
   bgcolor="#000000"
   src="{$pluginurl}/medialink/flowplayer/flowplayer-3.2.15.swf"
   allowFullScreen="true"
@@ -1121,8 +1158,8 @@ $movieplayercontainerIE9 = <<<MOVIEPLAYERCONTAINERIE9
 <object>
 <embed
   type="application/x-shockwave-flash"
-  width="500"
-  height="375"
+  width="{$movie_container_w}"
+  height="{$movie_container_h}"
   bgcolor="#000000"
   src="{$pluginurl}/medialink/flowplayer/flowplayer-3.2.15.swf"
   allowFullScreen="true"
