@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.4
+Version: 1.5
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -255,7 +255,7 @@ function medialink_plugin_options() {
 
 	<tr>
 	<td align="center" valign="middle"><b>thumbnail</b></td>
-	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_h') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
+	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_thumbnail') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_thumbnail') ?></td>
 	<td align="left" valign="middle">
@@ -787,9 +787,9 @@ function medialink_func( $atts ) {
         'display_pc' => '',
         'display_sp' => '',
         'thumbnail'  => '',
-        'exclude_cat' => get_option('medialink_exclude_cat'),
+        'exclude_cat' => '',
         'rssname' => '',
-        'rssmax'  => intval(get_option('medialink_rssmax'))
+        'rssmax'  => ''
 	), $atts));
 
 	$wp_uploads = wp_upload_dir();
@@ -799,8 +799,14 @@ function medialink_func( $atts ) {
 	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
 	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
 
+	if ( empty($exclude_cat) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
+		$exclude_cat = get_option('medialink_exclude_cat');
+	}
 	if ( empty($rssname) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
 		$rssname = 'medialink_'.$set.'_feed';
+	}
+	if ( empty($rssmax) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
+		$rssmax = intval(get_option('medialink_rssmax'));
 	}
 
 	if ( $set === 'album' ){
