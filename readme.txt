@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ none
 
 == Changelog ==
 
+= 1.6 =
+Fixed problem of thumbnail.
+
 = 1.5 =
 Fixed problem of thumbnail size.
 
@@ -75,6 +78,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.6 =
 = 1.5 =
 = 1.4 =
 = 1.3 =

@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.5
+Version: 1.6
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -423,11 +423,13 @@ function medialink_plugin_options() {
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>thumbnail</b></td>
-				<td>
+				<td align="center" valign="middle">
+					-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_movie_suffix_thumbnail = get_option('medialink_movie_suffix_thumbnail'); ?>
 				<select id="medialink_movie_suffix_thumbnail" name="medialink_movie_suffix_thumbnail">
+					<option <?php if ('' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>></option>
 					<option <?php if ('.gif' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
 					<option <?php if ('.jpg' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
 					<option <?php if ('.png' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
@@ -437,6 +439,7 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">
 				<?php $target_music_suffix_thumbnail = get_option('medialink_music_suffix_thumbnail'); ?>
 				<select id="medialink_music_suffix_thumbnail" name="medialink_music_suffix_thumbnail">
+					<option <?php if ('' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>></option>
 					<option <?php if ('.gif' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
 					<option <?php if ('.jpg' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
 					<option <?php if ('.png' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
