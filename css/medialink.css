@@ -15,40 +15,41 @@ p{
 
 li{ float: left; display: block;}
 
-
-#PlayerContainer{
+#PlayerContainer-medialink{
 	float:left;
 }
 
-#playlists {
+#playlists-medialink {
 	width: 400px;
 	float:left;
 	overflow: hidden;
 }
 
-#playlists li {
+#playlists-medialink li {
 	border-width: 1px 0;
 	width: 400px;
 	margin: 5px 5px 5px 5px;
 }
 
-#playlists li a {
+#playlists-medialink li a {
 	display: block;
 	font: bold 120% Arial, Helvetica, sans-serif;
+	width: 400px;
+	height: 35px;
 	padding: 5px;
 	text-decoration: none;
 }
 
-#playlists img{
+#playlists-medialink img{
 	float:left;
-	width: 60px;
-	height: 45px;
+	width: 50px;
+	height: 35px;
 	overflow: hidden;
 }
 
-* html #playlists li a {
+* html #playlists-medialink li a {
 	width: 400px;
 }
 
-#playlists li:hover {background: #f6efe2;}
-#playlists li a:hover {color: #000000; background: #f6efe2;}
+#playlists-medialink li:hover {background: #f6efe2;}
+#playlists-medialink li a:hover {color: #000000; background: #f6efe2;}

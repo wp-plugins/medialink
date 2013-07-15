@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.7
+Version: 1.8
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -1134,7 +1134,7 @@ list($movie_container_w, $movie_container_h) = explode( 'x', get_option('mediali
 
 //MoviePlayerContainer
 $movieplayercontainer = <<<MOVIEPLAYERCONTAINER
-<div id="PlayerContainer">
+<div id="PlayerContainer-medialink">
 <video controls style="border" height="{$movie_container_h}" width="{$movie_container_w}" autoplay onclick="this.play()">
 <source src="{$prevfile}">
 <source src="{$prevfile_nosuffix}{$suffix_pc2}">
@@ -1163,7 +1163,7 @@ MOVIEPLAYERCONTAINER;
 
 //MoviePlayerContainerIE9
 $movieplayercontainerIE9 = <<<MOVIEPLAYERCONTAINERIE9
-<div id="PlayerContainer">
+<div id="PlayerContainer-medialink">
 <object>
 <embed
   type="application/x-shockwave-flash"
@@ -1188,7 +1188,7 @@ MOVIEPLAYERCONTAINERIE9;
 
 //MusicPlayerContainer
 $musicplayercontainer = <<<MUSICPLAYERCONTAINER
-<div id="PlayerContainer">
+<div id="PlayerContainer-medialink">
 <audio controls style="border" autoplay onclick="this.play()">
 <source src="{$prevfile}">
 <source src="{$prevfile_nosuffix}{$suffix_pc2}">
@@ -1320,7 +1320,7 @@ FLASHMUSICPLAYER;
 		}
 	}else{
 		if ( $mode === 'pc' ) {
-			$linkfiles_begin = '<div id="playlists">';
+			$linkfiles_begin = '<div id="playlists-medialink">';
 			$linkfiles_end = '</div><br clear="all">';
 			$categoryselectbox_begin = '<div align="right">';
 			$categoryselectbox_end = '</div>';
