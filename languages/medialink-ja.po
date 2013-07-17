@@ -162,6 +162,36 @@ msgstr "その他のデフォルト値"
 msgid "Size of the movie container."
 msgstr "動画コンテナサイズ"
 
+msgid "Size of the thumbnail size for Video and Music"
+msgstr "動画と音楽のサムネイルサイズ"
+
+msgid "Background color"
+msgstr "背景色"
+
+msgid "Text color"
+msgstr "文字色"
+
+msgid "Width of the list"
+msgstr "リストの幅"
+
+msgid "Color of the arrow"
+msgstr "矢印色"
+
+msgid "Background color of the list"
+msgstr "リストの背景色"
+
+msgid "Background color of the partition line in the list"
+msgstr "リストの仕切線の背景色"
+
+msgid "Background color of the navigation"
+msgstr "ナビゲーションの背景色"
+
+msgid "Background color of the partition line in the navigation"
+msgstr "ナビゲーションの仕切線の背景色"
+
+msgid "Text color navigation"
+msgstr "ナビゲーションの文字色"
+
 msgid ""
 "The to playback of video and music, that such as the next, .htaccess may be "
 "required to the directory containing the data file by the environment."

@@ -32,7 +32,7 @@
  * @version     2.6.2
  */
 
-class Mobile_Detect {
+class MediaLink_Mobile_Detect {
 
     protected $scriptVersion = '2.6.2';
 
