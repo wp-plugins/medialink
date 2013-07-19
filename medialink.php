@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.9
+Version: 1.10
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -773,7 +773,18 @@ function medialink_print_file($catparam,$file,$title,$topurl,$suffix,$thumblink,
 			if (!empty($_GET['mlp'])){
 				$page = $_GET['mlp'];				//pages
 			}
-			$linkfile = '<li>'.$thumbfile.'<a href="'.$scriptname.'?mlcat='.$catparam.'&mlp='.$page.'&f='.$fileparam.'">'.$filetitle.'</a></li>';
+
+			$permlinkstr = NULL;
+			$permalinkstruct = NULL;
+			$permalinkstruct = get_option('permalink_structure');
+			if( empty($permalinkstruct) ){
+				$perm_id = get_the_ID();
+				$permlinkstr = '?page_id='.$perm_id.'&mlcat=';
+			} else {
+				$permlinkstr = '?mlcat=';
+			}
+
+			$linkfile = '<li>'.$thumbfile.'<a href="'.$scriptname.$permlinkstr.$catparam.'&mlp='.$page.'&f='.$fileparam.'">'.$filetitle.'</a></li>';
 		}
 	}
 
@@ -866,11 +877,20 @@ function medialink_xmlitem_read($file, $title, $thumblink, $suffix, $document_ro
 	$servername = $_SERVER['HTTP_HOST'];
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
+	$permalinkstruct = NULL;
+	$permalinkstruct = get_option('permalink_structure');
+	if( empty($permalinkstruct) ){
+		$perm_id = get_the_ID();
+		$scriptname .= '?page_id='.$perm_id.'&#38;f=';
+	} else {
+		$scriptname .= '?f=';
+	}
+
 	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
 		$link_url = 'http://'.$servername.$topurl.$file.$suffix;
 		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$file.$thumblink.$suffix.'"></a>';
 	}else{
-		$link_url = 'http://'.$servername.$scriptname.'?f='.$fparam;
+		$link_url = 'http://'.$servername.$scriptname.$fparam;
 		$enc_url = 'http://'.$servername.$topurl.$file.$suffix;
 		if( !empty($thumblink) ) {
 			$img_url = '<a href="'.$link_url.'">'.$thumblink.'</a>';
@@ -1227,7 +1247,18 @@ function medialink_func( $atts ) {
 	}
 	$pagestr = '&mlp='.$page;
 
-	$scripturl = $scriptname."?";
+	$permlinkstrform = NULL;
+	$permalinkstruct = NULL;
+	$permalinkstruct = get_option('permalink_structure');
+	$scripturl = $scriptname;
+	if( empty($permalinkstruct) ){
+		$perm_id = get_the_ID();
+		$scripturl .= '?page_id='.$perm_id;
+		$permlinkstrform = '<input type="hidden" name="page_id" value="'.$perm_id.'">';
+	} else {
+		$scripturl .= '?';
+	}
+
 	$catparam = mb_convert_encoding($catparam, "UTF-8", "auto");
 	$currentcategory_encode = urlencode($catparam);
 	if ( empty($currentcategory) ){
@@ -1295,6 +1326,7 @@ function medialink_func( $atts ) {
 
 $categoryselectbox = <<<CATEGORYSELECTBOX
 <form method="get" action="{$scriptname}">
+{$permlinkstrform}
 <select name="mlcat" onchange="submit(this.form)">
 {$linkcategories}
 </select>
@@ -1305,6 +1337,7 @@ CATEGORYSELECTBOX;
 	$search = mb_convert_encoding($search, "UTF-8", "auto");
 $searchform = <<<SEARCHFORM
 <form method="get" action="{$scriptname}">
+{$permlinkstrform}
 <input type="hidden" name="mlcat" value="{$catparam}">
 <input type="text" name="mls" value="{$search}">
 <input type="submit" value="{$searchbutton}">

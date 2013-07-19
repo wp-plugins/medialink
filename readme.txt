@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.9
+Stable tag: 1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ none
 
 == Changelog ==
 
+= 1.10 =
+Fixed problem in the case of a "Permalink Settings > Default".
+
 = 1.9 =
 Add "Settings" for CSS.
 Fixed conflict of class.
@@ -90,6 +93,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.10 =
 = 1.9 =
 = 1.8 =
 = 1.7 =
