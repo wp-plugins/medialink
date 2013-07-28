@@ -150,11 +150,11 @@ msgstr ""
 msgid "Category you want to exclude. More than one, specified separated by |."
 msgstr "除外するカテゴリ。複数の場合は、|で区切って指定します。"
 
-msgid "The name of the RSS feed file"
-msgstr "RSSフィードファイルの名前"
+msgid "The name of the RSS feed file (Use to widget)"
+msgstr "RSSフィードファイルの名前(ウィジェットに使用します)"
 
-msgid "Syndication feeds show the most recent"
-msgstr "RSSフィードの表示数"
+msgid "Syndication feeds show the most recent (Use to widget)"
+msgstr "RSSフィードの表示数(ウィジェットに使用します)"
 
 msgid "The default value for other."
 msgstr "その他のデフォルト値"
@@ -198,3 +198,12 @@ msgid ""
 msgstr ""
 "動画や音楽の再生では、環境によってデータファイルのあるディレクトリに以下の様"
 "な、.htaccess が必要になります。"
+
+msgid "Album (RSS)"
+msgstr "アルバム (RSS)"
+
+msgid "Video (Podcast)"
+msgstr "動画 (Podcast)"
+
+msgid "Music (Podcast)"
+msgstr "音楽 (Podcast)"

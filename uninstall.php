@@ -20,7 +20,12 @@
 	delete_option('medialink_movie_suffix_thumbnail');
 	delete_option('medialink_music_suffix_thumbnail');
 	delete_option('medialink_exclude_cat');
-	delete_option('medialink_rssmax'); 
+	delete_option('medialink_album_rssname');
+	delete_option('medialink_movie_rssname');
+	delete_option('medialink_music_rssname');
+	delete_option('medialink_album_rssmax');
+	delete_option('medialink_movie_rssmax');
+	delete_option('medialink_music_rssmax');
 	delete_option('medialink_movie_container');
 	delete_option('medialink_css_pc_listwidth');
 	delete_option('medialink_css_pc_listthumbsize');

@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.11
+Version: 1.12
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -33,6 +33,155 @@ Domain Path: /languages
 	add_action( 'wp_head', wp_enqueue_script('jquery') );
 	add_action( 'admin_menu', 'medialink_plugin_menu' );
 	add_shortcode( 'medialink', 'medialink_func' );
+	add_action('widgets_init', create_function('', 'return register_widget("MediaLinkWidgetItem");'));
+
+/* ==================================================
+ * Widget
+ * @since	1.12
+ */
+class MediaLinkWidgetItem extends WP_Widget {
+	function MediaLinkWidgetItem() {
+		parent::WP_Widget(false, $name = 'MediaLinkRssFeed');
+	}
+
+	function widget($args, $instance) {
+		extract($args);
+		$title = apply_filters('widget_title', $instance['title']);
+		$checkbox1 = apply_filters('widget_checkbox', $instance['checkbox1']);
+		$checkbox2 = apply_filters('widget_checkbox', $instance['checkbox2']);
+		$checkbox3 = apply_filters('widget_checkbox', $instance['checkbox3']);
+		$checkbox4 = apply_filters('widget_checkbox', $instance['checkbox4']);
+		$checkbox5 = apply_filters('widget_checkbox', $instance['checkbox5']);
+
+		$wp_uploads = wp_upload_dir();
+		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
+		$pluginurl = plugins_url($path='',$scheme=null);
+
+		if ($title) {
+			echo $before_widget;
+			echo $before_title . $title . $after_title;
+			echo '<table>';
+			if ($checkbox1) {
+				?>
+				<tr>
+				<td align="center" valign="middle">
+				<a href="<?php echo bloginfo('rss2_url'); ?>">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a>
+				</td>
+				<td align="left" valign="middle"><?php _e('Entries (RSS)'); ?></td>
+				</tr>
+				<?
+			}
+			if ($checkbox2) {
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo bloginfo('comments_rss2_url'); ?>">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a>
+				</td>
+				<td align="left" valign="middle"><?php _e('Comments (RSS)'); ?></td>
+				</tr>
+				<?
+			}	
+			if ($checkbox3) {
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_album_rssname') ?>.xml">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
+				<td align="left" valign="middle"><?php _e('Album (RSS)', 'medialink'); ?></td>
+				</tr>
+				<?
+			}
+			if ($checkbox4) {
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_movie_rssname') ?>.xml">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
+				<td align="left" valign="middle"><?php _e('Video (Podcast)', 'medialink'); ?></td>
+				</tr>
+				<?
+			}
+			if ($checkbox5) {
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_music_rssname') ?>.xml">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
+				<td align="left" valign="middle"><?php _e('Music (Podcast)', 'medialink'); ?></td>
+				</tr>
+				<?
+			}
+			echo '</table>';
+			echo $after_widget;
+		}
+	}
+	
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['checkbox1'] = strip_tags($new_instance['checkbox1']);
+		$instance['checkbox2'] = strip_tags($new_instance['checkbox2']);
+		$instance['checkbox3'] = strip_tags($new_instance['checkbox3']);
+		$instance['checkbox4'] = strip_tags($new_instance['checkbox4']);
+		$instance['checkbox5'] = strip_tags($new_instance['checkbox5']);
+		return $instance;
+	}
+	
+	function form($instance) {
+		$title = esc_attr($instance['title']);
+		$checkbox1 = esc_attr($instance['checkbox1']);
+		$checkbox2 = esc_attr($instance['checkbox2']);
+		$checkbox3 = esc_attr($instance['checkbox3']);
+		$checkbox4 = esc_attr($instance['checkbox4']);
+		$checkbox5 = esc_attr($instance['checkbox5']);
+
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title'); ?>:</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+		</p>
+		<div><?php echo get_bloginfo('name'); ?>:</div>
+		<table>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox1'); ?> ">
+<input class="widefat" id="<?php echo $this->get_field_id('checkbox1'); ?>" name="<?php echo $this->get_field_name('checkbox1'); ?>" type="checkbox"<?php checked('Blog', $checkbox1); ?> value="Blog" />
+			<?php _e('Entries (RSS)'); ?></label>
+		</td>
+		</tr>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox2'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox2'); ?>" name="<?php echo $this->get_field_name('checkbox2'); ?>" type="checkbox"<?php checked('Blog Comments', $checkbox2); ?> value="Blog Comments" />
+			<?php _e('Comments (RSS)'); ?></label>
+		</td>
+		</tr>
+		</table>
+		<div>MediaLink:</div>
+		<table>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox3'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox3'); ?>" name="<?php echo $this->get_field_name('checkbox3'); ?>" type="checkbox"<?php checked('Album', $checkbox3); ?> value="Album" />
+			<?php _e('Album (RSS)', 'medialink'); ?></label>
+		</td>
+		</tr>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox4'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox4'); ?>" name="<?php echo $this->get_field_name('checkbox4'); ?>" type="checkbox"<?php checked('Movie', $checkbox4); ?> value="Movie" />
+			<?php _e('Video (Podcast)', 'medialink'); ?></label>
+		</td>
+		</tr>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox5'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox5'); ?>" name="<?php echo $this->get_field_name('checkbox5'); ?>" type="checkbox"<?php checked('Music', $checkbox5); ?> value="Music" />
+			<?php _e('Music (Podcast)', 'medialink'); ?></label>
+		</td>
+		</tr>
+		</table>
+		<?php
+	}
+}
 
 /* ==================================================
  * Settings register
@@ -56,7 +205,12 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
-	register_setting( 'medialink-settings-group', 'medialink_rssmax', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_album_rssname');
+	register_setting( 'medialink-settings-group', 'medialink_movie_rssname');
+	register_setting( 'medialink-settings-group', 'medialink_music_rssname');
+	register_setting( 'medialink-settings-group', 'medialink_album_rssmax', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_movie_rssmax', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_music_rssmax', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_container');
 	register_setting( 'medialink-settings-group', 'medialink_css_listthumbsize');
 	register_setting( 'medialink-settings-group', 'medialink_css_pc_listwidth', 'medialink_pos_intval');
@@ -85,7 +239,12 @@ function medialink_register_settings(){
 	add_option('medialink_movie_suffix_thumbnail', '.gif');
 	add_option('medialink_music_suffix_thumbnail', '.gif');
 	add_option('medialink_exclude_cat', '');
-	add_option('medialink_rssmax', 10); 
+	add_option('medialink_album_rssname', 'medialink_album_feed');
+	add_option('medialink_movie_rssname', 'medialink_movie_feed');
+	add_option('medialink_music_rssname', 'medialink_music_feed');
+	add_option('medialink_album_rssmax', 10);
+	add_option('medialink_movie_rssmax', 10);
+	add_option('medialink_music_rssmax', 10);
 	add_option('medialink_movie_container', '512x384');
 	add_option('medialink_css_pc_listwidth', 400);
 	add_option('medialink_css_pc_listthumbsize', '50x35');
@@ -349,19 +508,21 @@ function medialink_plugin_options() {
 
 	<tr>
 	<td align="center" valign="middle"><b>rssname</b></td>
-	<td align="center" valign="middle">medialink_album_feed</td>
-	<td align="center" valign="middle">medialink_movie_feed</td>
-	<td align="center" valign="middle">medialink_music_feed</td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_rssname') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_rssname') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_rssname') ?></td>
 	<td align="left" valign="middle">
-	<?php _e('The name of the RSS feed file', 'medialink'); ?>
+	<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 	</td>
 	</tr>
 
 	<tr>
 	<td align="center" valign="middle"><b>rssmax</b></td>
-	<td colspan="3" align="center" valign="middle"><?php echo intval(get_option('medialink_rssmax')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_rssmax')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_rssmax')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_rssmax')) ?></td>
 	<td align="left" valign="middle">
-	<?php _e('Syndication feeds show the most recent', 'medialink'); ?>
+	<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -536,12 +697,33 @@ function medialink_plugin_options() {
 				</td>
 			</tr>
 			<tr>
-				<td align="center" valign="middle"><b>rssmax</b></td>
-				<td align="center" valign="middle" colspan="3">
-					<input type="text" id="medialink_rssmax" name="medialink_rssmax" value="<?php echo intval(get_option('medialink_rssmax')) ?>" size="3" />
+				<td align="center" valign="middle"><b>rssname</b></td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_album_rssname" name="medialink_album_rssname" value="<?php echo get_option('medialink_album_rssname') ?>" size="25" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_movie_rssname" name="medialink_movie_rssname" value="<?php echo get_option('medialink_movie_rssname') ?>" size="25" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo get_option('medialink_music_rssname') ?>" size="25" />
 				</td>
 				<td align="left" valign="middle">
-					<?php _e('Syndication feeds show the most recent', 'medialink') ?>
+					<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>rssmax</b></td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_album_rssmax" name="medialink_album_rssmax" value="<?php echo intval(get_option('medialink_album_rssmax')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_movie_rssmax" name="medialink_movie_rssmax" value="<?php echo intval(get_option('medialink_movie_rssmax')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval(get_option('medialink_music_rssmax')) ?>" size="3" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
 				</td>
 			</tr>
 		</tbody>
@@ -1008,18 +1190,14 @@ function medialink_func( $atts ) {
 	if ( empty($exclude_cat) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
 		$exclude_cat = get_option('medialink_exclude_cat');
 	}
-	if ( empty($rssname) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
-		$rssname = 'medialink_'.$set.'_feed';
-	}
-	if ( empty($rssmax) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
-		$rssmax = intval(get_option('medialink_rssmax'));
-	}
 
 	if ( $set === 'album' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_album_suffix_pc'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_album_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_album_display_sp')); }
+		if( empty($rssname) ) { $rssname = get_option('medialink_album_rssname'); }
+		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_album_rssmax')); }
 	} else if ( $set === 'movie' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
@@ -1027,6 +1205,8 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_movie_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_movie_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_movie_suffix_thumbnail'); }
+		if( empty($rssname) ) { $rssname = get_option('medialink_movie_rssname'); }
+		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_movie_rssmax')); }
 	} else if ( $set === 'music' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
@@ -1034,6 +1214,8 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_music_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_music_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_music_suffix_thumbnail'); }
+		if( empty($rssname) ) { $rssname = get_option('medialink_music_rssname'); }
+		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_music_rssmax')); }
 	}
 
 	$mode = NULL;
