@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.12
+Stable tag: 1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ MediaLink outputs as a gallery from the media library(image and music and video)
 
 Create a playlist (image, music, video) of data in the media library below the specified, MediaLink displays Pages by passing the data to various software.
 
-Please use the [GalleryLink](http://wordpress.org/plugins/gallerylink/) If you want to output the gallery by specifying the directory.
+If you want to output the gallery by specifying the directory, please use the [GalleryLink](http://wordpress.org/plugins/gallerylink/).
 
 You write and use short codes to page.
 
@@ -45,6 +45,8 @@ Bundled software and function
 
     [Settings](http://wordpress.org/plugins/medialink/other_notes/)
 
+7. Navigate to the appearance section and select widgets, select wordpress MediaLinkRssFeed and configure from here.
+
 == Frequently Asked Questions ==
 
 none
@@ -54,6 +56,9 @@ none
 none
 
 == Changelog ==
+
+= 1.13 =
+Change readme.txt
 
 = 1.12 =
 Add widget for RSS feed.
@@ -99,6 +104,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.13 =
 = 1.12 =
 = 1.11 =
 = 1.10 =
@@ -138,6 +144,8 @@ Video set='movie'
 Music set='music'
 
 * (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.
+
+* When you move to appearance> widget, there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.
 
 Customization 2
 
