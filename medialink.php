@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.14
+Version: 1.15
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -57,6 +57,12 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
 		$pluginurl = plugins_url($path='',$scheme=null);
 
+		$documentrootname = $_SERVER['DOCUMENT_ROOT'];
+		$servername = 'http://'.$_SERVER['HTTP_HOST'];
+		$xmlurl2 = get_bloginfo('comments_rss2_url');
+		$xml3 = $wp_uploads_path.'/'.get_option('medialink_album_rssname').'.xml';
+		$xml4 = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
+		$xml5 = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
@@ -68,44 +74,48 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<a href="<?php echo bloginfo('rss2_url'); ?>">
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a>
 				</td>
-				<td align="left" valign="middle"><?php _e('Entries (RSS)'); ?></td>
+				<td align="left" valign="middle"><?php echo bloginfo('name'); ?></td>
 				</tr>
 				<?
 			}
 			if ($checkbox2) {
+				$xmldata2 = simplexml_load_file($xmlurl2);
 				?>
 				<tr>
 				<td align="center" valign="middle"><a href="<?php echo bloginfo('comments_rss2_url'); ?>">
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a>
 				</td>
-				<td align="left" valign="middle"><?php _e('Comments (RSS)'); ?></td>
+				<td align="left" valign="middle"><?php echo $xmldata2->channel->title; ?></td>
 				</tr>
 				<?
 			}	
-			if ($checkbox3) {
+			if ($checkbox3 && file_exists($documentrootname.$xml3)) {
+				$xmldata3 = simplexml_load_file($servername.$xml3);
 				?>
 				<tr>
-				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_album_rssname') ?>.xml">
+				<td align="center" valign="middle"><a href="<?php echo $servername.$xml3; ?>">
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
-				<td align="left" valign="middle"><?php _e('Album (RSS)', 'medialink'); ?></td>
+				<td align="left" valign="middle"><?php echo $xmldata3->channel->title; ?></td>
 				</tr>
 				<?
 			}
-			if ($checkbox4) {
+			if ($checkbox4 && file_exists($documentrootname.$xml4)) {
+				$xmldata4 = simplexml_load_file($servername.$xml4);
 				?>
 				<tr>
-				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_movie_rssname') ?>.xml">
+				<td align="center" valign="middle"><a href="<?php echo $servername.$xml4; ?>">
 				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
-				<td align="left" valign="middle"><?php _e('Video (Podcast)', 'medialink'); ?></td>
+				<td align="left" valign="middle"><?php echo $xmldata4->channel->title; ?></td>
 				</tr>
 				<?
 			}
-			if ($checkbox5) {
+			if ($checkbox5 && file_exists($documentrootname.$xml5)) {
+				$xmldata5 = simplexml_load_file($servername.$xml5);
 				?>
 				<tr>
-				<td align="center" valign="middle"><a href="<?php echo $wp_uploads_path ?>/<?php echo get_option('medialink_music_rssname') ?>.xml">
+				<td align="center" valign="middle"><a href="<?php echo $servername.$xml5; ?>">
 				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
-				<td align="left" valign="middle"><?php _e('Music (Podcast)', 'medialink'); ?></td>
+				<td align="left" valign="middle"><?php echo $xmldata5->channel->title; ?></td>
 				</tr>
 				<?
 			}
