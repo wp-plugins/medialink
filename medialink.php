@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.13
+Version: 1.14
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -399,7 +399,8 @@ function medialink_plugin_options() {
 	<?php _e('MediaLink is also handles video and music. If you are dealing with music and video, please add the following attributes to the short code.', 'medialink'); ?>
 	<p><div><?php _e("Video set = 'movie'", 'medialink'); ?></div>
 	<div><?php _e("Music set = 'music'", 'medialink'); ?></div>
-	<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div></p>
+	<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div>
+	<p><div><?php _e('* When you move to (WordPress > Appearance > Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.', 'medialink'); ?></div></p>
 
 	<table border="1"><strong><?php _e('Customization 2', 'medialink'); ?></strong>
 	<tbody>

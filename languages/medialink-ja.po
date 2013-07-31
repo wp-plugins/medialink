@@ -207,3 +207,12 @@ msgstr "動画 (Podcast)"
 
 msgid "Music (Podcast)"
 msgstr "音楽 (Podcast)"
+
+msgid ""
+"* When you move to (WordPress > Appearance > Widgets), there is a widget "
+"MediaLinkRssFeed. If you place you can set this to display the sidebar link "
+"the RSS feed."
+msgstr ""
+"※（ワードプレス > 外観 ＞ ウィジェット）に移動すると、ウィジェット"
+"MediaLinkRssFeedがあります。これを設定して配置すると、RSSフィードのリンクをサ"
+"イドバーに表示します。"
