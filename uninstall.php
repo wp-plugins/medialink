@@ -3,6 +3,8 @@
 	if( !defined('WP_UNINSTALL_PLUGIN') )
     	exit();
 
+	delete_option('medialink_album_effect_pc');
+	delete_option('medialink_album_effect_sp');
 	delete_option('medialink_album_suffix_pc');
 	delete_option('medialink_album_suffix_sp');
 	delete_option('medialink_movie_suffix_pc');

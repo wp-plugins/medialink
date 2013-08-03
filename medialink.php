@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.16
+Version: 1.17
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -198,6 +198,8 @@ class MediaLinkWidgetItem extends WP_Widget {
  * @since	1.1
  */
 function medialink_register_settings(){
+	register_setting( 'medialink-settings-group', 'medialink_album_effect_pc');
+	register_setting( 'medialink-settings-group', 'medialink_album_effect_sp');
 	register_setting( 'medialink-settings-group', 'medialink_album_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_album_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc');
@@ -232,6 +234,8 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_css_sp_listbackcolor');
 	register_setting( 'medialink-settings-group', 'medialink_css_sp_listarrowcolor');
 	register_setting( 'medialink-settings-group', 'medialink_css_sp_listpartitionlinecolor');
+	add_option('medialink_album_effect_pc', 'colorbox');
+	add_option('medialink_album_effect_sp', 'photoswipe');
 	add_option('medialink_album_suffix_pc', '.jpg');
 	add_option('medialink_album_suffix_sp', '.jpg');
 	add_option('medialink_movie_suffix_pc', '.mp4');
@@ -360,7 +364,7 @@ function medialink_add_css(){
 
 // CSS PC
 $medialink_add_css_pc = <<<MEDIALINKADDCSSPC
-<!-- Start Gallerylink CSS for PC -->
+<!-- Start Medialink CSS for PC -->
 <style type="text/css">
 #playlists-medialink { width: {$pc_listwidth}px; }
 #playlists-medialink li { width: {$pc_listwidth}px; }
@@ -370,12 +374,12 @@ $medialink_add_css_pc = <<<MEDIALINKADDCSSPC
 #playlists-medialink li:hover {background: {$pc_linkbackcolor};}
 #playlists-medialink li a:hover {color: {$pc_linkstrcolor}; background: {$pc_linkbackcolor};}
 </style>
-<!-- End Gallerylink CSS for PC -->
+<!-- End Medialink CSS for PC -->
 MEDIALINKADDCSSPC;
 
 // CSS SP
 $medialink_add_css_sp = <<<MEDIALINKADDCSSSP
-<!-- Start Gallerylink CSS for Smart Phone -->
+<!-- Start Medialink CSS for Smart Phone -->
 <style type="text/css">
 .g_nav li{ color: {$sp_navstrcolor}; background: {$sp_navbackcolor}; }
 .g_nav li:not(:last-child){ border-right:1px solid {$sp_navpartitionlinecolor}; }
@@ -385,7 +389,7 @@ $medialink_add_css_sp = <<<MEDIALINKADDCSSSP
 .list ul li:not(:last-child){ border-bottom:1px solid {$sp_listpartitionlinecolor}; }
 .list ul li img{ width: {$listthumbsize_w}px; height: {$listthumbsize_h}px; }
 </style>
-<!-- End Gallerylink CSS for Smart Phone -->
+<!-- End Medialink CSS for Smart Phone -->
 MEDIALINKADDCSSSP;
 
 	$mode = medialink_agent_check();
@@ -433,7 +437,7 @@ function medialink_plugin_options() {
 	<p>&#91;medialink&#93;</p>
 	<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
 	<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
-	<p>&#91;medialink effect='nivoslider'&#93</p>
+	<p>&#91;medialink effect_pc='nivoslider'&#93</p>
 	<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
 	
 	<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
@@ -473,10 +477,21 @@ function medialink_plugin_options() {
 	</tr>
 
 	<tr>
-	<td align="center" valign="middle"><b>effect</b></td>
-	<td colspan="3" align="center" valign="middle"></td>
+	<td align="center" valign="middle"><b>effect_pc</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_pc') ?></td>
+	<td colspan="2" align="center" valign="middle"></td>
 	<td align="left" valign="middle">
-	<?php _e('Special effects nivoslider(slideshow)', 'medialink'); ?>
+	<?php _e('Effects of PC. If you want to use the Lightbox, please install the following plugin separately.', 'medialink'); ?>
+	<div><a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><font color="red">WP jQuery Lightbox</font></b><a></div>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>effect_sp</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_sp') ?></td>
+	<td colspan="2" align="center" valign="middle"></td>
+	<td align="left" valign="middle">
+	<?php _e('Effects of Smartphone', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -589,6 +604,38 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">album</td>
 				<td align="center" valign="middle">movie</td>
 				<td align="center" valign="middle">music</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>effect_pc</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_effect_pc = get_option('medialink_album_effect_pc'); ?>
+				<select id="medialink_album_effect_pc" name="medialink_album_effect_pc">
+					<option <?php if ('colorbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>colorbox</option>
+					<option <?php if ('nivoslider' == $target_album_effect_pc)echo 'selected="selected"'; ?>>nivoslider</option>
+					<option <?php if ('Lightbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
+				</select>
+				</td>
+				<td colspan="2">
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Effects of PC. If you want to use the Lightbox, please install the following plugin separately.', 'medialink'); ?>
+					<div><a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><font color="red">WP jQuery Lightbox</font></b><a></div>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>effect_sp</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_effect_sp = get_option('medialink_album_effect_sp'); ?>
+				<select id="medialink_album_effect_sp" name="medialink_album_effect_sp">
+					<option <?php if ('nivoslider' == $target_album_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
+					<option <?php if ('photoswipe' == $target_album_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
+				</select>
+				</td>
+				<td colspan="2">
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Effects of Smartphone', 'medialink'); ?>
+				</td>
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>suffix_pc</b></td>
@@ -976,18 +1023,16 @@ function medialink_print_file($catparam,$file,$title,$topurl,$suffix,$thumblink,
 
 	$linkfile = NULL;
 	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ) {
-		if ( $mode === 'sp' ) {
-			if ($effect === 'nivoslider'){ // for nivoslider
-				$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
-			} else { // for for Photoswipe
-				$linkfile = '<li><a rel="external" href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
-			}
-		}else{ //PC
-			if ($effect === 'nivoslider'){ // for nivoslider
-				$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
-			} else { // for colorbox
-				$linkfile = '<a class="medialink" href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
-			}
+		if ($effect === 'nivoslider'){ // for nivoslider
+			$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
+		} else if ($effect === 'colorbox' && $mode === 'pc'){ // for colorbox
+			$linkfile = '<a class=medialink href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
+		} else if ($effect === 'photoswipe' && $mode === 'sp'){ // for Photoswipe
+			$linkfile = '<li><a rel="external" href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
+		} else if ($effect === 'Lightbox' && $mode === 'pc'){ // for Lightbox
+			$linkfile = '<a href="'.$topurl.$file.'" rel="lightbox[medialink]" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
+		} else {
+			$linkfile = '<li><a href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
 		}
 	}else{
 		if ( $mode === 'sp' ) {
@@ -1210,7 +1255,8 @@ function medialink_func( $atts ) {
 
 	extract(shortcode_atts(array(
         'set' => 'album',
-        'effect' => '',
+        'effect_pc' => '',
+        'effect_sp' => '',
         'suffix_pc' => '',
         'suffix_pc2' => '',
         'suffix_sp' => '',
@@ -1235,6 +1281,8 @@ function medialink_func( $atts ) {
 
 	$rssdef = false;
 	if ( $set === 'album' ){
+		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_album_effect_pc'); }
+		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_album_effect_sp'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_album_suffix_pc'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_album_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
@@ -1276,9 +1324,11 @@ function medialink_func( $atts ) {
 
 	$mode = medialink_agent_check();
 	if ( $mode === 'pc' ) {
+		$effect = $effect_pc;
 		$suffix = $suffix_pc;
 		$display = $display_pc;
 	} else {
+		$effect = $effect_sp;
 		$suffix = $suffix_sp;
 		$display = $display_sp;
 	}
@@ -1672,7 +1722,7 @@ FLASHMUSICPLAYER;
 				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
 				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
 				wp_enqueue_script( 'nivoslider-in', $pluginurl.'/medialink/js/nivoslider-in.js' );
-			} else {
+			} else if ($effect === 'colorbox'){
 				// for COLORBOX
 				wp_enqueue_style( 'colorbox',  $pluginurl.'/medialink/colorbox/colorbox.css' );
 				wp_enqueue_script( 'colorbox', $pluginurl.'/medialink/colorbox/jquery.colorbox-min.js', null, '1.3.20.1');
@@ -1695,13 +1745,15 @@ FLASHMUSICPLAYER;
 				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
 				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
 				wp_enqueue_script( 'nivoslider-in', $pluginurl.'/medialink/js/nivoslider-in.js' );
-			} else {
+			} else if ($effect === 'photoswipe'){
 				// for PhotoSwipe
 				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
 				wp_enqueue_style( 'photoswipe',  $pluginurl.'/medialink/photoswipe/photoswipe.css' );
 				wp_enqueue_script( 'klass' , $pluginurl.'/medialink/photoswipe/lib/klass.min.js', null, '1.0' );
 				wp_enqueue_script( 'photoswipe' , $pluginurl.'/medialink/photoswipe/code.photoswipe.jquery-3.0.4.min.js', null, '3.0.4' );
 				wp_enqueue_script( 'photoswipe-in', $pluginurl.'/medialink/js/photoswipe-in.js' );
+			} else {
+				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
 			}
 		}
 		// for smartphone
@@ -1731,16 +1783,32 @@ FLASHMUSICPLAYER;
 	$searchform_end = NULL;
 	$rssfeeds_icon = NULL;
 	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
-		if ( $mode === 'pc' ) {
-			if ($effect === 'nivoslider'){
-				// for Nivo Slider
-				$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';
-				$linkfiles_end = '</div></div></div><br clear=all>';
-			} else {
-				// for COLORBOX
-				$linkfiles_begin = '<ul class = "medialink">';
-				$linkfiles_end = '</ul><br clear=all>';
+		if ($effect === 'nivoslider'){
+			// for Nivo Slider
+			$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';
+			$linkfiles_end = '</div></div></div><br clear=all>';
+		} else if ($effect === 'colorbox' && $mode ==='pc'){
+			// for COLORBOX
+			$linkfiles_begin = '<ul class = "medialink">';
+			$linkfiles_end = '</ul><br clear=all>';
+		} else if ($effect === 'photoswipe' && $mode === 'sp'){
+			// for PhotoSwipe
+			$linkfiles_begin = '<div id="Gallery" class="gallery">';
+			$linkfiles_end = '</div>';
+		} else if ($effect === 'Lightbox' && $mode === 'pc'){
+			// for Lightbox
+			$linkfiles_begin = '<div class = "medialink">';
+			$linkfiles_end = '</div><br clear=all>';
+		} else {
+			if ($mode === 'pc'){
+				$linkfiles_begin = '<div class = "medialink">';
+				$linkfiles_end = '</div><br clear=all>';
+			} else if ($mode === 'sp'){
+				$linkfiles_begin = '<div class="gallery">';
+				$linkfiles_end = '</div>';
 			}
+		}
+		if ( $mode === 'pc' ) {
 			$categoryselectbox_begin = '<div align="right">';
 			$categoryselectbox_end = '</div>';
 			$linkpages_begin = '<div align="center">';
@@ -1750,15 +1818,6 @@ FLASHMUSICPLAYER;
 			$searchform_begin = '<div align="center">';
 			$searchform_end = '</div>';
 		} else if ( $mode === 'sp' ) {
-			if ($effect === 'nivoslider'){
-				// for Nivo Slider
-				$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';
-				$linkfiles_end = '</div></div></div><br clear=all>';
-			} else {
-				// for PhotoSwipe
-				$linkfiles_begin = '<div id="Gallery" class="gallery">';
-				$linkfiles_end = '</div>';
-			}
 			$categoryselectbox_begin = '<div>';
 			$categoryselectbox_end = '</div>';
 			$linkpages_begin = '<nav class="g_nav"><ul>';

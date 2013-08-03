@@ -109,8 +109,15 @@ msgstr "属性"
 msgid "Next only three. album(image), movie(video), music(music)"
 msgstr "album（画像）,movie（動画）,music（音楽）の３つのみ"
 
-msgid "Special effects nivoslider(slideshow)"
-msgstr "特殊効果 nivoslider(スライドショー)"
+msgid ""
+"Effects of PC. If you want to use the Lightbox, please install the following "
+"plugin separately."
+msgstr ""
+"PCでのエフェクト。Lightboxを使用する場合は、別途以下のプラグインをインストー"
+"ルしてください。"
+
+msgid "Effects of Smartphone"
+msgstr "スマートフォンでのエフェクト"
 
 msgid "Full path to the top directory containing the data"
 msgstr "データのあるトップディレクトリのフルパス"
