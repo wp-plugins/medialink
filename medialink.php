@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.18
+Version: 1.19
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -52,6 +52,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$checkbox3 = apply_filters('widget_checkbox', $instance['checkbox3']);
 		$checkbox4 = apply_filters('widget_checkbox', $instance['checkbox4']);
 		$checkbox5 = apply_filters('widget_checkbox', $instance['checkbox5']);
+		$checkbox6 = apply_filters('widget_checkbox', $instance['checkbox6']);
 
 		$wp_uploads = wp_upload_dir();
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
@@ -63,6 +64,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$xml3 = $wp_uploads_path.'/'.get_option('medialink_album_rssname').'.xml';
 		$xml4 = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
 		$xml5 = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
+		$xml6 = $wp_uploads_path.'/'.get_option('medialink_slideshow_rssname').'.xml';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
@@ -119,6 +121,16 @@ class MediaLinkWidgetItem extends WP_Widget {
 				</tr>
 				<?
 			}
+			if ($checkbox6 && file_exists($documentrootname.$xml6)) {
+				$xmldata6 = simplexml_load_file($servername.$xml6);
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo $servername.$xml6; ?>">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
+				<td align="left" valign="middle"><?php echo $xmldata6->channel->title; ?></td>
+				</tr>
+				<?
+			}
 			echo '</table>';
 			echo $after_widget;
 		}
@@ -132,6 +144,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$instance['checkbox3'] = strip_tags($new_instance['checkbox3']);
 		$instance['checkbox4'] = strip_tags($new_instance['checkbox4']);
 		$instance['checkbox5'] = strip_tags($new_instance['checkbox5']);
+		$instance['checkbox6'] = strip_tags($new_instance['checkbox6']);
 		return $instance;
 	}
 	
@@ -142,6 +155,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$checkbox3 = esc_attr($instance['checkbox3']);
 		$checkbox4 = esc_attr($instance['checkbox4']);
 		$checkbox5 = esc_attr($instance['checkbox5']);
+		$checkbox6 = esc_attr($instance['checkbox6']);
 
 		?>
 		<p>
@@ -188,6 +202,13 @@ class MediaLinkWidgetItem extends WP_Widget {
 			<?php _e('Music (Podcast)', 'medialink'); ?></label>
 		</td>
 		</tr>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox6'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox6'); ?>" name="<?php echo $this->get_field_name('checkbox6'); ?>" type="checkbox"<?php checked('Slideshow', $checkbox6); ?> value="Slideshow" />
+			<?php _e('Slideshow (RSS)', 'medialink'); ?></label>
+		</td>
+		</tr>
 		</table>
 		<?php
 	}
@@ -200,6 +221,8 @@ class MediaLinkWidgetItem extends WP_Widget {
 function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_album_effect_pc');
 	register_setting( 'medialink-settings-group', 'medialink_album_effect_sp');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_effect_pc');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_effect_sp');
 	register_setting( 'medialink-settings-group', 'medialink_album_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_album_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc');
@@ -208,21 +231,28 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc2');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_sp');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_suffix_pc');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_album_display_pc', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_album_display_sp', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_display_pc', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_display_sp', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_music_display_pc', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_music_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_display_pc', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_display_sp', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
+	register_setting( 'medialink-settings-group', 'medialink_include_cat');
 	register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
 	register_setting( 'medialink-settings-group', 'medialink_album_rssname');
 	register_setting( 'medialink-settings-group', 'medialink_movie_rssname');
 	register_setting( 'medialink-settings-group', 'medialink_music_rssname');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_rssname');
 	register_setting( 'medialink-settings-group', 'medialink_album_rssmax', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_rssmax', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_music_rssmax', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_rssmax', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_movie_container');
 	register_setting( 'medialink-settings-group', 'medialink_css_listthumbsize');
 	register_setting( 'medialink-settings-group', 'medialink_css_pc_listwidth', 'medialink_pos_intval');
@@ -236,6 +266,8 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_css_sp_listpartitionlinecolor');
 	add_option('medialink_album_effect_pc', 'colorbox');
 	add_option('medialink_album_effect_sp', 'photoswipe');
+	add_option('medialink_slideshow_effect_pc', 'nivoslider');
+	add_option('medialink_slideshow_effect_sp', 'nivoslider');
 	add_option('medialink_album_suffix_pc', '.jpg');
 	add_option('medialink_album_suffix_sp', '.jpg');
 	add_option('medialink_movie_suffix_pc', '.mp4');
@@ -244,21 +276,28 @@ function medialink_register_settings(){
 	add_option('medialink_music_suffix_pc', '.mp3');
 	add_option('medialink_music_suffix_pc2', '.ogg');
 	add_option('medialink_music_suffix_sp', '.mp3');
+	add_option('medialink_slideshow_suffix_pc', '.jpg');
+	add_option('medialink_slideshow_suffix_sp', '.jpg');
 	add_option('medialink_album_display_pc', 20); 	
 	add_option('medialink_album_display_sp', 9); 	
 	add_option('medialink_movie_display_pc', 8); 	
 	add_option('medialink_movie_display_sp', 6); 	
 	add_option('medialink_music_display_pc', 8); 	
 	add_option('medialink_music_display_sp', 6); 	
+	add_option('medialink_slideshow_display_pc', 10); 	
+	add_option('medialink_slideshow_display_sp', 10); 	
 	add_option('medialink_movie_suffix_thumbnail', '.gif');
 	add_option('medialink_music_suffix_thumbnail', '.gif');
+	add_option('medialink_include_cat', '');
 	add_option('medialink_exclude_cat', '');
 	add_option('medialink_album_rssname', 'medialink_album_feed');
 	add_option('medialink_movie_rssname', 'medialink_movie_feed');
 	add_option('medialink_music_rssname', 'medialink_music_feed');
+	add_option('medialink_slideshow_rssname', 'medialink_slideshow_feed');
 	add_option('medialink_album_rssmax', 10);
 	add_option('medialink_movie_rssmax', 10);
 	add_option('medialink_music_rssmax', 10);
+	add_option('medialink_slideshow_rssmax', 10);
 	add_option('medialink_movie_container', '512x384');
 	add_option('medialink_css_pc_listwidth', 400);
 	add_option('medialink_css_pc_listthumbsize', '50x35');
@@ -327,6 +366,7 @@ function medialink_add_feedlink(){
 	$xml_album = $wp_uploads_path.'/'.get_option('medialink_album_rssname').'.xml';
 	$xml_movie = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
 	$xml_music = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
+	$xml_slideshow = $wp_uploads_path.'/'.get_option('medialink_slideshow_rssname').'.xml';
 
 	echo '<!-- Start Medialink feed -->'."\n";
 	if (file_exists($documentrootname.$xml_album)) {
@@ -340,6 +380,10 @@ function medialink_add_feedlink(){
 	if (file_exists($documentrootname.$xml_music)) {
 		$xml_music_data = simplexml_load_file($servername.$xml_music);
 		echo '<link rel="alternate" type="application/rss+xml" href="'.$servername.$xml_music.'" title="'.$xml_music_data->channel->title.'" />'."\n";
+	}
+	if (file_exists($documentrootname.$xml_slideshow)) {
+		$xml_slideshow_data = simplexml_load_file($servername.$xml_slideshow);
+		echo '<link rel="alternate" type="application/rss+xml" href="'.$servername.$xml_slideshow.'" title="'.$xml_slideshow_data->channel->title.'" />'."\n";
 	}
 	echo '<!-- End Medialink feed -->'."\n";
 
@@ -437,7 +481,7 @@ function medialink_plugin_options() {
 	<p>&#91;medialink&#93;</p>
 	<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
 	<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
-	<p>&#91;medialink effect_pc='nivoslider'&#93</p>
+	<p>&#91;medialink set='slideshow'&#93</p>
 	<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
 	
 	<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
@@ -458,7 +502,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle">
 	<?php _e('Attribute', 'medialink'); ?>
 	</td>
-	<td colspan="3" align="center" valign="middle">
+	<td colspan="4" align="center" valign="middle">
 	<?php _e('Default'); ?>
 	</td>
 	<td align="center" valign="middle">
@@ -471,22 +515,24 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle">album</td>
 	<td align="center" valign="middle">movie</td>
 	<td align="center" valign="middle">music</td>
+	<td align="center" valign="middle">slideshow</td>
 	<td align="left" valign="middle">
-	<?php _e('Next only three. album(image), movie(video), music(music)', 'medialink'); ?>
+	<?php _e('Next only four. album(image), movie(video), music(music), slideshow(image)', 'medialink'); ?>
 	</td>
 	</tr>
 
 	<tr>
 	<td align="center" valign="middle"><b>effect_pc</b></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_pc') ?></td>
-	<td colspan="2" align="center" valign="middle"></td>
+	<td colspan="2" align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_effect_pc') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 	<div>
-	<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><font color="red">WP jQuery Lightbox</font></b><a>
-	<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><font color="darkorange">FancyBox for WordPress</font></b><a>
-	<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><font color="blue">Simple Colorbox</font></b><a>
-	<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><font color="green">WP-Slimbox2</font></b><a>
+	<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><span style="color:red">WP jQuery Lightbox</span></b><a>
+	<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><span style="color:darkorange">FancyBox for WordPress</span></b><a>
+	<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><span style="color:blue">Simple Colorbox</span></b><a>
+	<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><span style="color:green">WP-Slimbox2</span></b><a>
 	</div>
 	</td>
 	</tr>
@@ -495,6 +541,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><b>effect_sp</b></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_sp') ?></td>
 	<td colspan="2" align="center" valign="middle"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_effect_sp') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('Effects of Smartphone', 'medialink'); ?>
 	</td>
@@ -505,6 +552,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_pc') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_pc') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('extension of PC', 'medialink'); ?>
 	</td>
@@ -512,9 +560,10 @@ function medialink_plugin_options() {
 
 	<tr>
 	<td align="center" valign="middle"><b>suffix_pc2</b></td>
-	<td align="center" valign="middle"></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc2') ?></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
 	<td align="left" valign="middle">
 	<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
 	</td>
@@ -525,6 +574,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_sp') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_sp') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_sp') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_sp') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('extension of Smartphone', 'medialink'); ?>
 	</td>
@@ -535,6 +585,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_display_pc')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_pc')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_pc')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_display_pc')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('File Display per page(PC)', 'medialink'); ?>
 	</td>
@@ -545,6 +596,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_display_sp')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_sp')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_sp')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_display_sp')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
 	</td>
@@ -555,14 +607,25 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_thumbnail') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_thumbnail') ?></td>
+	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
 	</td>
 	</tr>
 
 	<tr>
+	<td align="center" valign="middle"><b>include_cat</b></td>
+	<td colspan="3" align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_include_cat') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Category you want to include. Only one.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
 	<td align="center" valign="middle"><b>exclude_cat</b></td>
 	<td colspan="3" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
 	<td align="left" valign="middle">
 	<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
 	</td>
@@ -573,6 +636,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_rssname') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_movie_rssname') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_rssname') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_rssname') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 	</td>
@@ -583,6 +647,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_album_rssmax')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_rssmax')) ?></td>
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_rssmax')) ?></td>
+	<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_rssmax')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink'); ?>
 	</td>
@@ -601,7 +666,7 @@ function medialink_plugin_options() {
 		<tbody>
 			<tr>
 				<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
-				<td align="center" valign="middle" colspan=3><?php _e('Default'); ?></td>
+				<td align="center" valign="middle" colspan=4><?php _e('Default'); ?></td>
 				<td align="center" valign="middle"><?php _e('Description'); ?></td>
 			</tr>
 			<tr>
@@ -609,6 +674,7 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">album</td>
 				<td align="center" valign="middle">movie</td>
 				<td align="center" valign="middle">music</td>
+				<td align="center" valign="middle">slideshow</td>
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>effect_pc</b></td>
@@ -622,13 +688,18 @@ function medialink_plugin_options() {
 				</td>
 				<td colspan="2">
 				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_effect_pc = get_option('medialink_slideshow_effect_pc'); ?>
+				<select id="medialink_slideshow_effect_pc" name="medialink_slideshow_effect_pc">
+					<option <?php if ('nivoslider' == $target_slideshow_effect_pc)echo 'selected="selected"'; ?>>nivoslider</option>
+				</select>
 				<td align="left" valign="middle">
 					<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 					<div>
-					<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><font color="red">WP jQuery Lightbox</font></b><a>
-					<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><font color="darkorange">FancyBox for WordPress</font></b><a>
-					<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><font color="blue">Simple Colorbox</font></b><a>
-					<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><font color="green">WP-Slimbox2</font></b><a>
+					<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><span style="color:red">WP jQuery Lightbox</span></b><a>
+					<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><span style="color:darkorange">FancyBox for WordPress</span></b><a>
+					<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><span style="color:blue">Simple Colorbox</span></b><a>
+					<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><span style="color:green">WP-Slimbox2</span></b><a>
 					</div>
 				</td>
 			</tr>
@@ -642,6 +713,12 @@ function medialink_plugin_options() {
 				</select>
 				</td>
 				<td colspan="2">
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_effect_sp = get_option('medialink_slideshow_effect_sp'); ?>
+				<select id="medialink_slideshow_effect_sp" name="medialink_slideshow_effect_sp">
+					<option <?php if ('nivoslider' == $target_slideshow_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
+				</select>
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('Effects of Smartphone', 'medialink'); ?>
@@ -672,6 +749,15 @@ function medialink_plugin_options() {
 					<option <?php if ('.ogg' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.ogg</option>
 				</select>
 				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_suffix_pc = get_option('medialink_slideshow_suffix_pc'); ?>
+				<select id="medialink_slideshow_suffix_pc" name="medialink_slideshow_suffix_pc">
+					<option <?php if ('.jpg' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.gif' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.bmp' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
 				<td align="left" valign="middle">
 					<?php _e('extension of PC', 'medialink'); ?>
 				</td>
@@ -693,6 +779,8 @@ function medialink_plugin_options() {
 					<option <?php if ('.ogg' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.ogg</option>
 					<option <?php if ('.mp3' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.mp3</option>
 				</select>
+				</td>
+				<td>
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
@@ -723,6 +811,15 @@ function medialink_plugin_options() {
 					<option <?php if ('.ogg' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.ogg</option>
 				</select>
 				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_suffix_sp = get_option('medialink_slideshow_suffix_sp'); ?>
+				<select id="medialink_slideshow_suffix_sp" name="medialink_slideshow_suffix_sp">
+					<option <?php if ('.jpg' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.jpg</option>
+					<option <?php if ('.png' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('.gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('.bmp' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.bmp</option>
+				</select>
+				</td>
 				<td align="left" valign="middle">
 					<?php _e('extension of Smartphone', 'medialink'); ?>
 				</td>
@@ -738,6 +835,9 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">
 					<input type="text" id="medialink_music_display_pc" name="medialink_music_display_pc" value="<?php echo intval(get_option('medialink_music_display_pc')) ?>" size="3" />
 				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_slideshow_display_pc" name="medialink_slideshow_display_pc" value="<?php echo intval(get_option('medialink_slideshow_display_pc')) ?>" size="3" />
+				</td>
 				<td align="left" valign="middle">
 					<?php _e('File Display per page(PC)', 'medialink') ?>
 				</td>
@@ -752,6 +852,9 @@ function medialink_plugin_options() {
 				</td>
 				<td align="center" valign="middle">
 					<input type="text" id="medialink_music_display_sp" name="medialink_music_display_sp" value="<?php echo intval(get_option('medialink_music_display_sp')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_slideshow_display_sp" name="medialink_slideshow_display_sp" value="<?php echo intval(get_option('medialink_slideshow_display_sp')) ?>" size="3" />
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('File Display per page(Smartphone)', 'medialink') ?>
@@ -782,14 +885,29 @@ function medialink_plugin_options() {
 					<option <?php if ('.bmp' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.bmp</option>
 				</select>
 				</td>
+				<td align="center" valign="middle">
+					-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
+				</td>
 				<td align="left" valign="middle">
 					<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>include_cat</b></td>
+				<td align="center" valign="middle" colspan="3"></td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_include_cat" name="medialink_include_cat" value="<?php echo get_option('medialink_include_cat') ?>" size="20" />
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Category you want to include. Only one.', 'medialink'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>exclude_cat</b></td>
 				<td align="center" valign="middle" colspan="3">
 					<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="40" />
+				</td>
+				<td>
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
@@ -806,6 +924,9 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">
 					<input type="text" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo get_option('medialink_music_rssname') ?>" size="25" />
 				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo get_option('medialink_slideshow_rssname') ?>" size="25" />
+				</td>
 				<td align="left" valign="middle">
 					<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 				</td>
@@ -820,6 +941,9 @@ function medialink_plugin_options() {
 				</td>
 				<td align="center" valign="middle">
 					<input type="text" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval(get_option('medialink_music_rssmax')) ?>" size="3" />
+				</td>
+				<td align="center" valign="middle">
+					<input type="text" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval(get_option('medialink_slideshow_rssmax')) ?>" size="3" />
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
@@ -1267,6 +1391,7 @@ function medialink_func( $atts ) {
         'set' => 'album',
         'effect_pc' => '',
         'effect_sp' => '',
+        'include_cat' => '',
         'suffix_pc' => '',
         'suffix_pc2' => '',
         'suffix_sp' => '',
@@ -1285,6 +1410,9 @@ function medialink_func( $atts ) {
 	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
 	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
 
+	if ( empty($include_cat) && ($set === 'slideshow') ) {
+		$include_cat = get_option('medialink_include_cat');
+	}
 	if ( empty($exclude_cat) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
 		$exclude_cat = get_option('medialink_exclude_cat');
 	}
@@ -1326,6 +1454,18 @@ function medialink_func( $atts ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_music_rssmax')); }
+	} else if ( $set === 'slideshow' ){
+		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_slideshow_effect_pc'); }
+		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_slideshow_effect_sp'); }
+		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_slideshow_suffix_pc'); }
+		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_slideshow_suffix_sp'); }
+		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_slideshow_display_pc')); }
+		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_slideshow_display_sp')); }
+		if( empty($rssname) ) {
+			$rssname = get_option('medialink_slideshow_rssname');
+			$rssdef = true;
+		}
+		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_slideshow_rssmax')); }
 	}
 
 	$mode = NULL;
@@ -1433,6 +1573,7 @@ function medialink_func( $atts ) {
 	$thumblinks = array();
 	$titles = array();
 	$rssfiles = array();
+	$rsstitles = array();
 	$rssthumblinks = array();
 	$titlename = NULL;
 	if ($attachments) {
@@ -1471,11 +1612,24 @@ function medialink_func( $atts ) {
 				$attachment = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid);
 				$attachment = str_replace($document_root, "", $attachment);
 				if ( $sort_order === 'DESC' && empty($search) ) {
-					$rssfiles[$rsscount] = $attachment;
-					$rssthumblinks [$rsscount] = $thumblink;
-					++$rsscount;
+					if ( $set <> 'slideshow' ) {
+						$rssfiles[$rsscount] = $attachment;
+						$rsstitles[$rsscount] = $title;
+						$rssthumblinks [$rsscount] = $thumblink;
+						++$rsscount;
+					} else if ( ($set === 'slideshow') && ($caption === $include_cat) ) {
+						$rssfiles[$rsscount] = $attachment;
+						$rsstitles[$rsscount] = $title;
+						$rssthumblinks [$rsscount] = $thumblink;
+						++$rsscount;
+					}
 				}
-				if ( $caption === $catparam || empty($catparam) ) {
+				if ( ($caption === $catparam || empty($catparam)) && ($set <> 'slideshow') ) {
+					$files[$filecount] = $attachment;
+					$titles[$filecount] = $title;
+					$thumblinks [$filecount] = $thumblink;
+					++$filecount;
+				} else if ( ($set === 'slideshow') && ($caption === $include_cat) ) {
 					$files[$filecount] = $attachment;
 					$titles[$filecount] = $title;
 					$thumblinks [$filecount] = $thumblink;
@@ -1509,25 +1663,27 @@ function medialink_func( $atts ) {
 		}
 	}
 
-	$categories = array_unique($categories);
-	foreach ($categories as $linkcategory) {
-		$linkcategory = mb_convert_encoding(str_replace($document_root."/", "", $linkcategory), "UTF-8", "auto");
-		if($catparam === $linkcategory){
-			$linkcategory = '<option value="'.$linkcategory.'" selected>'.$linkcategory.'</option>';
+	if ( $set <> 'slideshow' ) {
+		$categories = array_unique($categories);
+		foreach ($categories as $linkcategory) {
+			$linkcategory = mb_convert_encoding(str_replace($document_root."/", "", $linkcategory), "UTF-8", "auto");
+			if($catparam === $linkcategory){
+				$linkcategory = '<option value="'.$linkcategory.'" selected>'.$linkcategory.'</option>';
+			}else{
+				$linkcategory = '<option value="'.$linkcategory.'">'.$linkcategory.'</option>';
+			}
+			$linkcategories = $linkcategories.$linkcategory;
+		}
+		$categoryselectall = mb_convert_encoding($categoryselectall, "UTF-8", "auto");
+		if(empty($catparam)){
+			$linkcategory = '<option value="" selected>'.$categoryselectall.'</option>';
 		}else{
-			$linkcategory = '<option value="'.$linkcategory.'">'.$linkcategory.'</option>';
+			$linkcategory = '<option value="">'.$categoryselectall.'</option>';
 		}
 		$linkcategories = $linkcategories.$linkcategory;
-	}
-	$categoryselectall = mb_convert_encoding($categoryselectall, "UTF-8", "auto");
-	if(empty($catparam)){
-		$linkcategory = '<option value="" selected>'.$categoryselectall.'</option>';
-	}else{
-		$linkcategory = '<option value="">'.$categoryselectall.'</option>';
-	}
-	$linkcategories = $linkcategories.$linkcategory;
 
-	$linkpages = medialink_print_pages($page,$maxpage,$mode);
+		$linkpages = medialink_print_pages($page,$maxpage,$mode);
+	}
 
 	$servername = $_SERVER['HTTP_HOST'];
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
@@ -1576,47 +1732,48 @@ function medialink_func( $atts ) {
 	}
 	$prevfile_nosuffix = str_replace($suffix, "", $prevfile);
 
-	$sortnamenew = mb_convert_encoding($sortnamenew, "UTF-8", "auto");
-	$sortnameold = mb_convert_encoding($sortnameold, "UTF-8", "auto");
-	$sortnamedes = mb_convert_encoding($sortnamedes, "UTF-8", "auto");
-	$sortnameasc = mb_convert_encoding($sortnameasc, "UTF-8", "auto");
-	if( $mode === 'sp' ){
-		$page_no_tag_left = '<a>';
-		$page_no_tag_right = '</a>';
-	} else {
-		$page_no_tag_left = NULL;
-		$page_no_tag_right = NULL;
-	}
-	if ( $sort === "n" || empty($sort) ) {
-		// new
-		$sortlink_n = $page_no_tag_left.$sortnamenew.$page_no_tag_right;
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'o') {
-		// old
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
-		$sortlink_o = $page_no_tag_left.$sortnameold.$page_no_tag_right;
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'd') {
-		// des
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
-		$sortlink_d = $page_no_tag_left.$sortnamedes.$page_no_tag_right;
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'a') {
-		// asc
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
-		$sortlink_a = $page_no_tag_left.$sortnameasc.$page_no_tag_right;
-	}
-	if ( $mode === 'sp' ) {
-		$sortlinks = '<li>'.$sortlink_n.'</li><li>'.$sortlink_o.'</li><li>'.$sortlink_d.'</li><li>'.$sortlink_a.'</li>';
-	} else {
-		$sortlinks = 'Sort:|'.$sortlink_n.'|'.$sortlink_o.'|'.$sortlink_d.'|'.$sortlink_a.'|';
-	}
+	if ( $set <> 'slideshow' ) {
+		$sortnamenew = mb_convert_encoding($sortnamenew, "UTF-8", "auto");
+		$sortnameold = mb_convert_encoding($sortnameold, "UTF-8", "auto");
+		$sortnamedes = mb_convert_encoding($sortnamedes, "UTF-8", "auto");
+		$sortnameasc = mb_convert_encoding($sortnameasc, "UTF-8", "auto");
+		if( $mode === 'sp' ){
+			$page_no_tag_left = '<a>';
+			$page_no_tag_right = '</a>';
+		} else {
+			$page_no_tag_left = NULL;
+			$page_no_tag_right = NULL;
+		}
+		if ( $sort === "n" || empty($sort) ) {
+			// new
+			$sortlink_n = $page_no_tag_left.$sortnamenew.$page_no_tag_right;
+			$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
+			$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
+			$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
+		} else if ($sort === 'o') {
+			// old
+			$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
+			$sortlink_o = $page_no_tag_left.$sortnameold.$page_no_tag_right;
+			$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
+			$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
+		} else if ($sort === 'd') {
+			// des
+			$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
+			$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
+			$sortlink_d = $page_no_tag_left.$sortnamedes.$page_no_tag_right;
+			$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
+		} else if ($sort === 'a') {
+			// asc
+			$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
+			$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
+			$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
+			$sortlink_a = $page_no_tag_left.$sortnameasc.$page_no_tag_right;
+		}
+		if ( $mode === 'sp' ) {
+			$sortlinks = '<li>'.$sortlink_n.'</li><li>'.$sortlink_o.'</li><li>'.$sortlink_d.'</li><li>'.$sortlink_a.'</li>';
+		} else {
+			$sortlinks = 'Sort:|'.$sortlink_n.'|'.$sortlink_o.'|'.$sortlink_d.'|'.$sortlink_a.'|';
+		}
 
 $categoryselectbox = <<<CATEGORYSELECTBOX
 <form method="get" action="{$scriptname}">
@@ -1637,6 +1794,8 @@ $searchform = <<<SEARCHFORM
 <input type="submit" value="{$searchbutton}">
 </form>
 SEARCHFORM;
+
+	}
 
 $pluginurl = plugins_url($path='',$scheme=null);
 
@@ -1722,7 +1881,7 @@ FLASHMUSICPLAYER;
 
 	if ( $mode === 'pc' ) {
 		wp_enqueue_style( 'pc for medialink',  $pluginurl.'/medialink/css/medialink.css' );
-		if ( $set === 'album' ){
+		if ( $set === 'album' || $set === 'slideshow'){
 			if ($effect === 'nivoslider'){
 				// for Nivo Slider
 				wp_enqueue_style( 'nivoslider-theme-def',  $pluginurl.'/medialink/nivo-slider/themes/default/default.css' );
@@ -1745,7 +1904,7 @@ FLASHMUSICPLAYER;
 			echo '<h2>'.$selectedfilename.'</h2>';
 		}
 	} else if ( $mode === 'sp') {
-		if ( $set === 'album' ){
+		if ( $set === 'album' || $set === 'slideshow'){
 			if ($effect === 'nivoslider'){
 				// for Nivo Slider
 				wp_enqueue_style( 'nivoslider-theme-def',  $pluginurl.'/medialink/nivo-slider/themes/default/default.css' );
@@ -1818,7 +1977,7 @@ FLASHMUSICPLAYER;
 				$linkfiles_end = '</div>';
 			}
 		}
-		if ( $mode === 'pc' ) {
+		if ( $mode === 'pc' && $set <> 'slideshow') {
 			$categoryselectbox_begin = '<div align="right">';
 			$categoryselectbox_end = '</div>';
 			$linkpages_begin = '<div align="center">';
@@ -1827,7 +1986,7 @@ FLASHMUSICPLAYER;
 			$sortlink_end = '</div>';
 			$searchform_begin = '<div align="center">';
 			$searchform_end = '</div>';
-		} else if ( $mode === 'sp' ) {
+		} else if ( $mode === 'sp' && $set <> 'slideshow') {
 			$categoryselectbox_begin = '<div>';
 			$categoryselectbox_end = '</div>';
 			$linkpages_begin = '<nav class="g_nav"><ul>';
@@ -1885,21 +2044,23 @@ FLASHMUSICPLAYER;
 
 	// RSS Feeds
 	$xml_title =  get_bloginfo('name').' | '.get_the_title();
+	if ( $set <> 'slideshow' ) {
 
-	$rssfeed_url = $topurl.'/'.$rssname.'.xml';
-	if ( $set === "album" ) {
-		$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/rssfeeds.png"></a></div>';
-	} else {
-		$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/podcast.png"></a></div>';
-	}
-	if ( $mode === "pc" || $mode === "sp" ) {
-		echo $rssfeeds_icon;
-		if ( $rssdef === false ) {
-			echo '<link rel="alternate" type="application/rss+xml" href="'.$rssfeed_url.'" title="'.$xml_title.'" />';
+		$rssfeed_url = $topurl.'/'.$rssname.'.xml';
+		if ( $set === "album" ) {
+			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/rssfeeds.png"></a></div>';
+		} else {
+			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/podcast.png"></a></div>';
+		}
+		if ( $mode === "pc" || $mode === "sp" ) {
+			echo $rssfeeds_icon;
+			if ( $rssdef === false ) {
+				echo '<link rel="alternate" type="application/rss+xml" href="'.$rssfeed_url.'" title="'.$xml_title.'" />';
+			}
 		}
 	}
 
-	echo '<div align = "center"><a href="http://wordpress.org/plugins/medialink/">by MediaLink</a></div>';
+	echo '<div align = "right"><a href="http://wordpress.org/plugins/medialink/"><span style="font-size : xx-small">by MediaLink</span></a></div>';
 
 	$xml_begin = NULL;
 	$xml_end = NULL;
@@ -1930,13 +2091,13 @@ XMLEND;
 					++$exist_rssfile_count;
  				}
  				$exist_rss_pubdate = $pubdate[0];
-				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $attachments[0]->post_title, $rssthumblinks[0], $suffix, $document_root, $topurl), $reg)){
+				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $rsstitles[0], $rssthumblinks[0], $suffix, $document_root, $topurl), $reg)){
 					$new_rss_pubdate = $reg[1];
 				}
 				if ($exist_rss_pubdate <> $new_rss_pubdate || $exist_rssfile_count != $rssmax){
 					$xmlitem = NULL;
 					for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $attachments[$i]->post_title, $rssthumblinks[$i], $suffix, $document_root, $topurl);
+						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $suffix, $document_root, $topurl);
 					}
 					$xmlitem = $xml_begin.$xmlitem.$xml_end;
 					$fno = fopen($xmlfile, 'w');
@@ -1946,7 +2107,7 @@ XMLEND;
 			}
 		}else{
 			for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $attachments[$i]->post_title, $rssthumblinks[$i], $suffix, $document_root, $topurl);
+				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $suffix, $document_root, $topurl);
 			}
 			$xmlitem = $xml_begin.$xmlitem.$xml_end;
 			$fno = fopen($xmlfile, 'w');

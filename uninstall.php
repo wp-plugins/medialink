@@ -5,6 +5,8 @@
 
 	delete_option('medialink_album_effect_pc');
 	delete_option('medialink_album_effect_sp');
+	delete_option('medialink_slideshow_effect_pc');
+	delete_option('medialink_slideshow_effect_sp');
 	delete_option('medialink_album_suffix_pc');
 	delete_option('medialink_album_suffix_sp');
 	delete_option('medialink_movie_suffix_pc');
@@ -13,21 +15,28 @@
 	delete_option('medialink_music_suffix_pc');
 	delete_option('medialink_music_suffix_pc2');
 	delete_option('medialink_music_suffix_sp');
+	delete_option('medialink_slideshow_suffix_pc');
+	delete_option('medialink_slideshow_suffix_sp');
 	delete_option('medialink_album_display_pc');
 	delete_option('medialink_album_display_sp');
 	delete_option('medialink_movie_display_pc');
 	delete_option('medialink_movie_display_sp');
 	delete_option('medialink_music_display_pc');
 	delete_option('medialink_music_display_sp');
+	delete_option('medialink_slideshow_display_pc'); 	
+	delete_option('medialink_slideshow_display_sp'); 	
 	delete_option('medialink_movie_suffix_thumbnail');
 	delete_option('medialink_music_suffix_thumbnail');
+	delete_option('medialink_include_cat');
 	delete_option('medialink_exclude_cat');
 	delete_option('medialink_album_rssname');
 	delete_option('medialink_movie_rssname');
 	delete_option('medialink_music_rssname');
+	delete_option('medialink_slideshow_rssname');
 	delete_option('medialink_album_rssmax');
 	delete_option('medialink_movie_rssmax');
 	delete_option('medialink_music_rssmax');
+	delete_option('medialink_slideshow_rssmax');
 	delete_option('medialink_movie_container');
 	delete_option('medialink_css_pc_listwidth');
 	delete_option('medialink_css_pc_listthumbsize');

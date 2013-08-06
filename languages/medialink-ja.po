@@ -106,8 +106,9 @@ msgstr "以下に、ショートコードの各種属性とデフォルト値を
 msgid "Attribute"
 msgstr "属性"
 
-msgid "Next only three. album(image), movie(video), music(music)"
-msgstr "album（画像）,movie（動画）,music（音楽）の３つのみ"
+msgid ""
+"Next only four. album(image), movie(video), music(music), slideshow(image)"
+msgstr "album（画像）,movie（動画）,music（音楽）,slideshow（画像）の４つのみ"
 
 msgid ""
 "Effects of PC. If you want to use the Lightbox, please install a plugin that "
@@ -153,6 +154,9 @@ msgstr ""
 "と同じタイトル名のサムネイルの拡張子を指定するが、サムネイルが見つからない場"
 "合は、WordPress標準のアイコンを表示し、何も指定しなければサムネイル表示をしま"
 "せん。"
+
+msgid "Category you want to include. Only one."
+msgstr "指定カテゴリ。１つだけ指定します。"
 
 msgid "Category you want to exclude. More than one, specified separated by |."
 msgstr "除外するカテゴリ。複数の場合は、|で区切って指定します。"
