@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.19
+Version: 1.20
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -1617,23 +1617,25 @@ function medialink_func( $atts ) {
 						$rsstitles[$rsscount] = $title;
 						$rssthumblinks [$rsscount] = $thumblink;
 						++$rsscount;
-					} else if ( ($set === 'slideshow') && ($caption === $include_cat) ) {
+					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
 						$rssfiles[$rsscount] = $attachment;
 						$rsstitles[$rsscount] = $title;
 						$rssthumblinks [$rsscount] = $thumblink;
 						++$rsscount;
 					}
 				}
-				if ( ($caption === $catparam || empty($catparam)) && ($set <> 'slideshow') ) {
-					$files[$filecount] = $attachment;
-					$titles[$filecount] = $title;
-					$thumblinks [$filecount] = $thumblink;
-					++$filecount;
-				} else if ( ($set === 'slideshow') && ($caption === $include_cat) ) {
-					$files[$filecount] = $attachment;
-					$titles[$filecount] = $title;
-					$thumblinks [$filecount] = $thumblink;
-					++$filecount;
+				if ( ($caption === $catparam || empty($catparam)) ) {
+					if ($set <> 'slideshow') {
+						$files[$filecount] = $attachment;
+						$titles[$filecount] = $title;
+						$thumblinks [$filecount] = $thumblink;
+						++$filecount;
+					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
+						$files[$filecount] = $attachment;
+						$titles[$filecount] = $title;
+						$thumblinks [$filecount] = $thumblink;
+						++$filecount;
+					}
 				}
 			}
 		}
