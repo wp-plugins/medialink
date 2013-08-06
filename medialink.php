@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.20
+Version: 1.21
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -491,13 +491,9 @@ function medialink_plugin_options() {
 	<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div>
 	<p><div><?php _e('* When you move to (WordPress > Appearance > Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.', 'medialink'); ?></div></p>
 
-	<table border="1"><strong><?php _e('Customization 2', 'medialink'); ?></strong>
+	<table border="1"><div><strong><?php _e('Customization 2', 'medialink'); ?></strong></div>
+	<div><strong><?php _e('Below, I shows the default values and various attributes of the short code.', 'medialink'); ?></strong></div>
 	<tbody>
-	<tr>
-	<td colspan="5" align="center" valign="middle">
-	<?php _e('Below, I shows the default values and various attributes of the short code.', 'medialink'); ?>
-	</td>
-	</tr>
 	<tr>
 	<td align="center" valign="middle">
 	<?php _e('Attribute', 'medialink'); ?>
@@ -540,7 +536,7 @@ function medialink_plugin_options() {
 	<tr>
 	<td align="center" valign="middle"><b>effect_sp</b></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_sp') ?></td>
-	<td colspan="2" align="center" valign="middle"></td>
+	<td colspan="2" align="center" valign="middle" bgcolor="#dddddd"></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_effect_sp') ?></td>
 	<td align="left" valign="middle">
 	<?php _e('Effects of Smartphone', 'medialink'); ?>
