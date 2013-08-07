@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.21
+Version: 1.22
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -605,7 +605,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_thumbnail') ?></td>
 	<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 	<td align="left" valign="middle">
-	<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+	<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -885,7 +885,7 @@ function medialink_plugin_options() {
 					-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 				</td>
 				<td align="left" valign="middle">
-					<?php _e('(album) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+					<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
 				</td>
 			</tr>
 			<tr>
