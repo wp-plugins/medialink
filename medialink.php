@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.23
+Version: 1.24
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -1597,8 +1597,18 @@ function medialink_func( $atts ) {
 				} else {
 					if( !empty($thumbnail) ) {
 						if ( preg_match( "/jpg|png|gif|bmp/i", $thumbnail) ) {
-							if( file_exists(str_replace($suffix, "", str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid) ).$thumbnail) ){
-								$thumblink = '<img src = "'.str_replace($suffix, "", $attachment->guid).'.gif'.'">';
+							$thumbname = NULL;
+							$thumbname_md5 = NULL;
+							$thumbpath = NULL;
+							$thumbname = str_replace($suffix, '', end(explode('/', $attachment->guid)));
+							$thumbname_md5 = md5($thumbname);
+							$thumbpath = str_replace($thumbname.$suffix, '', $attachment->guid);
+							$thumbcheck = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $thumbpath.$thumbname.$thumbnail);
+							$thumbcheck_md5 = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $thumbpath.$thumbname_md5.$thumbnail);
+							if( file_exists( $thumbcheck ) ){
+								$thumblink = '<img src = "'.$thumbpath.$thumbname.$thumbnail.'">';
+							} else if( file_exists( $thumbcheck_md5 ) ){
+								$thumblink = '<img src = "'.$thumbpath.$thumbname_md5.$thumbnail.'">';
 							} else {
 								$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
 							}
