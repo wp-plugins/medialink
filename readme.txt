@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.24
+Stable tag: 1.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ none
 none
 
 == Changelog ==
+
+= 1.25 =
+In the case of jpg can reads jpe and jpeg.
+Change /languages
 
 = 1.24 =
 Fixed problem of thumbnail (Video or Music),  In the case of multi-byte characters.
@@ -145,6 +149,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.25 =
 = 1.24 =
 = 1.23 =
 = 1.22 =

@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.24
+Version: 1.25
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -550,7 +550,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_pc') ?></td>
 	<td align="left" valign="middle">
-	<?php _e('extension of PC', 'medialink'); ?>
+	<?php _e('extension of PC. In the case of jpg can reads jpe and jpeg.', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -755,7 +755,7 @@ function medialink_plugin_options() {
 				</select>
 				</td>
 				<td align="left" valign="middle">
-					<?php _e('extension of PC', 'medialink'); ?>
+					<?php _e('extension of PC. In the case of jpg can reads jpe and jpeg.', 'medialink'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -813,7 +813,6 @@ function medialink_plugin_options() {
 					<option <?php if ('.jpg' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.jpg</option>
 					<option <?php if ('.png' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.png</option>
 					<option <?php if ('.gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.bmp' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.bmp</option>
 				</select>
 				</td>
 				<td align="left" valign="middle">
@@ -868,7 +867,6 @@ function medialink_plugin_options() {
 					<option <?php if ('.gif' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
 					<option <?php if ('.jpg' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
 					<option <?php if ('.png' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.bmp' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.bmp</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
@@ -878,7 +876,6 @@ function medialink_plugin_options() {
 					<option <?php if ('.gif' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
 					<option <?php if ('.jpg' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
 					<option <?php if ('.png' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.bmp' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.bmp</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
@@ -1123,14 +1120,15 @@ AddType audio/ogg .ogg
  * @param	string	$file
  * @param	string	$title
  * @param	string	$topurl
- * @param	string	$suffix
  * @param	string	$thumblink
  * @param	string	$document_root
  * @param	string	$mode
  * @return	string	$effect
  * @since	1.0
  */
-function medialink_print_file($catparam,$file,$title,$topurl,$suffix,$thumblink,$document_root,$mode,$effect) {
+function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$document_root,$mode,$effect) {
+
+	$suffix = '.'.end(explode('.', $file));
 
 	$catparam = mb_convert_encoding($catparam, "UTF-8", "auto");
 	$filename = mb_convert_encoding($file, "UTF-8", "auto");
@@ -1143,7 +1141,7 @@ function medialink_print_file($catparam,$file,$title,$topurl,$suffix,$thumblink,
 	$file = str_replace("%2F","/",urlencode($file));
 
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
 		$thumbfile = str_replace("%2F","/",urlencode($filename)).$thumblink.$suffix;
 	}else{
 		$thumbfile = $thumblink;
@@ -1152,7 +1150,7 @@ function medialink_print_file($catparam,$file,$title,$topurl,$suffix,$thumblink,
 	$mimetype = 'type="'.medialink_mime_type($suffix).'"'; // MimeType
 
 	$linkfile = NULL;
-	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ) {
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ) {
 		if ($effect === 'nivoslider'){ // for nivoslider
 			$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
 		} else if ($effect === 'colorbox' && $mode === 'pc'){ // for colorbox
@@ -1252,13 +1250,14 @@ function medialink_print_pages($page,$maxpage,$mode) {
  * @param	string	$file
  * @param	string	$title
  * @param	string	$thumblink
- * @param	string	$suffix
  * @param	string	$document_root
  * @param	string	$topurl
  * @return	string	$xmlitem
  * @since	1.0
  */
-function medialink_xmlitem_read($file, $title, $thumblink, $suffix, $document_root, $topurl) {
+function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topurl) {
+
+	$suffix = '.'.end(explode('.', $file));
 
 	$filesize = filesize($document_root.$file);
 	$filestat = stat($document_root.$file);
@@ -1285,7 +1284,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $suffix, $document_ro
 		$scriptname .= '?f=';
 	}
 
-	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
 		$link_url = 'http://'.$servername.$topurl.$file.$suffix;
 		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$file.$thumblink.$suffix.'"></a>';
 	}else{
@@ -1300,7 +1299,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $suffix, $document_ro
 	$xmlitem .= "<item>\n";
 	$xmlitem .= "<title>".$titlename."</title>\n";
 	$xmlitem .= "<link>".$link_url."</link>\n";
-	if ( !preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+	if ( !preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
 		$xmlitem .= '<enclosure url="'.$enc_url.'" length="'.$filesize.'" type="'.medialink_mime_type($suffix).'" />'."\n";
 	}
 	if( !empty($thumblink) ) {
@@ -1328,9 +1327,6 @@ function medialink_mime_type($suffix){
 			break;
 		case '.gif':
 			$mimetype = 'image/gif';
-			break;
-		case '.bmp':
-			$mimetype = 'image/bmp';
 			break;
 		case '.flv':
 			$mimetype = 'video/x-flv';
@@ -1576,6 +1572,7 @@ function medialink_func( $atts ) {
 		foreach ( $attachments as $attachment ) {
 			$title = $attachment->post_title;
 			$caption = $attachment->post_excerpt;
+			$suffix = '.'.end(explode('.', $attachment->guid));
 			if( empty($exclude_cat) ) { 
 				$loops = TRUE;
 			} else {
@@ -1591,12 +1588,12 @@ function medialink_func( $atts ) {
 					++$categorycount;
 				}
 				$thumblink = NULL;
-				if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+				if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
 					$thumb_src = wp_get_attachment_image_src($attachment->ID);
 					$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
 				} else {
 					if( !empty($thumbnail) ) {
-						if ( preg_match( "/jpg|png|gif|bmp/i", $thumbnail) ) {
+						if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $thumbnail) ) {
 							$thumbname = NULL;
 							$thumbname_md5 = NULL;
 							$thumbpath = NULL;
@@ -1663,7 +1660,7 @@ function medialink_func( $atts ) {
 
 	if ($files) {
 		for ( $i = $beginfiles; $i <= $endfiles; $i++ ) {
-			$linkfile = medialink_print_file($catparam,$files[$i],$titles[$i],$topurl,$suffix,$thumblinks[$i],$document_root,$mode,$effect);
+			$linkfile = medialink_print_file($catparam,$files[$i],$titles[$i],$topurl,$thumblinks[$i],$document_root,$mode,$effect);
 			$linkfiles = $linkfiles.$linkfile;
 			if ( $files[$i] === '/'.$fparam ) {
 				$titlename = $titles[$i];
@@ -1724,9 +1721,6 @@ function medialink_func( $atts ) {
 	}else{
 		$scripturl .= "&mlcat=".$currentcategory_encode.$pagestr;
 	}
-
-	// MimeType
-	$mimetype = 'type="'.medialink_mime_type($suffix).'"';
 
 	$fparam = mb_convert_encoding($fparam, "UTF-8", "auto");
 
@@ -1959,7 +1953,7 @@ FLASHMUSICPLAYER;
 	$searchform_begin = NULL;
 	$searchform_end = NULL;
 	$rssfeeds_icon = NULL;
-	if ( preg_match( "/jpg|png|gif|bmp/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
 		if ($effect === 'nivoslider'){
 			// for Nivo Slider
 			$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';
@@ -2099,13 +2093,13 @@ XMLEND;
 					++$exist_rssfile_count;
  				}
  				$exist_rss_pubdate = $pubdate[0];
-				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $rsstitles[0], $rssthumblinks[0], $suffix, $document_root, $topurl), $reg)){
+				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $rsstitles[0], $rssthumblinks[0], $document_root, $topurl), $reg)){
 					$new_rss_pubdate = $reg[1];
 				}
 				if ($exist_rss_pubdate <> $new_rss_pubdate || $exist_rssfile_count != $rssmax){
 					$xmlitem = NULL;
 					for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $suffix, $document_root, $topurl);
+						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $document_root, $topurl);
 					}
 					$xmlitem = $xml_begin.$xmlitem.$xml_end;
 					$fno = fopen($xmlfile, 'w');
@@ -2115,7 +2109,7 @@ XMLEND;
 			}
 		}else{
 			for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $suffix, $document_root, $topurl);
+				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $document_root, $topurl);
 			}
 			$xmlitem = $xml_begin.$xmlitem.$xml_end;
 			$fno = fopen($xmlfile, 'w');
