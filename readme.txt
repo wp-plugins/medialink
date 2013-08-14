@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.25
+Stable tag: 1.26
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,12 @@ none
 none
 
 == Changelog ==
+
+= 1.26 =
+Excluded period  from extension of the management screen and short codes.
+Have increased the file types that can be set in the administration screen.
+Fixed an issue with the selection of extension of music management screen.
+Change /languages
 
 = 1.25 =
 In the case of jpg can reads jpe and jpeg.
@@ -149,6 +155,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.26 =
 = 1.25 =
 = 1.24 =
 = 1.23 =

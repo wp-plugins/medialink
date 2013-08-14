@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.25
+Version: 1.26
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -227,9 +227,11 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_album_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_pc2');
+	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_flash');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_pc2');
+	register_setting( 'medialink-settings-group', 'medialink_music_suffix_flash');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_sp');
 	register_setting( 'medialink-settings-group', 'medialink_slideshow_suffix_pc');
 	register_setting( 'medialink-settings-group', 'medialink_slideshow_suffix_sp');
@@ -268,16 +270,18 @@ function medialink_register_settings(){
 	add_option('medialink_album_effect_sp', 'photoswipe');
 	add_option('medialink_slideshow_effect_pc', 'nivoslider');
 	add_option('medialink_slideshow_effect_sp', 'nivoslider');
-	add_option('medialink_album_suffix_pc', '.jpg');
-	add_option('medialink_album_suffix_sp', '.jpg');
-	add_option('medialink_movie_suffix_pc', '.mp4');
-	add_option('medialink_movie_suffix_pc2', '.ogv');
-	add_option('medialink_movie_suffix_sp', '.mp4');
-	add_option('medialink_music_suffix_pc', '.mp3');
-	add_option('medialink_music_suffix_pc2', '.ogg');
-	add_option('medialink_music_suffix_sp', '.mp3');
-	add_option('medialink_slideshow_suffix_pc', '.jpg');
-	add_option('medialink_slideshow_suffix_sp', '.jpg');
+	add_option('medialink_album_suffix_pc', 'jpg');
+	add_option('medialink_album_suffix_sp', 'jpg');
+	add_option('medialink_movie_suffix_pc', 'mp4');
+	add_option('medialink_movie_suffix_pc2', 'ogv');
+	add_option('medialink_movie_suffix_flash', 'mp4');
+	add_option('medialink_movie_suffix_sp', 'mp4');
+	add_option('medialink_music_suffix_pc', 'mp3');
+	add_option('medialink_music_suffix_pc2', 'ogg');
+	add_option('medialink_music_suffix_flash', 'mp3');
+	add_option('medialink_music_suffix_sp', 'mp3');
+	add_option('medialink_slideshow_suffix_pc', 'jpg');
+	add_option('medialink_slideshow_suffix_sp', 'jpg');
 	add_option('medialink_album_display_pc', 20); 	
 	add_option('medialink_album_display_sp', 9); 	
 	add_option('medialink_movie_display_pc', 8); 	
@@ -286,8 +290,8 @@ function medialink_register_settings(){
 	add_option('medialink_music_display_sp', 6); 	
 	add_option('medialink_slideshow_display_pc', 10); 	
 	add_option('medialink_slideshow_display_sp', 10); 	
-	add_option('medialink_movie_suffix_thumbnail', '.gif');
-	add_option('medialink_music_suffix_thumbnail', '.gif');
+	add_option('medialink_movie_suffix_thumbnail', 'gif');
+	add_option('medialink_music_suffix_thumbnail', 'gif');
 	add_option('medialink_include_cat', '');
 	add_option('medialink_exclude_cat', '');
 	add_option('medialink_album_rssname', 'medialink_album_feed');
@@ -550,7 +554,7 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
 	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_pc') ?></td>
 	<td align="left" valign="middle">
-	<?php _e('extension of PC. In the case of jpg can reads jpe and jpeg.', 'medialink'); ?>
+	<?php _e('extension of PC.', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -562,6 +566,17 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle" bgcolor="#dddddd"></td>
 	<td align="left" valign="middle">
 	<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>suffix_flash</b></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_flash') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_flash') ?></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="left" valign="middle">
+	<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -649,6 +664,13 @@ function medialink_plugin_options() {
 	</td>
 	</tr>
 
+	<tr>
+	<td align="center" valign="middle" colspan="6">
+	<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
+	jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
+	</td>
+	</tr>
+
 	</tbody>
 	</table>
   </div>
@@ -725,37 +747,36 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">
 				<?php $target_album_suffix_pc = get_option('medialink_album_suffix_pc'); ?>
 				<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
-					<option <?php if ('.jpg' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.gif' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.bmp' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>.bmp</option>
+					<option <?php if ('jpg' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>png</option>
+					<option <?php if ('gif' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>gif</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_movie_suffix_pc = get_option('medialink_movie_suffix_pc'); ?>
 				<select id="medialink_movie_suffix_pc" name="medialink_movie_suffix_pc">
-					<option <?php if ('.mp4' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.mp4</option>
-					<option <?php if ('.ogv' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.ogv</option>
+					<option <?php if ('mp4' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>mp4</option>
+					<option <?php if ('ogv' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>ogv</option>
+					<option <?php if ('webm' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>webm</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_music_suffix_pc = get_option('medialink_music_suffix_pc'); ?>
 				<select id="medialink_music_suffix_pc" name="medialink_music_suffix_pc">
-					<option <?php if ('.mp3' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.mp3</option>
-					<option <?php if ('.ogg' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>.ogg</option>
+					<option <?php if ('mp3' == $target_music_suffix_pc)echo 'selected="selected"'; ?>>mp3</option>
+					<option <?php if ('ogg' == $target_music_suffix_pc)echo 'selected="selected"'; ?>>ogg</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_slideshow_suffix_pc = get_option('medialink_slideshow_suffix_pc'); ?>
 				<select id="medialink_slideshow_suffix_pc" name="medialink_slideshow_suffix_pc">
-					<option <?php if ('.jpg' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.gif' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.bmp' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>.bmp</option>
+					<option <?php if ('jpg' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>png</option>
+					<option <?php if ('gif' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>gif</option>
 				</select>
 				</td>
 				<td align="left" valign="middle">
-					<?php _e('extension of PC. In the case of jpg can reads jpe and jpeg.', 'medialink'); ?>
+					<?php _e('extension of PC.', 'medialink'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -765,15 +786,16 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">
 				<?php $target_movie_suffix_pc2 = get_option('medialink_movie_suffix_pc2'); ?>
 				<select id="medialink_movie_suffix_pc2" name="medialink_movie_suffix_pc2">
-					<option <?php if ('.ogv' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.ogv</option>
-					<option <?php if ('.mp4' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.mp4</option>
+					<option <?php if ('ogv' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>ogv</option>
+					<option <?php if ('webm' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>webm</option>
+					<option <?php if ('mp4' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>mp4</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_music_suffix_pc2 = get_option('medialink_music_suffix_pc2'); ?>
 				<select id="medialink_music_suffix_pc2" name="medialink_music_suffix_pc2">
-					<option <?php if ('.ogg' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.ogg</option>
-					<option <?php if ('.mp3' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>.mp3</option>
+					<option <?php if ('ogg' == $target_music_suffix_pc2)echo 'selected="selected"'; ?>>ogg</option>
+					<option <?php if ('mp3' == $target_music_suffix_pc2)echo 'selected="selected"'; ?>>mp3</option>
 				</select>
 				</td>
 				<td>
@@ -783,36 +805,60 @@ function medialink_plugin_options() {
 				</td>
 			</tr>
 			<tr>
+				<td align="center" valign="middle"><b>suffix_flash</b></td>
+				<td>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_suffix_flash = get_option('medialink_movie_suffix_flash'); ?>
+				<select id="medialink_movie_suffix_flash" name="medialink_movie_suffix_flash">
+					<option <?php if ('mp4' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>mp4</option>
+					<option <?php if ('flv' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>flv</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_suffix_flash = get_option('medialink_music_suffix_flash'); ?>
+				<select id="medialink_music_suffix_flash" name="medialink_music_suffix_flash">
+					<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
+				</select>
+				</td>
+				<td>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
+				</td>
+			</tr>
+			<tr>
 				<td align="center" valign="middle"><b>suffix_sp</b></td>
 				<td align="center" valign="middle">
 				<?php $target_album_suffix_sp = get_option('medialink_album_suffix_sp'); ?>
 				<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
-					<option <?php if ('.jpg' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.gif' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.bmp' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>.bmp</option>
+					<option <?php if ('jpg' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>png</option>
+					<option <?php if ('gif' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>gif</option>
+					<option <?php if ('bmp' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>bmp</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_movie_suffix_sp = get_option('medialink_movie_suffix_sp'); ?>
 				<select id="medialink_movie_suffix_sp" name="medialink_movie_suffix_sp">
-					<option <?php if ('.mp4' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.mp4</option>
-					<option <?php if ('.ogv' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.ogv</option>
+					<option <?php if ('mp4' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>mp4</option>
+					<option <?php if ('ogv' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>ogv</option>
+					<option <?php if ('webm' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>webm</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_music_suffix_sp = get_option('medialink_music_suffix_sp'); ?>
 				<select id="medialink_music_suffix_sp" name="medialink_music_suffix_sp">
-					<option <?php if ('.mp3' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.mp3</option>
-					<option <?php if ('.ogg' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>.ogg</option>
+					<option <?php if ('mp3' == $target_music_suffix_sp)echo 'selected="selected"'; ?>>mp3</option>
+					<option <?php if ('ogg' == $target_music_suffix_sp)echo 'selected="selected"'; ?>>ogg</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_slideshow_suffix_sp = get_option('medialink_slideshow_suffix_sp'); ?>
 				<select id="medialink_slideshow_suffix_sp" name="medialink_slideshow_suffix_sp">
-					<option <?php if ('.jpg' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.png</option>
-					<option <?php if ('.gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>.gif</option>
+					<option <?php if ('jpg' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>png</option>
+					<option <?php if ('gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>gif</option>
 				</select>
 				</td>
 				<td align="left" valign="middle">
@@ -864,18 +910,18 @@ function medialink_plugin_options() {
 				<?php $target_movie_suffix_thumbnail = get_option('medialink_movie_suffix_thumbnail'); ?>
 				<select id="medialink_movie_suffix_thumbnail" name="medialink_movie_suffix_thumbnail">
 					<option <?php if ('' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>></option>
-					<option <?php if ('.gif' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.jpg' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('gif' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>gif</option>
+					<option <?php if ('jpg' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_movie_suffix_thumbnail)echo 'selected="selected"'; ?>>png</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
 				<?php $target_music_suffix_thumbnail = get_option('medialink_music_suffix_thumbnail'); ?>
 				<select id="medialink_music_suffix_thumbnail" name="medialink_music_suffix_thumbnail">
 					<option <?php if ('' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>></option>
-					<option <?php if ('.gif' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.gif</option>
-					<option <?php if ('.jpg' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.jpg</option>
-					<option <?php if ('.png' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>.png</option>
+					<option <?php if ('gif' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>gif</option>
+					<option <?php if ('jpg' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>jpg</option>
+					<option <?php if ('png' == $target_music_suffix_thumbnail)echo 'selected="selected"'; ?>>png</option>
 				</select>
 				</td>
 				<td align="center" valign="middle">
@@ -941,6 +987,12 @@ function medialink_plugin_options() {
 				<td align="left" valign="middle">
 					<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
 				</td>
+			</tr>
+			<tr>
+			<td align="center" valign="middle" colspan="6">
+			<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
+			jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
+			</td>
 			</tr>
 		</tbody>
 		</table>
@@ -1090,10 +1142,17 @@ function medialink_plugin_options() {
 	</form>
 
 <h3><?php _e('The to playback of video and music, that such as the next, .htaccess may be required to the directory containing the data file by the environment.', 'medialink') ?></h3>
-<textarea rows="5" cols="30">AddType video/mp4 .mp4
+<textarea rows="10" cols="30">
+AddType video/mp4 .mp4
+AddType video/mp4 .m4v
 AddType video/ogg .ogv
+AddType video/webm .webm
+AddType video/x-flv .flv
 AddType audio/mpeg .mp3
+AddType audio/mpeg .m4a
+AddType audio/mpeg .m4b
 AddType audio/ogg .ogg
+AddType audio/ogg .oga
 </textarea>
 
 	</div>
@@ -1141,7 +1200,7 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$documen
 	$file = str_replace("%2F","/",urlencode($file));
 
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 		$thumbfile = str_replace("%2F","/",urlencode($filename)).$thumblink.$suffix;
 	}else{
 		$thumbfile = $thumblink;
@@ -1150,7 +1209,7 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$documen
 	$mimetype = 'type="'.medialink_mime_type($suffix).'"'; // MimeType
 
 	$linkfile = NULL;
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ) {
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ) {
 		if ($effect === 'nivoslider'){ // for nivoslider
 			$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
 		} else if ($effect === 'colorbox' && $mode === 'pc'){ // for colorbox
@@ -1284,7 +1343,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topu
 		$scriptname .= '?f=';
 	}
 
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 		$link_url = 'http://'.$servername.$topurl.$file.$suffix;
 		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$file.$thumblink.$suffix.'"></a>';
 	}else{
@@ -1299,7 +1358,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topu
 	$xmlitem .= "<item>\n";
 	$xmlitem .= "<title>".$titlename."</title>\n";
 	$xmlitem .= "<link>".$link_url."</link>\n";
-	if ( !preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
+	if ( !preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 		$xmlitem .= '<enclosure url="'.$enc_url.'" length="'.$filesize.'" type="'.medialink_mime_type($suffix).'" />'."\n";
 	}
 	if( !empty($thumblink) ) {
@@ -1318,31 +1377,14 @@ function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topu
  */
 function medialink_mime_type($suffix){
 
-	switch ($suffix){
-		case '.jpg':
-			$mimetype = 'image/jpeg';
-			break;
-		case '.png':
-			$mimetype = 'image/png';
-			break;
-		case '.gif':
-			$mimetype = 'image/gif';
-			break;
-		case '.flv':
-			$mimetype = 'video/x-flv';
-			break;
-		case '.mp4':
-			$mimetype = 'video/mp4';
-			break;
-		case '.ogv':
-			$mimetype = 'video/ogg';
-			break;
-		case '.ogg':
-			$mimetype = 'audio/ogg';
-			break;
-		case '.mp3':
-			$mimetype = 'audio/mpeg';
-			break;
+	$suffix = str_replace('.', '', $suffix);
+
+	$mimes = wp_get_mime_types();
+
+	foreach ($mimes as $ext => $mime) {
+    	if ( preg_match("/".$ext."/i", $suffix) ) {
+			$mimetype = $mime;
+		}
 	}
 
 	return $mimetype;
@@ -1386,6 +1428,7 @@ function medialink_func( $atts ) {
         'include_cat' => '',
         'suffix_pc' => '',
         'suffix_pc2' => '',
+		'suffix_flash' => '',
         'suffix_sp' => '',
         'display_pc' => '',
         'display_sp' => '',
@@ -1424,11 +1467,12 @@ function medialink_func( $atts ) {
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_album_rssmax')); }
 	} else if ( $set === 'movie' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
-		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = '.'.get_option('medialink_movie_suffix_pc2'); }
+		if( empty($suffix_flash) ) { $suffix_flash = '.'.get_option('medialink_movie_suffix_flash'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_movie_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_movie_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_movie_display_sp')); }
-		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_movie_suffix_thumbnail'); }
+		if( empty($thumbnail) ) { $thumbnail = '.'.get_option('medialink_movie_suffix_thumbnail'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_movie_rssname');
 			$rssdef = true;
@@ -1436,11 +1480,12 @@ function medialink_func( $atts ) {
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_movie_rssmax')); }
 	} else if ( $set === 'music' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
-		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = '.'.get_option('medialink_music_suffix_pc2'); }
+		if( empty($suffix_flash) ) { $suffix_flash = '.'.get_option('medialink_music_suffix_flash'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_music_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_music_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_music_display_sp')); }
-		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_music_suffix_thumbnail'); }
+		if( empty($thumbnail) ) { $thumbnail = '.'.get_option('medialink_music_suffix_thumbnail'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_music_rssname');
 			$rssdef = true;
@@ -1474,6 +1519,7 @@ function medialink_func( $atts ) {
 		$suffix = $suffix_sp;
 		$display = $display_sp;
 	}
+	$suffix = '.'.$suffix;
 
 	$catparam = NULL;
 	$fparam = NULL;
@@ -1588,12 +1634,12 @@ function medialink_func( $atts ) {
 					++$categorycount;
 				}
 				$thumblink = NULL;
-				if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
+				if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 					$thumb_src = wp_get_attachment_image_src($attachment->ID);
 					$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
 				} else {
 					if( !empty($thumbnail) ) {
-						if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $thumbnail) ) {
+						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) ) {
 							$thumbname = NULL;
 							$thumbname_md5 = NULL;
 							$thumbpath = NULL;
@@ -1819,7 +1865,7 @@ $movieplayercontainer = <<<MOVIEPLAYERCONTAINER
   allowFullScreen="true"
   flashvars='config={
     "clip":{
-      "url":"{$prevfile}",
+      "url":"{$prevfile_nosuffix}{$suffix_flash}",
       "urlEncoding":true,
       "scaling":"fit",
       "autoPlay":true,
@@ -1845,7 +1891,7 @@ $movieplayercontainerIE9 = <<<MOVIEPLAYERCONTAINERIE9
   allowFullScreen="true"
   flashvars='config={
     "clip":{
-      "url":"{$prevfile}",
+      "url":"{$prevfile_nosuffix}{$suffix_flash}",
       "urlEncoding":true,
       "scaling":"fit",
       "autoPlay":true,
@@ -1876,7 +1922,7 @@ function () {
 jQuery('#FlashContainer').flash(
 {swf: '{$pluginurl}/medialink/player_mp3/player_mp3.swf',width: '200',height: '20',
 flashvars: {
-mp3: '{$prevfile}',
+mp3: '{$prevfile_nosuffix}{$suffix_flash}',
 autoplay: '1'},allowFullScreen: 'true',allowScriptAccess: 'always'});});
 </script>
 FLASHMUSICPLAYER;
@@ -1953,7 +1999,7 @@ FLASHMUSICPLAYER;
 	$searchform_begin = NULL;
 	$searchform_end = NULL;
 	$rssfeeds_icon = NULL;
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png/i", $suffix) ){
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 		if ($effect === 'nivoslider'){
 			// for Nivo Slider
 			$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';

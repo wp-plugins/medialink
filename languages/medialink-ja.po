@@ -123,8 +123,8 @@ msgstr "スマートフォンでのエフェクト"
 msgid "Full path to the top directory containing the data"
 msgstr "データのあるトップディレクトリのフルパス"
 
-msgid "extension of PC. In the case of jpg can reads jpe and jpeg."
-msgstr "PCの拡張子 .jpgの場合は、.jpegと.jpeを読み取る事ができます。"
+msgid "extension of PC."
+msgstr "PCの拡張子"
 
 msgid "second extension on the PC. Second candidate when working with html5"
 msgstr "PCの第２拡張子。動画や音楽をhtml5で扱う場合の第２候補。"
@@ -231,3 +231,12 @@ msgstr ""
 "※（ワードプレス > 外観 ＞ ウィジェット）に移動すると、ウィジェット"
 "MediaLinkRssFeedがあります。これを設定して配置すると、RSSフィードのリンクをサ"
 "イドバーに表示します。"
+
+msgid ""
+"Flash extension on the PC. Flash Player to be used when a HTML5 player does "
+"not work."
+msgstr ""
+"PCのFlashの拡張子。HTML5プレーヤーが動作しない場合Flash Playerが使用される。"
+
+msgid "Alias read extension : "
+msgstr "読み込み拡張子のエイリアス : "
