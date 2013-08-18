@@ -48,5 +48,29 @@
 	delete_option('medialink_css_sp_listbackcolor');
 	delete_option('medialink_css_sp_listarrowcolor');
 	delete_option('medialink_css_sp_listpartitionlinecolor');
+	delete_option('medialink_album_categorylinks_show');
+	delete_option('medialink_album_pagelinks_show');
+	delete_option('medialink_album_sortlinks_show');
+	delete_option('medialink_album_searchbox_show');
+	delete_option('medialink_album_rssicon_show');
+	delete_option('medialink_album_credit_show');
+	delete_option('medialink_movie_categorylinks_show');
+	delete_option('medialink_movie_pagelinks_show');
+	delete_option('medialink_movie_sortlinks_show');
+	delete_option('medialink_movie_searchbox_show');
+	delete_option('medialink_movie_rssicon_show');
+	delete_option('medialink_movie_credit_show');
+	delete_option('medialink_music_categorylinks_show');
+	delete_option('medialink_music_pagelinks_show');
+	delete_option('medialink_music_sortlinks_show');
+	delete_option('medialink_music_searchbox_show');
+	delete_option('medialink_music_rssicon_show');
+	delete_option('medialink_music_credit_show');
+	delete_option('medialink_slideshow_categorylinks_show');
+	delete_option('medialink_slideshow_pagelinks_show');
+	delete_option('medialink_slideshow_sortlinks_show');
+	delete_option('medialink_slideshow_searchbox_show');
+	delete_option('medialink_slideshow_rssicon_show');
+	delete_option('medialink_slideshow_credit_show');
 
 ?>

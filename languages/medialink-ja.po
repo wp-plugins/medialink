@@ -240,3 +240,24 @@ msgstr ""
 
 msgid "Alias read extension : "
 msgstr "読み込み拡張子のエイリアス : "
+
+msgid "Display"
+msgstr "ディスプレイ"
+
+msgid "Selectbox of categories."
+msgstr "カテゴリーのセレクトボックス"
+
+msgid "Navigation of page."
+msgstr "ページネーション"
+
+msgid "Navigation of sort."
+msgstr "ソートのナビゲーション"
+
+msgid "Search box"
+msgstr "検索ボックス"
+
+msgid "RSS Icon"
+msgstr "RSS アイコン"
+
+msgid "Credit"
+msgstr "クレジット"
