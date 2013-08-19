@@ -241,9 +241,6 @@ msgstr ""
 msgid "Alias read extension : "
 msgstr "読み込み拡張子のエイリアス : "
 
-msgid "Display"
-msgstr "ディスプレイ"
-
 msgid "Selectbox of categories."
 msgstr "カテゴリーのセレクトボックス"
 

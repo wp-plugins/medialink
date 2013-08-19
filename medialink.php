@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.28
+Version: 1.29
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -712,6 +712,72 @@ function medialink_plugin_options() {
 	</tr>
 
 	<tr>
+	<td align="center" valign="middle"><b>categorylinks_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_categorylinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_categorylinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_categorylinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_categorylinks_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Selectbox of categories.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>pagelinks_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_pagelinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_pagelinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_pagelinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_pagelinks_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Navigation of page.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>sortlinks_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_sortlinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_sortlinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_sortlinks_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_sortlinks_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Navigation of sort.', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>searchbox_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_searchbox_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_searchbox_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_searchbox_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_searchbox_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Search box', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>rssicon_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_rssicon_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_rssicon_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_rssicon_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_rssicon_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('RSS Icon', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>credit_show</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_credit_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_movie_credit_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_music_credit_show') ?></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_credit_show') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Credit', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
 	<td align="center" valign="middle" colspan="6">
 	<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
 	jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
@@ -1036,6 +1102,210 @@ function medialink_plugin_options() {
 				</td>
 			</tr>
 			<tr>
+				<td align="center" valign="middle"><b>categorylinks_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_categorylinks_show = get_option('medialink_album_categorylinks_show'); ?>
+				<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
+					<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_categorylinks_show = get_option('medialink_movie_categorylinks_show'); ?>
+				<select id="medialink_movie_categorylinks_show" name="medialink_movie_categorylinks_show">
+					<option <?php if ('Show' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_categorylinks_show = get_option('medialink_music_categorylinks_show'); ?>
+				<select id="medialink_music_categorylinks_show" name="medialink_music_categorylinks_show">
+					<option <?php if ('Show' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_categorylinks_show = get_option('medialink_slideshow_categorylinks_show'); ?>
+				<select id="medialink_slideshow_categorylinks_show" name="medialink_slideshow_categorylinks_show">
+					<option <?php if ('Show' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('Selectbox of categories.', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>pagelinks_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_pagelinks_show = get_option('medialink_album_pagelinks_show'); ?>
+				<select id="medialink_album_pagelinks_show" name="medialink_album_pagelinks_show">
+					<option <?php if ('Show' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_pagelinks_show = get_option('medialink_movie_pagelinks_show'); ?>
+				<select id="medialink_movie_pagelinks_show" name="medialink_movie_pagelinks_show">
+					<option <?php if ('Show' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_pagelinks_show = get_option('medialink_music_pagelinks_show'); ?>
+				<select id="medialink_music_pagelinks_show" name="medialink_music_pagelinks_show">
+					<option <?php if ('Show' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_pagelinks_show = get_option('medialink_slideshow_pagelinks_show'); ?>
+				<select id="medialink_slideshow_pagelinks_show" name="medialink_slideshow_pagelinks_show">
+					<option <?php if ('Show' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('Navigation of page.', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>sortlinks_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_sortlinks_show = get_option('medialink_album_sortlinks_show'); ?>
+				<select id="medialink_album_sortlinks_show" name="medialink_album_sortlinks_show">
+					<option <?php if ('Show' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_sortlinks_show = get_option('medialink_movie_sortlinks_show'); ?>
+				<select id="medialink_movie_sortlinks_show" name="medialink_movie_sortlinks_show">
+					<option <?php if ('Show' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_sortlinks_show = get_option('medialink_music_sortlinks_show'); ?>
+				<select id="medialink_music_sortlinks_show" name="medialink_music_sortlinks_show">
+					<option <?php if ('Show' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_sortlinks_show = get_option('medialink_slideshow_sortlinks_show'); ?>
+				<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
+					<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('Navigation of sort.', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>searchbox_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_searchbox_show = get_option('medialink_album_searchbox_show'); ?>
+				<select id="medialink_album_searchbox_show" name="medialink_album_searchbox_show">
+					<option <?php if ('Show' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_searchbox_show = get_option('medialink_movie_searchbox_show'); ?>
+				<select id="medialink_movie_searchbox_show" name="medialink_movie_searchbox_show">
+					<option <?php if ('Show' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_searchbox_show = get_option('medialink_music_searchbox_show'); ?>
+				<select id="medialink_music_searchbox_show" name="medialink_music_searchbox_show">
+					<option <?php if ('Show' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_searchbox_show = get_option('medialink_slideshow_searchbox_show'); ?>
+				<select id="medialink_slideshow_searchbox_show" name="medialink_slideshow_searchbox_show">
+					<option <?php if ('Show' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('Search box', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>rssicon_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_rssicon_show = get_option('medialink_album_rssicon_show'); ?>
+				<select id="medialink_album_rssicon_show" name="medialink_album_rssicon_show">
+					<option <?php if ('Show' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_rssicon_show = get_option('medialink_movie_rssicon_show'); ?>
+				<select id="medialink_movie_rssicon_show" name="medialink_movie_rssicon_show">
+					<option <?php if ('Show' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_rssicon_show = get_option('medialink_music_rssicon_show'); ?>
+				<select id="medialink_music_rssicon_show" name="medialink_music_rssicon_show">
+					<option <?php if ('Show' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_rssicon_show = get_option('medialink_slideshow_rssicon_show'); ?>
+				<select id="medialink_slideshow_rssicon_show" name="medialink_slideshow_rssicon_show">
+					<option <?php if ('Show' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('RSS Icon', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>credit_show</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_credit_show = get_option('medialink_album_credit_show'); ?>
+				<select id="medialink_album_credit_show" name="medialink_album_credit_show">
+					<option <?php if ('Show' == $target_album_credit_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_album_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_movie_credit_show = get_option('medialink_movie_credit_show'); ?>
+				<select id="medialink_movie_credit_show" name="medialink_movie_credit_show">
+					<option <?php if ('Show' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_music_credit_show = get_option('medialink_music_credit_show'); ?>
+				<select id="medialink_music_credit_show" name="medialink_music_credit_show">
+					<option <?php if ('Show' == $target_music_credit_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_music_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_credit_show = get_option('medialink_slideshow_credit_show'); ?>
+				<select id="medialink_slideshow_credit_show" name="medialink_slideshow_credit_show">
+					<option <?php if ('Show' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Show</option>
+					<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+				<?php _e('Credit', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
 			<td align="center" valign="middle" colspan="6">
 			<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
 			jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
@@ -1178,221 +1448,6 @@ function medialink_plugin_options() {
 				</td>
 				<td align="left" valign="middle">
 				<?php _e('Text color navigation', 'medialink') ?>
-				</td>
-			</tr>
-		</tbody>
-		</table>
-
-		<h2><?php _e('Display', 'medialink') ?></h2>	
-		<table border="1" bgcolor="#dddddd">
-		<tbody>
-			<tr>
-				<td align="center" valign="middle" colspan=4><?php _e('Default'); ?></td>
-				<td align="center" valign="middle"><?php _e('Description'); ?></td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle"><b>album</b></td>
-				<td align="center" valign="middle"><b>movie</b></td>
-				<td align="center" valign="middle"><b>music</b></td>
-				<td align="center" valign="middle"><b>slideshow</b></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_categorylinks_show = get_option('medialink_album_categorylinks_show'); ?>
-				<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
-					<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_categorylinks_show = get_option('medialink_movie_categorylinks_show'); ?>
-				<select id="medialink_movie_categorylinks_show" name="medialink_movie_categorylinks_show">
-					<option <?php if ('Show' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_categorylinks_show = get_option('medialink_music_categorylinks_show'); ?>
-				<select id="medialink_music_categorylinks_show" name="medialink_music_categorylinks_show">
-					<option <?php if ('Show' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_categorylinks_show = get_option('medialink_slideshow_categorylinks_show'); ?>
-				<select id="medialink_slideshow_categorylinks_show" name="medialink_slideshow_categorylinks_show">
-					<option <?php if ('Show' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('Selectbox of categories.', 'medialink') ?>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_pagelinks_show = get_option('medialink_album_pagelinks_show'); ?>
-				<select id="medialink_album_pagelinks_show" name="medialink_album_pagelinks_show">
-					<option <?php if ('Show' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_pagelinks_show = get_option('medialink_movie_pagelinks_show'); ?>
-				<select id="medialink_movie_pagelinks_show" name="medialink_movie_pagelinks_show">
-					<option <?php if ('Show' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_pagelinks_show = get_option('medialink_music_pagelinks_show'); ?>
-				<select id="medialink_music_pagelinks_show" name="medialink_music_pagelinks_show">
-					<option <?php if ('Show' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_pagelinks_show = get_option('medialink_slideshow_pagelinks_show'); ?>
-				<select id="medialink_slideshow_pagelinks_show" name="medialink_slideshow_pagelinks_show">
-					<option <?php if ('Show' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('Navigation of page.', 'medialink') ?>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_sortlinks_show = get_option('medialink_album_sortlinks_show'); ?>
-				<select id="medialink_album_sortlinks_show" name="medialink_album_sortlinks_show">
-					<option <?php if ('Show' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_sortlinks_show = get_option('medialink_movie_sortlinks_show'); ?>
-				<select id="medialink_movie_sortlinks_show" name="medialink_movie_sortlinks_show">
-					<option <?php if ('Show' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_sortlinks_show = get_option('medialink_music_sortlinks_show'); ?>
-				<select id="medialink_music_sortlinks_show" name="medialink_music_sortlinks_show">
-					<option <?php if ('Show' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_sortlinks_show = get_option('medialink_slideshow_sortlinks_show'); ?>
-				<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
-					<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('Navigation of sort.', 'medialink') ?>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_searchbox_show = get_option('medialink_album_searchbox_show'); ?>
-				<select id="medialink_album_searchbox_show" name="medialink_album_searchbox_show">
-					<option <?php if ('Show' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_searchbox_show = get_option('medialink_movie_searchbox_show'); ?>
-				<select id="medialink_movie_searchbox_show" name="medialink_movie_searchbox_show">
-					<option <?php if ('Show' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_searchbox_show = get_option('medialink_music_searchbox_show'); ?>
-				<select id="medialink_music_searchbox_show" name="medialink_music_searchbox_show">
-					<option <?php if ('Show' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_searchbox_show = get_option('medialink_slideshow_searchbox_show'); ?>
-				<select id="medialink_slideshow_searchbox_show" name="medialink_slideshow_searchbox_show">
-					<option <?php if ('Show' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('Search box', 'medialink') ?>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_rssicon_show = get_option('medialink_album_rssicon_show'); ?>
-				<select id="medialink_album_rssicon_show" name="medialink_album_rssicon_show">
-					<option <?php if ('Show' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_rssicon_show = get_option('medialink_movie_rssicon_show'); ?>
-				<select id="medialink_movie_rssicon_show" name="medialink_movie_rssicon_show">
-					<option <?php if ('Show' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_rssicon_show = get_option('medialink_music_rssicon_show'); ?>
-				<select id="medialink_music_rssicon_show" name="medialink_music_rssicon_show">
-					<option <?php if ('Show' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_rssicon_show = get_option('medialink_slideshow_rssicon_show'); ?>
-				<select id="medialink_slideshow_rssicon_show" name="medialink_slideshow_rssicon_show">
-					<option <?php if ('Show' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('RSS Icon', 'medialink') ?>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" valign="middle">
-				<?php $target_album_credit_show = get_option('medialink_album_credit_show'); ?>
-				<select id="medialink_album_credit_show" name="medialink_album_credit_show">
-					<option <?php if ('Show' == $target_album_credit_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_album_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_movie_credit_show = get_option('medialink_movie_credit_show'); ?>
-				<select id="medialink_movie_credit_show" name="medialink_movie_credit_show">
-					<option <?php if ('Show' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_music_credit_show = get_option('medialink_music_credit_show'); ?>
-				<select id="medialink_music_credit_show" name="medialink_music_credit_show">
-					<option <?php if ('Show' == $target_music_credit_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_music_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="center" valign="middle">
-				<?php $target_slideshow_credit_show = get_option('medialink_slideshow_credit_show'); ?>
-				<select id="medialink_slideshow_credit_show" name="medialink_slideshow_credit_show">
-					<option <?php if ('Show' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Show</option>
-					<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-				</select>
-				</td>
-				<td align="left" valign="middle">
-				<?php _e('Credit', 'medialink') ?>
 				</td>
 			</tr>
 		</tbody>
@@ -1697,7 +1752,13 @@ function medialink_func( $atts ) {
         'thumbnail'  => '',
         'exclude_cat' => '',
         'rssname' => '',
-        'rssmax'  => ''
+        'rssmax'  => '',
+        'categorylinks_show'  => '',
+        'pagelinks_show'  => '',
+        'sortlinks_show'  => '',
+        'searchbox_show'  => '',
+        'rssicon_show'  => '',
+        'credit_show'  => ''
 	), $atts));
 
 	$wp_uploads = wp_upload_dir();
@@ -1727,12 +1788,12 @@ function medialink_func( $atts ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_album_rssmax')); }
-		$categorylinks_show = get_option('medialink_album_categorylinks_show');
-		$pagelinks_show = get_option('medialink_album_pagelinks_show');
-		$sortlinks_show = get_option('medialink_album_sortlinks_show');
-		$searchbox_show = get_option('medialink_album_searchbox_show');
-		$rssicon_show = get_option('medialink_album_rssicon_show');
-		$credit_show = get_option('medialink_album_credit_show');
+		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_album_categorylinks_show'); }
+		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_album_pagelinks_show'); }
+		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_album_sortlinks_show'); }
+		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_album_searchbox_show'); }
+		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_album_rssicon_show'); }
+		if( empty($credit_show) ) { $credit_show = get_option('medialink_album_credit_show'); }
 	} else if ( $set === 'movie' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
@@ -1746,12 +1807,12 @@ function medialink_func( $atts ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_movie_rssmax')); }
-		$categorylinks_show = get_option('medialink_movie_categorylinks_show');
-		$pagelinks_show = get_option('medialink_movie_pagelinks_show');
-		$sortlinks_show = get_option('medialink_movie_sortlinks_show');
-		$searchbox_show = get_option('medialink_movie_searchbox_show');
-		$rssicon_show = get_option('medialink_movie_rssicon_show');
-		$credit_show = get_option('medialink_movie_credit_show');
+		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_movie_categorylinks_show'); }
+		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_movie_pagelinks_show'); }
+		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_movie_sortlinks_show'); }
+		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_movie_searchbox_show'); }
+		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_movie_rssicon_show'); }
+		if( empty($credit_show) ) { $credit_show = get_option('medialink_movie_credit_show'); }
 	} else if ( $set === 'music' ){
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
@@ -1765,12 +1826,12 @@ function medialink_func( $atts ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_music_rssmax')); }
-		$categorylinks_show = get_option('medialink_music_categorylinks_show');
-		$pagelinks_show = get_option('medialink_music_pagelinks_show');
-		$sortlinks_show = get_option('medialink_music_sortlinks_show');
-		$searchbox_show = get_option('medialink_music_searchbox_show');
-		$rssicon_show = get_option('medialink_music_rssicon_show');
-		$credit_show = get_option('medialink_music_credit_show');
+		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_music_categorylinks_show'); }
+		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_music_pagelinks_show'); }
+		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_music_sortlinks_show'); }
+		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_music_searchbox_show'); }
+		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_music_rssicon_show'); }
+		if( empty($credit_show) ) { $credit_show = get_option('medialink_music_credit_show'); }
 	} else if ( $set === 'slideshow' ){
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_slideshow_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_slideshow_effect_sp'); }
@@ -1783,12 +1844,12 @@ function medialink_func( $atts ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_slideshow_rssmax')); }
-		$categorylinks_show = get_option('medialink_slideshow_categorylinks_show');
-		$pagelinks_show = get_option('medialink_slideshow_pagelinks_show');
-		$sortlinks_show = get_option('medialink_slideshow_sortlinks_show');
-		$searchbox_show = get_option('medialink_slideshow_searchbox_show');
-		$rssicon_show = get_option('medialink_slideshow_rssicon_show');
-		$credit_show = get_option('medialink_slideshow_credit_show');
+		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_slideshow_categorylinks_show'); }
+		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_slideshow_pagelinks_show'); }
+		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_slideshow_sortlinks_show'); }
+		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_slideshow_searchbox_show'); }
+		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_slideshow_rssicon_show'); }
+		if( empty($credit_show) ) { $credit_show = get_option('medialink_slideshow_credit_show'); }
 	}
 
 	$mode = NULL;
