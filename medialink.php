@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.29
+Version: 1.30
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -243,6 +243,8 @@ function medialink_register_settings(){
 	register_setting( 'medialink-settings-group', 'medialink_music_display_sp', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_slideshow_display_pc', 'medialink_pos_intval');
 	register_setting( 'medialink-settings-group', 'medialink_slideshow_display_sp', 'medialink_pos_intval');
+	register_setting( 'medialink-settings-group', 'medialink_album_image_show_size');
+	register_setting( 'medialink-settings-group', 'medialink_slideshow_image_show_size');
 	register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
 	register_setting( 'medialink-settings-group', 'medialink_include_cat');
@@ -314,6 +316,8 @@ function medialink_register_settings(){
 	add_option('medialink_music_display_sp', 6); 	
 	add_option('medialink_slideshow_display_pc', 10); 	
 	add_option('medialink_slideshow_display_sp', 10); 	
+	add_option('medialink_album_image_show_size', 'Full');
+	add_option('medialink_slideshow_image_show_size', 'Full');
 	add_option('medialink_movie_suffix_thumbnail', 'gif');
 	add_option('medialink_music_suffix_thumbnail', 'gif');
 	add_option('medialink_include_cat', '');
@@ -657,6 +661,17 @@ function medialink_plugin_options() {
 	<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_display_sp')) ?></td>
 	<td align="left" valign="middle">
 	<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" valign="middle"><b>image_show_size</b></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_album_image_show_size') ?></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="center" valign="middle" bgcolor="#dddddd"></td>
+	<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_image_show_size') ?></td>
+	<td align="left" valign="middle">
+	<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 	</td>
 	</tr>
 
@@ -1012,6 +1027,30 @@ function medialink_plugin_options() {
 				</td>
 				<td align="left" valign="middle">
 					<?php _e('File Display per page(Smartphone)', 'medialink') ?>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="middle"><b>image_show_size</b></td>
+				<td align="center" valign="middle">
+				<?php $target_album_image_show_size = get_option('medialink_album_image_show_size'); ?>
+				<select id="medialink_album_image_show_size" name="medialink_album_image_show_size">
+					<option <?php if ('Full' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Full</option>
+					<option <?php if ('Medium' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
+					<option <?php if ('Large' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Large</option>
+				</select>
+				</td>
+				<td></td>
+				<td></td>
+				<td align="center" valign="middle">
+				<?php $target_slideshow_image_show_size = get_option('medialink_slideshow_image_show_size'); ?>
+				<select id="medialink_slideshow_image_show_size" name="medialink_slideshow_image_show_size">
+					<option <?php if ('Full' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Full</option>
+					<option <?php if ('Medium' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
+					<option <?php if ('Large' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Large</option>
+				</select>
+				</td>
+				<td align="left" valign="middle">
+					<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -1497,12 +1536,13 @@ AddType audio/ogg .oga
  * @param	string	$title
  * @param	string	$topurl
  * @param	string	$thumblink
+ * @param	string	$largemediumlink
  * @param	string	$document_root
  * @param	string	$mode
  * @return	string	$effect
  * @since	1.0
  */
-function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$document_root,$mode,$effect) {
+function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$largemediumlink,$document_root,$mode,$effect) {
 
 	$suffix = '.'.end(explode('.', $file));
 
@@ -1514,14 +1554,23 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$documen
 	$fileparam = substr($file,1);
 	$filetitle = $titlename;
 	$fileparam = str_replace("%2F","/",urlencode($fileparam));
-	$file = str_replace("%2F","/",urlencode($file));
 
-	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
-		$thumbfile = str_replace("%2F","/",urlencode($filename)).$thumblink.$suffix;
+		$thumbfile = str_replace($suffix, '', $file).$thumblink.$suffix;
+		$thumbfile = str_replace("%2F","/",urlencode($thumbfile));
 	}else{
 		$thumbfile = $thumblink;
 	}
+
+	if ( !empty($largemediumlink) ) {
+		if(file_exists($document_root.str_replace($suffix, '', $file).$largemediumlink.$suffix)){
+			$file = str_replace($suffix, '', $file).$largemediumlink.$suffix;
+		}
+	}
+
+	$file = str_replace("%2F","/",urlencode($file));
+
+	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 	$mimetype = 'type="'.medialink_mime_type($suffix).'"'; // MimeType
 
@@ -1626,12 +1675,13 @@ function medialink_print_pages($page,$maxpage,$mode) {
  * @param	string	$file
  * @param	string	$title
  * @param	string	$thumblink
+ * @param	string	$largemediumlink
  * @param	string	$document_root
  * @param	string	$topurl
  * @return	string	$xmlitem
  * @since	1.0
  */
-function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topurl) {
+function medialink_xmlitem_read($file, $title, $thumblink, $largemediumlink, $document_root, $topurl) {
 
 	$suffix = '.'.end(explode('.', $file));
 
@@ -1644,7 +1694,21 @@ function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topu
 	$fparam = str_replace("%2F","/",urlencode($fparam));
 	$fparam = substr($fparam,1);
 
-	$file = str_replace($suffix, "", str_replace($document_root, "", $file));
+	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
+		$thumbfile = str_replace($suffix, '', $file).$thumblink.$suffix;
+		$thumbfile = str_replace("%2F","/",urlencode($thumbfile));
+	}
+
+	if ( !empty($largemediumlink) ) {
+		if(file_exists($document_root.str_replace($suffix, '', $file).$largemediumlink.$suffix)){
+			$file = str_replace($suffix, '', str_replace($document_root, '', $file)).$largemediumlink;
+		} else {
+			$file = str_replace($suffix, '', str_replace($document_root, '', $file));
+		}
+	} else {
+		$file = str_replace($suffix, '', str_replace($document_root, '', $file));
+	}
+
 	$titlename = $title;
 	$file = str_replace("%2F","/",urlencode(mb_convert_encoding($file, "UTF8", "auto")));
 
@@ -1662,7 +1726,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $document_root, $topu
 
 	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 		$link_url = 'http://'.$servername.$topurl.$file.$suffix;
-		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$file.$thumblink.$suffix.'"></a>';
+		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$thumbfile.'"></a>';
 	}else{
 		$link_url = 'http://'.$servername.$scriptname.$fparam;
 		$enc_url = 'http://'.$servername.$topurl.$file.$suffix;
@@ -1749,6 +1813,7 @@ function medialink_func( $atts ) {
         'suffix_sp' => '',
         'display_pc' => '',
         'display_sp' => '',
+        'image_show_size' => '',
         'thumbnail'  => '',
         'exclude_cat' => '',
         'rssname' => '',
@@ -1783,6 +1848,7 @@ function medialink_func( $atts ) {
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_album_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_album_display_sp')); }
+		if( empty($image_show_size) ) { $image_show_size = get_option('medialink_album_image_show_size'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_album_rssname');
 			$rssdef = true;
@@ -1839,6 +1905,7 @@ function medialink_func( $atts ) {
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_slideshow_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_slideshow_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_slideshow_display_sp')); }
+		if( empty($image_show_size) ) { $image_show_size = get_option('medialink_slideshow_image_show_size'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_slideshow_rssname');
 			$rssdef = true;
@@ -1963,10 +2030,12 @@ function medialink_func( $atts ) {
 	$files = array();
 	$categories = array();
 	$thumblinks = array();
+	$largemediumlinks = array();
 	$titles = array();
 	$rssfiles = array();
 	$rsstitles = array();
 	$rssthumblinks = array();
+	$rsslargemediumlinks = array();
 	$titlename = NULL;
 	if ($attachments) {
 		foreach ( $attachments as $attachment ) {
@@ -1988,9 +2057,16 @@ function medialink_func( $atts ) {
 					++$categorycount;
 				}
 				$thumblink = NULL;
+				$mediumlink = NULL;
+				$largelink = NULL;
+				$largemediumlink = NULL;
 				if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
 					$thumb_src = wp_get_attachment_image_src($attachment->ID);
+					$medium_src = wp_get_attachment_image_src($attachment->ID, 'medium');
+					$large_src = wp_get_attachment_image_src($attachment->ID, 'large');
 					$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
+					$mediumlink = '-'.$medium_src[1].'x'.$medium_src[2];
+					$largelink = '-'.$large_src[1].'x'.$large_src[2];
 				} else {
 					if( !empty($thumbnail) ) {
 						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) ) {
@@ -2014,16 +2090,25 @@ function medialink_func( $atts ) {
 				}
 				$attachment = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid);
 				$attachment = str_replace($document_root, "", $attachment);
+				if ( $set === 'album' || $set === 'slideshow' ) {
+					if ( $image_show_size === 'Medium' ) {
+						$largemediumlink = $mediumlink;
+					} else if ( $image_show_size === 'Large' ) {
+						$largemediumlink = $largelink;
+					}
+				}
 				if ( $sort_order === 'DESC' && empty($search) ) {
 					if ( $set <> 'slideshow' ) {
 						$rssfiles[$rsscount] = $attachment;
 						$rsstitles[$rsscount] = $title;
 						$rssthumblinks [$rsscount] = $thumblink;
+						$rsslargemediumlinks [$rsscount] = $largemediumlink;
 						++$rsscount;
 					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
 						$rssfiles[$rsscount] = $attachment;
 						$rsstitles[$rsscount] = $title;
 						$rssthumblinks [$rsscount] = $thumblink;
+						$rsslargemediumlinks [$rsscount] = $largemediumlink;
 						++$rsscount;
 					}
 				}
@@ -2032,11 +2117,13 @@ function medialink_func( $atts ) {
 						$files[$filecount] = $attachment;
 						$titles[$filecount] = $title;
 						$thumblinks [$filecount] = $thumblink;
+						$largemediumlinks [$filecount] = $largemediumlink;
 						++$filecount;
 					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
 						$files[$filecount] = $attachment;
 						$titles[$filecount] = $title;
 						$thumblinks [$filecount] = $thumblink;
+						$largemediumlinks [$filecount] = $largemediumlink;
 						++$filecount;
 					}
 				}
@@ -2060,7 +2147,7 @@ function medialink_func( $atts ) {
 
 	if ($files) {
 		for ( $i = $beginfiles; $i <= $endfiles; $i++ ) {
-			$linkfile = medialink_print_file($catparam,$files[$i],$titles[$i],$topurl,$thumblinks[$i],$document_root,$mode,$effect);
+			$linkfile = medialink_print_file($catparam,$files[$i],$titles[$i],$topurl,$thumblinks[$i],$largemediumlinks[$i],$document_root,$mode,$effect);
 			$linkfiles = $linkfiles.$linkfile;
 			if ( $files[$i] === '/'.$fparam ) {
 				$titlename = $titles[$i];
@@ -2496,13 +2583,13 @@ XMLEND;
 					++$exist_rssfile_count;
  				}
  				$exist_rss_pubdate = $pubdate[0];
-				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $rsstitles[0], $rssthumblinks[0], $document_root, $topurl), $reg)){
+				if(preg_match("/\<pubDate\>(.+)\<\/pubDate\>/ms", medialink_xmlitem_read($rssfiles[0], $rsstitles[0], $rssthumblinks[0], $rsslargemediumlinks[0], $document_root, $topurl), $reg)){
 					$new_rss_pubdate = $reg[1];
 				}
 				if ($exist_rss_pubdate <> $new_rss_pubdate || $exist_rssfile_count != $rssmax){
 					$xmlitem = NULL;
 					for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $document_root, $topurl);
+						$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $rsslargemediumlinks[$i], $document_root, $topurl);
 					}
 					$xmlitem = $xml_begin.$xmlitem.$xml_end;
 					$fno = fopen($xmlfile, 'w');
@@ -2512,7 +2599,7 @@ XMLEND;
 			}
 		}else{
 			for ( $i = 0; $i <= $rssmax-1; $i++ ) {
-				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $document_root, $topurl);
+				$xmlitem .= medialink_xmlitem_read($rssfiles[$i], $rsstitles[$i], $rssthumblinks[$i], $rsslargemediumlinks[$i], $document_root, $topurl);
 			}
 			$xmlitem = $xml_begin.$xmlitem.$xml_end;
 			$fno = fopen($xmlfile, 'w');

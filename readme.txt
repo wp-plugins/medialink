@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.29
+Stable tag: 1.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,9 @@ none
 none
 
 == Changelog ==
+
+= 1.30 =
+In the slideshow and album, you can change the size of the image to be displayed.
 
 = 1.29 =
 Added shortcode attribute is the credit display and the various navigation display.
@@ -165,6 +168,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.30 =
 = 1.29 =
 = 1.28 =
 = 1.27 =

@@ -258,3 +258,6 @@ msgstr "RSS アイコン"
 
 msgid "Credit"
 msgstr "クレジット"
+
+msgid "Size of the image display. (Media Settings > Image Size)"
+msgstr "画像表示のサイズ。（メディア設定 > 画像サイズ）"

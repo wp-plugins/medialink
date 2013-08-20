@@ -25,6 +25,8 @@
 	delete_option('medialink_music_display_sp');
 	delete_option('medialink_slideshow_display_pc'); 	
 	delete_option('medialink_slideshow_display_sp'); 	
+	delete_option('medialink_album_image_show_size');
+	delete_option('medialink_slideshow_image_show_size');
 	delete_option('medialink_movie_suffix_thumbnail');
 	delete_option('medialink_music_suffix_thumbnail');
 	delete_option('medialink_include_cat');
