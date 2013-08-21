@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.30
+Version: 1.31
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -1555,20 +1555,13 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$largeme
 	$filetitle = $titlename;
 	$fileparam = str_replace("%2F","/",urlencode($fileparam));
 
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
-		$thumbfile = str_replace($suffix, '', $file).$thumblink.$suffix;
-		$thumbfile = str_replace("%2F","/",urlencode($thumbfile));
-	}else{
-		$thumbfile = $thumblink;
-	}
+	$file = str_replace("%2F","/",urlencode($file));
 
 	if ( !empty($largemediumlink) ) {
-		if(file_exists($document_root.str_replace($suffix, '', $file).$largemediumlink.$suffix)){
-			$file = str_replace($suffix, '', $file).$largemediumlink.$suffix;
-		}
+		$imgshowlink = $largemediumlink;
+	} else {
+		$imgshowlink = $topurl.$file;
 	}
-
-	$file = str_replace("%2F","/",urlencode($file));
 
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
@@ -1577,19 +1570,19 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$largeme
 	$linkfile = NULL;
 	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ) {
 		if ($effect === 'nivoslider'){ // for nivoslider
-			$linkfile = '<img src="'.$topurl.$file.'" alt="'.$titlename.'" title="'.$titlename.'">';
+			$linkfile = '<img src="'.$imgshowlink.'" alt="'.$titlename.'" title="'.$titlename.'">';
 		} else if ($effect === 'colorbox' && $mode === 'pc'){ // for colorbox
-			$linkfile = '<a class=medialink href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
+			$linkfile = '<a class=medialink href="'.$imgshowlink.'" title="'.$titlename.'"><img src="'.$thumblink.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
 		} else if ($effect === 'photoswipe' && $mode === 'sp'){ // for Photoswipe
-			$linkfile = '<li><a rel="external" href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
+			$linkfile = '<li><a rel="external" href="'.$imgshowlink.'" title="'.$titlename.'"><img src="'.$thumblink.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
 		} else if ($effect === 'Lightbox' && $mode === 'pc'){ // for Lightbox
-			$linkfile = '<a href="'.$topurl.$file.'" rel="lightbox[medialink]" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
+			$linkfile = '<a href="'.$imgshowlink.'" rel="lightbox[medialink]" title="'.$titlename.'"><img src="'.$thumblink.'" alt="'.$titlename.'" title="'.$titlename.'"></a>';
 		} else {
-			$linkfile = '<li><a href="'.$topurl.$file.'" title="'.$titlename.'"><img src="'.$topurl.$thumbfile.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
+			$linkfile = '<li><a href="'.$imgshowlink.'" title="'.$titlename.'"><img src="'.$topurl.$thumblink.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
 		}
 	}else{
 		if ( $mode === 'sp' ) {
-			$linkfile = '<li>'.$thumbfile.'<a href="'.$topurl.$file.'" '.$mimetype.'>'.$titlename.'</a></li>';
+			$linkfile = '<li>'.$thumblink.'<a href="'.$topurl.$file.'" '.$mimetype.'>'.$titlename.'</a></li>';
 		}else{ //PC
 			$page =NULL;
 			if (!empty($_GET['mlp'])){
@@ -1606,7 +1599,7 @@ function medialink_print_file($catparam,$file,$title,$topurl,$thumblink,$largeme
 				$permlinkstr = '?mlcat=';
 			}
 
-			$linkfile = '<li>'.$thumbfile.'<a href="'.$scriptname.$permlinkstr.$catparam.'&mlp='.$page.'&f='.$fileparam.'">'.$filetitle.'</a></li>';
+			$linkfile = '<li>'.$thumblink.'<a href="'.$scriptname.$permlinkstr.$catparam.'&mlp='.$page.'&f='.$fileparam.'">'.$filetitle.'</a></li>';
 		}
 	}
 
@@ -1694,20 +1687,7 @@ function medialink_xmlitem_read($file, $title, $thumblink, $largemediumlink, $do
 	$fparam = str_replace("%2F","/",urlencode($fparam));
 	$fparam = substr($fparam,1);
 
-	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
-		$thumbfile = str_replace($suffix, '', $file).$thumblink.$suffix;
-		$thumbfile = str_replace("%2F","/",urlencode($thumbfile));
-	}
-
-	if ( !empty($largemediumlink) ) {
-		if(file_exists($document_root.str_replace($suffix, '', $file).$largemediumlink.$suffix)){
-			$file = str_replace($suffix, '', str_replace($document_root, '', $file)).$largemediumlink;
-		} else {
-			$file = str_replace($suffix, '', str_replace($document_root, '', $file));
-		}
-	} else {
-		$file = str_replace($suffix, '', str_replace($document_root, '', $file));
-	}
+	$file = str_replace($suffix, '', str_replace($document_root, '', $file));
 
 	$titlename = $title;
 	$file = str_replace("%2F","/",urlencode(mb_convert_encoding($file, "UTF8", "auto")));
@@ -1725,8 +1705,12 @@ function medialink_xmlitem_read($file, $title, $thumblink, $largemediumlink, $do
 	}
 
 	if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
-		$link_url = 'http://'.$servername.$topurl.$file.$suffix;
-		$img_url = '<a href="'.$link_url.'"><img src = "http://'.$servername.$topurl.$thumbfile.'"></a>';
+		if ( !empty($largemediumlink) ) {
+			$link_url = $largemediumlink;
+		} else {
+			$link_url = 'http://'.$servername.$topurl.$file.$suffix;
+		}
+		$img_url = '<a href="'.$link_url.'"><img src = "'.$thumblink.'"></a>';
 	}else{
 		$link_url = 'http://'.$servername.$scriptname.$fparam;
 		$enc_url = 'http://'.$servername.$topurl.$file.$suffix;
@@ -2064,9 +2048,9 @@ function medialink_func( $atts ) {
 					$thumb_src = wp_get_attachment_image_src($attachment->ID);
 					$medium_src = wp_get_attachment_image_src($attachment->ID, 'medium');
 					$large_src = wp_get_attachment_image_src($attachment->ID, 'large');
-					$thumblink = '-'.$thumb_src[1].'x'.$thumb_src[2];
-					$mediumlink = '-'.$medium_src[1].'x'.$medium_src[2];
-					$largelink = '-'.$large_src[1].'x'.$large_src[2];
+					$thumblink = $thumb_src[0];
+					$mediumlink = $medium_src[0];
+					$largelink = $large_src[0];
 				} else {
 					if( !empty($thumbnail) ) {
 						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) ) {
@@ -2095,6 +2079,8 @@ function medialink_func( $atts ) {
 						$largemediumlink = $mediumlink;
 					} else if ( $image_show_size === 'Large' ) {
 						$largemediumlink = $largelink;
+					} else {
+						$largemediumlink = NULL;
 					}
 				}
 				if ( $sort_order === 'DESC' && empty($search) ) {
