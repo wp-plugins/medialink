@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.31
+Version: 1.32
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -821,6 +821,9 @@ function medialink_plugin_options() {
 				<td align="center" valign="middle">movie</td>
 				<td align="center" valign="middle">music</td>
 				<td align="center" valign="middle">slideshow</td>
+				<td align="left" valign="middle">
+				<?php _e('Next only four. album(image), movie(video), music(music), slideshow(image)', 'medialink'); ?>
+				</td>
 			</tr>
 			<tr>
 				<td align="center" valign="middle"><b>effect_pc</b></td>
