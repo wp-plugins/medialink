@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.33
+Version: 1.34
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -1727,6 +1727,14 @@ function medialink_func( $atts ) {
 	$categoryselectall = mb_convert_encoding($categoryselectall, "UTF-8", "auto");
 	$categoryselectbutton = mb_convert_encoding($categoryselectbutton, "UTF-8", "auto");
 
+	$medialink->catparam = $catparam;
+	$medialink->topurl = $topurl;
+	$medialink->document_root = $document_root;
+	$medialink->mode = $mode;
+	$medialink->effect = $effect;
+	$medialink->rssname = $rssname;
+	$medialink->rssmax = $rssmax;
+
 	$file = NULL;
 	$attachment = NULL;
 	$title = NULL;
@@ -1875,11 +1883,14 @@ function medialink_func( $atts ) {
 	}
 
 	$maxpage = ceil(count($files) / $display);
-	$beginfiles = 0;
-	$endfiles = 0;
 	if(empty($page)){
 		$page = 1;
 	}
+	$medialink->page = $page;
+	$medialink->maxpage = $maxpage;
+
+	$beginfiles = 0;
+	$endfiles = 0;
 	if( $page == $maxpage){
 		$beginfiles = $display * ( $page - 1 );
 		$endfiles = count($files) - 1;
@@ -1890,7 +1901,7 @@ function medialink_func( $atts ) {
 
 	if ($files) {
 		for ( $i = $beginfiles; $i <= $endfiles; $i++ ) {
-			$linkfile = $medialink->print_file($catparam,$files[$i],$titles[$i],$topurl,$thumblinks[$i],$largemediumlinks[$i],$document_root,$mode,$effect);
+			$linkfile = $medialink->print_file($files[$i],$titles[$i],$thumblinks[$i],$largemediumlinks[$i]);
 			$linkfiles = $linkfiles.$linkfile;
 			if ( $files[$i] === '/'.$fparam ) {
 				$titlename = $titles[$i];
@@ -1916,18 +1927,15 @@ function medialink_func( $atts ) {
 	}
 	$linkcategories = $linkcategories.$linkcategory;
 
-	$linkpages = $medialink->print_pages($page,$maxpage,$mode);
+	$linkpages = $medialink->print_pages();
 
 	$servername = $_SERVER['HTTP_HOST'];
 	$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 	$query = $_SERVER['QUERY_STRING'];
 
-	$currentcategory = mb_convert_encoding($catparam, "UTF-8", "auto");
+	$currentcategory = $catparam;
 	$selectedfilename = $titlename;
 
-	if(empty($page)){
-		$page = 1;
-	}
 	$pagestr = '&mlp='.$page;
 
 	$permlinkstrform = NULL;
@@ -1942,7 +1950,6 @@ function medialink_func( $atts ) {
 		$scripturl .= '?';
 	}
 
-	$catparam = mb_convert_encoding($catparam, "UTF-8", "auto");
 	$currentcategory_encode = urlencode($catparam);
 	if ( empty($currentcategory) ){
 		$scripturl .= $pagestr;
@@ -2293,7 +2300,7 @@ FLASHMUSICPLAYER;
 		}
 	}
 	if(!empty($rssfiles)){
-		$medialink->rss_wirte($xml_title, $catparam, $mode, $rssname, $rssmax, $rssfiles, $rsstitles, $rssthumblinks, $rsslargemediumlinks, $document_root, $topurl);
+		$medialink->rss_wirte($xml_title, $rssfiles, $rsstitles, $rssthumblinks, $rsslargemediumlinks);
 	}
 
 	if ( $credit_show === 'Show' ) {
