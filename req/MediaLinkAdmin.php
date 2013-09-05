@@ -3,6 +3,21 @@
 class MediaLinkAdmin {
 
 	/* ==================================================
+	 * Add a "Settings" link to the plugins page
+	 * @since	1.0
+	 */
+	function settings_link( $links, $file ) {
+		static $this_plugin;
+		if ( empty($this_plugin) ) {
+			$this_plugin = MEDIALINK_PLUGIN_BASE_FILE;
+		}
+		if ( $file == $this_plugin ) {
+			$links[] = '<a href="'.admin_url('options-general.php?page=MediaLink').'">'.__( 'Settings').'</a>';
+		}
+			return $links;
+	}
+
+	/* ==================================================
 	 * Settings page
 	 * @since	1.0
 	 */

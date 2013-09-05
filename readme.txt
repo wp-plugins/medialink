@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.35
+Stable tag: 1.36
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ MediaLink outputs as a gallery from the media library(image and music and video)
 Create a playlist (image, music, video) of data in the media library below the specified, MediaLink displays Pages by passing the data to various software.
 
 If you want to output the gallery by specifying the directory, please use the [GalleryLink](http://wordpress.org/plugins/gallerylink/).
+
+In the media uploader, you may not be able to upload by the environment of server. That's when the files are large. If you want to upload to the media library without having to worry about the file size, please use the [Media from FTP](http://wordpress.org/plugins/media-from-ftp/).
 
 You write and use short codes to page.
 
@@ -56,6 +58,9 @@ none
 none
 
 == Changelog ==
+
+= 1.36 =
+Optimization
 
 = 1.35 =
 Optimization
@@ -183,6 +188,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 1.36 =
 = 1.35 =
 = 1.34 =
 = 1.33 =
