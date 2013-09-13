@@ -35,7 +35,10 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_image_show_size');
 		register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 		register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
-		register_setting( 'medialink-settings-group', 'medialink_include_cat');
+		register_setting( 'medialink-settings-group', 'medialink_album_include_cat');
+		register_setting( 'medialink-settings-group', 'medialink_movie_include_cat');
+		register_setting( 'medialink-settings-group', 'medialink_music_include_cat');
+		register_setting( 'medialink-settings-group', 'medialink_slideshow_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
 		register_setting( 'medialink-settings-group', 'medialink_album_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_movie_rssname');
@@ -108,7 +111,10 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_slideshow_image_show_size', 'Full');
 		add_option('medialink_movie_suffix_thumbnail', 'gif');
 		add_option('medialink_music_suffix_thumbnail', 'gif');
-		add_option('medialink_include_cat', '');
+		add_option('medialink_album_include_cat', '');
+		add_option('medialink_movie_include_cat', '');
+		add_option('medialink_music_include_cat', '');
+		add_option('medialink_slideshow_include_cat', '');
 		add_option('medialink_exclude_cat', '');
 		add_option('medialink_album_rssname', 'medialink_album_feed');
 		add_option('medialink_movie_rssname', 'medialink_movie_feed');

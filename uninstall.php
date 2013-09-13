@@ -29,7 +29,10 @@
 	delete_option('medialink_slideshow_image_show_size');
 	delete_option('medialink_movie_suffix_thumbnail');
 	delete_option('medialink_music_suffix_thumbnail');
-	delete_option('medialink_include_cat');
+	delete_option('medialink_album_include_cat');
+	delete_option('medialink_movie_include_cat');
+	delete_option('medialink_music_include_cat');
+	delete_option('medialink_slideshow_include_cat');
 	delete_option('medialink_exclude_cat');
 	delete_option('medialink_album_rssname');
 	delete_option('medialink_movie_rssname');

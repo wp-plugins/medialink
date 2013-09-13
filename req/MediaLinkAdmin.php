@@ -214,8 +214,10 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>include_cat</b></td>
-		<td colspan="3" align="center" valign="middle" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_include_cat') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_album_include_cat') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_movie_include_cat') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_music_include_cat') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_include_cat') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to include. Only one.', 'medialink'); ?>
 		</td>
@@ -223,8 +225,7 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>exclude_cat</b></td>
-		<td colspan="3" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="4" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
 		</td>
@@ -614,9 +615,17 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>include_cat</b></td>
-					<td align="center" valign="middle" colspan="3"></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_include_cat" name="medialink_include_cat" value="<?php echo get_option('medialink_include_cat') ?>" size="20" />
+						<input type="text" id="medialink_album_include_cat" name="medialink_album_include_cat" value="<?php echo get_option('medialink_album_include_cat') ?>" size="20" />
+					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_movie_include_cat" name="medialink_movie_include_cat" value="<?php echo get_option('medialink_movie_include_cat') ?>" size="20" />
+					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_music_include_cat" name="medialink_music_include_cat" value="<?php echo get_option('medialink_music_include_cat') ?>" size="20" />
+					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_slideshow_include_cat" name="medialink_slideshow_include_cat" value="<?php echo get_option('medialink_slideshow_include_cat') ?>" size="20" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Category you want to include. Only one.', 'medialink'); ?>
@@ -624,10 +633,8 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>exclude_cat</b></td>
-					<td align="center" valign="middle" colspan="3">
-						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="40" />
-					</td>
-					<td>
+					<td align="center" valign="middle" colspan="4">
+						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="100" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>

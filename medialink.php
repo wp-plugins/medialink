@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.36
+Version: 1.37
 Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -51,7 +51,7 @@ Domain Path: /languages
 /* ==================================================
  * Main
  */
-function medialink_func( $atts ) {
+function medialink_func( $atts, $html = NULL ) {
 
 	include_once dirname(__FILE__).'/inc/MediaLink.php';
 	$medialink = new MediaLink();
@@ -87,10 +87,7 @@ function medialink_func( $atts ) {
 	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
 	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
 
-	if ( empty($include_cat) && ($set === 'slideshow') ) {
-		$include_cat = get_option('medialink_include_cat');
-	}
-	if ( empty($exclude_cat) && ($set === 'album' || $set === 'movie' || $set === 'music') ) {
+	if ( empty($exclude_cat) ) {
 		$exclude_cat = get_option('medialink_exclude_cat');
 	}
 
@@ -103,6 +100,7 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_album_display_sp')); }
 		if( empty($image_show_size) ) { $image_show_size = get_option('medialink_album_image_show_size'); }
+		if( empty($include_cat) ) { $include_cat = get_option('medialink_album_include_cat'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_album_rssname');
 			$rssdef = true;
@@ -122,6 +120,7 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_movie_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_movie_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_movie_suffix_thumbnail'); }
+		if( empty($include_cat) ) { $include_cat = get_option('medialink_movie_include_cat'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_movie_rssname');
 			$rssdef = true;
@@ -141,6 +140,7 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_music_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_music_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_music_suffix_thumbnail'); }
+		if( empty($include_cat) ) { $include_cat = get_option('medialink_music_include_cat'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_music_rssname');
 			$rssdef = true;
@@ -160,6 +160,7 @@ function medialink_func( $atts ) {
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_slideshow_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_slideshow_display_sp')); }
 		if( empty($image_show_size) ) { $image_show_size = get_option('medialink_slideshow_image_show_size'); }
+		if( empty($include_cat) ) { $include_cat = get_option('medialink_slideshow_include_cat'); }
 		if( empty($rssname) ) {
 			$rssname = get_option('medialink_slideshow_rssname');
 			$rssdef = true;
@@ -314,7 +315,7 @@ function medialink_func( $atts ) {
 				}
 			}
 			if( $loops === TRUE ) {
-				if ( !empty($caption) ) {
+				if ( !empty($caption) && (($caption === $include_cat) || empty($include_cat)) ) {
 					$categories[$categorycount] = $caption;
 					++$categorycount;
 				}
@@ -362,13 +363,7 @@ function medialink_func( $atts ) {
 					}
 				}
 				if ( $sort_order === 'DESC' && empty($search) ) {
-					if ( $set <> 'slideshow' ) {
-						$rssfiles[$rsscount] = $attachment;
-						$rsstitles[$rsscount] = $title;
-						$rssthumblinks [$rsscount] = $thumblink;
-						$rsslargemediumlinks [$rsscount] = $largemediumlink;
-						++$rsscount;
-					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
+					if ( ($caption === $include_cat) || empty($include_cat) ) {
 						$rssfiles[$rsscount] = $attachment;
 						$rsstitles[$rsscount] = $title;
 						$rssthumblinks [$rsscount] = $thumblink;
@@ -377,13 +372,7 @@ function medialink_func( $atts ) {
 					}
 				}
 				if ( ($caption === $catparam || empty($catparam)) ) {
-					if ($set <> 'slideshow') {
-						$files[$filecount] = $attachment;
-						$titles[$filecount] = $title;
-						$thumblinks [$filecount] = $thumblink;
-						$largemediumlinks [$filecount] = $largemediumlink;
-						++$filecount;
-					} else if ( ($set === 'slideshow') && (($caption === $include_cat) || empty($include_cat)) ) {
+					if ( ($caption === $include_cat) || empty($include_cat) ) {
 						$files[$filecount] = $attachment;
 						$titles[$filecount] = $title;
 						$thumblinks [$filecount] = $thumblink;
@@ -648,7 +637,7 @@ FLASHMUSICPLAYER;
 			if ( $set === 'music' ){
 				wp_enqueue_script( 'jQuery SWFObject', $pluginurl.'/medialink/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
 			}
-			echo '<h2>'.$selectedfilename.'</h2>';
+			$html .= '<h2>'.$selectedfilename.'</h2>';
 		}
 	} else if ( $mode === 'sp') {
 		if ( $set === 'album' || $set === 'slideshow'){
@@ -678,13 +667,13 @@ FLASHMUSICPLAYER;
 
 	if ( $mode === 'pc' && $set === 'movie' ) {
 		if(preg_match("/MSIE 9\.0/", $_SERVER['HTTP_USER_AGENT'])){
-			echo $movieplayercontainerIE9;
+			$html .= $movieplayercontainerIE9;
 		} else {
-			echo $movieplayercontainer;
+			$html .= $movieplayercontainer;
 		}
 	} else if ( $mode === 'pc' && $set === 'music' ) {
-		echo $flashmusicplayer;
-		echo $musicplayercontainer;
+		$html .= $flashmusicplayer;
+		$html .= $musicplayercontainer;
 	}
 
 	$linkfiles_begin = NULL;
@@ -769,32 +758,32 @@ FLASHMUSICPLAYER;
 		}
 	}
 
-	echo $linkfiles_begin;
-	echo $linkfiles;
-	echo $linkfiles_end;
+	$html .= $linkfiles_begin;
+	$html .= $linkfiles;
+	$html .= $linkfiles_end;
 
 	if ( $categorylinks_show === 'Show' ) {
-		echo $categoryselectbox_begin;
-		echo $categoryselectbox;
-		echo $categoryselectbox_end;
+		$html .= $categoryselectbox_begin;
+		$html .= $categoryselectbox;
+		$html .= $categoryselectbox_end;
 	}
 
 	if ( $pagelinks_show === 'Show' ) {
-		echo $linkpages_begin;
-		echo $linkpages;
-		echo $linkpages_end;
+		$html .= $linkpages_begin;
+		$html .= $linkpages;
+		$html .= $linkpages_end;
 	}
 
 	if ( $sortlinks_show === 'Show' ) {
-		echo $sortlink_begin;
-		echo $sortlinks;
-		echo $sortlink_end;
+		$html .= $sortlink_begin;
+		$html .= $sortlinks;
+		$html .= $sortlink_end;
 	}
 
 	if ( $searchbox_show === 'Show' ) {
-		echo $searchform_begin;
-		echo $searchform;
-		echo $searchform_end;
+		$html .= $searchform_begin;
+		$html .= $searchform;
+		$html .= $searchform_end;
 	}
 
 	// RSS Feeds
@@ -807,9 +796,9 @@ FLASHMUSICPLAYER;
 		$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/podcast.png"></a></div>';
 	}
 	if ( $mode === "pc" || $mode === "sp" ) {
-		if ( $rssicon_show === 'Show' ) { echo $rssfeeds_icon; }
+		if ( $rssicon_show === 'Show' ) { $html .= $rssfeeds_icon; }
 		if ( $rssdef === false ) {
-			echo '<link rel="alternate" type="application/rss+xml" href="'.$rssfeed_url.'" title="'.$xml_title.'" />';
+			$html .= '<link rel="alternate" type="application/rss+xml" href="'.$rssfeed_url.'" title="'.$xml_title.'" />';
 		}
 	}
 	if(!empty($rssfiles)){
@@ -817,8 +806,10 @@ FLASHMUSICPLAYER;
 	}
 
 	if ( $credit_show === 'Show' ) {
-		echo '<div align = "right"><a href="http://wordpress.org/plugins/medialink/"><span style="font-size : xx-small">by MediaLink</span></a></div>';
+		$html .= '<div align = "right"><a href="http://wordpress.org/plugins/medialink/"><span style="font-size : xx-small">by MediaLink</span></a></div>';
 	}
+
+	return $html;
 
 }
 
