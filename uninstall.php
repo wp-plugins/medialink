@@ -34,6 +34,10 @@
 	delete_option('medialink_music_include_cat');
 	delete_option('medialink_slideshow_include_cat');
 	delete_option('medialink_exclude_cat');
+	delete_option('medialink_album_generate_rssfeed');
+	delete_option('medialink_movie_generate_rssfeed');
+	delete_option('medialink_music_generate_rssfeed');
+	delete_option('medialink_slideshow_generate_rssfeed');
 	delete_option('medialink_album_rssname');
 	delete_option('medialink_movie_rssname');
 	delete_option('medialink_music_rssname');

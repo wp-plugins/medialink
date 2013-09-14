@@ -40,6 +40,10 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_music_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
+		register_setting( 'medialink-settings-group', 'medialink_album_generate_rssfeed');
+		register_setting( 'medialink-settings-group', 'medialink_movie_generate_rssfeed');
+		register_setting( 'medialink-settings-group', 'medialink_music_generate_rssfeed');
+		register_setting( 'medialink-settings-group', 'medialink_slideshow_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_album_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_movie_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_music_rssname');
@@ -116,6 +120,10 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_music_include_cat', '');
 		add_option('medialink_slideshow_include_cat', '');
 		add_option('medialink_exclude_cat', '');
+		add_option('medialink_album_generate_rssfeed', 'on');
+		add_option('medialink_movie_generate_rssfeed', 'on');
+		add_option('medialink_music_generate_rssfeed', 'on');
+		add_option('medialink_slideshow_generate_rssfeed', 'on');
 		add_option('medialink_album_rssname', 'medialink_album_feed');
 		add_option('medialink_movie_rssname', 'medialink_movie_feed');
 		add_option('medialink_music_rssname', 'medialink_music_feed');
