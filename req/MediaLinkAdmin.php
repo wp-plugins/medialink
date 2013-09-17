@@ -66,9 +66,10 @@ class MediaLinkAdmin {
 		<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
 		
 		<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
-		<?php _e('MediaLink is also handles video and music. If you are dealing with music and video, please add the following attributes to the short code.', 'medialink'); ?>
+		<?php _e('MediaLink is also handles video and music and document. If you are dealing with music and video and document, please add the following attributes to the short code.', 'medialink'); ?>
 		<p><div><?php _e("Video set = 'movie'", 'medialink'); ?></div>
 		<div><?php _e("Music set = 'music'", 'medialink'); ?></div>
+		<div><?php _e("Document set = 'document'", 'medialink'); ?></div>
 		<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div>
 		<p><div><?php _e('* When you move to (WordPress > Appearance > Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.', 'medialink'); ?></div></p>
 
@@ -79,7 +80,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle">
 		<?php _e('Attribute', 'medialink'); ?>
 		</td>
-		<td colspan="4" align="center" valign="middle">
+		<td colspan="5" align="center" valign="middle">
 		<?php _e('Default'); ?>
 		</td>
 		<td align="center" valign="middle">
@@ -93,16 +94,18 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle">movie</td>
 		<td align="center" valign="middle">music</td>
 		<td align="center" valign="middle">slideshow</td>
+		<td align="center" valign="middle">document</td>
 		<td align="left" valign="middle">
-		<?php _e('Next only four. album(image), movie(video), music(music), slideshow(image)', 'medialink'); ?>
+		<?php _e('Next only five. album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
 		<td align="center" valign="middle"><b>effect_pc</b></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_pc') ?></td>
-		<td colspan="2" align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_effect_pc') ?></td>
+		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 		<div>
@@ -117,8 +120,9 @@ class MediaLinkAdmin {
 		<tr>
 		<td align="center" valign="middle"><b>effect_sp</b></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_effect_sp') ?></td>
-		<td colspan="2" align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_effect_sp') ?></td>
+		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of Smartphone', 'medialink'); ?>
 		</td>
@@ -130,6 +134,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_pc') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_suffix_pc') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('extension of PC.', 'medialink'); ?>
 		</td>
@@ -137,10 +142,10 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_pc2</b></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc2') ?></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
 		</td>
@@ -151,7 +156,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle" bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_flash') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_flash') ?></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 		</td>
@@ -163,6 +168,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_sp') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_sp') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_suffix_sp') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_suffix_sp') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('extension of Smartphone', 'medialink'); ?>
 		</td>
@@ -174,6 +180,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_pc')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_pc')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_display_pc')) ?></td>
+		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document_display_pc')) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('File Display per page(PC)', 'medialink'); ?>
 		</td>
@@ -185,6 +192,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_display_sp')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_display_sp')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_display_sp')) ?></td>
+		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document_display_sp')) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
 		</td>
@@ -193,9 +201,9 @@ class MediaLinkAdmin {
 		<tr>
 		<td align="center" valign="middle"><b>image_show_size</b></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_image_show_size') ?></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_image_show_size') ?></td>
+		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 		</td>
@@ -207,8 +215,9 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_thumbnail') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_thumbnail') ?></td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_suffix_thumbnail') ?></td>
 		<td align="left" valign="middle">
-		<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+		<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon. The thumbnail no display if you do not specify anything. (document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
 		</td>
 		</tr>
 
@@ -218,6 +227,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_include_cat') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_include_cat') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_include_cat') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_include_cat') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to include. Only one.', 'medialink'); ?>
 		</td>
@@ -225,7 +235,7 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>exclude_cat</b></td>
-		<td colspan="4" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
+		<td colspan="5" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
 		</td>
@@ -237,6 +247,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_generate_rssfeed') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_generate_rssfeed') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_generate_rssfeed') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_generate_rssfeed') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Generation of RSS feed.', 'medialink'); ?>
 		</td>
@@ -248,6 +259,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_rssname') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_rssname') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_rssname') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_rssname') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 		</td>
@@ -259,6 +271,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie_rssmax')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music_rssmax')) ?></td>
 		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow_rssmax')) ?></td>
+		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document_rssmax')) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink'); ?>
 		</td>
@@ -270,6 +283,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_categorylinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_categorylinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_categorylinks_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_categorylinks_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Selectbox of categories.', 'medialink'); ?>
 		</td>
@@ -281,6 +295,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_pagelinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_pagelinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_pagelinks_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_pagelinks_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Navigation of page.', 'medialink'); ?>
 		</td>
@@ -292,6 +307,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_sortlinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_sortlinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_sortlinks_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_sortlinks_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Navigation of sort.', 'medialink'); ?>
 		</td>
@@ -303,6 +319,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_searchbox_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_searchbox_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_searchbox_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_searchbox_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Search box', 'medialink'); ?>
 		</td>
@@ -314,6 +331,7 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_rssicon_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_rssicon_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_rssicon_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_rssicon_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('RSS Icon', 'medialink'); ?>
 		</td>
@@ -325,15 +343,16 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_credit_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_credit_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_credit_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_credit_show') ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Credit', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle" colspan="6">
+		<td align="center" valign="middle" colspan="7">
 		<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
-		jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
+		jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
 		</td>
 		</tr>
 
@@ -350,7 +369,7 @@ class MediaLinkAdmin {
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
-					<td align="center" valign="middle" colspan=4><?php _e('Default'); ?></td>
+					<td align="center" valign="middle" colspan=5><?php _e('Default'); ?></td>
 					<td align="center" valign="middle"><?php _e('Description'); ?></td>
 				</tr>
 				<tr>
@@ -359,8 +378,9 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">movie</td>
 					<td align="center" valign="middle">music</td>
 					<td align="center" valign="middle">slideshow</td>
+					<td align="center" valign="middle">document</td>
 					<td align="left" valign="middle">
-					<?php _e('Next only four. album(image), movie(video), music(music), slideshow(image)', 'medialink'); ?>
+					<?php _e('Next only five. album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -373,13 +393,13 @@ class MediaLinkAdmin {
 						<option <?php if ('Lightbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
 					</select>
 					</td>
-					<td colspan="2">
-					</td>
+					<td colspan="2"></td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_effect_pc = get_option('medialink_slideshow_effect_pc'); ?>
 					<select id="medialink_slideshow_effect_pc" name="medialink_slideshow_effect_pc">
 						<option <?php if ('nivoslider' == $target_slideshow_effect_pc)echo 'selected="selected"'; ?>>nivoslider</option>
 					</select>
+					<td></td>
 					<td align="left" valign="middle">
 						<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 						<div>
@@ -399,14 +419,14 @@ class MediaLinkAdmin {
 						<option <?php if ('photoswipe' == $target_album_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
 					</select>
 					</td>
-					<td colspan="2">
-					</td>
+					<td colspan="2"></td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_effect_sp = get_option('medialink_slideshow_effect_sp'); ?>
 					<select id="medialink_slideshow_effect_sp" name="medialink_slideshow_effect_sp">
 						<option <?php if ('nivoslider' == $target_slideshow_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
 					</select>
 					</td>
+					<td></td>
 					<td align="left" valign="middle">
 						<?php _e('Effects of Smartphone', 'medialink'); ?>
 					</td>
@@ -444,6 +464,31 @@ class MediaLinkAdmin {
 						<option <?php if ('gif' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>gif</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_suffix_pc = get_option('medialink_document_suffix_pc'); ?>
+					<select id="medialink_document_suffix_pc" name="medialink_document_suffix_pc">
+						<option <?php if ('pdf' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pdf</option>
+						<option <?php if ('doc' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>doc</option>
+						<option <?php if ('docx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>docx</option>
+						<option <?php if ('xls' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xls</option>
+						<option <?php if ('xlsx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsx</option>
+						<option <?php if ('xlsa' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsa</option>
+						<option <?php if ('xlst' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlst</option>
+						<option <?php if ('xlsw' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsw</option>
+						<option <?php if ('pot' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pot</option>
+						<option <?php if ('pps' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pps</option>
+						<option <?php if ('ppt' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppt</option>
+						<option <?php if ('pptx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pptx</option>
+						<option <?php if ('pptm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pptm</option>
+						<option <?php if ('ppsx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppsx</option>
+						<option <?php if ('ppsm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppsm</option>
+						<option <?php if ('potx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>potx</option>
+						<option <?php if ('potm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>potm</option>
+						<option <?php if ('ppam' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppam</option>
+						<option <?php if ('sldx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>sldx</option>
+						<option <?php if ('sldm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>sldm</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 						<?php _e('extension of PC.', 'medialink'); ?>
 					</td>
@@ -467,8 +512,7 @@ class MediaLinkAdmin {
 						<option <?php if ('mp3' == $target_music_suffix_pc2)echo 'selected="selected"'; ?>>mp3</option>
 					</select>
 					</td>
-					<td>
-					</td>
+					<td colspan="2"></td>
 					<td align="left" valign="middle">
 						<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
 					</td>
@@ -490,8 +534,7 @@ class MediaLinkAdmin {
 						<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
 					</select>
 					</td>
-					<td>
-					</td>
+					<td colspan="2"></td>
 					<td align="left" valign="middle">
 						<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 					</td>
@@ -530,6 +573,31 @@ class MediaLinkAdmin {
 						<option <?php if ('gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>gif</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_suffix_sp = get_option('medialink_document_suffix_sp'); ?>
+					<select id="medialink_document_suffix_sp" name="medialink_document_suffix_sp">
+						<option <?php if ('pdf' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pdf</option>
+						<option <?php if ('doc' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>doc</option>
+						<option <?php if ('docx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>docx</option>
+						<option <?php if ('xls' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xls</option>
+						<option <?php if ('xlsx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsx</option>
+						<option <?php if ('xlsa' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsa</option>
+						<option <?php if ('xlst' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlst</option>
+						<option <?php if ('xlsw' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsw</option>
+						<option <?php if ('pot' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pot</option>
+						<option <?php if ('pps' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pps</option>
+						<option <?php if ('ppt' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppt</option>
+						<option <?php if ('pptx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pptx</option>
+						<option <?php if ('pptm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pptm</option>
+						<option <?php if ('ppsx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppsx</option>
+						<option <?php if ('ppsm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppsm</option>
+						<option <?php if ('potx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>potx</option>
+						<option <?php if ('potm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>potm</option>
+						<option <?php if ('ppam' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppam</option>
+						<option <?php if ('sldx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>sldx</option>
+						<option <?php if ('sldm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>sldm</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 						<?php _e('extension of Smartphone', 'medialink'); ?>
 					</td>
@@ -547,6 +615,9 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_slideshow_display_pc" name="medialink_slideshow_display_pc" value="<?php echo intval(get_option('medialink_slideshow_display_pc')) ?>" size="3" />
+					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_document_display_pc" name="medialink_document_display_pc" value="<?php echo intval(get_option('medialink_document_display_pc')) ?>" size="3" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('File Display per page(PC)', 'medialink') ?>
@@ -566,6 +637,9 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_slideshow_display_sp" name="medialink_slideshow_display_sp" value="<?php echo intval(get_option('medialink_slideshow_display_sp')) ?>" size="3" />
 					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_document_display_sp" name="medialink_document_display_sp" value="<?php echo intval(get_option('medialink_document_display_sp')) ?>" size="3" />
+					</td>
 					<td align="left" valign="middle">
 						<?php _e('File Display per page(Smartphone)', 'medialink') ?>
 					</td>
@@ -580,8 +654,7 @@ class MediaLinkAdmin {
 						<option <?php if ('Large' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Large</option>
 					</select>
 					</td>
-					<td></td>
-					<td></td>
+					<td colspan="2"></td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_image_show_size = get_option('medialink_slideshow_image_show_size'); ?>
 					<select id="medialink_slideshow_image_show_size" name="medialink_slideshow_image_show_size">
@@ -590,6 +663,7 @@ class MediaLinkAdmin {
 						<option <?php if ('Large' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Large</option>
 					</select>
 					</td>
+					<td></td>
 					<td align="left" valign="middle">
 						<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 					</td>
@@ -620,8 +694,15 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_suffix_thumbnail = get_option('medialink_document_suffix_thumbnail'); ?>
+					<select id="medialink_document_suffix_thumbnail" name="medialink_document_suffix_thumbnail">
+						<option <?php if ('' == $target_document_suffix_thumbnail)echo 'selected="selected"'; ?>></option>
+						<option <?php if ('icon' == $target_document_suffix_thumbnail)echo 'selected="selected"'; ?>>icon</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
-						<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon of WordPress standard, the thumbnail display if you do not specify anything.', 'medialink'); ?>
+						<?php _e('(album, slideshow) default thumbnail suffix name of WordPress. (movie, music) specify an extension for the thumbnail of the title the same name as the file you want to view, but if the thumbnail is not found, display the icon. The thumbnail no display if you do not specify anything. (document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -638,13 +719,16 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_slideshow_include_cat" name="medialink_slideshow_include_cat" value="<?php echo get_option('medialink_slideshow_include_cat') ?>" size="20" />
 					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_document_include_cat" name="medialink_document_include_cat" value="<?php echo get_option('medialink_document_include_cat') ?>" size="20" />
+					</td>
 					<td align="left" valign="middle">
 						<?php _e('Category you want to include. Only one.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>exclude_cat</b></td>
-					<td align="center" valign="middle" colspan="4">
+					<td align="center" valign="middle" colspan="5">
 						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="100" />
 					</td>
 					<td align="left" valign="middle">
@@ -681,6 +765,13 @@ class MediaLinkAdmin {
 						<option <?php if ('off' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_generate_rssfeed = get_option('medialink_document_generate_rssfeed'); ?>
+					<select id="medialink_document_generate_rssfeed" name="medialink_document_generate_rssfeed">
+						<option <?php if ('on' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+						<option <?php if ('off' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 					<?php _e('Generation of RSS feed.', 'medialink') ?>
 					</td>
@@ -699,6 +790,9 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo get_option('medialink_slideshow_rssname') ?>" size="25" />
 					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_document_rssname" name="medialink_document_rssname" value="<?php echo get_option('medialink_document_rssname') ?>" size="25" />
+					</td>
 					<td align="left" valign="middle">
 						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 					</td>
@@ -716,6 +810,9 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval(get_option('medialink_slideshow_rssmax')) ?>" size="3" />
+					</td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_document_rssmax" name="medialink_document_rssmax" value="<?php echo intval(get_option('medialink_document_rssmax')) ?>" size="3" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
@@ -749,6 +846,13 @@ class MediaLinkAdmin {
 					<select id="medialink_slideshow_categorylinks_show" name="medialink_slideshow_categorylinks_show">
 						<option <?php if ('Show' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_categorylinks_show = get_option('medialink_document_categorylinks_show'); ?>
+					<select id="medialink_document_categorylinks_show" name="medialink_document_categorylinks_show">
+						<option <?php if ('Show' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -785,6 +889,13 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_pagelinks_show = get_option('medialink_document_pagelinks_show'); ?>
+					<select id="medialink_document_pagelinks_show" name="medialink_document_pagelinks_show">
+						<option <?php if ('Show' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 					<?php _e('Navigation of page.', 'medialink') ?>
 					</td>
@@ -817,6 +928,13 @@ class MediaLinkAdmin {
 					<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
 						<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_sortlinks_show = get_option('medialink_document_sortlinks_show'); ?>
+					<select id="medialink_document_sortlinks_show" name="medialink_document_sortlinks_show">
+						<option <?php if ('Show' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -853,6 +971,13 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_searchbox_show = get_option('medialink_document_searchbox_show'); ?>
+					<select id="medialink_document_searchbox_show" name="medialink_document_searchbox_show">
+						<option <?php if ('Show' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 					<?php _e('Search box', 'medialink') ?>
 					</td>
@@ -885,6 +1010,13 @@ class MediaLinkAdmin {
 					<select id="medialink_slideshow_rssicon_show" name="medialink_slideshow_rssicon_show">
 						<option <?php if ('Show' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_rssicon_show = get_option('medialink_document_rssicon_show'); ?>
+					<select id="medialink_document_rssicon_show" name="medialink_document_rssicon_show">
+						<option <?php if ('Show' == $target_document_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -921,6 +1053,13 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_credit_show = get_option('medialink_document_credit_show'); ?>
+					<select id="medialink_document_credit_show" name="medialink_document_credit_show">
+						<option <?php if ('Show' == $target_document_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
 					<td align="left" valign="middle">
 					<?php _e('Credit', 'medialink') ?>
 					</td>
@@ -928,7 +1067,7 @@ class MediaLinkAdmin {
 				<tr>
 				<td align="center" valign="middle" colspan="6">
 				<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
-				jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
+				jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
 				</td>
 				</tr>
 			</tbody>
@@ -1079,17 +1218,29 @@ class MediaLinkAdmin {
 		</form>
 
 	<h3><?php _e('The to playback of video and music, that such as the next, .htaccess may be required to the directory containing the data file by the environment.', 'medialink') ?></h3>
-	<textarea rows="10" cols="30">
-AddType video/mp4 .mp4
-AddType video/mp4 .m4v
-AddType video/ogg .ogv
-AddType video/webm .webm
-AddType video/x-flv .flv
-AddType audio/mpeg .mp3
-AddType audio/mpeg .m4a
-AddType audio/mpeg .m4b
-AddType audio/ogg .ogg
-AddType audio/ogg .oga
+	<textarea rows="23" cols="100">
+AddType video/mp4 mp4 m4v
+AddType video/webm webm
+AddType video/ogg ogv
+AddType video/x-flv flv
+AddType audio/mpeg mp3 m4a m4b
+AddType audio/ogg ogg oga
+AddType audio/midi mid midi
+AddType application/pdf pdf
+AddType application/msword doc
+AddType application/vnd.ms-excel xla xls xlt xlw
+AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document docx
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx
+AddType application/vnd.ms-powerpoint pot pps ppt
+AddType application/vnd.openxmlformats-officedocument.presentationml.presentation pptx
+AddType application/vnd.ms-powerpoint.presentation.macroEnabled.12 pptm
+AddType application/vnd.openxmlformats-officedocument.presentationml.slideshow ppsx
+AddType application/vnd.ms-powerpoint.slideshow.macroEnabled.12 ppsm
+AddType application/vnd.openxmlformats-officedocument.presentationml.template potx
+AddType application/vnd.ms-powerpoint.template.macroEnabled.12 potm
+AddType application/vnd.ms-powerpoint.addin.macroEnabled.12 ppam
+AddType application/vnd.openxmlformats-officedocument.presentationml.slide sldx
+AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 	</textarea>
 
 		</div>

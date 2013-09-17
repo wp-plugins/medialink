@@ -4,15 +4,15 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 1.38
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
+MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 
 == Description ==
 
-Create a playlist (image, music, video) of data in the media library below the specified, MediaLink displays Pages by passing the data to various software.
+Create a playlist (image, music, video, document) of data in the media library below the specified, MediaLink displays Pages by passing the data to various software.
 
 If you want to output the gallery by specifying the directory, please use the [GalleryLink](http://wordpress.org/plugins/gallerylink/).
 
@@ -42,7 +42,7 @@ Bundled software and function
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Add a new Page
 4. Write a short code. The following text field. `[medialink]`
-5. For pictures `[medialink]`. For video `[medialink set='movie']`. For music `[medialink set='music']`.
+5. For pictures `[medialink]`. For video `[medialink set='movie']`. For music `[medialink set='music']`. For document `[medialink set='document']`.
 6. Please read. (Settings > MediaLink)
 
     [Settings](http://wordpress.org/plugins/medialink/other_notes/)
@@ -58,6 +58,11 @@ none
 none
 
 == Changelog ==
+
+= 2.0 =
+Add document mode.
+Change /languages
+Change readme.txt
 
 = 1.38 =
 Add the short code attribute called generate_rssfeed .
@@ -196,6 +201,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.0 =
 = 1.38 =
 = 1.37 =
 = 1.36 =
@@ -254,11 +260,13 @@ When you view this Page, it is displayed in slideshow mode.
 
 Customization 1
 
-MediaLink is also handles video and music. If you are dealing with music and video, please add the following attributes to the short code.
+MediaLink is also handles video and music and document. If you are dealing with music and video and document, please add the following attributes to the short code.
 
 Video set='movie'
 
 Music set='music'
+
+Document set='document'
 
 * (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.
 

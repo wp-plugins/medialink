@@ -2,8 +2,8 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 1.38
-Description: MediaLink outputs as a gallery from the media library(image and music and video). Support the classification of the category.
+Version: 2.0
+Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
 Domain Path: /languages
@@ -177,6 +177,25 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_slideshow_searchbox_show'); }
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_slideshow_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_slideshow_credit_show'); }
+	} else if ( $set === 'document' ){
+		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_document_suffix_pc'); }
+		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_document_suffix_sp'); }
+		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_document_display_pc')); }
+		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_document_display_sp')); }
+		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_document_suffix_thumbnail'); }
+		if( empty($include_cat) ) { $include_cat = get_option('medialink_document_include_cat'); }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = get_option('medialink_document_generate_rssfeed'); }
+		if( empty($rssname) ) {
+			$rssname = get_option('medialink_document_rssname');
+			$rssdef = true;
+		}
+		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_document_rssmax')); }
+		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_document_categorylinks_show'); }
+		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_document_pagelinks_show'); }
+		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_document_sortlinks_show'); }
+		if( empty($searchbox_show) ) { $searchbox_show = get_option('medialink_document_searchbox_show'); }
+		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_document_rssicon_show'); }
+		if( empty($credit_show) ) { $credit_show = get_option('medialink_document_credit_show'); }
 	}
 
 	$mode = NULL;
@@ -249,6 +268,7 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->catparam = $catparam;
 	$medialink->topurl = $topurl;
 	$medialink->document_root = $document_root;
+	$medialink->set = $set;
 	$medialink->mode = $mode;
 	$medialink->effect = $effect;
 	$medialink->rssname = $rssname;
@@ -305,6 +325,7 @@ function medialink_func( $atts, $html = NULL ) {
 	$rssthumblinks = array();
 	$rsslargemediumlinks = array();
 	$titlename = NULL;
+	$pluginurl = plugins_url($path='',$scheme=null);
 	if ($attachments) {
 		foreach ( $attachments as $attachment ) {
 			$title = $attachment->post_title;
@@ -337,7 +358,7 @@ function medialink_func( $atts, $html = NULL ) {
 					$largelink = $large_src[0];
 				} else {
 					if( !empty($thumbnail) ) {
-						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) ) {
+						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) || $set === 'document') {
 							$thumbname = NULL;
 							$thumbname_md5 = NULL;
 							$thumbpath = NULL;
@@ -351,7 +372,21 @@ function medialink_func( $atts, $html = NULL ) {
 							} else if( file_exists( $thumbcheck_md5 ) ){
 								$thumblink = '<img src = "'.$thumbpath.$thumbname_md5.$thumbnail.'">';
 							} else {
-								$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+								if ( $set === 'document' && $thumbnail === 'icon' ) {
+									if ( $suffix === '.pdf' ) {
+										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/pdf.png">';
+									} else if ( $suffix === '.doc' || $suffix === '.docx' ) {
+										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/word.png">';
+									} else if ( $suffix === '.xls' || $suffix === '.xlsx' || $suffix === '.xla' || $suffix === '.xlt' || $suffix === '.xlw' ) {
+										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/excel.png">';
+									} else if ( $suffix === '.pot' || $suffix === '.pps' || $suffix === '.ppt' || $suffix === '.pptx' || $suffix === '.pptm' || $suffix === '.ppsx' || $suffix === '.ppsm' || $suffix === '.potx' || $suffix === '.potm' || $suffix === '.ppam' || $suffix === '.sldx' || $suffix === '.sldm' ) {
+										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/powerpoint.png">';
+									} else {
+										$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+									}
+								} else {
+									$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+								}
 							}
 						}
 					}
@@ -540,8 +575,6 @@ $searchform = <<<SEARCHFORM
 </form>
 SEARCHFORM;
 
-$pluginurl = plugins_url($path='',$scheme=null);
-
 list($movie_container_w, $movie_container_h) = explode( 'x', get_option('medialink_movie_container') );
 
 //MoviePlayerContainer
@@ -644,7 +677,9 @@ FLASHMUSICPLAYER;
 			if ( $set === 'music' ){
 				wp_enqueue_script( 'jQuery SWFObject', $pluginurl.'/medialink/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
 			}
-			$html .= '<h2>'.$selectedfilename.'</h2>';
+			if ( $set <> 'document' ){
+				$html .= '<h2>'.$selectedfilename.'</h2>';
+			}
 		}
 	} else if ( $mode === 'sp') {
 		if ( $set === 'album' || $set === 'slideshow'){
@@ -798,7 +833,7 @@ FLASHMUSICPLAYER;
 		$xml_title =  get_bloginfo('name').' | '.get_the_title();
 
 		$rssfeed_url = $topurl.'/'.$rssname.'.xml';
-		if ( $set === "album" || $set === "slideshow" ) {
+		if ( $set === "album" || $set === "slideshow" || $set === "document" ) {
 			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/rssfeeds.png"></a></div>';
 		} else {
 			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.$pluginurl.'/medialink/icon/podcast.png"></a></div>';

@@ -18,6 +18,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$checkbox4 = apply_filters('widget_checkbox', $instance['checkbox4']);
 		$checkbox5 = apply_filters('widget_checkbox', $instance['checkbox5']);
 		$checkbox6 = apply_filters('widget_checkbox', $instance['checkbox6']);
+		$checkbox7 = apply_filters('widget_checkbox', $instance['checkbox7']);
 
 		$wp_uploads = wp_upload_dir();
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
@@ -30,6 +31,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$xml4 = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
 		$xml5 = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
 		$xml6 = $wp_uploads_path.'/'.get_option('medialink_slideshow_rssname').'.xml';
+		$xml7 = $wp_uploads_path.'/'.get_option('medialink_document_rssname').'.xml';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
@@ -96,6 +98,16 @@ class MediaLinkWidgetItem extends WP_Widget {
 				</tr>
 				<?
 			}
+			if ($checkbox7 && file_exists($documentrootname.$xml7)) {
+				$xmldata7 = simplexml_load_file($servername.$xml7);
+				?>
+				<tr>
+				<td align="center" valign="middle"><a href="<?php echo $servername.$xml7; ?>">
+				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
+				<td align="left" valign="middle"><?php echo $xmldata7->channel->title; ?></td>
+				</tr>
+				<?
+			}
 			echo '</table>';
 			echo $after_widget;
 		}
@@ -110,6 +122,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$instance['checkbox4'] = strip_tags($new_instance['checkbox4']);
 		$instance['checkbox5'] = strip_tags($new_instance['checkbox5']);
 		$instance['checkbox6'] = strip_tags($new_instance['checkbox6']);
+		$instance['checkbox7'] = strip_tags($new_instance['checkbox7']);
 		return $instance;
 	}
 	
@@ -121,6 +134,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$checkbox4 = esc_attr($instance['checkbox4']);
 		$checkbox5 = esc_attr($instance['checkbox5']);
 		$checkbox6 = esc_attr($instance['checkbox6']);
+		$checkbox7 = esc_attr($instance['checkbox7']);
 
 		?>
 		<p>
@@ -172,6 +186,13 @@ class MediaLinkWidgetItem extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('checkbox6'); ?> ">
 			<input class="widefat" id="<?php echo $this->get_field_id('checkbox6'); ?>" name="<?php echo $this->get_field_name('checkbox6'); ?>" type="checkbox"<?php checked('Slideshow', $checkbox6); ?> value="Slideshow" />
 			<?php _e('Slideshow (RSS)', 'medialink'); ?></label>
+		</td>
+		</tr>
+		<tr>
+		<td align="left" valign="middle" nowrap>
+			<label for="<?php echo $this->get_field_id('checkbox7'); ?> ">
+			<input class="widefat" id="<?php echo $this->get_field_id('checkbox7'); ?>" name="<?php echo $this->get_field_name('checkbox7'); ?>" type="checkbox"<?php checked('Document', $checkbox7); ?> value="Document" />
+			<?php _e('Document (RSS)', 'medialink'); ?></label>
 		</td>
 		</tr>
 		</table>

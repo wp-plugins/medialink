@@ -17,6 +17,8 @@
 	delete_option('medialink_music_suffix_sp');
 	delete_option('medialink_slideshow_suffix_pc');
 	delete_option('medialink_slideshow_suffix_sp');
+	delete_option('medialink_document_suffix_pc');
+	delete_option('medialink_document_suffix_sp');
 	delete_option('medialink_album_display_pc');
 	delete_option('medialink_album_display_sp');
 	delete_option('medialink_movie_display_pc');
@@ -25,27 +27,34 @@
 	delete_option('medialink_music_display_sp');
 	delete_option('medialink_slideshow_display_pc'); 	
 	delete_option('medialink_slideshow_display_sp'); 	
+	delete_option('medialink_document_display_pc');
+	delete_option('medialink_document_display_sp');
 	delete_option('medialink_album_image_show_size');
 	delete_option('medialink_slideshow_image_show_size');
 	delete_option('medialink_movie_suffix_thumbnail');
 	delete_option('medialink_music_suffix_thumbnail');
+	delete_option('medialink_document_suffix_thumbnail');
 	delete_option('medialink_album_include_cat');
 	delete_option('medialink_movie_include_cat');
 	delete_option('medialink_music_include_cat');
 	delete_option('medialink_slideshow_include_cat');
+	delete_option('medialink_document_include_cat');
 	delete_option('medialink_exclude_cat');
 	delete_option('medialink_album_generate_rssfeed');
 	delete_option('medialink_movie_generate_rssfeed');
 	delete_option('medialink_music_generate_rssfeed');
 	delete_option('medialink_slideshow_generate_rssfeed');
+	delete_option('medialink_document_generate_rssfeed');
 	delete_option('medialink_album_rssname');
 	delete_option('medialink_movie_rssname');
 	delete_option('medialink_music_rssname');
 	delete_option('medialink_slideshow_rssname');
+	delete_option('medialink_document_rssname');
 	delete_option('medialink_album_rssmax');
 	delete_option('medialink_movie_rssmax');
 	delete_option('medialink_music_rssmax');
 	delete_option('medialink_slideshow_rssmax');
+	delete_option('medialink_document_rssmax');
 	delete_option('medialink_movie_container');
 	delete_option('medialink_css_pc_listwidth');
 	delete_option('medialink_css_pc_listthumbsize');
@@ -81,5 +90,11 @@
 	delete_option('medialink_slideshow_searchbox_show');
 	delete_option('medialink_slideshow_rssicon_show');
 	delete_option('medialink_slideshow_credit_show');
+	delete_option('medialink_document_categorylinks_show');
+	delete_option('medialink_document_pagelinks_show');
+	delete_option('medialink_document_sortlinks_show');
+	delete_option('medialink_document_searchbox_show');
+	delete_option('medialink_document_rssicon_show');
+	delete_option('medialink_document_credit_show');
 
 ?>

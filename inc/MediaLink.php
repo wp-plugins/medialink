@@ -5,6 +5,7 @@ class MediaLink {
 	public $catparam;
 	public $topurl;
 	public $document_root;
+	public $set;
 	public $mode;
 	public $effect;
 	public $page;
@@ -88,7 +89,7 @@ class MediaLink {
 				$linkfile = '<li><a href="'.$imgshowlink.'" title="'.$titlename.'"><img src="'.$this->topurl.$thumblink.'" alt="'.$titlename.'" title="'.$titlename.'"></a></li>';
 			}
 		}else{
-			if ( $this->mode === 'sp' ) {
+			if ( $this->mode === 'sp' || $this->set === 'document' ) {
 				$linkfile = '<li>'.$thumblink.'<a href="'.$this->topurl.$file.'" '.$mimetype.'>'.$titlename.'</a></li>';
 			}else{ //PC
 				$page =NULL;
@@ -219,8 +220,12 @@ class MediaLink {
 			}
 			$img_url = '<a href="'.$link_url.'"><img src = "'.$thumblink.'"></a>';
 		}else{
-			$link_url = 'http://'.$servername.$scriptname.$fparam;
-			$enc_url = 'http://'.$servername.$this->topurl.$file.$suffix;
+			if ( $this->set === 'document' ){
+				$link_url = 'http://'.$servername.$this->topurl.$file.$suffix;
+			} else {
+				$link_url = 'http://'.$servername.$scriptname.$fparam;
+				$enc_url = 'http://'.$servername.$this->topurl.$file.$suffix;
+			}
 			if( !empty($thumblink) ) {
 				$img_url = '<a href="'.$link_url.'">'.$thumblink.'</a>';
 			}
@@ -230,7 +235,7 @@ class MediaLink {
 		$xmlitem .= "<item>\n";
 		$xmlitem .= "<title>".$titlename."</title>\n";
 		$xmlitem .= "<link>".$link_url."</link>\n";
-		if ( !preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
+		if ( $this->set === 'movie' || $this->set === 'music' ){
 			$xmlitem .= '<enclosure url="'.$enc_url.'" length="'.$filesize.'" type="'.$this->mime_type($suffix).'" />'."\n";
 		}
 		if( !empty($thumblink) ) {
