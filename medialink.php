@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 2.0
+Version: 2.1
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -82,15 +82,9 @@ function medialink_func( $atts, $html = NULL ) {
 	), $atts));
 
 	$wp_uploads = wp_upload_dir();
-	$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
+	$wp_uploads_baseurl = $wp_uploads['baseurl'];
+	$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads_baseurl);
 	$topurl = $wp_uploads_path;
-
-	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
-	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
-
-	if ( empty($exclude_cat) ) {
-		$exclude_cat = get_option('medialink_exclude_cat');
-	}
 
 	$rssdef = false;
 	if ( $set === 'album' ){
@@ -197,11 +191,16 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_document_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_document_credit_show'); }
 	}
+	if ( empty($exclude_cat) ) {
+		$exclude_cat = get_option('medialink_exclude_cat');
+	}
+
+	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
+	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
 
 	$mode = NULL;
 	$suffix = NULL;
 	$display = NULL;
-
 	$mode = $medialink->agent_check();
 	if ( $mode === 'pc' ) {
 		$effect = $effect_pc;
@@ -226,7 +225,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$page = NULL;
 	$search = NULL;
 	$sort =  NULL;
-
 	if (!empty($_GET['mlcat'])){
 		$catparam = urldecode($_GET['mlcat']);	//categories
 	}
@@ -242,7 +240,6 @@ function medialink_func( $atts, $html = NULL ) {
 	if (!empty($_GET['sort'])){
 		$sort = $_GET['sort'];				//sort
 	}
-
 	$catparam = mb_convert_encoding($catparam, "UTF-8", "auto");
 	$fparam = mb_convert_encoding($fparam, "UTF-8", "auto");
 	$search = mb_convert_encoding($search, "UTF-8", "auto");
@@ -265,8 +262,19 @@ function medialink_func( $atts, $html = NULL ) {
 	$categoryselectall = mb_convert_encoding($categoryselectall, "UTF-8", "auto");
 	$categoryselectbutton = mb_convert_encoding($categoryselectbutton, "UTF-8", "auto");
 
+	$pluginurl = plugins_url($path='',$scheme=null);
+
+	$medialink->thumbnail = $thumbnail;
+	$medialink->include_cat = $include_cat;
+	$medialink->exclude_cat = $exclude_cat;
+	$medialink->image_show_size = $image_show_size;
+	$medialink->generate_rssfeed = $generate_rssfeed;
+	$medialink->search = $search;
 	$medialink->catparam = $catparam;
 	$medialink->topurl = $topurl;
+	$medialink->wp_uploads_baseurl = $wp_uploads_baseurl;
+	$medialink->wp_path = $wp_path;
+	$medialink->pluginurl = $pluginurl;
 	$medialink->document_root = $document_root;
 	$medialink->set = $set;
 	$medialink->mode = $mode;
@@ -274,11 +282,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->rssname = $rssname;
 	$medialink->rssmax = $rssmax;
 
-	$file = NULL;
-	$attachment = NULL;
-	$title = NULL;
-	$caption = NULL;
-	$linkfiles = NULL;
 	$sort_key = NULL;
 	$sort_order = NULL;
 	if ( $sort === "n" || empty($sort) ) {
@@ -298,6 +301,7 @@ function medialink_func( $atts, $html = NULL ) {
 		$sort_key = 'title';
 		$sort_order = 'ASC';
 	}
+	$medialink->sort_order = $sort_order;
 
 	$args = array(
 		'post_type' => 'attachment',
@@ -312,119 +316,8 @@ function medialink_func( $atts, $html = NULL ) {
 
 	$attachments = get_posts($args);
 
-	$rsscount = 0;
-	$filecount = 0;
-	$categorycount = 0;
-	$files = array();
-	$categories = array();
-	$thumblinks = array();
-	$largemediumlinks = array();
-	$titles = array();
-	$rssfiles = array();
-	$rsstitles = array();
-	$rssthumblinks = array();
-	$rsslargemediumlinks = array();
-	$titlename = NULL;
-	$pluginurl = plugins_url($path='',$scheme=null);
-	if ($attachments) {
-		foreach ( $attachments as $attachment ) {
-			$title = $attachment->post_title;
-			$caption = $attachment->post_excerpt;
-			$suffix = '.'.end(explode('.', $attachment->guid));
-			if( empty($exclude_cat) ) { 
-				$loops = TRUE;
-			} else {
-				if ( preg_match("/".$exclude_cat."/", $caption) ) {
-					$loops = FALSE;
-				} else {
-					$loops = TRUE;
-				}
-			}
-			if( $loops === TRUE ) {
-				if ( !empty($caption) && (($caption === $include_cat) || empty($include_cat)) ) {
-					$categories[$categorycount] = $caption;
-					++$categorycount;
-				}
-				$thumblink = NULL;
-				$mediumlink = NULL;
-				$largelink = NULL;
-				$largemediumlink = NULL;
-				if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $suffix) ){
-					$thumb_src = wp_get_attachment_image_src($attachment->ID);
-					$medium_src = wp_get_attachment_image_src($attachment->ID, 'medium');
-					$large_src = wp_get_attachment_image_src($attachment->ID, 'large');
-					$thumblink = $thumb_src[0];
-					$mediumlink = $medium_src[0];
-					$largelink = $large_src[0];
-				} else {
-					if( !empty($thumbnail) ) {
-						if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $thumbnail) || $set === 'document') {
-							$thumbname = NULL;
-							$thumbname_md5 = NULL;
-							$thumbpath = NULL;
-							$thumbname = str_replace($suffix, '', end(explode('/', $attachment->guid)));
-							$thumbname_md5 = md5($thumbname);
-							$thumbpath = str_replace($thumbname.$suffix, '', $attachment->guid);
-							$thumbcheck = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $thumbpath.$thumbname.$thumbnail);
-							$thumbcheck_md5 = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $thumbpath.$thumbname_md5.$thumbnail);
-							if( file_exists( $thumbcheck ) ){
-								$thumblink = '<img src = "'.$thumbpath.$thumbname.$thumbnail.'">';
-							} else if( file_exists( $thumbcheck_md5 ) ){
-								$thumblink = '<img src = "'.$thumbpath.$thumbname_md5.$thumbnail.'">';
-							} else {
-								if ( $set === 'document' && $thumbnail === 'icon' ) {
-									if ( $suffix === '.pdf' ) {
-										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/pdf.png">';
-									} else if ( $suffix === '.doc' || $suffix === '.docx' ) {
-										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/word.png">';
-									} else if ( $suffix === '.xls' || $suffix === '.xlsx' || $suffix === '.xla' || $suffix === '.xlt' || $suffix === '.xlw' ) {
-										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/excel.png">';
-									} else if ( $suffix === '.pot' || $suffix === '.pps' || $suffix === '.ppt' || $suffix === '.pptx' || $suffix === '.pptm' || $suffix === '.ppsx' || $suffix === '.ppsm' || $suffix === '.potx' || $suffix === '.potm' || $suffix === '.ppam' || $suffix === '.sldx' || $suffix === '.sldm' ) {
-										$thumblink = '<img src = "'.$pluginurl.'/medialink/icon/powerpoint.png">';
-									} else {
-										$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
-									}
-								} else {
-									$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
-								}
-							}
-						}
-					}
-				}
-				$attachment = str_replace($wp_path, '', ABSPATH).$wp_uploads_path.str_replace($wp_uploads['baseurl'], '', $attachment->guid);
-				$attachment = str_replace($document_root, "", $attachment);
-				if ( $set === 'album' || $set === 'slideshow' ) {
-					if ( $image_show_size === 'Medium' ) {
-						$largemediumlink = $mediumlink;
-					} else if ( $image_show_size === 'Large' ) {
-						$largemediumlink = $largelink;
-					} else {
-						$largemediumlink = NULL;
-					}
-				}
-				if ( $generate_rssfeed === 'on' ) {
-					if ( $sort_order === 'DESC' && empty($search) ) {
-						if ( ($caption === $include_cat) || empty($include_cat) ) {
-							$rssfiles[$rsscount] = $attachment;
-							$rsstitles[$rsscount] = $title;
-							$rssthumblinks [$rsscount] = $thumblink;
-							$rsslargemediumlinks [$rsscount] = $largemediumlink;
-							++$rsscount;
-						}
-					}
-				}
-				if ( ($caption === $catparam || empty($catparam)) ) {
-					if ( ($caption === $include_cat) || empty($include_cat) ) {
-						$files[$filecount] = $attachment;
-						$titles[$filecount] = $title;
-						$thumblinks [$filecount] = $thumblink;
-						$largemediumlinks [$filecount] = $largemediumlink;
-						++$filecount;
-					}
-				}
-			}
-		}
-	}
+	list($files, $titles, $thumblinks, $largemediumlinks, $categories, $rssfiles, $rsstitles, $rssthumblinks, $rsslargemediumlinks) = $medialink->scan_media($attachments);
+	unset($attachments);
 
 	$maxpage = ceil(count($files) / $display);
 	if(empty($page)){
@@ -443,6 +336,8 @@ function medialink_func( $atts, $html = NULL ) {
 		$endfiles = ( $display * $page ) - 1;
 	}
 
+	$linkfiles = NULL;
+	$titlename = NULL;
 	if ($files) {
 		for ( $i = $beginfiles; $i <= $endfiles; $i++ ) {
 			$linkfile = $medialink->print_file($files[$i],$titles[$i],$thumblinks[$i],$largemediumlinks[$i]);
@@ -471,6 +366,7 @@ function medialink_func( $atts, $html = NULL ) {
 	}
 	$linkcategories = $linkcategories.$linkcategory;
 
+	$linkpages = NULL;
 	$linkpages = $medialink->print_pages();
 
 	$servername = $_SERVER['HTTP_HOST'];

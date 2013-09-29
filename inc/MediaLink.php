@@ -2,9 +2,19 @@
 
 class MediaLink {
 
+	public $thumbnail;
+	public $include_cat;
+	public $exclude_cat;
+	public $image_show_size;
+	public $generate_rssfeed;
+	public $sort_order;
+	public $search;
 	public $catparam;
 	public $topurl;
 	public $document_root;
+	public $wp_uploads_baseurl;
+	public $wp_path;
+	public $pluginurl;
 	public $set;
 	public $mode;
 	public $effect;
@@ -35,6 +45,150 @@ class MediaLink {
 		}
 
 		return $mode;
+
+	}
+
+	/* ==================================================
+	 * @param	array	$attachments
+	 * @param	string	$include_cat
+	 * @param	string	$exclude_cat
+	 * @param	string	$thumbnail
+	 * @param	string	$image_show_size
+	 * @param	string	$generate_rssfeed
+	 * @param	string	$sort_order
+	 * @param	string	$search
+	 * @param	string	$topurl
+	 * @param	string	$wp_path
+	 * @param	string	$pluginurl
+	 * @return	array	$files
+	 * @return	array	$titles
+	 * @return	array	$thumblinks
+	 * @return	array	$largemediumlinks
+	 * @return	array	$categories
+	 * @return	array	$rssfiles
+	 * @return	array	$rsstitles
+	 * @return	array	$rssthumblinks
+	 * @return	array	$rsslargemediumlinks
+	 * @since	2.1
+	 */
+	function scan_media($attachments){
+
+		$attachment = NULL;
+		$title = NULL;
+		$caption = NULL;
+		$rsscount = 0;
+		$filecount = 0;
+		$categorycount = 0;
+		$files = array();
+		$categories = array();
+		$thumblinks = array();
+		$largemediumlinks = array();
+		$titles = array();
+		$rssfiles = array();
+		$rsstitles = array();
+		$rssthumblinks = array();
+		$rsslargemediumlinks = array();
+		if ($attachments) {
+			foreach ( $attachments as $attachment ) {
+				$title = $attachment->post_title;
+				$caption = $attachment->post_excerpt;
+				$suffix = '.'.end(explode('.', $attachment->guid));
+				if( empty($this->exclude_cat) ) { 
+					$loops = TRUE;
+				} else {
+					if ( preg_match("/".$this->exclude_cat."/", $caption) ) {
+						$loops = FALSE;
+					} else {
+						$loops = TRUE;
+					}
+				}
+				if( $loops === TRUE ) {
+					if ( !empty($caption) && (($caption === $this->include_cat) || empty($this->include_cat)) ) {
+						$categories[$categorycount] = $caption;
+						++$categorycount;
+					}
+					$thumblink = NULL;
+					$mediumlink = NULL;
+					$largelink = NULL;
+					$largemediumlink = NULL;
+					if ( $this->set === 'album' ){
+						$thumb_src = wp_get_attachment_image_src($attachment->ID);
+						$medium_src = wp_get_attachment_image_src($attachment->ID, 'medium');
+						$large_src = wp_get_attachment_image_src($attachment->ID, 'large');
+						$thumblink = $thumb_src[0];
+						$mediumlink = $medium_src[0];
+						$largelink = $large_src[0];
+					} else {
+						if( !empty($this->thumbnail) ) {
+							if ( preg_match( "/jpg|jpeg|jpe|gif|png|bmp|tif|tiff|ico/i", $this->thumbnail) || $this->set === 'document') {
+								$thumbname = NULL;
+								$thumbname_md5 = NULL;
+								$thumbpath = NULL;
+								$thumbname = str_replace($suffix, '', end(explode('/', $attachment->guid)));
+								$thumbname_md5 = md5($thumbname);
+								$thumbpath = str_replace($thumbname.$suffix, '', $attachment->guid);
+								$thumbcheck = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname.$this->thumbnail);
+								$thumbcheck_md5 = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname_md5.$this->thumbnail);
+								if( file_exists( $thumbcheck ) ){
+									$thumblink = '<img src = "'.$thumbpath.$thumbname.$this->thumbnail.'">';
+								} else if( file_exists( $thumbcheck_md5 ) ){
+									$thumblink = '<img src = "'.$thumbpath.$thumbname_md5.$this->thumbnail.'">';
+								} else {
+									if ( $this->set === 'document' && $this->thumbnail === 'icon' ) {
+										if ( $suffix === '.pdf' ) {
+											$thumblink = '<img src = "'.$this->pluginurl.'/medialink/icon/pdf.png">';
+										} else if ( $suffix === '.doc' || $suffix === '.docx' ) {
+											$thumblink = '<img src = "'.$this->pluginurl.'/medialink/icon/word.png">';
+										} else if ( $suffix === '.xls' || $suffix === '.xlsx' || $suffix === '.xla' || $suffix === '.xlt' || $suffix === '.xlw' ) {
+											$thumblink = '<img src = "'.$this->pluginurl.'/medialink/icon/excel.png">';
+										} else if ( $suffix === '.pot' || $suffix === '.pps' || $suffix === '.ppt' || $suffix === '.pptx' || $suffix === '.pptm' || $suffix === '.ppsx' || $suffix === '.ppsm' || $suffix === '.potx' || $suffix === '.potm' || $suffix === '.ppam' || $suffix === '.sldx' || $suffix === '.sldm' ) {
+											$thumblink = '<img src = "'.$this->pluginurl.'/medialink/icon/powerpoint.png">';
+										} else {
+											$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+										}
+									} else {
+										$thumblink = wp_get_attachment_image( $attachment->ID, 'thumbnail', TRUE );
+									}
+								}
+							}
+						}
+					}
+					$attachment = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $attachment->guid);
+					$attachment = str_replace($this->document_root, "", $attachment);
+					if ( $this->set === 'album' || $this->set === 'slideshow' ) {
+						if ( $this->image_show_size === 'Medium' ) {
+							$largemediumlink = $mediumlink;
+						} else if ( $this->image_show_size === 'Large' ) {
+							$largemediumlink = $largelink;
+						} else {
+							$largemediumlink = NULL;
+						}
+					}
+					if ( $this->generate_rssfeed === 'on' ) {
+						if ( $this->sort_order === 'DESC' && empty($this->search) ) {
+							if ( ($caption === $this->include_cat) || empty($this->include_cat) ) {
+								$rssfiles[$rsscount] = $attachment;
+								$rsstitles[$rsscount] = $title;
+								$rssthumblinks [$rsscount] = $thumblink;
+								$rsslargemediumlinks [$rsscount] = $largemediumlink;
+								++$rsscount;
+							}
+						}
+					}
+					if ( ($caption === $this->catparam || empty($this->catparam)) ) {
+						if ( ($caption === $this->include_cat) || empty($this->include_cat) ) {
+							$files[$filecount] = $attachment;
+							$titles[$filecount] = $title;
+							$thumblinks [$filecount] = $thumblink;
+							$largemediumlinks [$filecount] = $largemediumlink;
+							++$filecount;
+						}
+					}
+				}
+			}
+		}
+
+		return array($files, $titles, $thumblinks, $largemediumlinks, $categories, $rssfiles, $rsstitles, $rssthumblinks, $rsslargemediumlinks);
 
 	}
 
@@ -188,6 +342,7 @@ class MediaLink {
 
 		$filesize = filesize($this->document_root.$file);
 		$filestat = stat($this->document_root.$file);
+
 		date_default_timezone_set(timezone_name_from_abbr(get_the_date(T)));
 		$stamptime = date(DATE_RSS,  $filestat['mtime']);
 
