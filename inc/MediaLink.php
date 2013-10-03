@@ -261,7 +261,7 @@ class MediaLink {
 					$permlinkstr = '?mlcat=';
 				}
 
-				$linkfile = '<li>'.$thumblink.'<a href="'.$scriptname.$permlinkstr.$this->catparam.'&mlp='.$page.'&f='.$fileparam.'">'.$filetitle.'</a></li>';
+				$linkfile = '<li>'.$thumblink.'<a href="'.$scriptname.$permlinkstr.$this->catparam.'&mlp='.$page.'&f='.$fileparam.'&sort='.$_GET['sort'].'">'.$filetitle.'</a></li>';
 			}
 		}
 
