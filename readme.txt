@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ none
 none
 
 == Changelog ==
+
+= 2.3 =
+Added shortcode attribute is the type of sort.
 
 = 2.2 =
 Optimization
@@ -207,6 +210,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.3 =
 = 2.2 =
 = 2.1 =
 = 2.0 =
@@ -256,7 +260,7 @@ Change readme.txt
 
 Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.
 
-[medialink]
+[medialink set='album']
 
 When you view this Page, it is displayed in album mode. It is the result of a search for Media Library. The Settings> Media, determine the size of the thumbnail. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.
 

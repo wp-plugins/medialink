@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 2.2
+Version: 2.3
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -57,7 +57,8 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink = new MediaLink();
 
 	extract(shortcode_atts(array(
-        'set' => 'album',
+        'set' => '',
+        'sort' => '',
         'effect_pc' => '',
         'effect_sp' => '',
         'include_cat' => '',
@@ -88,6 +89,7 @@ function medialink_func( $atts, $html = NULL ) {
 
 	$rssdef = false;
 	if ( $set === 'album' ){
+		if( empty($sort) ) { $sort = get_option('medialink_album_sort'); }
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_album_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_album_effect_sp'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_album_suffix_pc'); }
@@ -109,6 +111,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_album_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_album_credit_show'); }
 	} else if ( $set === 'movie' ){
+		if( empty($sort) ) { $sort = get_option('medialink_movie_sort'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_movie_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_movie_suffix_pc2'); }
 		if( empty($suffix_flash) ) { $suffix_flash = get_option('medialink_movie_suffix_flash'); }
@@ -130,6 +133,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_movie_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_movie_credit_show'); }
 	} else if ( $set === 'music' ){
+		if( empty($sort) ) { $sort = get_option('medialink_music_sort'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_music_suffix_pc'); }
 		if( empty($suffix_pc2) ) { $suffix_pc2 = get_option('medialink_music_suffix_pc2'); }
 		if( empty($suffix_flash) ) { $suffix_flash = get_option('medialink_music_suffix_flash'); }
@@ -151,6 +155,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_music_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_music_credit_show'); }
 	} else if ( $set === 'slideshow' ){
+		if( empty($sort) ) { $sort = get_option('medialink_slideshow_sort'); }
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_slideshow_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_slideshow_effect_sp'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_slideshow_suffix_pc'); }
@@ -172,6 +177,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssicon_show) ) { $rssicon_show = get_option('medialink_slideshow_rssicon_show'); }
 		if( empty($credit_show) ) { $credit_show = get_option('medialink_slideshow_credit_show'); }
 	} else if ( $set === 'document' ){
+		if( empty($sort) ) { $sort = get_option('medialink_document_sort'); }
 		if( empty($suffix_pc) ) { $suffix_pc = get_option('medialink_document_suffix_pc'); }
 		if( empty($suffix_sp) ) { $suffix_sp = get_option('medialink_document_suffix_sp'); }
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_document_display_pc')); }
@@ -224,7 +230,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$fparam = NULL;
 	$page = NULL;
 	$search = NULL;
-	$sort =  NULL;
 	if (!empty($_GET['mlcat'])){
 		$catparam = urldecode($_GET['mlcat']);	//categories
 	}
@@ -284,20 +289,16 @@ function medialink_func( $atts, $html = NULL ) {
 
 	$sort_key = NULL;
 	$sort_order = NULL;
-	if ( $sort === "n" || empty($sort) ) {
-		// new
+	if ( $sort === 'new' || empty($sort) ) {
 		$sort_key = 'date';
 		$sort_order = 'DESC';
-	} else if ($sort === 'o') {
-		// old
+	} else if ($sort === 'old') {
 		$sort_key = 'date';
 		$sort_order = 'ASC';
-	} else if ($sort === 'd') {
-		// des
+	} else if ($sort === 'des') {
 		$sort_key = 'title';
 		$sort_order = 'DESC';
-	} else if ($sort === 'a') {
-		// asc
+	} else if ($sort === 'asc') {
 		$sort_key = 'title';
 		$sort_order = 'ASC';
 	}
@@ -416,29 +417,28 @@ function medialink_func( $atts, $html = NULL ) {
 		$page_no_tag_left = NULL;
 		$page_no_tag_right = NULL;
 	}
-	if ( $sort === "n" || empty($sort) ) {
-		// new
+	if ( $sort === 'new' || empty($sort) ) {
 		$sortlink_n = $page_no_tag_left.$sortnamenew.$page_no_tag_right;
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'o') {
+		$sortlink_o = '<a href="'.$scripturl.'&sort=old">'.$sortnameold.'</a>';
+		$sortlink_d = '<a href="'.$scripturl.'&sort=des">'.$sortnamedes.'</a>';
+		$sortlink_a = '<a href="'.$scripturl.'&sort=asc">'.$sortnameasc.'</a>';
+	} else if ($sort === 'old') {
 		// old
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
+		$sortlink_n = '<a href="'.$scripturl.'&sort=new">'.$sortnamenew.'</a>';
 		$sortlink_o = $page_no_tag_left.$sortnameold.$page_no_tag_right;
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'd') {
+		$sortlink_d = '<a href="'.$scripturl.'&sort=des">'.$sortnamedes.'</a>';
+		$sortlink_a = '<a href="'.$scripturl.'&sort=asc">'.$sortnameasc.'</a>';
+	} else if ($sort === 'des') {
 		// des
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
+		$sortlink_n = '<a href="'.$scripturl.'&sort=new">'.$sortnamenew.'</a>';
+		$sortlink_o = '<a href="'.$scripturl.'&sort=old">'.$sortnameold.'</a>';
 		$sortlink_d = $page_no_tag_left.$sortnamedes.$page_no_tag_right;
-		$sortlink_a = '<a href="'.$scripturl.'&sort=a">'.$sortnameasc.'</a>';
-	} else if ($sort === 'a') {
+		$sortlink_a = '<a href="'.$scripturl.'&sort=asc">'.$sortnameasc.'</a>';
+	} else if ($sort === 'asc') {
 		// asc
-		$sortlink_n = '<a href="'.$scripturl.'&sort=n">'.$sortnamenew.'</a>';
-		$sortlink_o = '<a href="'.$scripturl.'&sort=o">'.$sortnameold.'</a>';
-		$sortlink_d = '<a href="'.$scripturl.'&sort=d">'.$sortnamedes.'</a>';
+		$sortlink_n = '<a href="'.$scripturl.'&sort=new">'.$sortnamenew.'</a>';
+		$sortlink_o = '<a href="'.$scripturl.'&sort=old">'.$sortnameold.'</a>';
+		$sortlink_d = '<a href="'.$scripturl.'&sort=des">'.$sortnamedes.'</a>';
 		$sortlink_a = $page_no_tag_left.$sortnameasc.$page_no_tag_right;
 	}
 	if ( $mode === 'sp' ) {

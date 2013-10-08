@@ -3,6 +3,11 @@
 	if( !defined('WP_UNINSTALL_PLUGIN') )
     	exit();
 
+	delete_option('medialink_album_sort');
+	delete_option('medialink_movie_sort');
+	delete_option('medialink_music_sort');
+	delete_option('medialink_slideshow_sort');
+	delete_option('medialink_document_sort');
 	delete_option('medialink_album_effect_pc');
 	delete_option('medialink_album_effect_sp');
 	delete_option('medialink_slideshow_effect_pc');

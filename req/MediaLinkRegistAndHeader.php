@@ -7,6 +7,11 @@ class MediaLinkRegistAndHeader {
 	 * @since	1.1
 	 */
 	function register_settings(){
+		register_setting( 'medialink-settings-group', 'medialink_album_sort');
+		register_setting( 'medialink-settings-group', 'medialink_movie_sort');
+		register_setting( 'medialink-settings-group', 'medialink_music_sort');
+		register_setting( 'medialink-settings-group', 'medialink_slideshow_sort');
+		register_setting( 'medialink-settings-group', 'medialink_document_sort');
 		register_setting( 'medialink-settings-group', 'medialink_album_effect_pc');
 		register_setting( 'medialink-settings-group', 'medialink_album_effect_sp');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_effect_pc');
@@ -102,6 +107,11 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_document_searchbox_show');
 		register_setting( 'medialink-settings-group', 'medialink_document_rssicon_show');
 		register_setting( 'medialink-settings-group', 'medialink_document_credit_show');
+		add_option('medialink_album_sort', 'new');
+		add_option('medialink_movie_sort', 'new');
+		add_option('medialink_music_sort', 'new');
+		add_option('medialink_slideshow_sort', 'new');
+		add_option('medialink_document_sort', 'new');
 		add_option('medialink_album_effect_pc', 'colorbox');
 		add_option('medialink_album_effect_sp', 'photoswipe');
 		add_option('medialink_slideshow_effect_pc', 'nivoslider');

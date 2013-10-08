@@ -59,7 +59,7 @@ class MediaLinkAdmin {
 	  <div id="tabs-1">
 		<h2><?php _e('(In the case of image) Easy use', 'medialink'); ?></h2>
 		<p><?php _e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink'); ?></p>
-		<p>&#91;medialink&#93;</p>
+		<p>&#91;medialink set='album'&#93;</p>
 		<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
 		<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
 		<p>&#91;medialink set='slideshow'&#93</p>
@@ -97,6 +97,18 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle">document</td>
 		<td align="left" valign="middle">
 		<?php _e('Next only five. album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+		</td>
+		</tr>
+
+		<tr>
+		<td align="center" valign="middle"><b>sort</b></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_album_sort') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_movie_sort') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_music_sort') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_sort') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_sort') ?></td>
+		<td align="left" valign="middle">
+		<?php _e('Type of Sort', 'medialink'); ?>
 		</td>
 		</tr>
 
@@ -381,6 +393,57 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">document</td>
 					<td align="left" valign="middle">
 					<?php _e('Next only five. album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle"><b>sort</b></td>
+					<td align="center" valign="middle">
+					<?php $target_album_sort = get_option('medialink_album_sort'); ?>
+					<select id="medialink_album_sort" name="medialink_album_sort">
+						<option <?php if ('new' == $target_album_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_album_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_album_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_album_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_sort = get_option('medialink_movie_sort'); ?>
+					<select id="medialink_movie_sort" name="medialink_movie_sort">
+						<option <?php if ('new' == $target_movie_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_movie_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_movie_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_movie_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_music_sort = get_option('medialink_music_sort'); ?>
+					<select id="medialink_music_sort" name="medialink_music_sort">
+						<option <?php if ('new' == $target_music_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_music_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_music_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_music_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_sort = get_option('medialink_slideshow_sort'); ?>
+					<select id="medialink_slideshow_sort" name="medialink_slideshow_sort">
+						<option <?php if ('new' == $target_slideshow_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_slideshow_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_slideshow_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_slideshow_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_sort = get_option('medialink_document_sort'); ?>
+					<select id="medialink_document_sort" name="medialink_document_sort">
+						<option <?php if ('new' == $target_document_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_document_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_document_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_document_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>

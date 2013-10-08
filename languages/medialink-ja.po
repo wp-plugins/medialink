@@ -283,3 +283,6 @@ msgstr ""
 
 msgid "Generation of RSS feed."
 msgstr "RSSフィードの生成"
+
+msgid "Type of Sort"
+msgstr "ソートの種類"
