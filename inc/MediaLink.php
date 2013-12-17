@@ -128,8 +128,8 @@ class MediaLink {
 								$thumbname = str_replace($suffix, '', end(explode('/', $attachment->guid)));
 								$thumbname_md5 = md5($thumbname);
 								$thumbpath = str_replace($thumbname.$suffix, '', $attachment->guid);
-								$thumbcheck = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname.$this->thumbnail);
-								$thumbcheck_md5 = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname_md5.$this->thumbnail);
+								$thumbcheck = str_replace($this->wp_path, '', str_replace("\\", "/", ABSPATH)).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname.$this->thumbnail);
+								$thumbcheck_md5 = str_replace($this->wp_path, '', str_replace("\\", "/", ABSPATH)).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $thumbpath.$thumbname_md5.$this->thumbnail);
 								if( file_exists( $thumbcheck ) ){
 									$thumblink = '<img src = "'.$thumbpath.$thumbname.$this->thumbnail.'">';
 								} else if( file_exists( $thumbcheck_md5 ) ){
@@ -154,7 +154,7 @@ class MediaLink {
 							}
 						}
 					}
-					$attachment = str_replace($this->wp_path, '', ABSPATH).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $attachment->guid);
+					$attachment = str_replace($this->wp_path, '', str_replace("\\", "/", ABSPATH)).$this->topurl.str_replace($this->wp_uploads_baseurl, '', $attachment->guid);
 					$attachment = str_replace($this->document_root, "", $attachment);
 					if ( $this->set === 'album' || $this->set === 'slideshow' ) {
 						if ( $this->image_show_size === 'Medium' ) {

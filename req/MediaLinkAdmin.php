@@ -1321,7 +1321,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 	</div>
 
 		</div>
-		<?
+		<?php
 	}
 
 }

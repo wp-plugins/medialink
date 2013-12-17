@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 2.4
+Version: 2.5
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -202,7 +202,7 @@ function medialink_func( $atts, $html = NULL ) {
 	}
 
 	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
-	$document_root = str_replace($wp_path, '', ABSPATH).$topurl;
+	$document_root = str_replace($wp_path, '', str_replace("\\", "/", ABSPATH)).$topurl;
 
 	$mode = NULL;
 	$suffix = NULL;

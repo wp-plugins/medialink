@@ -45,7 +45,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				</td>
 				<td align="left" valign="middle"><?php echo bloginfo('name'); ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			if ($checkbox2) {
 				$xmldata2 = simplexml_load_file($xmlurl2);
@@ -56,7 +56,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				</td>
 				<td align="left" valign="middle"><?php echo $xmldata2->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}	
 			if ($checkbox3 && file_exists($documentrootname.$xml3)) {
 				$xmldata3 = simplexml_load_file($servername.$xml3);
@@ -66,7 +66,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
 				<td align="left" valign="middle"><?php echo $xmldata3->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			if ($checkbox4 && file_exists($documentrootname.$xml4)) {
 				$xmldata4 = simplexml_load_file($servername.$xml4);
@@ -76,7 +76,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
 				<td align="left" valign="middle"><?php echo $xmldata4->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			if ($checkbox5 && file_exists($documentrootname.$xml5)) {
 				$xmldata5 = simplexml_load_file($servername.$xml5);
@@ -86,7 +86,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<img src="<?php echo $pluginurl ?>/medialink/icon/podcast.png"></a></td>
 				<td align="left" valign="middle"><?php echo $xmldata5->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			if ($checkbox6 && file_exists($documentrootname.$xml6)) {
 				$xmldata6 = simplexml_load_file($servername.$xml6);
@@ -96,7 +96,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
 				<td align="left" valign="middle"><?php echo $xmldata6->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			if ($checkbox7 && file_exists($documentrootname.$xml7)) {
 				$xmldata7 = simplexml_load_file($servername.$xml7);
@@ -106,7 +106,7 @@ class MediaLinkWidgetItem extends WP_Widget {
 				<img src="<?php echo $pluginurl ?>/medialink/icon/rssfeeds.png"></a></td>
 				<td align="left" valign="middle"><?php echo $xmldata7->channel->title; ?></td>
 				</tr>
-				<?
+				<?php
 			}
 			echo '</table>';
 			echo $after_widget;
