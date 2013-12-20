@@ -309,6 +309,28 @@ MEDIALINKADDCSSSP;
 
 	}
 
+	/* ==================================================
+	 * For IE
+	 * @since	2.6
+	 */
+	function add_meta(){
+
+$medialink_add_meta_ie_emulation = <<<MEDIALINKADDMETAIEEMULATION
+<!-- Start Medialink meta -->
+<meta http-equiv="x-ua-compatible" content="IE=9" />
+<!-- End Medialink meta -->
+MEDIALINKADDMETAIEEMULATION;
+
+		include_once dirname(__FILE__).'/../inc/MediaLink.php';
+		$medialink = new MediaLink();
+		$mode = $medialink->agent_check();
+
+		if ( $mode === 'pc' ) {
+			echo $medialink_add_meta_ie_emulation;
+		}
+
+	}
+
 }
 
 ?>
