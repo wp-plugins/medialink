@@ -1,59 +1,60 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: MediaLink\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Katsushi Kawamori <dodesyoswift312@gmail.com>\n"
+"Last-Translator: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.7\n"
 
 msgid "prev"
-msgstr ""
+msgstr "prethodno"
 
 msgid "next"
-msgstr ""
+msgstr "sledeće"
 
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 msgid "Old"
-msgstr ""
+msgstr "Staro"
 
 msgid "Des"
-msgstr ""
+msgstr "Opadajući"
 
 msgid "Asc"
-msgstr ""
+msgstr "Rastući"
 
 msgid "Search"
-msgstr ""
+msgstr "Pretraga"
 
 msgid "all"
-msgstr ""
+msgstr "sve"
 
 msgid "Select"
-msgstr ""
+msgstr "Odaberi"
 
 msgid "How to use"
-msgstr ""
+msgstr "Kako koristiti"
 
 msgid "Default settings"
-msgstr ""
+msgstr "Podrazumevana podešavanja"
 
 msgid "The default value for the short code attribute"
-msgstr ""
+msgstr "Podrazumevana vrednost za atribut kratkog koda"
 
 msgid "(In the case of image) Easy use"
-msgstr ""
+msgstr "(U slučaju slike) Lako korišćenje"
 
 msgid ""
 "Please add new Page. Please write a short code in the text field of the "
 "Page. Please go in Text mode this task."
 msgstr ""
+"Dodajte novu stranicu. Napišite kratak kod u tekstualnom polju stranice. "
+"Uključite tekstualni mod za ovaj zadatak."
 
 msgid ""
 "When you view this Page, it is displayed in album mode. This is the result "
@@ -62,83 +63,99 @@ msgid ""
 "Please set its value. In the Media> Add New, please drag and drop the image. "
 "You view the Page again. Should see the image to the Page."
 msgstr ""
+"Kada gledate ovu stranicu, ona je prikazana u album modu. To je posledica "
+"pretrage medijske biblioteke. Podešavanja > Mediji, odredite veličinu "
+"umanjene sličice. Podrazumevana vrednost MediaLink-a, širina 80, visina 80. "
+"Molim Odredite vrednost. U Media > Dodaj novo, prevucite i spustite sliku. "
+"Ponovo pogledajte stranicu. Trebalo bi da vidite sliku na stranici."
 
 msgid ""
 "In addition, you want to place add an attribute like this in the short code."
-msgstr ""
+msgstr "Pored toga, treba da stavite dodaj atribut kao ovaj u kratki kod."
 
 msgid "When you view this Page, it is displayed in slideshow mode."
-msgstr ""
+msgstr "Kada gledate ovu stranicu, ona je prikazana u slajdšou modu."
 
 msgid "Customization 1"
-msgstr ""
+msgstr "Kustomizacija 1"
 
 msgid ""
 "MediaLink is also handles video and music and document. If you are dealing "
 "with music and video and document, please add the following attributes to "
 "the short code."
 msgstr ""
+"MediaLink takođe barata video i muzičkim dokumentima. Ako imate posla s "
+"muzičkim i video dokumentom, dodajte sledeće atribute krartkom kodu."
 
 msgid "Video set = 'movie'"
-msgstr ""
+msgstr "Video set = 'movie'"
 
 msgid "Music set = 'music'"
-msgstr ""
+msgstr "Music set = 'music'"
 
 msgid "Document set = 'document'"
-msgstr ""
+msgstr "Document set = 'document'"
 
 msgid ""
 "* (WordPress > Settings > General Timezone) Please specify your area other "
 "than UTC. For accurate time display of RSS feed."
 msgstr ""
+"* (WordPress > Podešavanja > Opšte > Vremenska zona). Odredite svoje "
+"područje osim UTC. Za precizno vremensko prikazivanje RSS dovoda."
 
 msgid "Customization 2"
-msgstr ""
+msgstr "Kustomizacija 2"
 
 msgid ""
 "Below, I shows the default values and various attributes of the short code."
 msgstr ""
+"Ispod prikazujem podrazumevane vrednosti i razne atribute kratkog koda."
 
 msgid "Attribute"
-msgstr ""
+msgstr "Atribut"
 
 msgid ""
 "Next only five. album(image), movie(video), music(music), slideshow(image), "
 "document(document)"
 msgstr ""
+"Sledeće samo pet. Album (slika), film (video), muzika (muzika), slajdšou "
+"(slika), dokument (dokument)"
 
 msgid ""
 "Effects of PC. If you want to use the Lightbox, please install a plugin that "
 "is compatible to the Lightbox. I would recommend some plugins below."
 msgstr ""
+"Efekti PC-a. Ako želite da koristite Lightbox, instalirajte plug in koji je "
+"kompatibilan sa Lightbox-om. Preporučujem neke plug in-ove ispod."
 
 msgid "Effects of Smartphone"
-msgstr ""
+msgstr "Efekti smart telefona"
 
 msgid "Full path to the top directory containing the data"
 msgstr ""
+"Kompletan put do gornjeg direktorijuma koji sadrži ekstenziju podataka na PC-"
+"u."
 
 msgid "extension of PC."
-msgstr ""
+msgstr "extension of PC."
 
 msgid "second extension on the PC. Second candidate when working with html5"
-msgstr ""
+msgstr "druga ekstenzija na PC-u. Drugi kandidat kada se radi sa html5"
 
 msgid "extension of Smartphone"
-msgstr ""
+msgstr "ekstenzija smart telefona"
 
 msgid "extension of Japanese mobile phone"
-msgstr ""
+msgstr "ekstenzija japanskog mobilnog telefona"
 
 msgid "File Display per page(PC)"
-msgstr ""
+msgstr "Displej fajla po stranici (PC)"
 
 msgid "File Display per page(Smartphone)"
-msgstr ""
+msgstr "Displej fajla po stranici (smart telefon)"
 
 msgid "File Display per page(Japanese mobile phone)"
-msgstr ""
+msgstr "Displej fajla po stranici (japanski mobilni telefon)"
 
 msgid ""
 "(album, slideshow) default thumbnail suffix name of WordPress. (movie, "
@@ -148,117 +165,132 @@ msgid ""
 "The icon is displayed if you specify icon. The thumbnail no display if you "
 "do not specify anything."
 msgstr ""
+"(album, slajdšou) podrazumevana umanjena sličica sufiks naziv za WordPress. "
+"(film, muzika) odredite ekstenziju za umanjenu sličicu istog naslova kao "
+"fajl koji želite da pogledate, ali ako umanjena sličica nije pronađena, "
+"prikažite ikonu. Umanjena sličica se ne prikazuje ako ništa ne odredite. "
+"(dokument) Ikona je prikazana ako odredite ikonu. Umanjena sličica se neće "
+"prikazati ako ništa ne odredite."
 
 msgid "Category you want to include. Only one."
-msgstr ""
+msgstr "Kategorija koju želite da obuhvatite. Samo jedna."
 
 msgid "Category you want to exclude. More than one, specified separated by |."
-msgstr ""
+msgstr "Kategorija koju želite da izuzmete. Više od jedne, odvojene sa |."
 
 msgid "The name of the RSS feed file (Use to widget)"
-msgstr ""
+msgstr "Naziv fajla RSS dovoda (Koristi se kao vidžet)"
 
 msgid "Syndication feeds show the most recent (Use to widget)"
-msgstr ""
+msgstr "Sindikacioni odvodi pokazuju najaktuelnije (Koristi se kao vidžet)"
 
 msgid "The default value for other."
-msgstr ""
+msgstr "Podrazumevana vrednost za ostale."
 
 msgid "Size of the movie container."
-msgstr ""
+msgstr "Veličina kontejnera filma."
 
 msgid "Size of the thumbnail size for Video and Music"
-msgstr ""
+msgstr "Veličina umanjene sličice za video i muziku"
 
 msgid "Background color"
-msgstr ""
+msgstr "Boja pozadine"
 
 msgid "Text color"
-msgstr ""
+msgstr "Boja teksta"
 
 msgid "Width of the list"
-msgstr ""
+msgstr "Širina liste"
 
 msgid "Color of the arrow"
-msgstr ""
+msgstr "Boja strelice"
 
 msgid "Background color of the list"
-msgstr ""
+msgstr "Boja pozadine liste"
 
 msgid "Background color of the partition line in the list"
-msgstr ""
+msgstr "Boja pozadine"
 
 msgid "Background color of the navigation"
-msgstr ""
+msgstr "Boja pozadine navigacije"
 
 msgid "Background color of the partition line in the navigation"
-msgstr ""
+msgstr "Boja pozadine pregradne linije u navigaciji"
 
 msgid "Text color navigation"
-msgstr ""
+msgstr "Navigacija boje teksta"
 
 msgid ""
 "The to playback of video and music, that such as the next, .htaccess may be "
 "required to the directory containing the data file by the environment."
 msgstr ""
+"Za plejbek videa i muzike može biti potreban .htaccess za direktorijum koji "
+"sadrži fajl s podacima. "
 
 msgid "Album (RSS)"
-msgstr ""
+msgstr "Album (RSS)"
 
 msgid "Video (Podcast)"
-msgstr ""
+msgstr "Video (potkast)"
 
 msgid "Music (Podcast)"
-msgstr ""
+msgstr "Muzika (potkast)"
 
 msgid "Slideshow (RSS)"
-msgstr ""
+msgstr "Slajdšou (RSS)"
 
 msgid "Document (RSS)"
-msgstr ""
+msgstr "Dokument (RSS)"
 
 msgid ""
 "* When you move to (WordPress > Appearance > Widgets), there is a widget "
 "MediaLinkRssFeed. If you place you can set this to display the sidebar link "
 "the RSS feed."
 msgstr ""
+"*Kada pređete na (WordPress > Izgled >Vidžeti), tu se nalazi vidžet "
+"MediaLinkRssFeed. Možete da podesite ovo da prikazuje RSS dovod na bočnoj "
+"traci sa menijima."
 
 msgid ""
 "Flash extension on the PC. Flash Player to be used when a HTML5 player does "
 "not work."
 msgstr ""
+"Fleš ekstenzija na PC-u. Treba koristiti fleš plejer kada HTML5 plejer ne "
+"radi."
 
 msgid "Alias read extension : "
-msgstr ""
+msgstr "Alijas"
 
 msgid "Selectbox of categories."
-msgstr ""
+msgstr "Select box kategorija"
 
 msgid "Navigation of page."
-msgstr ""
+msgstr "Navigacija stranice"
 
 msgid "Navigation of sort."
-msgstr ""
+msgstr "Navigacija algoritma"
 
 msgid "Search box"
-msgstr ""
+msgstr "Polje za pretragu"
 
 msgid "RSS Icon"
-msgstr ""
+msgstr "RSS ikona"
 
 msgid "Credit"
-msgstr ""
+msgstr "Kredit"
 
 msgid "Size of the image display. (Media Settings > Image Size)"
-msgstr ""
+msgstr "Veličina displeja slike (Medija podešavanja > veličina slike)"
 
 msgid ""
 "Could not create an RSS Feed. Please change to 777 or 757 to permissions of "
 "following directory."
 msgstr ""
+"Ne može da se kreira RSS dovod. Promenite na 777 ili 757 za dozvolu za "
+"sledeći direktorijum."
 
 msgid "Generation of RSS feed."
-msgstr ""
+msgstr "Generacija RSS dovoda"
 
 msgid "Type of Sort"
-msgstr ""
+msgstr "Tip algoritma"

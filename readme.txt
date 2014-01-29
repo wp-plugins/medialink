@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.6
+Stable tag: 2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,11 @@ Bundled software and function
 
     [Demo1(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo2(Album)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Movie)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/)
 
+Translators
+
+*   Serbo-Croatian (sr_RS) - Borisa Djuraskovic. I want to thank Borisa Djuraskovic and his [company](http://www.webhostinghub.com).
+*   Japanese (ja) - [Katsushi Kawamori](http://gallerylink.nyanko.org/medialink/)
+
 == Installation ==
 
 1. Upload `medialink` directory to the `/wp-content/plugins/` directory
@@ -58,6 +63,10 @@ none
 none
 
 == Changelog ==
+
+= 2.7 =
+Change /languages.
+Supported language Serbo-Croatian.
 
 = 2.6 =
 Fixed the problem of InternetExplorer11.
@@ -219,6 +228,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.7 =
 = 2.6 =
 = 2.5 =
 = 2.4 =
