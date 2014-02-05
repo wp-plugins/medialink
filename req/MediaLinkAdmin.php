@@ -480,6 +480,7 @@ class MediaLinkAdmin {
 					<select id="medialink_album_effect_sp" name="medialink_album_effect_sp">
 						<option <?php if ('nivoslider' == $target_album_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
 						<option <?php if ('photoswipe' == $target_album_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
+						<option <?php if ('swipebox' == $target_album_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
 					</select>
 					</td>
 					<td colspan="2"></td>

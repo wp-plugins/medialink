@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.7
+Stable tag: 2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Bundled software and function
 *   HTML5 player (video, music)
 *   FlashPlugin: jQuery SWFObject
 *   Flash player (video, music): Flowplayer Flash, MP3Player (for previous versions of IE8)
-*   Image: Nivo Slider, ColorBox, PhotoSwipe
+*   Image: Nivo Slider, ColorBox, PhotoSwipe, Swipebox
 *   Create RSS feeds of data (XML). It support to the podcast.
 *   Switching of smartphones or tablets: PHP Mobile Detect
 
@@ -63,6 +63,10 @@ none
 none
 
 == Changelog ==
+
+= 2.8 =
+Supported Swipebox
+Change /icon.
 
 = 2.7 =
 Change /languages.
@@ -228,6 +232,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.8 =
 = 2.7 =
 = 2.6 =
 = 2.5 =
