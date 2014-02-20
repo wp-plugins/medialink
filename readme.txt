@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.8
+Stable tag: 2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ none
 none
 
 == Changelog ==
+
+= 2.9 =
+Removed unnecessary code.
 
 = 2.8 =
 Supported Swipebox
@@ -232,6 +235,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.9 =
 = 2.8 =
 = 2.7 =
 = 2.6 =
