@@ -1276,6 +1276,30 @@ class MediaLinkAdmin {
 			</tbody>
 			</table>
 
+			<h2><?php _e('The default value for User Agent.', 'medialink') ?></h2>	
+			<table border="1" bgcolor="#dddddd">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Generate html', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Default'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle"><?php _e('for Pc or Tablet', 'medialink'); ?></td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_useragent_tb" name="medialink_useragent_tb" value="<?php echo get_option('medialink_useragent_tb') ?>" size="150" />
+					</td>
+					<td align="left" valign="middle" rowspan="2"><?php _e('| Specify separated by. Regular expression is possible.', 'medialink'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle"><?php _e('for Smartphone', 'medialink'); ?></td>
+					<td align="center" valign="middle">
+						<input type="text" id="medialink_useragent_sp" name="medialink_useragent_sp" value="<?php echo get_option('medialink_useragent_sp') ?>" size="150" />
+					</td>
+				</tr>
+			</tbody>
+			</table>
+
 			<p class="submit">
 			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
 			</p>

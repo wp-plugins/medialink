@@ -31,18 +31,17 @@ class MediaLink {
 	 */
 	function agent_check(){
 
-		include_once dirname(__FILE__).'/Mobile-Detect-2.6.2/Mobile_Detect.php';
-		$detect = new MediaLink_Mobile_Detect();
+		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
-		if ( function_exists('wp_is_mobile') && wp_is_mobile() ) { //smartphone or tablet
-			// Check for any mobile device, excluding tablets.
-			if ($detect->isMobile() && !$detect->isTablet()){
-				$mode = 'sp';
-			} else {
-				$mode = 'pc';
-			}
-		} else {
-			$mode = 'pc';
+		if(preg_match("{".get_option('medialink_useragent_tb')."}",$user_agent)){
+			//Tablet
+			$mode = "pc"; 
+		}else if(preg_match("{".get_option('medialink_useragent_sp')."}",$user_agent)){
+			//Smartphone
+			$mode = "sp";
+		}else{
+			//PC or Tablet
+			$mode = "pc"; 
 		}
 
 		return $mode;

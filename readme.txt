@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.9
+Stable tag: 2.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,9 +30,6 @@ Bundled software and function
 *   Flash player (video, music): Flowplayer Flash, MP3Player (for previous versions of IE8)
 *   Image: Nivo Slider, ColorBox, PhotoSwipe, Swipebox
 *   Create RSS feeds of data (XML). It support to the podcast.
-*   Switching of smartphones or tablets: PHP Mobile Detect
-
-    It support to the smartphone. WordPress3.4 or higher.
 
     [Demo1(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo2(Album)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Movie)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/)
 
@@ -63,6 +60,11 @@ none
 none
 
 == Changelog ==
+
+= 2.10 =
+Was added the ability to allocate to each terminal by the user agent that you specify.
+Version up of colorbox.
+Removed of PHP Mobile Detect.
 
 = 2.9 =
 Removed unnecessary code.
@@ -235,6 +237,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 2.10 =
 = 2.9 =
 = 2.8 =
 = 2.7 =

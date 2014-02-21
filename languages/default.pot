@@ -262,3 +262,18 @@ msgstr ""
 
 msgid "Type of Sort"
 msgstr ""
+
+msgid "The default value for User Agent."
+msgstr ""
+
+msgid "Generate html"
+msgstr ""
+
+msgid "for Pc or Tablet"
+msgstr ""
+
+msgid "for Smartphone"
+msgstr ""
+
+msgid "| Specify separated by. Regular expression is possible."
+msgstr ""

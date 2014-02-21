@@ -101,5 +101,7 @@
 	delete_option('medialink_document_searchbox_show');
 	delete_option('medialink_document_rssicon_show');
 	delete_option('medialink_document_credit_show');
+	delete_option('medialink_useragent_tb');
+	delete_option('medialink_useragent_sp');
 
 ?>
