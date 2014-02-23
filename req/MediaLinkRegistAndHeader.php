@@ -209,7 +209,7 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_document_searchbox_show', 'Show');
 		add_option('medialink_document_rssicon_show', 'Show');
 		add_option('medialink_document_credit_show', 'Show');
-		add_option('medialink_useragent_tb','iPad｜^.*Android.*Nexus(((?:(?!Mobile))|(?:(\s(7|10).+))).)*$|Kindle|Silk.*Accelerated|Sony.*Tablet|Xperia Tablet|Sony Tablet S|SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|SC-01D|SC-01E|SC-02D');
+		add_option('medialink_useragent_tb','iPad|^.*Android.*Nexus(((?:(?!Mobile))|(?:(\s(7|10).+))).)*$|Kindle|Silk.*Accelerated|Sony.*Tablet|Xperia Tablet|Sony Tablet S|SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|SC-01D|SC-01E|SC-02D');
 		add_option('medialink_useragent_sp', 'iPhone|iPod|Android.*Mobile|BlackBerry|IEMobile');
 	}
 
