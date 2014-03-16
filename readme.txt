@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 2.11
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Bundled software and function
 *   Image: Nivo Slider, ColorBox, PhotoSwipe, Swipebox
 *   Create RSS feeds of data (XML). It support to the podcast.
 
-    [Demo1(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo2(Album)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Movie)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/)
+    [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo5(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo6(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
 
 Translators
 
@@ -60,6 +60,13 @@ none
 none
 
 == Changelog ==
+
+= 3.0 =
+Add mode for output of all data.
+Fixed the problem of permalinks.
+Fixed the problem of podcast.
+Change /languages.
+Change readme.txt.
 
 = 2.11 =
 Removed unnecessary code.
@@ -240,6 +247,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 3.0 =
 = 2.11 =
 = 2.10 =
 = 2.9 =

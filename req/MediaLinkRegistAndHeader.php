@@ -7,11 +7,14 @@ class MediaLinkRegistAndHeader {
 	 * @since	1.1
 	 */
 	function register_settings(){
+		register_setting( 'medialink-settings-group', 'medialink_all_sort');
 		register_setting( 'medialink-settings-group', 'medialink_album_sort');
 		register_setting( 'medialink-settings-group', 'medialink_movie_sort');
 		register_setting( 'medialink-settings-group', 'medialink_music_sort');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_sort');
 		register_setting( 'medialink-settings-group', 'medialink_document_sort');
+		register_setting( 'medialink-settings-group', 'medialink_all_effect_pc');
+		register_setting( 'medialink-settings-group', 'medialink_all_effect_sp');
 		register_setting( 'medialink-settings-group', 'medialink_album_effect_pc');
 		register_setting( 'medialink-settings-group', 'medialink_album_effect_sp');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_effect_pc');
@@ -30,6 +33,8 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_suffix_sp');
 		register_setting( 'medialink-settings-group', 'medialink_document_suffix_pc');
 		register_setting( 'medialink-settings-group', 'medialink_document_suffix_sp');
+		register_setting( 'medialink-settings-group', 'medialink_all_display_pc', 'intval');
+		register_setting( 'medialink-settings-group', 'medialink_all_display_sp', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_album_display_pc', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_album_display_sp', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_movie_display_pc', 'intval');
@@ -40,27 +45,32 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_display_sp', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_document_display_pc', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_document_display_sp', 'intval');
+		register_setting( 'medialink-settings-group', 'medialink_all_image_show_size');
 		register_setting( 'medialink-settings-group', 'medialink_album_image_show_size');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_image_show_size');
 		register_setting( 'medialink-settings-group', 'medialink_movie_suffix_thumbnail');
 		register_setting( 'medialink-settings-group', 'medialink_music_suffix_thumbnail');
 		register_setting( 'medialink-settings-group', 'medialink_document_suffix_thumbnail');
+		register_setting( 'medialink-settings-group', 'medialink_all_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_album_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_movie_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_music_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_document_include_cat');
 		register_setting( 'medialink-settings-group', 'medialink_exclude_cat');
+		register_setting( 'medialink-settings-group', 'medialink_all_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_album_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_movie_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_music_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_generate_rssfeed');
 		register_setting( 'medialink-settings-group', 'medialink_document_generate_rssfeed');
+		register_setting( 'medialink-settings-group', 'medialink_all_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_album_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_movie_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_music_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_slideshow_rssname');
 		register_setting( 'medialink-settings-group', 'medialink_document_rssname');
+		register_setting( 'medialink-settings-group', 'medialink_all_rssmax', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_album_rssmax', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_movie_rssmax', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_music_rssmax', 'intval');
@@ -68,7 +78,6 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_document_rssmax', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_movie_container');
 		register_setting( 'medialink-settings-group', 'medialink_css_listthumbsize');
-		register_setting( 'medialink-settings-group', 'medialink_css_pc_listwidth', 'intval');
 		register_setting( 'medialink-settings-group', 'medialink_css_pc_linkstrcolor');
 		register_setting( 'medialink-settings-group', 'medialink_css_pc_linkbackcolor');
 		register_setting( 'medialink-settings-group', 'medialink_css_sp_navstrcolor');
@@ -77,6 +86,12 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_css_sp_listbackcolor');
 		register_setting( 'medialink-settings-group', 'medialink_css_sp_listarrowcolor');
 		register_setting( 'medialink-settings-group', 'medialink_css_sp_listpartitionlinecolor');
+		register_setting( 'medialink-settings-group', 'medialink_all_categorylinks_show');
+		register_setting( 'medialink-settings-group', 'medialink_all_pagelinks_show');
+		register_setting( 'medialink-settings-group', 'medialink_all_sortlinks_show');
+		register_setting( 'medialink-settings-group', 'medialink_all_searchbox_show');
+		register_setting( 'medialink-settings-group', 'medialink_all_rssicon_show');
+		register_setting( 'medialink-settings-group', 'medialink_all_credit_show');
 		register_setting( 'medialink-settings-group', 'medialink_album_categorylinks_show');
 		register_setting( 'medialink-settings-group', 'medialink_album_pagelinks_show');
 		register_setting( 'medialink-settings-group', 'medialink_album_sortlinks_show');
@@ -109,11 +124,14 @@ class MediaLinkRegistAndHeader {
 		register_setting( 'medialink-settings-group', 'medialink_document_credit_show');
 		register_setting( 'medialink-settings-group', 'medialink_useragent_tb');
 		register_setting( 'medialink-settings-group', 'medialink_useragent_sp');
+		add_option('medialink_all_sort', 'new');
 		add_option('medialink_album_sort', 'new');
 		add_option('medialink_movie_sort', 'new');
 		add_option('medialink_music_sort', 'new');
 		add_option('medialink_slideshow_sort', 'new');
 		add_option('medialink_document_sort', 'new');
+		add_option('medialink_all_effect_pc', 'colorbox');
+		add_option('medialink_all_effect_sp', 'swipebox');
 		add_option('medialink_album_effect_pc', 'colorbox');
 		add_option('medialink_album_effect_sp', 'photoswipe');
 		add_option('medialink_slideshow_effect_pc', 'nivoslider');
@@ -132,6 +150,8 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_slideshow_suffix_sp', 'jpg');
 		add_option('medialink_document_suffix_pc', 'pdf');
 		add_option('medialink_document_suffix_sp', 'pdf');
+		add_option('medialink_all_display_pc', 8); 	
+		add_option('medialink_all_display_sp', 6);
 		add_option('medialink_album_display_pc', 20); 	
 		add_option('medialink_album_display_sp', 9); 	
 		add_option('medialink_movie_display_pc', 8); 	
@@ -142,35 +162,39 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_slideshow_display_sp', 10); 	
 		add_option('medialink_document_display_pc', 20);
 		add_option('medialink_document_display_sp', 9);
+		add_option('medialink_all_image_show_size', 'Full');
 		add_option('medialink_album_image_show_size', 'Full');
 		add_option('medialink_slideshow_image_show_size', 'Full');
-		add_option('medialink_movie_suffix_thumbnail', 'gif');
-		add_option('medialink_music_suffix_thumbnail', 'gif');
+		add_option('medialink_movie_suffix_thumbnail', '');
+		add_option('medialink_music_suffix_thumbnail', '');
 		add_option('medialink_document_suffix_thumbnail', '');
+		add_option('medialink_all_include_cat', '');
 		add_option('medialink_album_include_cat', '');
 		add_option('medialink_movie_include_cat', '');
 		add_option('medialink_music_include_cat', '');
 		add_option('medialink_slideshow_include_cat', '');
 		add_option('medialink_document_include_cat', '');
 		add_option('medialink_exclude_cat', '');
+		add_option('medialink_all_generate_rssfeed', 'on');
 		add_option('medialink_album_generate_rssfeed', 'on');
 		add_option('medialink_movie_generate_rssfeed', 'on');
 		add_option('medialink_music_generate_rssfeed', 'on');
 		add_option('medialink_slideshow_generate_rssfeed', 'on');
 		add_option('medialink_document_generate_rssfeed', 'on');
+		add_option('medialink_all_rssname', 'medialink_all_feed');
 		add_option('medialink_album_rssname', 'medialink_album_feed');
 		add_option('medialink_movie_rssname', 'medialink_movie_feed');
 		add_option('medialink_music_rssname', 'medialink_music_feed');
 		add_option('medialink_slideshow_rssname', 'medialink_slideshow_feed');
 		add_option('medialink_document_rssname', 'medialink_document_feed');
+		add_option('medialink_all_rssmax', 10);
 		add_option('medialink_album_rssmax', 10);
 		add_option('medialink_movie_rssmax', 10);
 		add_option('medialink_music_rssmax', 10);
 		add_option('medialink_slideshow_rssmax', 10);
 		add_option('medialink_document_rssmax', 10);
 		add_option('medialink_movie_container', '512x384');
-		add_option('medialink_css_pc_listwidth', 400);
-		add_option('medialink_css_pc_listthumbsize', '50x35');
+		add_option('medialink_css_pc_listthumbsize', '40x40');
 		add_option('medialink_css_pc_linkstrcolor', '#000000');
 		add_option('medialink_css_pc_linkbackcolor', '#f6efe2');
 		add_option('medialink_css_sp_navstrcolor', '#000000');
@@ -179,6 +203,12 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_css_sp_listbackcolor', '#ffffff');
 		add_option('medialink_css_sp_listarrowcolor', '#e2a6a6');
 		add_option('medialink_css_sp_listpartitionlinecolor', '#f6efe2');
+		add_option('medialink_all_categorylinks_show', 'Show');
+		add_option('medialink_all_pagelinks_show', 'Show');
+		add_option('medialink_all_sortlinks_show', 'Show');
+		add_option('medialink_all_searchbox_show', 'Show');
+		add_option('medialink_all_rssicon_show', 'Show');
+		add_option('medialink_all_credit_show', 'Show');
 		add_option('medialink_album_categorylinks_show', 'Show');
 		add_option('medialink_album_pagelinks_show', 'Show');
 		add_option('medialink_album_sortlinks_show', 'Show');
@@ -275,14 +305,10 @@ class MediaLinkRegistAndHeader {
 $medialink_add_css_pc = <<<MEDIALINKADDCSSPC
 <!-- Start Medialink CSS for PC -->
 <style type="text/css">
-#playlists-medialink { width: {$pc_listwidth}px; }
-#playlists-medialink li { width: {$pc_listwidth}px; }
-#playlists-medialink li a { width: {$pc_listwidth}px; height: {$pc_listthumbsize_h}px; }
+#playlists-medialink li a { width: 100%; height: {$listthumbsize_h}px; }
 #playlists-medialink img { width: {$listthumbsize_w}px; height: {$listthumbsize_h}px; }
-* html #playlists-medialink li a { width: {$pc_listwidth}px; }
 #playlists-medialink li:hover {background: {$pc_linkbackcolor};}
-#playlists-medialink li a:hover {color: {$pc_linkstrcolor}; background: {$pc_linkbackcolor};}
-</style>
+#playlists-medialink a:hover {color: {$pc_linkstrcolor}; background: {$pc_linkbackcolor};}</style>
 <!-- End Medialink CSS for PC -->
 MEDIALINKADDCSSPC;
 
