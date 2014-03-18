@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 3.0
+Version: 3.1
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -720,12 +720,9 @@ FLASHMUSICPLAYER;
 				wp_enqueue_script( 'photoswipe-in', $pluginurl.'/medialink/js/photoswipe-in.js' );
 			} else if ($effect === 'swipebox'){
 				// for Swipebox
-				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
 				wp_enqueue_style( 'swipebox-style',  $pluginurl.'/medialink/swipebox/source/swipebox.css' );
 				wp_enqueue_script( 'swipebox' , $pluginurl.'/medialink/swipebox/source/jquery.swipebox.min.js', null, '1.2.1' );
 				wp_enqueue_script( 'swipebox-in', $pluginurl.'/medialink/js/swipebox-in.js' );
-			} else {
-				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
 			}
 		}
 		// for smartphone

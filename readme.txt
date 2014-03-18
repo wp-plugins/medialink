@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 3.0
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ none
 none
 
 == Changelog ==
+
+= 3.1 =
+Fixed a display of management screen.
+Fixed css for smartphone.
 
 = 3.0 =
 Add mode for output of all data.
@@ -247,6 +251,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 3.1 =
 = 3.0 =
 = 2.11 =
 = 2.10 =
@@ -325,6 +330,10 @@ Video set='movie'
 Music set='music'
 
 Document set='document'
+
+If you want to display in a mix of data, please specify the following attributes to the short code.
+
+Mix of data set = 'all'
 
 * (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.
 

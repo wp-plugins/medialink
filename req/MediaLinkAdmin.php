@@ -1403,14 +1403,16 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><?php _e('for Pc or Tablet', 'medialink'); ?></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_useragent_tb" name="medialink_useragent_tb" value="<?php echo get_option('medialink_useragent_tb') ?>" size="150" />
+						<textarea id="medialink_useragent_tb" name="medialink_useragent_tb" rows="4" cols="120"><?php echo get_option('medialink_useragent_tb') ?></textarea>
+
 					</td>
 					<td align="left" valign="middle" rowspan="2"><?php _e('| Specify separated by. Regular expression is possible.', 'medialink'); ?></td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><?php _e('for Smartphone', 'medialink'); ?></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_useragent_sp" name="medialink_useragent_sp" value="<?php echo get_option('medialink_useragent_sp') ?>" size="150" />
+						<textarea id="medialink_useragent_sp" name="medialink_useragent_sp" rows="4" cols="120"><?php echo get_option('medialink_useragent_sp') ?></textarea>
+
 					</td>
 				</tr>
 			</tbody>
