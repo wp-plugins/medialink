@@ -549,57 +549,96 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_pc = get_option('medialink_album_suffix_pc'); ?>
 					<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
-						<option <?php if ('jpg' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>jpg</option>
-						<option <?php if ('png' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>png</option>
-						<option <?php if ('gif' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>gif</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_album_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_pc = get_option('medialink_movie_suffix_pc'); ?>
 					<select id="medialink_movie_suffix_pc" name="medialink_movie_suffix_pc">
-						<option <?php if ('mp4' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>mp4</option>
-						<option <?php if ('ogv' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>ogv</option>
-						<option <?php if ('webm' == $target_movie_suffix_pc)echo 'selected="selected"'; ?>>webm</option>
+						<?php
+							$exts = $this->exts('video');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_movie_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_music_suffix_pc = get_option('medialink_music_suffix_pc'); ?>
 					<select id="medialink_music_suffix_pc" name="medialink_music_suffix_pc">
-						<option <?php if ('mp3' == $target_music_suffix_pc)echo 'selected="selected"'; ?>>mp3</option>
-						<option <?php if ('ogg' == $target_music_suffix_pc)echo 'selected="selected"'; ?>>ogg</option>
+						<?php
+							$exts = $this->exts('audio');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_music_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_suffix_pc = get_option('medialink_slideshow_suffix_pc'); ?>
 					<select id="medialink_slideshow_suffix_pc" name="medialink_slideshow_suffix_pc">
-						<option <?php if ('jpg' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>jpg</option>
-						<option <?php if ('png' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>png</option>
-						<option <?php if ('gif' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>gif</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_document_suffix_pc = get_option('medialink_document_suffix_pc'); ?>
 					<select id="medialink_document_suffix_pc" name="medialink_document_suffix_pc">
-						<option <?php if ('pdf' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pdf</option>
-						<option <?php if ('doc' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>doc</option>
-						<option <?php if ('docx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>docx</option>
-						<option <?php if ('xls' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xls</option>
-						<option <?php if ('xlsx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsx</option>
-						<option <?php if ('xlsa' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsa</option>
-						<option <?php if ('xlst' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlst</option>
-						<option <?php if ('xlsw' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>xlsw</option>
-						<option <?php if ('pot' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pot</option>
-						<option <?php if ('pps' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pps</option>
-						<option <?php if ('ppt' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppt</option>
-						<option <?php if ('pptx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pptx</option>
-						<option <?php if ('pptm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>pptm</option>
-						<option <?php if ('ppsx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppsx</option>
-						<option <?php if ('ppsm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppsm</option>
-						<option <?php if ('potx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>potx</option>
-						<option <?php if ('potm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>potm</option>
-						<option <?php if ('ppam' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>ppam</option>
-						<option <?php if ('sldx' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>sldx</option>
-						<option <?php if ('sldm' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>sldm</option>
+						<?php
+							$exts = $this->exts('document');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('spreadsheet');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('interactive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('text');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('archive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('code');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -613,16 +652,27 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_pc2 = get_option('medialink_movie_suffix_pc2'); ?>
 					<select id="medialink_movie_suffix_pc2" name="medialink_movie_suffix_pc2">
-						<option <?php if ('ogv' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>ogv</option>
-						<option <?php if ('webm' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>webm</option>
-						<option <?php if ('mp4' == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>>mp4</option>
+						<?php
+							$exts = $this->exts('video');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_music_suffix_pc2 = get_option('medialink_music_suffix_pc2'); ?>
 					<select id="medialink_music_suffix_pc2" name="medialink_music_suffix_pc2">
-						<option <?php if ('ogg' == $target_music_suffix_pc2)echo 'selected="selected"'; ?>>ogg</option>
-						<option <?php if ('mp3' == $target_music_suffix_pc2)echo 'selected="selected"'; ?>>mp3</option>
+						<?php
+							$exts = $this->exts('audio');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_music_suffix_pc2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td colspan="2"></td>
@@ -658,58 +708,96 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_sp = get_option('medialink_album_suffix_sp'); ?>
 					<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
-						<option <?php if ('jpg' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>jpg</option>
-						<option <?php if ('png' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>png</option>
-						<option <?php if ('gif' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>gif</option>
-						<option <?php if ('bmp' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>bmp</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_album_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_sp = get_option('medialink_movie_suffix_sp'); ?>
 					<select id="medialink_movie_suffix_sp" name="medialink_movie_suffix_sp">
-						<option <?php if ('mp4' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>mp4</option>
-						<option <?php if ('ogv' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>ogv</option>
-						<option <?php if ('webm' == $target_movie_suffix_sp)echo 'selected="selected"'; ?>>webm</option>
+						<?php
+							$exts = $this->exts('video');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_movie_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_music_suffix_sp = get_option('medialink_music_suffix_sp'); ?>
 					<select id="medialink_music_suffix_sp" name="medialink_music_suffix_sp">
-						<option <?php if ('mp3' == $target_music_suffix_sp)echo 'selected="selected"'; ?>>mp3</option>
-						<option <?php if ('ogg' == $target_music_suffix_sp)echo 'selected="selected"'; ?>>ogg</option>
+						<?php
+							$exts = $this->exts('audio');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_music_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_suffix_sp = get_option('medialink_slideshow_suffix_sp'); ?>
 					<select id="medialink_slideshow_suffix_sp" name="medialink_slideshow_suffix_sp">
-						<option <?php if ('jpg' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>jpg</option>
-						<option <?php if ('png' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>png</option>
-						<option <?php if ('gif' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>gif</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="center" valign="middle">
 					<?php $target_document_suffix_sp = get_option('medialink_document_suffix_sp'); ?>
 					<select id="medialink_document_suffix_sp" name="medialink_document_suffix_sp">
-						<option <?php if ('pdf' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pdf</option>
-						<option <?php if ('doc' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>doc</option>
-						<option <?php if ('docx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>docx</option>
-						<option <?php if ('xls' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xls</option>
-						<option <?php if ('xlsx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsx</option>
-						<option <?php if ('xlsa' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsa</option>
-						<option <?php if ('xlst' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlst</option>
-						<option <?php if ('xlsw' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>xlsw</option>
-						<option <?php if ('pot' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pot</option>
-						<option <?php if ('pps' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pps</option>
-						<option <?php if ('ppt' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppt</option>
-						<option <?php if ('pptx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pptx</option>
-						<option <?php if ('pptm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>pptm</option>
-						<option <?php if ('ppsx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppsx</option>
-						<option <?php if ('ppsm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppsm</option>
-						<option <?php if ('potx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>potx</option>
-						<option <?php if ('potm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>potm</option>
-						<option <?php if ('ppam' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>ppam</option>
-						<option <?php if ('sldx' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>sldx</option>
-						<option <?php if ('sldm' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>sldm</option>
+						<?php
+							$exts = $this->exts('document');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('spreadsheet');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('interactive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('text');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('archive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('code');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -1465,6 +1553,34 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 		</div>
 		<?php
+	}
+
+	/* ==================================================
+	 * @param	string	$ext2type
+	 * @return	array	$exts
+	 * @since	3.2
+	 */
+	function exts($ext2type){
+
+		$mimes = wp_get_mime_types();
+
+		foreach ($mimes as $ext => $mime) {
+			if( strpos($ext,  '|') <> FALSE ) {
+				$extstmp = explode('|', $ext );
+				foreach ( $extstmp as $exttmp ) {
+					if ( wp_ext2type($exttmp) === $ext2type ) {
+						$exts[] = $exttmp;
+					}
+				}
+			} else {
+				if ( wp_ext2type($ext) === $ext2type ) {
+					$exts[] = $ext;
+				}
+			}
+		}
+
+		return $exts;
+
 	}
 
 }
