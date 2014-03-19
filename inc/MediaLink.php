@@ -23,6 +23,8 @@ class MediaLink {
 	public $rssname;
 	public $rssmax;
 	public $sort;
+	public $filesize_show;
+	public $stamptime_show;
 
 	/* ==================================================
 	 * @param	none
@@ -180,13 +182,26 @@ class MediaLink {
 		$ext2type = wp_ext2type($ext);
 		$suffix = '.'.$ext;
 
+		$fileinfo = NULL;
+		if ( $this->filesize_show === 'Show' || $this->stamptime_show === 'Show' ) {
+			if ( $this->filesize_show === 'Show' ) {
+				$filesize = ' '.round( filesize($this->document_root.$file) / 1024 ).'KB';
+			}
+			if ( $this->stamptime_show === 'Show' ) {
+				$filestat = stat($this->document_root.$file);
+				date_default_timezone_set(timezone_name_from_abbr(get_the_date(T)));
+				$stamptime = ' '.date("Y-m-d H:i:s",  $filestat['mtime']);
+			}
+			$fileinfo = ' ['.$stamptime.$filesize.' ]';
+		}
+
 		$catparam = mb_convert_encoding($this->catparam, "UTF-8", "auto");
 		$filename = $file;
 		$filename = str_replace($suffix, "", $filename);
 		$filename = mb_convert_encoding($filename, "UTF-8", "auto");
 
 		$fileparam = substr($file,1);
-		$titlename = mb_convert_encoding($title, "UTF-8", "auto");
+		$titlename = mb_convert_encoding($title, "UTF-8", "auto").$fileinfo;
 		$filetitle = $titlename;
 
 		$fileparam = mb_convert_encoding($fileparam, "UTF-8", "auto");

@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 3.2
+Version: 3.3
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -75,6 +75,8 @@ function medialink_func( $atts, $html = NULL ) {
         'generate_rssfeed' => '',
         'rssname' => '',
         'rssmax'  => '',
+        'filesize_show'  => '',
+        'stamptime_show'  => '',
         'categorylinks_show'  => '',
         'pagelinks_show'  => '',
         'sortlinks_show'  => '',
@@ -123,6 +125,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_all_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_all_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_all_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_all_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_all_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_all_sortlinks_show'); }
@@ -153,6 +157,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_album_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_album_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_album_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_album_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_album_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_album_sortlinks_show'); }
@@ -183,6 +189,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_movie_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_movie_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_movie_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_movie_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_movie_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_movie_sortlinks_show'); }
@@ -213,6 +221,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_music_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_music_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_music_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_music_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_music_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_music_sortlinks_show'); }
@@ -243,6 +253,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_slideshow_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_slideshow_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_slideshow_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_slideshow_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_slideshow_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_slideshow_sortlinks_show'); }
@@ -271,6 +283,8 @@ function medialink_func( $atts, $html = NULL ) {
 			$rssdef = true;
 		}
 		if( empty($rssmax) ) { $rssmax = intval(get_option('medialink_document_rssmax')); }
+		if( empty($filesize_show) ) { $filesize_show = get_option('medialink_document_filesize_show'); }
+		if( empty($stamptime_show) ) { $stamptime_show = get_option('medialink_document_stamptime_show'); }
 		if( empty($categorylinks_show) ) { $categorylinks_show = get_option('medialink_document_categorylinks_show'); }
 		if( empty($pagelinks_show) ) { $pagelinks_show = get_option('medialink_document_pagelinks_show'); }
 		if( empty($sortlinks_show) ) { $sortlinks_show = get_option('medialink_document_sortlinks_show'); }
@@ -366,6 +380,8 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->rssname = $rssname;
 	$medialink->rssmax = $rssmax;
 	$medialink->sort = $sort;
+	$medialink->filesize_show = $filesize_show;
+	$medialink->stamptime_show = $stamptime_show;
 
 	$files = array();
 	$titles = array();

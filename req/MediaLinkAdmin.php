@@ -309,6 +309,32 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
+		<td align="center" valign="middle"><b>filesize_show</b></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_all_filesize_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_album_filesize_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_movie_filesize_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_music_filesize_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_filesize_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_filesize_show') ?></td>
+		<td align="left" valign="middle">
+		<?php _e('File size', 'medialink'); ?>
+		</td>
+		</tr>
+
+		<tr>
+		<td align="center" valign="middle"><b>stamptime_show</b></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_all_stamptime_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_album_stamptime_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_movie_stamptime_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_music_stamptime_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow_stamptime_show') ?></td>
+		<td align="center" valign="middle"><?php echo get_option('medialink_document_stamptime_show') ?></td>
+		<td align="left" valign="middle">
+		<?php _e('Date Time', 'medialink'); ?>
+		</td>
+		</tr>
+
+		<tr>
 		<td align="center" valign="middle"><b>categorylinks_show</b></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_all_categorylinks_show') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_categorylinks_show') ?></td>
@@ -1050,19 +1076,115 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>categorylinks_show</b></td>
+					<td align="center" valign="middle"><b>filesize_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_album_categorylinks_show = get_option('medialink_album_categorylinks_show'); ?>
-					<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
-						<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					<?php $target_all_filesize_show = get_option('medialink_all_filesize_show'); ?>
+					<select id="medialink_all_filesize_show" name="medialink_all_filesize_show">
+						<option <?php if ('Show' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="center" valign="middle">
+					<?php $target_album_filesize_show = get_option('medialink_album_filesize_show'); ?>
+					<select id="medialink_album_filesize_show" name="medialink_album_filesize_show">
+						<option <?php if ('Show' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_filesize_show = get_option('medialink_movie_filesize_show'); ?>
+					<select id="medialink_movie_filesize_show" name="medialink_movie_filesize_show">
+						<option <?php if ('Show' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_music_filesize_show = get_option('medialink_music_filesize_show'); ?>
+					<select id="medialink_music_filesize_show" name="medialink_music_filesize_show">
+						<option <?php if ('Show' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_filesize_show = get_option('medialink_slideshow_filesize_show'); ?>
+					<select id="medialink_slideshow_filesize_show" name="medialink_slideshow_filesize_show">
+						<option <?php if ('Show' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_filesize_show = get_option('medialink_document_filesize_show'); ?>
+					<select id="medialink_document_filesize_show" name="medialink_document_filesize_show">
+						<option <?php if ('Show' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle"><b>stamptime_show</b></td>
+					<td align="center" valign="middle">
+					<?php $target_all_stamptime_show = get_option('medialink_all_stamptime_show'); ?>
+					<select id="medialink_all_stamptime_show" name="medialink_all_stamptime_show">
+						<option <?php if ('Show' == $target_all_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_all_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_album_stamptime_show = get_option('medialink_album_stamptime_show'); ?>
+					<select id="medialink_album_stamptime_show" name="medialink_album_stamptime_show">
+						<option <?php if ('Show' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_stamptime_show = get_option('medialink_movie_stamptime_show'); ?>
+					<select id="medialink_movie_stamptime_show" name="medialink_movie_stamptime_show">
+						<option <?php if ('Show' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_music_stamptime_show = get_option('medialink_music_stamptime_show'); ?>
+					<select id="medialink_music_stamptime_show" name="medialink_music_stamptime_show">
+						<option <?php if ('Show' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_stamptime_show = get_option('medialink_slideshow_stamptime_show'); ?>
+					<select id="medialink_slideshow_stamptime_show" name="medialink_slideshow_stamptime_show">
+						<option <?php if ('Show' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_document_stamptime_show = get_option('medialink_document_stamptime_show'); ?>
+					<select id="medialink_document_stamptime_show" name="medialink_document_stamptime_show">
+						<option <?php if ('Show' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle"><b>categorylinks_show</b></td>
 					<td align="center" valign="middle">
 					<?php $target_all_categorylinks_show = get_option('medialink_all_categorylinks_show'); ?>
 					<select id="medialink_all_categorylinks_show" name="medialink_all_categorylinks_show">
 						<option <?php if ('Show' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="center" valign="middle">
+					<?php $target_album_categorylinks_show = get_option('medialink_album_categorylinks_show'); ?>
+					<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
+						<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">

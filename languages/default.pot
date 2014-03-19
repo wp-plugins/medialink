@@ -207,6 +207,9 @@ msgid ""
 "required to the directory containing the data file by the environment."
 msgstr ""
 
+msgid "All data (Podcast)"
+msgstr ""
+
 msgid "Album (RSS)"
 msgstr ""
 
@@ -281,4 +284,10 @@ msgid "for Smartphone"
 msgstr ""
 
 msgid "| Specify separated by. Regular expression is possible."
+msgstr ""
+
+msgid "File size"
+msgstr ""
+
+msgid "Date Time"
 msgstr ""
