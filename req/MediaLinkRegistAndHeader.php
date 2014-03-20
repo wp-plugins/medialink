@@ -145,7 +145,7 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_all_effect_pc', 'colorbox');
 		add_option('medialink_all_effect_sp', 'swipebox');
 		add_option('medialink_album_effect_pc', 'colorbox');
-		add_option('medialink_album_effect_sp', 'photoswipe');
+		add_option('medialink_album_effect_sp', 'swipebox');
 		add_option('medialink_slideshow_effect_pc', 'nivoslider');
 		add_option('medialink_slideshow_effect_sp', 'nivoslider');
 		add_option('medialink_album_suffix_pc', 'jpg');

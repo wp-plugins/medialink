@@ -545,7 +545,6 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 					<?php $target_all_effect_sp = get_option('medialink_all_effect_sp'); ?>
 					<select id="medialink_all_effect_sp" name="medialink_all_effect_sp">
-						<option <?php if ('photoswipe' == $target_all_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
 						<option <?php if ('swipebox' == $target_all_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
 					</select>
 					</td>
