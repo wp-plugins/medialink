@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 3.4
+Version: 3.5
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -687,12 +687,10 @@ FLASHMUSICPLAYER;
 				wp_enqueue_style( 'nivoslider-theme-bar',  $pluginurl.'/medialink/nivo-slider/themes/bar/bar.css' );
 				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
 				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
-				wp_enqueue_script( 'nivoslider-in', $pluginurl.'/medialink/js/nivoslider-in.js' );
 			} else if ($effect === 'colorbox'){
 				// for COLORBOX
 				wp_enqueue_style( 'colorbox',  $pluginurl.'/medialink/colorbox/colorbox.css' );
 				wp_enqueue_script( 'colorbox', $pluginurl.'/medialink/colorbox/jquery.colorbox-min.js', null, '1.4.37');
-				wp_enqueue_script( 'colorbox-in', $pluginurl.'/medialink/js/colorbox-in.js' );
 			}
 		} else {
 			if ( $set === 'music' ){
@@ -704,18 +702,10 @@ FLASHMUSICPLAYER;
 		}
 	} else if ( $mode === 'sp') {
 		if ( $set === 'all' ){
-			if ($effect === 'photoswipe'){
-				// for PhotoSwipe
-				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
-				wp_enqueue_style( 'photoswipe',  $pluginurl.'/medialink/photoswipe/photoswipe.css' );
-				wp_enqueue_script( 'klass' , $pluginurl.'/medialink/photoswipe/lib/klass.min.js', null, '1.0' );
-				wp_enqueue_script( 'photoswipe' , $pluginurl.'/medialink/photoswipe/code.photoswipe.jquery-3.0.4.min.js', null, '3.0.4' );
-				wp_enqueue_script( 'photoswipe-in', $pluginurl.'/medialink/js/photoswipe-in.js' );
-			} else if ($effect === 'swipebox'){
+			if ($effect === 'swipebox'){
 				// for Swipebox
 				wp_enqueue_style( 'swipebox-style',  $pluginurl.'/medialink/swipebox/source/swipebox.css' );
 				wp_enqueue_script( 'swipebox' , $pluginurl.'/medialink/swipebox/source/jquery.swipebox.min.js', null, '1.2.1' );
-				wp_enqueue_script( 'swipebox-in', $pluginurl.'/medialink/js/swipebox-in.js' );
 			}
 		} else if ( $set === 'album' || $set === 'slideshow'){
 			if ($effect === 'nivoslider'){
@@ -726,24 +716,24 @@ FLASHMUSICPLAYER;
 				wp_enqueue_style( 'nivoslider-theme-bar',  $pluginurl.'/medialink/nivo-slider/themes/bar/bar.css' );
 				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
 				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
-				wp_enqueue_script( 'nivoslider-in', $pluginurl.'/medialink/js/nivoslider-in.js' );
 			} else if ($effect === 'photoswipe'){
 				// for PhotoSwipe
-				wp_enqueue_style( 'photoswipe-style',  $pluginurl.'/medialink/photoswipe/examples/styles.css' );
 				wp_enqueue_style( 'photoswipe',  $pluginurl.'/medialink/photoswipe/photoswipe.css' );
-				wp_enqueue_script( 'klass' , $pluginurl.'/medialink/photoswipe/lib/klass.min.js', null, '1.0' );
-				wp_enqueue_script( 'photoswipe' , $pluginurl.'/medialink/photoswipe/code.photoswipe.jquery-3.0.4.min.js', null, '3.0.4' );
-				wp_enqueue_script( 'photoswipe-in', $pluginurl.'/medialink/js/photoswipe-in.js' );
+				wp_enqueue_script( 'sji' , $pluginurl.'/medialink/photoswipe/lib/simple-inheritance.min.js', null );
+				wp_enqueue_script( 'photoswipe' , $pluginurl.'/medialink/photoswipe/code-photoswipe-1.0.11.min.js', null, '1.0.11' );
 			} else if ($effect === 'swipebox'){
 				// for Swipebox
 				wp_enqueue_style( 'swipebox-style',  $pluginurl.'/medialink/swipebox/source/swipebox.css' );
 				wp_enqueue_script( 'swipebox' , $pluginurl.'/medialink/swipebox/source/jquery.swipebox.min.js', null, '1.2.1' );
-				wp_enqueue_script( 'swipebox-in', $pluginurl.'/medialink/js/swipebox-in.js' );
 			}
 		}
 		// for smartphone
 		wp_enqueue_style( 'smartphone for medialink',  $pluginurl.'/medialink/css/medialink_sp.css' );
 	}
+	include_once dirname(__FILE__).'/inc/MediaLinkAddJs.php';
+	$medialinkaddjs = new MediaLinkAddJs();
+	$medialinkaddjs->effect = $effect;
+	add_action('wp_footer', array($medialinkaddjs, 'add_js'));
 
 	if ( !empty($fparam) ) {
 		if ( $mode === 'pc' && wp_ext2type(end(explode('.', $fparam))) === 'video' ) {
@@ -780,11 +770,11 @@ FLASHMUSICPLAYER;
 			$linkfiles_end = '</ul><br clear=all>';
 		} else if ($effect === 'photoswipe' && $mode === 'sp'){
 			// for PhotoSwipe
-			$linkfiles_begin = '<div id="Gallery" class="gallery">';
+			$linkfiles_begin = '<div id="Gallery" class="medialinkthumb">';
 			$linkfiles_end = '</div>';
 		} else if ($effect === 'swipebox' && $mode === 'sp'){
 			// for Swipebox
-			$linkfiles_begin = '<div id="Gallery" class="gallery">';
+			$linkfiles_begin = '<div id="Gallery" class="medialinkthumb">';
 			$linkfiles_end = '</div>';
 		} else if ($effect === 'Lightbox' && $mode === 'pc'){
 			// for Lightbox
@@ -795,7 +785,7 @@ FLASHMUSICPLAYER;
 				$linkfiles_begin = '<div class = "medialink">';
 				$linkfiles_end = '</div><br clear=all>';
 			} else if ($mode === 'sp'){
-				$linkfiles_begin = '<div class="gallery">';
+				$linkfiles_begin = '<div class="medialinkthumb">';
 				$linkfiles_end = '</div>';
 			}
 		}

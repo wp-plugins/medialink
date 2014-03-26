@@ -224,9 +224,9 @@ class MediaLink {
 		if ( $ext2type === 'image' ) {
 			if ( $this->set === 'all' ) {
 				if ($this->effect === 'colorbox' && $this->mode === 'pc'){ // for colorbox
-					$linkfile = '<li><a class=medialink href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
+					$linkfile = '<li><a class="medialink" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
 				} else if ($this->effect === 'swipebox' && $this->mode === 'sp'){ // for Swipebox
-					$linkfile = '<li><a rel="gallery" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
+					$linkfile = '<li><a rel="medialinkthumb" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
 				} else if ($this->effect === 'Lightbox' && $this->mode === 'pc'){ // for Lightbox
 					$linkfile = '<li><a href="'.$imgshowlink.'" rel="lightbox[medialink]" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
 				}
@@ -235,11 +235,11 @@ class MediaLink {
 				if ($this->effect === 'nivoslider'){ // for nivoslider
 					$linkfile = '<img src="'.$imgshowlink.'" alt="'.$titlename.'" title="'.$titlename.$fileinfo.'">';
 				} else if ($this->effect === 'colorbox' && $this->mode === 'pc'){ // for colorbox
-					$linkfile = '<a class=medialink href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
+					$linkfile = '<a class="medialink" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
 				} else if ($this->effect === 'photoswipe' && $this->mode === 'sp'){ // for Photoswipe
 					$linkfile = '<li><a rel="external" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a></li>';
 				} else if ($this->effect === 'swipebox' && $this->mode === 'sp'){ // for Swipebox
-					$linkfile = '<li><a rel="gallery" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a></li>';
+					$linkfile = '<li><a rel="medialinkthumb" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a></li>';
 				} else if ($this->effect === 'Lightbox' && $this->mode === 'pc'){ // for Lightbox
 					$linkfile = '<a href="'.$imgshowlink.'" rel="lightbox[medialink]" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
 				}

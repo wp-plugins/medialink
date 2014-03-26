@@ -145,7 +145,7 @@ class MediaLinkRegistAndHeader {
 		add_option('medialink_all_effect_pc', 'colorbox');
 		add_option('medialink_all_effect_sp', 'swipebox');
 		add_option('medialink_album_effect_pc', 'colorbox');
-		add_option('medialink_album_effect_sp', 'swipebox');
+		add_option('medialink_album_effect_sp', 'photoswipe');
 		add_option('medialink_slideshow_effect_pc', 'nivoslider');
 		add_option('medialink_slideshow_effect_sp', 'nivoslider');
 		add_option('medialink_album_suffix_pc', 'jpg');
@@ -277,6 +277,7 @@ class MediaLinkRegistAndHeader {
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
 		$documentrootname = $_SERVER['DOCUMENT_ROOT'];
 		$servername = 'http://'.$_SERVER['HTTP_HOST'];
+		$xml_all = $wp_uploads_path.'/'.get_option('medialink_all_rssname').'.xml';
 		$xml_album = $wp_uploads_path.'/'.get_option('medialink_album_rssname').'.xml';
 		$xml_movie = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
 		$xml_music = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
@@ -284,6 +285,10 @@ class MediaLinkRegistAndHeader {
 		$xml_document = $wp_uploads_path.'/'.get_option('medialink_document_rssname').'.xml';
 
 		echo '<!-- Start Medialink feed -->'."\n";
+		if (file_exists($documentrootname.$xml_all)) {
+			$xml_all_data = simplexml_load_file($servername.$xml_all);
+			echo '<link rel="alternate" type="application/rss+xml" href="'.$servername.$xml_all.'" title="'.$xml_all_data->channel->title.'" />'."\n";
+		}
 		if (file_exists($documentrootname.$xml_album)) {
 			$xml_album_data = simplexml_load_file($servername.$xml_album);
 			echo '<link rel="alternate" type="application/rss+xml" href="'.$servername.$xml_album.'" title="'.$xml_album_data->channel->title.'" />'."\n";
