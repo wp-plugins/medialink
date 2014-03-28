@@ -181,8 +181,8 @@ msgstr "RSSフィードファイルの名前(ウィジェットに使用しま�
 msgid "Syndication feeds show the most recent (Use to widget)"
 msgstr "RSSフィードの表示数(ウィジェットに使用します)"
 
-msgid "The default value for other."
-msgstr "その他のデフォルト値"
+msgid "The default value for the display size and display color."
+msgstr "表示色や表示サイズのデフォルト値"
 
 msgid "Size of the movie container."
 msgstr "動画コンテナサイズ"
@@ -314,3 +314,6 @@ msgstr "ファイルサイズ"
 
 msgid "Date Time"
 msgstr "日付時刻"
+
+msgid "The default value for effects."
+msgstr "エフェクトのデフォルト値"

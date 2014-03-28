@@ -166,7 +166,7 @@ msgstr ""
 msgid "Syndication feeds show the most recent (Use to widget)"
 msgstr ""
 
-msgid "The default value for other."
+msgid "The default value for the display size and display color."
 msgstr ""
 
 msgid "Size of the movie container."
@@ -290,4 +290,7 @@ msgid "File size"
 msgstr ""
 
 msgid "Date Time"
+msgstr ""
+
+msgid "The default value for effects."
 msgstr ""
