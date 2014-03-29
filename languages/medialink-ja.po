@@ -317,3 +317,15 @@ msgstr "日付時刻"
 
 msgid "The default value for effects."
 msgstr "エフェクトのデフォルト値"
+
+msgid "AllData"
+msgstr "混在データ"
+
+msgid "Slideshow"
+msgstr "スライドショー"
+
+msgid "Music"
+msgstr "音楽"
+
+msgid "Document"
+msgstr "文書"

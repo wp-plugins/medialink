@@ -294,3 +294,15 @@ msgstr ""
 
 msgid "The default value for effects."
 msgstr ""
+
+msgid "AllData"
+msgstr ""
+
+msgid "Slideshow"
+msgstr ""
+
+msgid "Music"
+msgstr ""
+
+msgid "Document"
+msgstr ""
