@@ -404,7 +404,11 @@ class MediaLink {
 			} else {
 				$link_url = 'http://'.$servername.$topurl_urlencode.$file.$suffix;
 			}
-			$img_url = '<a href="'.$link_url.'"><img src = "'.$thumblink.'"></a>';
+			if ( $this->set === 'all' || $this->set === 'slideshow' ) {
+				$img_url = '<a href="'.$link_url.'">'.$thumblink.'"</a>';
+			} else {
+				$img_url = '<a href="'.$link_url.'"><img src = "'.$thumblink.'"></a>';
+			}
 		}else{
 			if ( $ext2type === 'document' || $ext2type === 'spreadsheet' || $ext2type === 'interactive' || $ext2type === 'text' || $ext2type === 'archive' || $ext2type === 'code' ){
 				$link_url = 'http://'.$servername.$topurl_urlencode.$file.$suffix;
@@ -551,6 +555,43 @@ XMLEND;
 		}
 
 		return $queryhead;
+
+	}
+
+	/* ==================================================
+	 * @param	none
+	 * @return	string	$extpattern
+	 * @since	4.2
+	 */
+	function extpattern(){
+
+		if ( $this->set === 'all' ) {
+			$searchtype = 'image|document|spreadsheet|interactive|text|archive|code';
+		} else if( $this->set === 'album' || $this->set === 'slideshow') {
+			$searchtype = 'image';
+		} else if ( $this->set === 'document' ) {
+			$searchtype = 'document|spreadsheet|interactive|text|archive|code';
+		}
+
+		$mimes = wp_get_mime_types();
+
+		foreach ($mimes as $ext => $mime) {
+			if( strpos( $ext, '|' ) ){
+				$exts = explode('|',$ext);
+				foreach ( $exts as $ext2 ) {
+					if( preg_match( "/".$searchtype."/", wp_ext2type($ext2) ) ) {
+						$extpattern .= $ext2.','.strtoupper($ext2).',';
+					}
+				}
+			} else {
+				if( preg_match("/".$searchtype."/", wp_ext2type($ext) ) ) {
+					$extpattern .= $ext.','.strtoupper($ext).',';
+				}
+			}
+		}
+		$extpattern = substr($extpattern, 0, -1);
+
+		return $extpattern;
 
 	}
 

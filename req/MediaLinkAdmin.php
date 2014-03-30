@@ -171,7 +171,7 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_pc</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_pc').','.get_option('medialink_movie_suffix_pc').','.get_option('medialink_music_suffix_pc').','.get_option('medialink_document_suffix_pc') ?></td>
+		<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_pc') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc') ?></td>
@@ -184,7 +184,6 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_pc2</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2').','.get_option('medialink_music_suffix_pc2') ?></td>
 		<td bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_pc2') ?></td>
@@ -196,7 +195,6 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_flash</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_flash').','.get_option('medialink_music_suffix_flash') ?></td>
 		<td align="center" valign="middle" bgcolor="#dddddd"></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_flash') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_flash') ?></td>
@@ -208,7 +206,6 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_sp</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_sp').','.get_option('medialink_movie_suffix_sp').','.get_option('medialink_music_suffix_sp').','.get_option('medialink_document_suffix_sp') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_sp') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_sp') ?></td>
 		<td align="center" valign="middle"><?php echo get_option('medialink_music_suffix_sp') ?></td>
@@ -596,7 +593,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>suffix_pc</b></td>
-					<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_pc').','.get_option('medialink_movie_suffix_pc').','.get_option('medialink_music_suffix_pc').','.get_option('medialink_document_suffix_pc') ?></td>
+					<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_pc = get_option('medialink_album_suffix_pc'); ?>
 					<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
@@ -608,6 +605,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
@@ -647,6 +645,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
@@ -690,6 +689,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -698,7 +698,6 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>suffix_pc2</b></td>
-					<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_pc2').','.get_option('medialink_music_suffix_pc2') ?></td>
 					<td></td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_pc2 = get_option('medialink_movie_suffix_pc2'); ?>
@@ -733,7 +732,6 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>suffix_flash</b></td>
-					<td align="center" valign="middle"><?php echo get_option('medialink_movie_suffix_flash').','.get_option('medialink_music_suffix_flash') ?></td>
 					<td></td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_flash = get_option('medialink_movie_suffix_flash'); ?>
@@ -755,7 +753,6 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle"><b>suffix_sp</b></td>
-					<td align="center" valign="middle"><?php echo get_option('medialink_album_suffix_sp').','.get_option('medialink_movie_suffix_sp').','.get_option('medialink_music_suffix_sp').','.get_option('medialink_document_suffix_sp') ?></td>
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_sp = get_option('medialink_album_suffix_sp'); ?>
 					<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
@@ -767,6 +764,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
@@ -806,6 +804,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
@@ -849,6 +848,7 @@ class MediaLinkAdmin {
 								<?php
 							}
 						?>
+						<option <?php if ('all' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">

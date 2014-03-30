@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 4.1
+Version: 4.2
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -98,6 +98,7 @@ function medialink_func( $atts, $html = NULL ) {
 	if ( empty($set) ){
 		$set = 'all';
 	}
+	$medialink->set = $set;
 
 	$rssdef = false;
 	if ( $set === 'all' ){
@@ -105,9 +106,8 @@ function medialink_func( $atts, $html = NULL ) {
 
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_all_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_all_effect_sp'); }
-
-		$suffix_pattern_pc = strtoupper(get_option('medialink_album_suffix_pc')).','.strtolower(get_option('medialink_album_suffix_pc'));
-		$suffix_pattern_sp = strtoupper(get_option('medialink_album_suffix_sp')).','.strtolower(get_option('medialink_album_suffix_sp'));
+		$suffix_pattern_pc = $medialink->extpattern();
+		$suffix_pattern_sp = $medialink->extpattern();
 		$suffix_pattern_pc .= ','.strtoupper(get_option('medialink_movie_suffix_pc')).','.strtolower(get_option('medialink_movie_suffix_pc'));
 		$suffix_movie_pc2 = get_option('medialink_movie_suffix_pc2');
 		$suffix_movie_flash = get_option('medialink_movie_suffix_flash');
@@ -116,9 +116,6 @@ function medialink_func( $atts, $html = NULL ) {
 		$suffix_music_pc2 = get_option('medialink_music_suffix_pc2');
 		$suffix_music_flash = get_option('medialink_music_suffix_flash');
 		$suffix_pattern_sp .= ','.strtoupper(get_option('medialink_music_suffix_sp')).','.strtolower(get_option('medialink_music_suffix_sp'));
-		$suffix_pattern_pc .= ','.strtoupper(get_option('medialink_document_suffix_pc')).','.strtolower(get_option('medialink_document_suffix_pc'));
-		$suffix_pattern_sp .= ','.strtoupper(get_option('medialink_document_suffix_sp')).','.strtolower(get_option('medialink_document_suffix_sp'));
-
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_all_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_all_display_sp')); }
 		if( empty($thumbnail) ) { $thumbnail = get_option('medialink_all_suffix_thumbnail'); }
@@ -143,14 +140,30 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_album_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_album_effect_sp'); }
 		if( empty($suffix_pc) ) {
-			$suffix_pattern_pc = strtoupper(get_option('medialink_album_suffix_pc')).','.strtolower(get_option('medialink_album_suffix_pc'));
+			if ( get_option('medialink_album_suffix_pc') === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper(get_option('medialink_album_suffix_pc')).','.strtolower(get_option('medialink_album_suffix_pc'));
+			}
 		} else {
-			$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			if ( $suffix_pc === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			}
 		}
 		if( empty($suffix_sp) ) {
-			$suffix_pattern_sp = strtoupper(get_option('medialink_album_suffix_sp')).','.strtolower(get_option('medialink_album_suffix_sp'));
+			if ( get_option('medialink_album_suffix_sp') === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper(get_option('medialink_album_suffix_sp')).','.strtolower(get_option('medialink_album_suffix_sp'));
+			}
 		} else {
-			$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			if ( $suffix_sp === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			}
 		}
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_album_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_album_display_sp')); }
@@ -239,14 +252,30 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($effect_pc) ) { $effect_pc = get_option('medialink_slideshow_effect_pc'); }
 		if( empty($effect_sp) ) { $effect_sp = get_option('medialink_slideshow_effect_sp'); }
 		if( empty($suffix_pc) ) {
-			$suffix_pattern_pc = strtoupper(get_option('medialink_slideshow_suffix_pc')).','.strtolower(get_option('medialink_slideshow_suffix_pc'));
+			if ( get_option('medialink_slideshow_suffix_pc') === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper(get_option('medialink_slideshow_suffix_pc')).','.strtolower(get_option('medialink_slideshow_suffix_pc'));
+			}
 		} else {
-			$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			if ( $suffix_pc === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			}
 		}
 		if( empty($suffix_sp) ) {
-			$suffix_pattern_sp = strtoupper(get_option('medialink_slideshow_suffix_sp')).','.strtolower(get_option('medialink_slideshow_suffix_sp'));
+			if ( get_option('medialink_slideshow_suffix_sp') === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper(get_option('medialink_slideshow_suffix_sp')).','.strtolower(get_option('medialink_slideshow_suffix_sp'));
+			}
 		} else {
-			$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			if ( $suffix_sp === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			}
 		}
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_slideshow_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_slideshow_display_sp')); }
@@ -269,14 +298,30 @@ function medialink_func( $atts, $html = NULL ) {
 	} else if ( $set === 'document' ){
 		if( empty($sort) ) { $sort = get_option('medialink_document_sort'); }
 		if( empty($suffix_pc) ) {
-			$suffix_pattern_pc = strtoupper(get_option('medialink_document_suffix_pc')).','.strtolower(get_option('medialink_document_suffix_pc'));
+			if ( get_option('medialink_document_suffix_pc') === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper(get_option('medialink_document_suffix_pc')).','.strtolower(get_option('medialink_document_suffix_pc'));
+			}
 		} else {
-			$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			if ( $suffix_pc === 'all' ) {
+				$suffix_pattern_pc = $medialink->extpattern();
+			} else {
+				$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
+			}
 		}
 		if( empty($suffix_sp) ) {
-			$suffix_pattern_sp = strtoupper(get_option('medialink_document_suffix_sp')).','.strtolower(get_option('medialink_document_suffix_sp'));
+			if ( get_option('medialink_document_suffix_sp') === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper(get_option('medialink_document_suffix_sp')).','.strtolower(get_option('medialink_document_suffix_sp'));
+			}
 		} else {
-			$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			if ( $suffix_sp === 'all' ) {
+				$suffix_pattern_sp = $medialink->extpattern();
+			} else {
+				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
+			}
 		}
 		if( empty($display_pc) ) { $display_pc = intval(get_option('medialink_document_display_pc')); }
 		if( empty($display_sp) ) { $display_sp = intval(get_option('medialink_document_display_sp')); }
@@ -379,7 +424,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->wp_path = $wp_path;
 	$medialink->pluginurl = $pluginurl;
 	$medialink->document_root = $document_root;
-	$medialink->set = $set;
 	$medialink->mode = $mode;
 	$medialink->effect = $effect;
 	$medialink->rssname = $rssname;
@@ -512,7 +556,11 @@ function medialink_func( $atts, $html = NULL ) {
 	$scripturl = $scriptname;
 	if( $queryhead <> '?' ){
 		$perm_id = get_the_ID();
-		$permlinkstrform = '<input type="hidden" name="page_id" value="'.$perm_id.'">';
+		if( is_page($perm_id) ) {
+			$permlinkstrform = '<input type="hidden" name="page_id" value="'.$perm_id.'">';
+		} else {
+			$permlinkstrform = '<input type="hidden" name="p" value="'.$perm_id.'">';
+		}
 	}
 	$scripturl .= $queryhead;
 
