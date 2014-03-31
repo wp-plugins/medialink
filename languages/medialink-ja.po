@@ -329,3 +329,10 @@ msgstr "音楽"
 
 msgid "Document"
 msgstr "文書"
+
+msgid ""
+"Audio's suffix and Video's suffix is following to the setting(set='music',"
+"set='movie'). Other than that, read all the data."
+msgstr ""
+"音楽とビデオの拡張子は、それぞれの設定(set='music',set='movie')に従います。そ"
+"れ以外は、全てのデータを読み込みます。"

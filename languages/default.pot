@@ -306,3 +306,8 @@ msgstr ""
 
 msgid "Document"
 msgstr ""
+
+msgid ""
+"Audio's suffix and Video's suffix is following to the setting(set='music',"
+"set='movie'). Other than that, read all the data."
+msgstr ""
