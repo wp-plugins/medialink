@@ -47,12 +47,12 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$documentrootname = $_SERVER['DOCUMENT_ROOT'];
 		$servername = 'http://'.$_SERVER['HTTP_HOST'];
 		$xmlurl2 = get_bloginfo('comments_rss2_url');
-		$xml3 = $wp_uploads_path.'/'.get_option('medialink_all_rssname').'.xml';
-		$xml4 = $wp_uploads_path.'/'.get_option('medialink_album_rssname').'.xml';
-		$xml5 = $wp_uploads_path.'/'.get_option('medialink_movie_rssname').'.xml';
-		$xml6 = $wp_uploads_path.'/'.get_option('medialink_music_rssname').'.xml';
-		$xml7 = $wp_uploads_path.'/'.get_option('medialink_slideshow_rssname').'.xml';
-		$xml8 = $wp_uploads_path.'/'.get_option('medialink_document_rssname').'.xml';
+		$xml3 = $wp_uploads_path.'/'.get_option('medialink_all')[rssname].'.xml';
+		$xml4 = $wp_uploads_path.'/'.get_option('medialink_album')[rssname].'.xml';
+		$xml5 = $wp_uploads_path.'/'.get_option('medialink_movie')[rssname].'.xml';
+		$xml6 = $wp_uploads_path.'/'.get_option('medialink_music')[rssname].'.xml';
+		$xml7 = $wp_uploads_path.'/'.get_option('medialink_slideshow')[rssname].'.xml';
+		$xml8 = $wp_uploads_path.'/'.get_option('medialink_document')[rssname].'.xml';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
