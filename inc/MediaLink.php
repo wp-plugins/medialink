@@ -54,10 +54,12 @@ class MediaLink {
 
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
-		if(preg_match("{".get_option('medialink_useragent')[tb]."}",$user_agent)){
+		$medialink_useragent = get_option('medialink_useragent');
+
+		if(preg_match("{".$medialink_useragent[tb]."}",$user_agent)){
 			//Tablet
 			$mode = "pc"; 
-		}else if(preg_match("{".get_option('medialink_useragent')[sp]."}",$user_agent)){
+		}else if(preg_match("{".$medialink_useragent[sp]."}",$user_agent)){
 			//Smartphone
 			$mode = "sp";
 		}else{

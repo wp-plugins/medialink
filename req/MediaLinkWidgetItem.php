@@ -44,15 +44,22 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
 		$pluginurl = plugins_url($path='',$scheme=null);
 
+		$medialink_album = get_option('medialink_album');
+		$medialink_all = get_option('medialink_all');
+		$medialink_document = get_option('medialink_document');
+		$medialink_movie = get_option('medialink_movie');
+		$medialink_music = get_option('medialink_music');
+		$medialink_slideshow = get_option('medialink_slideshow');
+
 		$documentrootname = $_SERVER['DOCUMENT_ROOT'];
 		$servername = 'http://'.$_SERVER['HTTP_HOST'];
 		$xmlurl2 = get_bloginfo('comments_rss2_url');
-		$xml3 = $wp_uploads_path.'/'.get_option('medialink_all')[rssname].'.xml';
-		$xml4 = $wp_uploads_path.'/'.get_option('medialink_album')[rssname].'.xml';
-		$xml5 = $wp_uploads_path.'/'.get_option('medialink_movie')[rssname].'.xml';
-		$xml6 = $wp_uploads_path.'/'.get_option('medialink_music')[rssname].'.xml';
-		$xml7 = $wp_uploads_path.'/'.get_option('medialink_slideshow')[rssname].'.xml';
-		$xml8 = $wp_uploads_path.'/'.get_option('medialink_document')[rssname].'.xml';
+		$xml3 = $wp_uploads_path.'/'.$medialink_all[rssname].'.xml';
+		$xml4 = $wp_uploads_path.'/'.$medialink_album[rssname].'.xml';
+		$xml5 = $wp_uploads_path.'/'.$medialink_movie[rssname].'.xml';
+		$xml6 = $wp_uploads_path.'/'.$medialink_music[rssname].'.xml';
+		$xml7 = $wp_uploads_path.'/'.$medialink_slideshow[rssname].'.xml';
+		$xml8 = $wp_uploads_path.'/'.$medialink_document[rssname].'.xml';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;

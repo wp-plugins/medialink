@@ -64,6 +64,20 @@ class MediaLinkAdmin {
 		if( !empty($_POST) ) { $this->options_updated(); }
 		$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH).'?page=MediaLink';
 
+		$medialink_album = get_option('medialink_album');
+		$medialink_all = get_option('medialink_all');
+		$medialink_colorbox = get_option('medialink_colorbox');
+		$medialink_css = get_option('medialink_css');
+		$medialink_document = get_option('medialink_document');
+		$medialink_exclude = get_option('medialink_exclude');
+		$medialink_movie = get_option('medialink_movie');
+		$medialink_music = get_option('medialink_music');
+		$medialink_nivoslider = get_option('medialink_nivoslider');
+		$medialink_photoswipe = get_option('medialink_photoswipe');
+		$medialink_slideshow = get_option('medialink_slideshow');
+		$medialink_swipebox = get_option('medialink_swipebox');
+		$medialink_useragent = get_option('medialink_useragent');
+
 		?>
 
 		<div class="wrap">
@@ -130,12 +144,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>sort</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[sort] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[sort] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[sort] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[sort] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[sort] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[sort] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[sort] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Type of Sort', 'medialink'); ?>
 		</td>
@@ -143,10 +157,10 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>effect_pc</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[effect_pc] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[effect_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[effect_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[effect_pc] ?></td>
 		<td colspan="2" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[effect_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_pc] ?></td>
 		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
@@ -161,10 +175,10 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>effect_sp</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[effect_sp] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[effect_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[effect_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[effect_sp] ?></td>
 		<td colspan="2" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[effect_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_sp] ?></td>
 		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of Smartphone', 'medialink'); ?>
@@ -174,11 +188,11 @@ class MediaLinkAdmin {
 		<tr>
 		<td align="center" valign="middle"><b>suffix_pc</b></td>
 		<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[suffix_pc] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[suffix_pc] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[suffix_pc] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[suffix_pc] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[suffix_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[suffix_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[suffix_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[suffix_pc] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[suffix_pc] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('extension of PC.', 'medialink'); ?>
 		</td>
@@ -187,8 +201,8 @@ class MediaLinkAdmin {
 		<tr>
 		<td align="center" valign="middle"><b>suffix_pc2</b></td>
 		<td bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[suffix_pc2] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[suffix_pc2] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_pc2] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[suffix_pc2] ?></td>
 		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
@@ -198,8 +212,8 @@ class MediaLinkAdmin {
 		<tr>
 		<td align="center" valign="middle"><b>suffix_flash</b></td>
 		<td align="center" valign="middle" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[suffix_flash] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[suffix_flash] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_flash] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[suffix_flash] ?></td>
 		<td colspan="2" bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
@@ -208,11 +222,11 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>suffix_sp</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[suffix_sp] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[suffix_sp] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[suffix_sp] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[suffix_sp] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[suffix_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[suffix_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[suffix_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[suffix_sp] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[suffix_sp] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('extension of Smartphone', 'medialink'); ?>
 		</td>
@@ -220,12 +234,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>display_pc</b></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_all')[display_pc]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_album')[display_pc]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie')[display_pc]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music')[display_pc]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow')[display_pc]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document')[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_all[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_album[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_movie[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_music[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_slideshow[display_pc]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_document[display_pc]) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('File Display per page(PC)', 'medialink'); ?>
 		</td>
@@ -233,12 +247,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>display_sp</b></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_all')[display_sp]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_album')[display_sp]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie')[display_sp]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music')[display_sp]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow')[display_sp]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document')[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_all[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_album[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_movie[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_music[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_slideshow[display_sp]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_document[display_sp]) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
 		</td>
@@ -246,10 +260,10 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>image_show_size</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[image_show_size] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[image_show_size] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[image_show_size] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[image_show_size] ?></td>
 		<td colspan="2" bgcolor="#dddddd"></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[image_show_size] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[image_show_size] ?></td>
 		<td bgcolor="#dddddd"></td>
 		<td align="left" valign="middle">
 		<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
@@ -260,10 +274,10 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><b>thumbnail</b></td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[thumbnail] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[thumbnail] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[thumbnail] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[thumbnail] ?></td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[thumbnail] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[thumbnail] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
 		</td>
@@ -271,12 +285,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>include_cat</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[include_cat] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[include_cat] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[include_cat] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[include_cat] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[include_cat] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[include_cat] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[include_cat] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to include. Only one.', 'medialink'); ?>
 		</td>
@@ -284,7 +298,7 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>exclude_cat</b></td>
-		<td colspan="6" align="center" valign="middle"><?php echo get_option('medialink_exclude_cat') ?></td>
+		<td colspan="6" align="center" valign="middle"><?php echo $medialink_exclude[cat] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
 		</td>
@@ -292,12 +306,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>generate_rssfeed</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[generate_rssfeed] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[generate_rssfeed] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[generate_rssfeed] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[generate_rssfeed] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[generate_rssfeed] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[generate_rssfeed] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[generate_rssfeed] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Generation of RSS feed.', 'medialink'); ?>
 		</td>
@@ -305,12 +319,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>rssname</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[rssname] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[rssname] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[rssname] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[rssname] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[rssname] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[rssname] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[rssname] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
 		</td>
@@ -318,12 +332,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>rssmax</b></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_all')[rssmax]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_album')[rssmax]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_movie')[rssmax]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_music')[rssmax]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_slideshow')[rssmax]) ?></td>
-		<td align="center" valign="middle"><?php echo intval(get_option('medialink_document')[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_all[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_album[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_movie[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_music[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_slideshow[rssmax]) ?></td>
+		<td align="center" valign="middle"><?php echo intval($medialink_document[rssmax]) ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink'); ?>
 		</td>
@@ -331,12 +345,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>filesize_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[filesize_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[filesize_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[filesize_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[filesize_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[filesize_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[filesize_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[filesize_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('File size', 'medialink'); ?>
 		</td>
@@ -344,12 +358,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>stamptime_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[stamptime_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[stamptime_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[stamptime_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[stamptime_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[stamptime_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[stamptime_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[stamptime_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Date Time', 'medialink'); ?>
 		</td>
@@ -357,12 +371,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>categorylinks_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[categorylinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[categorylinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[categorylinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[categorylinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[categorylinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[categorylinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[categorylinks_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Selectbox of categories.', 'medialink'); ?>
 		</td>
@@ -370,12 +384,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>pagelinks_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[pagelinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[pagelinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[pagelinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[pagelinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[pagelinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[pagelinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[pagelinks_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Navigation of page.', 'medialink'); ?>
 		</td>
@@ -383,12 +397,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>sortlinks_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[sortlinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[sortlinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[sortlinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[sortlinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[sortlinks_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[sortlinks_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[sortlinks_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Navigation of sort.', 'medialink'); ?>
 		</td>
@@ -396,12 +410,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>searchbox_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[searchbox_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[searchbox_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[searchbox_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[searchbox_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[searchbox_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[searchbox_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[searchbox_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Search box', 'medialink'); ?>
 		</td>
@@ -409,12 +423,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>rssicon_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[rssicon_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[rssicon_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[rssicon_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[rssicon_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[rssicon_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[rssicon_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[rssicon_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('RSS Icon', 'medialink'); ?>
 		</td>
@@ -422,12 +436,12 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle"><b>credit_show</b></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_all')[credit_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_album')[credit_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_movie')[credit_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_music')[credit_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_slideshow')[credit_show] ?></td>
-		<td align="center" valign="middle"><?php echo get_option('medialink_document')[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_all[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_album[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_movie[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_music[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_slideshow[credit_show] ?></td>
+		<td align="center" valign="middle"><?php echo $medialink_document[credit_show] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Credit', 'medialink'); ?>
 		</td>
@@ -475,7 +489,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>sort</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_sort = get_option('medialink_all')[sort]; ?>
+					<?php $target_all_sort = $medialink_all[sort]; ?>
 					<select id="medialink_all_sort" name="medialink_all_sort">
 						<option <?php if ('new' == $target_all_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_all_sort)echo 'selected="selected"'; ?>>old</option>
@@ -483,7 +497,7 @@ class MediaLinkAdmin {
 						<option <?php if ('asc' == $target_all_sort)echo 'selected="selected"'; ?>>asc</option>
 					</select>
 					</td>					<td align="center" valign="middle">
-					<?php $target_album_sort = get_option('medialink_album')[sort]; ?>
+					<?php $target_album_sort = $medialink_album[sort]; ?>
 					<select id="medialink_album_sort" name="medialink_album_sort">
 						<option <?php if ('new' == $target_album_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_album_sort)echo 'selected="selected"'; ?>>old</option>
@@ -492,7 +506,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_sort = get_option('medialink_movie')[sort]; ?>
+					<?php $target_movie_sort = $medialink_movie[sort]; ?>
 					<select id="medialink_movie_sort" name="medialink_movie_sort">
 						<option <?php if ('new' == $target_movie_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_movie_sort)echo 'selected="selected"'; ?>>old</option>
@@ -501,7 +515,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_sort = get_option('medialink_music')[sort]; ?>
+					<?php $target_music_sort = $medialink_music[sort]; ?>
 					<select id="medialink_music_sort" name="medialink_music_sort">
 						<option <?php if ('new' == $target_music_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_music_sort)echo 'selected="selected"'; ?>>old</option>
@@ -510,7 +524,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_sort = get_option('medialink_slideshow')[sort]; ?>
+					<?php $target_slideshow_sort = $medialink_slideshow[sort]; ?>
 					<select id="medialink_slideshow_sort" name="medialink_slideshow_sort">
 						<option <?php if ('new' == $target_slideshow_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_slideshow_sort)echo 'selected="selected"'; ?>>old</option>
@@ -519,7 +533,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_sort = get_option('medialink_document')[sort]; ?>
+					<?php $target_document_sort = $medialink_document[sort]; ?>
 					<select id="medialink_document_sort" name="medialink_document_sort">
 						<option <?php if ('new' == $target_document_sort)echo 'selected="selected"'; ?>>new</option>
 						<option <?php if ('old' == $target_document_sort)echo 'selected="selected"'; ?>>old</option>
@@ -534,14 +548,14 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>effect_pc</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_effect_pc = get_option('medialink_all')[effect_pc]; ?>
+					<?php $target_all_effect_pc = $medialink_all[effect_pc]; ?>
 					<select id="medialink_all_effect_pc" name="medialink_all_effect_pc">
 						<option <?php if ('colorbox' == $target_all_effect_pc)echo 'selected="selected"'; ?>>colorbox</option>
 						<option <?php if ('Lightbox' == $target_all_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_effect_pc = get_option('medialink_album')[effect_pc]; ?>
+					<?php $target_album_effect_pc = $medialink_album[effect_pc]; ?>
 					<select id="medialink_album_effect_pc" name="medialink_album_effect_pc">
 						<option <?php if ('colorbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>colorbox</option>
 						<option <?php if ('Lightbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
@@ -549,7 +563,7 @@ class MediaLinkAdmin {
 					</td>
 					<td colspan="2"></td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_effect_pc = get_option('medialink_slideshow')[effect_pc]; ?>
+					<?php $target_slideshow_effect_pc = $medialink_slideshow[effect_pc]; ?>
 					<select id="medialink_slideshow_effect_pc" name="medialink_slideshow_effect_pc">
 						<option <?php if ('nivoslider' == $target_slideshow_effect_pc)echo 'selected="selected"'; ?>>nivoslider</option>
 					</select>
@@ -567,13 +581,13 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>effect_sp</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_effect_sp = get_option('medialink_all')[effect_sp]; ?>
+					<?php $target_all_effect_sp = $medialink_all[effect_sp]; ?>
 					<select id="medialink_all_effect_sp" name="medialink_all_effect_sp">
 						<option <?php if ('swipebox' == $target_all_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_effect_sp = get_option('medialink_album')[effect_sp]; ?>
+					<?php $target_album_effect_sp = $medialink_album[effect_sp]; ?>
 					<select id="medialink_album_effect_sp" name="medialink_album_effect_sp">
 						<option <?php if ('photoswipe' == $target_album_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
 						<option <?php if ('swipebox' == $target_album_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
@@ -581,7 +595,7 @@ class MediaLinkAdmin {
 					</td>
 					<td colspan="2"></td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_effect_sp = get_option('medialink_slideshow')[effect_sp]; ?>
+					<?php $target_slideshow_effect_sp = $medialink_slideshow[effect_sp]; ?>
 					<select id="medialink_slideshow_effect_sp" name="medialink_slideshow_effect_sp">
 						<option <?php if ('nivoslider' == $target_slideshow_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
 					</select>
@@ -595,7 +609,7 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle"><b>suffix_pc</b></td>
 					<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="center" valign="middle">
-					<?php $target_album_suffix_pc = get_option('medialink_album')[suffix_pc]; ?>
+					<?php $target_album_suffix_pc = $medialink_album[suffix_pc]; ?>
 					<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
 						<option <?php if ('all' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -609,7 +623,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_suffix_pc = get_option('medialink_movie')[suffix_pc]; ?>
+					<?php $target_movie_suffix_pc = $medialink_movie[suffix_pc]; ?>
 					<select id="medialink_movie_suffix_pc" name="medialink_movie_suffix_pc">
 						<?php
 							$exts = $this->exts('video');
@@ -622,7 +636,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_suffix_pc = get_option('medialink_music')[suffix_pc]; ?>
+					<?php $target_music_suffix_pc = $medialink_music[suffix_pc]; ?>
 					<select id="medialink_music_suffix_pc" name="medialink_music_suffix_pc">
 						<?php
 							$exts = $this->exts('audio');
@@ -635,7 +649,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_suffix_pc = get_option('medialink_slideshow')[suffix_pc]; ?>
+					<?php $target_slideshow_suffix_pc = $medialink_slideshow[suffix_pc]; ?>
 					<select id="medialink_slideshow_suffix_pc" name="medialink_slideshow_suffix_pc">
 						<option <?php if ('all' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -649,7 +663,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_suffix_pc = get_option('medialink_document')[suffix_pc]; ?>
+					<?php $target_document_suffix_pc = $medialink_document[suffix_pc]; ?>
 					<select id="medialink_document_suffix_pc" name="medialink_document_suffix_pc">
 						<option <?php if ('all' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -700,7 +714,7 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle"><b>suffix_pc2</b></td>
 					<td></td>
 					<td align="center" valign="middle">
-					<?php $target_movie_suffix_pc2 = get_option('medialink_movie')[suffix_pc2]; ?>
+					<?php $target_movie_suffix_pc2 = $medialink_movie[suffix_pc2]; ?>
 					<select id="medialink_movie_suffix_pc2" name="medialink_movie_suffix_pc2">
 						<?php
 							$exts = $this->exts('video');
@@ -713,7 +727,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_suffix_pc2 = get_option('medialink_music')[suffix_pc2]; ?>
+					<?php $target_music_suffix_pc2 = $medialink_music[suffix_pc2]; ?>
 					<select id="medialink_music_suffix_pc2" name="medialink_music_suffix_pc2">
 						<?php
 							$exts = $this->exts('audio');
@@ -734,14 +748,14 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle"><b>suffix_flash</b></td>
 					<td></td>
 					<td align="center" valign="middle">
-					<?php $target_movie_suffix_flash = get_option('medialink_movie')[suffix_flash]; ?>
+					<?php $target_movie_suffix_flash = $medialink_movie[suffix_flash]; ?>
 					<select id="medialink_movie_suffix_flash" name="medialink_movie_suffix_flash">
 						<option <?php if ('mp4' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>mp4</option>
 						<option <?php if ('flv' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>flv</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_suffix_flash = get_option('medialink_music')[suffix_flash]; ?>
+					<?php $target_music_suffix_flash = $medialink_music[suffix_flash]; ?>
 					<select id="medialink_music_suffix_flash" name="medialink_music_suffix_flash">
 						<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
 					</select>
@@ -754,7 +768,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>suffix_sp</b></td>
 					<td align="center" valign="middle">
-					<?php $target_album_suffix_sp = get_option('medialink_album')[suffix_sp]; ?>
+					<?php $target_album_suffix_sp = $medialink_album[suffix_sp]; ?>
 					<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
 						<option <?php if ('all' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -768,7 +782,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_suffix_sp = get_option('medialink_movie')[suffix_sp]; ?>
+					<?php $target_movie_suffix_sp = $medialink_movie[suffix_sp]; ?>
 					<select id="medialink_movie_suffix_sp" name="medialink_movie_suffix_sp">
 						<?php
 							$exts = $this->exts('video');
@@ -781,7 +795,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_suffix_sp = get_option('medialink_music')[suffix_sp]; ?>
+					<?php $target_music_suffix_sp = $medialink_music[suffix_sp]; ?>
 					<select id="medialink_music_suffix_sp" name="medialink_music_suffix_sp">
 						<?php
 							$exts = $this->exts('audio');
@@ -794,7 +808,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_suffix_sp = get_option('medialink_slideshow')[suffix_sp]; ?>
+					<?php $target_slideshow_suffix_sp = $medialink_slideshow[suffix_sp]; ?>
 					<select id="medialink_slideshow_suffix_sp" name="medialink_slideshow_suffix_sp">
 						<option <?php if ('all' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -808,7 +822,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_suffix_sp = get_option('medialink_document')[suffix_sp]; ?>
+					<?php $target_document_suffix_sp = $medialink_document[suffix_sp]; ?>
 					<select id="medialink_document_suffix_sp" name="medialink_document_suffix_sp">
 						<option <?php if ('all' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>all</option>
 						<?php
@@ -858,22 +872,22 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>display_pc</b></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_display_pc" name="medialink_all_display_pc" value="<?php echo intval(get_option('medialink_all')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_all_display_pc" name="medialink_all_display_pc" value="<?php echo intval($medialink_all[display_pc]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_display_pc" name="medialink_album_display_pc" value="<?php echo intval(get_option('medialink_album')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_album_display_pc" name="medialink_album_display_pc" value="<?php echo intval($medialink_album[display_pc]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_display_pc" name="medialink_movie_display_pc" value="<?php echo intval(get_option('medialink_movie')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_movie_display_pc" name="medialink_movie_display_pc" value="<?php echo intval($medialink_movie[display_pc]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_display_pc" name="medialink_music_display_pc" value="<?php echo intval(get_option('medialink_music')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_music_display_pc" name="medialink_music_display_pc" value="<?php echo intval($medialink_music[display_pc]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_display_pc" name="medialink_slideshow_display_pc" value="<?php echo intval(get_option('medialink_slideshow')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_slideshow_display_pc" name="medialink_slideshow_display_pc" value="<?php echo intval($medialink_slideshow[display_pc]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_display_pc" name="medialink_document_display_pc" value="<?php echo intval(get_option('medialink_document')[display_pc]) ?>" size="3" />
+						<input type="text" id="medialink_document_display_pc" name="medialink_document_display_pc" value="<?php echo intval($medialink_document[display_pc]) ?>" size="3" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('File Display per page(PC)', 'medialink') ?>
@@ -882,22 +896,22 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>display_sp</b></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_display_sp" name="medialink_all_display_sp" value="<?php echo intval(get_option('medialink_all')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_all_display_sp" name="medialink_all_display_sp" value="<?php echo intval($medialink_all[display_sp]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_display_sp" name="medialink_album_display_sp" value="<?php echo intval(get_option('medialink_album')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_album_display_sp" name="medialink_album_display_sp" value="<?php echo intval($medialink_album[display_sp]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_display_sp" name="medialink_movie_display_sp" value="<?php echo intval(get_option('medialink_movie')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_movie_display_sp" name="medialink_movie_display_sp" value="<?php echo intval($medialink_movie[display_sp]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_display_sp" name="medialink_music_display_sp" value="<?php echo intval(get_option('medialink_music')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_music_display_sp" name="medialink_music_display_sp" value="<?php echo intval($medialink_music[display_sp]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_display_sp" name="medialink_slideshow_display_sp" value="<?php echo intval(get_option('medialink_slideshow')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_slideshow_display_sp" name="medialink_slideshow_display_sp" value="<?php echo intval($medialink_slideshow[display_sp]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_display_sp" name="medialink_document_display_sp" value="<?php echo intval(get_option('medialink_document')[display_sp]) ?>" size="3" />
+						<input type="text" id="medialink_document_display_sp" name="medialink_document_display_sp" value="<?php echo intval($medialink_document[display_sp]) ?>" size="3" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('File Display per page(Smartphone)', 'medialink') ?>
@@ -906,7 +920,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>image_show_size</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_image_show_size = get_option('medialink_all')[image_show_size]; ?>
+					<?php $target_all_image_show_size = $medialink_all[image_show_size]; ?>
 					<select id="medialink_all_image_show_size" name="medialink_all_image_show_size">
 						<option <?php if ('Full' == $target_all_image_show_size)echo 'selected="selected"'; ?>>Full</option>
 						<option <?php if ('Medium' == $target_all_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
@@ -914,7 +928,7 @@ class MediaLinkAdmin {
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_image_show_size = get_option('medialink_album')[image_show_size]; ?>
+					<?php $target_album_image_show_size = $medialink_album[image_show_size]; ?>
 					<select id="medialink_album_image_show_size" name="medialink_album_image_show_size">
 						<option <?php if ('Full' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Full</option>
 						<option <?php if ('Medium' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
@@ -923,7 +937,7 @@ class MediaLinkAdmin {
 					</td>
 					<td colspan="2"></td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_image_show_size = get_option('medialink_slideshow')[image_show_size]; ?>
+					<?php $target_slideshow_image_show_size = $medialink_slideshow[image_show_size]; ?>
 					<select id="medialink_slideshow_image_show_size" name="medialink_slideshow_image_show_size">
 						<option <?php if ('Full' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Full</option>
 						<option <?php if ('Medium' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
@@ -944,14 +958,14 @@ class MediaLinkAdmin {
 						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_thumbnail = get_option('medialink_movie')[thumbnail]; ?>
+					<?php $target_movie_thumbnail = $medialink_movie[thumbnail]; ?>
 					<select id="medialink_movie_thumbnail" name="medialink_movie_thumbnail">
 						<option <?php if ('' == $target_movie_thumbnail)echo 'selected="selected"'; ?>></option>
 						<option <?php if ('icon' == $target_movie_thumbnail)echo 'selected="selected"'; ?>>icon</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_thumbnail = get_option('medialink_music')[thumbnail]; ?>
+					<?php $target_music_thumbnail = $medialink_music[thumbnail]; ?>
 					<select id="medialink_music_thumbnail" name="medialink_music_thumbnail">
 						<option <?php if ('' == $target_music_thumbnail)echo 'selected="selected"'; ?>></option>
 						<option <?php if ('icon' == $target_music_thumbnail)echo 'selected="selected"'; ?>>icon</option>
@@ -961,7 +975,7 @@ class MediaLinkAdmin {
 						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_thumbnail = get_option('medialink_document')[thumbnail]; ?>
+					<?php $target_document_thumbnail = $medialink_document[thumbnail]; ?>
 					<select id="medialink_document_thumbnail" name="medialink_document_thumbnail">
 						<option <?php if ('' == $target_document_thumbnail)echo 'selected="selected"'; ?>></option>
 						<option <?php if ('icon' == $target_document_thumbnail)echo 'selected="selected"'; ?>>icon</option>
@@ -974,22 +988,22 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>include_cat</b></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_include_cat" name="medialink_all_include_cat" value="<?php echo get_option('medialink_all')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_all_include_cat" name="medialink_all_include_cat" value="<?php echo $medialink_all[include_cat] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_include_cat" name="medialink_album_include_cat" value="<?php echo get_option('medialink_album')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_album_include_cat" name="medialink_album_include_cat" value="<?php echo $medialink_album[include_cat] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_include_cat" name="medialink_movie_include_cat" value="<?php echo get_option('medialink_movie')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_movie_include_cat" name="medialink_movie_include_cat" value="<?php echo $medialink_movie[include_cat] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_include_cat" name="medialink_music_include_cat" value="<?php echo get_option('medialink_music')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_music_include_cat" name="medialink_music_include_cat" value="<?php echo $medialink_music[include_cat] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_include_cat" name="medialink_slideshow_include_cat" value="<?php echo get_option('medialink_slideshow')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_slideshow_include_cat" name="medialink_slideshow_include_cat" value="<?php echo $medialink_slideshow[include_cat] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_include_cat" name="medialink_document_include_cat" value="<?php echo get_option('medialink_document')[include_cat] ?>" size="15" />
+						<input type="text" id="medialink_document_include_cat" name="medialink_document_include_cat" value="<?php echo $medialink_document[include_cat] ?>" size="15" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Category you want to include. Only one.', 'medialink'); ?>
@@ -998,7 +1012,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>exclude_cat</b></td>
 					<td align="center" valign="middle" colspan="6">
-						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo get_option('medialink_exclude_cat') ?>" size="100" />
+						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo $medialink_exclude[cat] ?>" size="100" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
@@ -1007,42 +1021,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>generate_rssfeed</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_generate_rssfeed = get_option('medialink_all')[generate_rssfeed]; ?>
+					<?php $target_all_generate_rssfeed = $medialink_all[generate_rssfeed]; ?>
 					<select id="medialink_all_generate_rssfeed" name="medialink_all_generate_rssfeed">
 						<option <?php if ('on' == $target_all_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_all_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_generate_rssfeed = get_option('medialink_album')[generate_rssfeed]; ?>
+					<?php $target_album_generate_rssfeed = $medialink_album[generate_rssfeed]; ?>
 					<select id="medialink_album_generate_rssfeed" name="medialink_album_generate_rssfeed">
 						<option <?php if ('on' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_generate_rssfeed = get_option('medialink_movie')[generate_rssfeed]; ?>
+					<?php $target_movie_generate_rssfeed = $medialink_movie[generate_rssfeed]; ?>
 					<select id="medialink_movie_generate_rssfeed" name="medialink_movie_generate_rssfeed">
 						<option <?php if ('on' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_generate_rssfeed = get_option('medialink_music')[generate_rssfeed]; ?>
+					<?php $target_music_generate_rssfeed = $medialink_music[generate_rssfeed]; ?>
 					<select id="medialink_music_generate_rssfeed" name="medialink_music_generate_rssfeed">
 						<option <?php if ('on' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_generate_rssfeed = get_option('medialink_slideshow')[generate_rssfeed]; ?>
+					<?php $target_slideshow_generate_rssfeed = $medialink_slideshow[generate_rssfeed]; ?>
 					<select id="medialink_slideshow_generate_rssfeed" name="medialink_slideshow_generate_rssfeed">
 						<option <?php if ('on' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_generate_rssfeed = get_option('medialink_document')[generate_rssfeed]; ?>
+					<?php $target_document_generate_rssfeed = $medialink_document[generate_rssfeed]; ?>
 					<select id="medialink_document_generate_rssfeed" name="medialink_document_generate_rssfeed">
 						<option <?php if ('on' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
 						<option <?php if ('off' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
@@ -1055,22 +1069,22 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>rssname</b></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_rssname" name="medialink_all_rssname" value="<?php echo get_option('medialink_all')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_all_rssname" name="medialink_all_rssname" value="<?php echo $medialink_all[rssname] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_rssname" name="medialink_album_rssname" value="<?php echo get_option('medialink_album')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_album_rssname" name="medialink_album_rssname" value="<?php echo $medialink_album[rssname] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_rssname" name="medialink_movie_rssname" value="<?php echo get_option('medialink_movie')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_movie_rssname" name="medialink_movie_rssname" value="<?php echo $medialink_movie[rssname] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo get_option('medialink_music')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo $medialink_music[rssname] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo get_option('medialink_slideshow')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo $medialink_slideshow[rssname] ?>" size="15" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_rssname" name="medialink_document_rssname" value="<?php echo get_option('medialink_document')[rssname] ?>" size="15" />
+						<input type="text" id="medialink_document_rssname" name="medialink_document_rssname" value="<?php echo $medialink_document[rssname] ?>" size="15" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
@@ -1079,22 +1093,22 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>rssmax</b></td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_rssmax" name="medialink_all_rssmax" value="<?php echo intval(get_option('medialink_all')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_all_rssmax" name="medialink_all_rssmax" value="<?php echo intval($medialink_all[rssmax]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_rssmax" name="medialink_album_rssmax" value="<?php echo intval(get_option('medialink_album')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_album_rssmax" name="medialink_album_rssmax" value="<?php echo intval($medialink_album[rssmax]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_rssmax" name="medialink_movie_rssmax" value="<?php echo intval(get_option('medialink_movie')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_movie_rssmax" name="medialink_movie_rssmax" value="<?php echo intval($medialink_movie[rssmax]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval(get_option('medialink_music')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval($medialink_music[rssmax]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval(get_option('medialink_slideshow')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval($medialink_slideshow[rssmax]) ?>" size="3" />
 					</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_rssmax" name="medialink_document_rssmax" value="<?php echo intval(get_option('medialink_document')[rssmax]) ?>" size="3" />
+						<input type="text" id="medialink_document_rssmax" name="medialink_document_rssmax" value="<?php echo intval($medialink_document[rssmax]) ?>" size="3" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
@@ -1103,42 +1117,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>filesize_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_filesize_show = get_option('medialink_all')[filesize_show]; ?>
+					<?php $target_all_filesize_show = $medialink_all[filesize_show]; ?>
 					<select id="medialink_all_filesize_show" name="medialink_all_filesize_show">
 						<option <?php if ('Show' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_filesize_show = get_option('medialink_album')[filesize_show]; ?>
+					<?php $target_album_filesize_show = $medialink_album[filesize_show]; ?>
 					<select id="medialink_album_filesize_show" name="medialink_album_filesize_show">
 						<option <?php if ('Show' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_filesize_show = get_option('medialink_movie')[filesize_show]; ?>
+					<?php $target_movie_filesize_show = $medialink_movie[filesize_show]; ?>
 					<select id="medialink_movie_filesize_show" name="medialink_movie_filesize_show">
 						<option <?php if ('Show' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_filesize_show = get_option('medialink_music')[filesize_show]; ?>
+					<?php $target_music_filesize_show = $medialink_music[filesize_show]; ?>
 					<select id="medialink_music_filesize_show" name="medialink_music_filesize_show">
 						<option <?php if ('Show' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_filesize_show = get_option('medialink_slideshow')[filesize_show]; ?>
+					<?php $target_slideshow_filesize_show = $medialink_slideshow[filesize_show]; ?>
 					<select id="medialink_slideshow_filesize_show" name="medialink_slideshow_filesize_show">
 						<option <?php if ('Show' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_filesize_show = get_option('medialink_document')[filesize_show]; ?>
+					<?php $target_document_filesize_show = $medialink_document[filesize_show]; ?>
 					<select id="medialink_document_filesize_show" name="medialink_document_filesize_show">
 						<option <?php if ('Show' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1151,42 +1165,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>stamptime_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_stamptime_show = get_option('medialink_all')[stamptime_show]; ?>
+					<?php $target_all_stamptime_show = $medialink_all[stamptime_show]; ?>
 					<select id="medialink_all_stamptime_show" name="medialink_all_stamptime_show">
 						<option <?php if ('Show' == $target_all_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_stamptime_show = get_option('medialink_album')[stamptime_show]; ?>
+					<?php $target_album_stamptime_show = $medialink_album[stamptime_show]; ?>
 					<select id="medialink_album_stamptime_show" name="medialink_album_stamptime_show">
 						<option <?php if ('Show' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_stamptime_show = get_option('medialink_movie')[stamptime_show]; ?>
+					<?php $target_movie_stamptime_show = $medialink_movie[stamptime_show]; ?>
 					<select id="medialink_movie_stamptime_show" name="medialink_movie_stamptime_show">
 						<option <?php if ('Show' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_stamptime_show = get_option('medialink_music')[stamptime_show]; ?>
+					<?php $target_music_stamptime_show = $medialink_music[stamptime_show]; ?>
 					<select id="medialink_music_stamptime_show" name="medialink_music_stamptime_show">
 						<option <?php if ('Show' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_stamptime_show = get_option('medialink_slideshow')[stamptime_show]; ?>
+					<?php $target_slideshow_stamptime_show = $medialink_slideshow[stamptime_show]; ?>
 					<select id="medialink_slideshow_stamptime_show" name="medialink_slideshow_stamptime_show">
 						<option <?php if ('Show' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_stamptime_show = get_option('medialink_document')[stamptime_show]; ?>
+					<?php $target_document_stamptime_show = $medialink_document[stamptime_show]; ?>
 					<select id="medialink_document_stamptime_show" name="medialink_document_stamptime_show">
 						<option <?php if ('Show' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1199,42 +1213,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>categorylinks_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_categorylinks_show = get_option('medialink_all')[categorylinks_show]; ?>
+					<?php $target_all_categorylinks_show = $medialink_all[categorylinks_show]; ?>
 					<select id="medialink_all_categorylinks_show" name="medialink_all_categorylinks_show">
 						<option <?php if ('Show' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_categorylinks_show = get_option('medialink_album')[categorylinks_show]; ?>
+					<?php $target_album_categorylinks_show = $medialink_album[categorylinks_show]; ?>
 					<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
 						<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_categorylinks_show = get_option('medialink_movie')[categorylinks_show]; ?>
+					<?php $target_movie_categorylinks_show = $medialink_movie[categorylinks_show]; ?>
 					<select id="medialink_movie_categorylinks_show" name="medialink_movie_categorylinks_show">
 						<option <?php if ('Show' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_categorylinks_show = get_option('medialink_music')[categorylinks_show]; ?>
+					<?php $target_music_categorylinks_show = $medialink_music[categorylinks_show]; ?>
 					<select id="medialink_music_categorylinks_show" name="medialink_music_categorylinks_show">
 						<option <?php if ('Show' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_categorylinks_show = get_option('medialink_slideshow')[categorylinks_show]; ?>
+					<?php $target_slideshow_categorylinks_show = $medialink_slideshow[categorylinks_show]; ?>
 					<select id="medialink_slideshow_categorylinks_show" name="medialink_slideshow_categorylinks_show">
 						<option <?php if ('Show' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_categorylinks_show = get_option('medialink_document')[categorylinks_show]; ?>
+					<?php $target_document_categorylinks_show = $medialink_document[categorylinks_show]; ?>
 					<select id="medialink_document_categorylinks_show" name="medialink_document_categorylinks_show">
 						<option <?php if ('Show' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1247,42 +1261,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>pagelinks_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_pagelinks_show = get_option('medialink_all')[pagelinks_show]; ?>
+					<?php $target_all_pagelinks_show = $medialink_all[pagelinks_show]; ?>
 					<select id="medialink_all_pagelinks_show" name="medialink_all_pagelinks_show">
 						<option <?php if ('Show' == $target_all_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_pagelinks_show = get_option('medialink_album')[pagelinks_show]; ?>
+					<?php $target_album_pagelinks_show = $medialink_album[pagelinks_show]; ?>
 					<select id="medialink_album_pagelinks_show" name="medialink_album_pagelinks_show">
 						<option <?php if ('Show' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_pagelinks_show = get_option('medialink_movie')[pagelinks_show]; ?>
+					<?php $target_movie_pagelinks_show = $medialink_movie[pagelinks_show]; ?>
 					<select id="medialink_movie_pagelinks_show" name="medialink_movie_pagelinks_show">
 						<option <?php if ('Show' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_pagelinks_show = get_option('medialink_music')[pagelinks_show]; ?>
+					<?php $target_music_pagelinks_show = $medialink_music[pagelinks_show]; ?>
 					<select id="medialink_music_pagelinks_show" name="medialink_music_pagelinks_show">
 						<option <?php if ('Show' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_pagelinks_show = get_option('medialink_slideshow')[pagelinks_show]; ?>
+					<?php $target_slideshow_pagelinks_show = $medialink_slideshow[pagelinks_show]; ?>
 					<select id="medialink_slideshow_pagelinks_show" name="medialink_slideshow_pagelinks_show">
 						<option <?php if ('Show' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_pagelinks_show = get_option('medialink_document')[pagelinks_show]; ?>
+					<?php $target_document_pagelinks_show = $medialink_document[pagelinks_show]; ?>
 					<select id="medialink_document_pagelinks_show" name="medialink_document_pagelinks_show">
 						<option <?php if ('Show' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1295,42 +1309,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>sortlinks_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_sortlinks_show = get_option('medialink_all')[sortlinks_show]; ?>
+					<?php $target_all_sortlinks_show = $medialink_all[sortlinks_show]; ?>
 					<select id="medialink_all_sortlinks_show" name="medialink_all_sortlinks_show">
 						<option <?php if ('Show' == $target_all_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_sortlinks_show = get_option('medialink_album')[sortlinks_show]; ?>
+					<?php $target_album_sortlinks_show = $medialink_album[sortlinks_show]; ?>
 					<select id="medialink_album_sortlinks_show" name="medialink_album_sortlinks_show">
 						<option <?php if ('Show' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_sortlinks_show = get_option('medialink_movie')[sortlinks_show]; ?>
+					<?php $target_movie_sortlinks_show = $medialink_movie[sortlinks_show]; ?>
 					<select id="medialink_movie_sortlinks_show" name="medialink_movie_sortlinks_show">
 						<option <?php if ('Show' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_sortlinks_show = get_option('medialink_music')[sortlinks_show]; ?>
+					<?php $target_music_sortlinks_show = $medialink_music[sortlinks_show]; ?>
 					<select id="medialink_music_sortlinks_show" name="medialink_music_sortlinks_show">
 						<option <?php if ('Show' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_sortlinks_show = get_option('medialink_slideshow')[sortlinks_show]; ?>
+					<?php $target_slideshow_sortlinks_show = $medialink_slideshow[sortlinks_show]; ?>
 					<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
 						<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_sortlinks_show = get_option('medialink_document')[sortlinks_show]; ?>
+					<?php $target_document_sortlinks_show = $medialink_document[sortlinks_show]; ?>
 					<select id="medialink_document_sortlinks_show" name="medialink_document_sortlinks_show">
 						<option <?php if ('Show' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1343,42 +1357,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>searchbox_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_searchbox_show = get_option('medialink_all')[searchbox_show]; ?>
+					<?php $target_all_searchbox_show = $medialink_all[searchbox_show]; ?>
 					<select id="medialink_all_searchbox_show" name="medialink_all_searchbox_show">
 						<option <?php if ('Show' == $target_all_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_searchbox_show = get_option('medialink_album')[searchbox_show]; ?>
+					<?php $target_album_searchbox_show = $medialink_album[searchbox_show]; ?>
 					<select id="medialink_album_searchbox_show" name="medialink_album_searchbox_show">
 						<option <?php if ('Show' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_searchbox_show = get_option('medialink_movie')[searchbox_show]; ?>
+					<?php $target_movie_searchbox_show = $medialink_movie[searchbox_show]; ?>
 					<select id="medialink_movie_searchbox_show" name="medialink_movie_searchbox_show">
 						<option <?php if ('Show' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_searchbox_show = get_option('medialink_music')[searchbox_show]; ?>
+					<?php $target_music_searchbox_show = $medialink_music[searchbox_show]; ?>
 					<select id="medialink_music_searchbox_show" name="medialink_music_searchbox_show">
 						<option <?php if ('Show' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_searchbox_show = get_option('medialink_slideshow')[searchbox_show]; ?>
+					<?php $target_slideshow_searchbox_show = $medialink_slideshow[searchbox_show]; ?>
 					<select id="medialink_slideshow_searchbox_show" name="medialink_slideshow_searchbox_show">
 						<option <?php if ('Show' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_searchbox_show = get_option('medialink_document')[searchbox_show]; ?>
+					<?php $target_document_searchbox_show = $medialink_document[searchbox_show]; ?>
 					<select id="medialink_document_searchbox_show" name="medialink_document_searchbox_show">
 						<option <?php if ('Show' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1391,42 +1405,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>rssicon_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_rssicon_show = get_option('medialink_all')[rssicon_show]; ?>
+					<?php $target_all_rssicon_show = $medialink_all[rssicon_show]; ?>
 					<select id="medialink_all_rssicon_show" name="medialink_all_rssicon_show">
 						<option <?php if ('Show' == $target_all_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_rssicon_show = get_option('medialink_album')[rssicon_show]; ?>
+					<?php $target_album_rssicon_show = $medialink_album[rssicon_show]; ?>
 					<select id="medialink_album_rssicon_show" name="medialink_album_rssicon_show">
 						<option <?php if ('Show' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_rssicon_show = get_option('medialink_movie')[rssicon_show]; ?>
+					<?php $target_movie_rssicon_show = $medialink_movie[rssicon_show]; ?>
 					<select id="medialink_movie_rssicon_show" name="medialink_movie_rssicon_show">
 						<option <?php if ('Show' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_rssicon_show = get_option('medialink_music')[rssicon_show]; ?>
+					<?php $target_music_rssicon_show = $medialink_music[rssicon_show]; ?>
 					<select id="medialink_music_rssicon_show" name="medialink_music_rssicon_show">
 						<option <?php if ('Show' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_rssicon_show = get_option('medialink_slideshow')[rssicon_show]; ?>
+					<?php $target_slideshow_rssicon_show = $medialink_slideshow[rssicon_show]; ?>
 					<select id="medialink_slideshow_rssicon_show" name="medialink_slideshow_rssicon_show">
 						<option <?php if ('Show' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_rssicon_show = get_option('medialink_document')[rssicon_show]; ?>
+					<?php $target_document_rssicon_show = $medialink_document[rssicon_show]; ?>
 					<select id="medialink_document_rssicon_show" name="medialink_document_rssicon_show">
 						<option <?php if ('Show' == $target_document_rssicon_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1439,42 +1453,42 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><b>credit_show</b></td>
 					<td align="center" valign="middle">
-					<?php $target_all_credit_show = get_option('medialink_all')[credit_show]; ?>
+					<?php $target_all_credit_show = $medialink_all[credit_show]; ?>
 					<select id="medialink_all_credit_show" name="medialink_all_credit_show">
 						<option <?php if ('Show' == $target_all_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_album_credit_show = get_option('medialink_album')[credit_show]; ?>
+					<?php $target_album_credit_show = $medialink_album[credit_show]; ?>
 					<select id="medialink_album_credit_show" name="medialink_album_credit_show">
 						<option <?php if ('Show' == $target_album_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_album_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_movie_credit_show = get_option('medialink_movie')[credit_show]; ?>
+					<?php $target_movie_credit_show = $medialink_movie[credit_show]; ?>
 					<select id="medialink_movie_credit_show" name="medialink_movie_credit_show">
 						<option <?php if ('Show' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_music_credit_show = get_option('medialink_music')[credit_show]; ?>
+					<?php $target_music_credit_show = $medialink_music[credit_show]; ?>
 					<select id="medialink_music_credit_show" name="medialink_music_credit_show">
 						<option <?php if ('Show' == $target_music_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_music_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_slideshow_credit_show = get_option('medialink_slideshow')[credit_show]; ?>
+					<?php $target_slideshow_credit_show = $medialink_slideshow[credit_show]; ?>
 					<select id="medialink_slideshow_credit_show" name="medialink_slideshow_credit_show">
 						<option <?php if ('Show' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="center" valign="middle">
-					<?php $target_document_credit_show = get_option('medialink_document')[credit_show]; ?>
+					<?php $target_document_credit_show = $medialink_document[credit_show]; ?>
 					<select id="medialink_document_credit_show" name="medialink_document_credit_show">
 						<option <?php if ('Show' == $target_document_credit_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_document_credit_show)echo 'selected="selected"'; ?>>Hide</option>
@@ -1526,7 +1540,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle" colspan="2">
-					<?php $target_movie_container = get_option('medialink_movie')[container]; ?>
+					<?php $target_movie_container = $medialink_movie[container]; ?>
 					<select id="medialink_movie_container" name="medialink_movie_container">
 						<option <?php if ('256x144' == $target_movie_container)echo 'selected="selected"'; ?>>256x144</option>
 						<option <?php if ('320x240' == $target_movie_container)echo 'selected="selected"'; ?>>320x240</option>
@@ -1553,7 +1567,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle" colspan="8">
-					<?php $target_css_pc_listthumbsize = get_option('medialink_css')[pc_listthumbsize]; ?>
+					<?php $target_css_pc_listthumbsize = $medialink_css[pc_listthumbsize]; ?>
 					<select id="medialink_css_pc_listthumbsize" name="medialink_css_pc_listthumbsize">
 						<option <?php if ('40x40' == $target_css_pc_listthumbsize)echo 'selected="selected"'; ?>>40x40</option>
 						<option <?php if ('60x60' == $target_css_pc_listthumbsize)echo 'selected="selected"'; ?>>60x60</option>
@@ -1566,7 +1580,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_pc_linkbackcolor" name="medialink_css_pc_linkbackcolor" value="<?php echo get_option('medialink_css')[pc_linkbackcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_pc_linkbackcolor" name="medialink_css_pc_linkbackcolor" value="<?php echo $medialink_css[pc_linkbackcolor] ?>" size="10" />
 					</td>
 					<td colspan="4"></td>
 					<td align="left" valign="middle">
@@ -1575,7 +1589,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_pc_linkstrcolor" name="medialink_css_pc_linkstrcolor" value="<?php echo get_option('medialink_css')[pc_linkstrcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_pc_linkstrcolor" name="medialink_css_pc_linkstrcolor" value="<?php echo $medialink_css[pc_linkstrcolor] ?>" size="10" />
 					</td>
 					<td colspan="4"></td>
 					<td align="left" valign="middle">
@@ -1585,7 +1599,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listarrowcolor" name="medialink_css_sp_listarrowcolor" value="<?php echo get_option('medialink_css')[sp_listarrowcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_listarrowcolor" name="medialink_css_sp_listarrowcolor" value="<?php echo $medialink_css[sp_listarrowcolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Color of the arrow', 'medialink') ?>
@@ -1594,7 +1608,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listbackcolor" name="medialink_css_sp_listbackcolor" value="<?php echo get_option('medialink_css')[sp_listbackcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_listbackcolor" name="medialink_css_sp_listbackcolor" value="<?php echo $medialink_css[sp_listbackcolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Background color of the list', 'medialink') ?>
@@ -1603,7 +1617,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listpartitionlinecolor" name="medialink_css_sp_listpartitionlinecolor" value="<?php echo get_option('medialink_css')[sp_listpartitionlinecolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_listpartitionlinecolor" name="medialink_css_sp_listpartitionlinecolor" value="<?php echo $medialink_css[sp_listpartitionlinecolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Background color of the partition line in the list', 'medialink') ?>
@@ -1612,7 +1626,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navbackcolor" name="medialink_css_sp_navbackcolor" value="<?php echo get_option('medialink_css')[sp_navbackcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_navbackcolor" name="medialink_css_sp_navbackcolor" value="<?php echo $medialink_css[sp_navbackcolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Background color of the navigation', 'medialink') ?>
@@ -1621,7 +1635,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navpartitionlinecolor" name="medialink_css_sp_navpartitionlinecolor" value="<?php echo get_option('medialink_css')[sp_navpartitionlinecolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_navpartitionlinecolor" name="medialink_css_sp_navpartitionlinecolor" value="<?php echo $medialink_css[sp_navpartitionlinecolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Background color of the partition line in the navigation', 'medialink') ?>
@@ -1630,7 +1644,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td colspan="4"></td>
 					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navstrcolor" name="medialink_css_sp_navstrcolor" value="<?php echo get_option('medialink_css')[sp_navstrcolor] ?>" size="10" />
+						<input type="text" id="medialink_css_sp_navstrcolor" name="medialink_css_sp_navstrcolor" value="<?php echo $medialink_css[sp_navstrcolor] ?>" size="10" />
 					</td>
 					<td align="left" valign="middle">
 					<?php _e('Text color navigation', 'medialink') ?>
@@ -1650,7 +1664,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><?php _e('for Pc or Tablet', 'medialink'); ?></td>
 					<td align="center" valign="middle">
-						<textarea id="medialink_useragent_tb" name="medialink_useragent_tb" rows="4" cols="120"><?php echo get_option('medialink_useragent')[tb] ?></textarea>
+						<textarea id="medialink_useragent_tb" name="medialink_useragent_tb" rows="4" cols="120"><?php echo $medialink_useragent[tb] ?></textarea>
 
 					</td>
 					<td align="left" valign="middle" rowspan="2"><?php _e('| Specify separated by. Regular expression is possible.', 'medialink'); ?></td>
@@ -1658,7 +1672,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle"><?php _e('for Smartphone', 'medialink'); ?></td>
 					<td align="center" valign="middle">
-						<textarea id="medialink_useragent_sp" name="medialink_useragent_sp" rows="4" cols="120"><?php echo get_option('medialink_useragent')[sp] ?></textarea>
+						<textarea id="medialink_useragent_sp" name="medialink_useragent_sp" rows="4" cols="120"><?php echo $medialink_useragent[sp] ?></textarea>
 
 					</td>
 				</tr>
@@ -1689,7 +1703,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">transition</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_transition = get_option('medialink_colorbox')[transition]; ?>
+					<?php $target_colorbox_transition = $medialink_colorbox[transition]; ?>
 					<select id="medialink_colorbox_transition" name="medialink_colorbox_transition">
 						<option <?php if ('elastic' == $target_colorbox_transition)echo 'selected="selected"'; ?>>elastic</option>
 						<option <?php if ('fade' == $target_colorbox_transition)echo 'selected="selected"'; ?>>fade</option>
@@ -1698,7 +1712,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">effect</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_effect = get_option('medialink_nivoslider')[effect]; ?>
+					<?php $target_nivoslider_effect = $medialink_nivoslider[effect]; ?>
 					<select id="medialink_nivoslider_effect" name="medialink_nivoslider_effect">
 						<option <?php if ('random' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>random</option>
 						<option <?php if ('fold' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>fold</option>
@@ -1708,46 +1722,46 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">fadeInSpeed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_fadeInSpeed" name="medialink_photoswipe_fadeInSpeed" value="<?php echo get_option('medialink_photoswipe')[fadeInSpeed] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_fadeInSpeed" name="medialink_photoswipe_fadeInSpeed" value="<?php echo $medialink_photoswipe[fadeInSpeed] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">hideBarsDelay</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_swipebox_hideBarsDelay" name="medialink_swipebox_hideBarsDelay" value="<?php echo get_option('medialink_swipebox')[hideBarsDelay] ?>" size="10" />
+						<input type="text" id="medialink_swipebox_hideBarsDelay" name="medialink_swipebox_hideBarsDelay" value="<?php echo $medialink_swipebox[hideBarsDelay] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">speed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_speed" name="medialink_colorbox_speed" value="<?php echo get_option('medialink_colorbox')[speed] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_speed" name="medialink_colorbox_speed" value="<?php echo $medialink_colorbox[speed] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">slices</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_slices" name="medialink_nivoslider_slices" value="<?php echo get_option('medialink_nivoslider')[slices] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_slices" name="medialink_nivoslider_slices" value="<?php echo $medialink_nivoslider[slices] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">fadeOutSpeed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_fadeOutSpeed" name="medialink_photoswipe_fadeOutSpeed" value="<?php echo get_option('medialink_photoswipe')[fadeOutSpeed] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_fadeOutSpeed" name="medialink_photoswipe_fadeOutSpeed" value="<?php echo $medialink_photoswipe[fadeOutSpeed] ?>" size="10" />
 					</td>
 					<td colspan="2" rowspan="40"></td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">title</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_title" name="medialink_colorbox_title" value="<?php echo get_option('medialink_colorbox')[title] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_title" name="medialink_colorbox_title" value="<?php echo $medialink_colorbox[title] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">boxCols</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_boxCols" name="medialink_nivoslider_boxCols" value="<?php echo get_option('medialink_nivoslider')[boxCols] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_boxCols" name="medialink_nivoslider_boxCols" value="<?php echo $medialink_nivoslider[boxCols] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">slideSpeed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_slideSpeed" name="medialink_photoswipe_slideSpeed" value="<?php echo get_option('medialink_photoswipe')[slideSpeed] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_slideSpeed" name="medialink_photoswipe_slideSpeed" value="<?php echo $medialink_photoswipe[slideSpeed] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">scalePhotos</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_scalePhotos = get_option('medialink_colorbox')[scalePhotos]; ?>
+					<?php $target_colorbox_scalePhotos = $medialink_colorbox[scalePhotos]; ?>
 					<select id="medialink_colorbox_scalePhotos" name="medialink_colorbox_scalePhotos">
 						<option <?php if ('true' == $target_colorbox_scalePhotos)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_scalePhotos)echo 'selected="selected"'; ?>>false</option>
@@ -1755,16 +1769,16 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">boxRows</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_boxRows" name="medialink_nivoslider_boxRows" value="<?php echo get_option('medialink_nivoslider')[boxRows] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_boxRows" name="medialink_nivoslider_boxRows" value="<?php echo $medialink_nivoslider[boxRows] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">swipeThreshold</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_swipeThreshold" name="medialink_photoswipe_swipeThreshold" value="<?php echo get_option('medialink_photoswipe')[swipeThreshold] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_swipeThreshold" name="medialink_photoswipe_swipeThreshold" value="<?php echo $medialink_photoswipe[swipeThreshold] ?>" size="10" />
 					</td>
 				<tr>
 					<td align="center" valign="middle">scrolling</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_scrolling = get_option('medialink_colorbox')[scrolling]; ?>
+					<?php $target_colorbox_scrolling = $medialink_colorbox[scrolling]; ?>
 					<select id="medialink_colorbox_scrolling" name="medialink_colorbox_scrolling">
 						<option <?php if ('true' == $target_colorbox_scrolling)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_scrolling)echo 'selected="selected"'; ?>>false</option>
@@ -1772,25 +1786,25 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">animSpeed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_animSpeed" name="medialink_nivoslider_animSpeed" value="<?php echo get_option('medialink_nivoslider')[animSpeed] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_animSpeed" name="medialink_nivoslider_animSpeed" value="<?php echo $medialink_nivoslider[animSpeed] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">swipeTimeThreshold</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_swipeTimeThreshold" name="medialink_photoswipe_swipeTimeThreshold" value="<?php echo get_option('medialink_photoswipe')[swipeTimeThreshold] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_swipeTimeThreshold" name="medialink_photoswipe_swipeTimeThreshold" value="<?php echo $medialink_photoswipe[swipeTimeThreshold] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">opacity</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_opacity" name="medialink_colorbox_opacity" value="<?php echo get_option('medialink_colorbox')[opacity] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_opacity" name="medialink_colorbox_opacity" value="<?php echo $medialink_colorbox[opacity] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">pauseTime</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_pauseTime" name="medialink_nivoslider_pauseTime" value="<?php echo get_option('medialink_nivoslider')[pauseTime] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_pauseTime" name="medialink_nivoslider_pauseTime" value="<?php echo $medialink_nivoslider[pauseTime] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">loop</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_loop = get_option('medialink_photoswipe')[loop]; ?>
+					<?php $target_photoswipe_loop = $medialink_photoswipe[loop]; ?>
 					<select id="medialink_photoswipe_loop" name="medialink_photoswipe_loop">
 						<option <?php if ('true' == $target_photoswipe_loop)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_loop)echo 'selected="selected"'; ?>>false</option>
@@ -1800,7 +1814,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">open</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_open = get_option('medialink_colorbox')[open]; ?>
+					<?php $target_colorbox_open = $medialink_colorbox[open]; ?>
 					<select id="medialink_colorbox_open" name="medialink_colorbox_open">
 						<option <?php if ('true' == $target_colorbox_open)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_open)echo 'selected="selected"'; ?>>false</option>
@@ -1808,17 +1822,17 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">startSlide</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_startSlide" name="medialink_nivoslider_startSlide" value="<?php echo get_option('medialink_nivoslider')[startSlide] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_startSlide" name="medialink_nivoslider_startSlide" value="<?php echo $medialink_nivoslider[startSlide] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">slideshowDelay</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_slideshowDelay" name="medialink_photoswipe_slideshowDelay" value="<?php echo get_option('medialink_photoswipe')[slideshowDelay] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_slideshowDelay" name="medialink_photoswipe_slideshowDelay" value="<?php echo $medialink_photoswipe[slideshowDelay] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">returnFocus</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_returnFocus = get_option('medialink_colorbox')[returnFocus]; ?>
+					<?php $target_colorbox_returnFocus = $medialink_colorbox[returnFocus]; ?>
 					<select id="medialink_colorbox_returnFocus" name="medialink_colorbox_returnFocus">
 						<option <?php if ('true' == $target_colorbox_returnFocus)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_returnFocus)echo 'selected="selected"'; ?>>false</option>
@@ -1826,7 +1840,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">directionNav</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_directionNav = get_option('medialink_nivoslider')[directionNav]; ?>
+					<?php $target_nivoslider_directionNav = $medialink_nivoslider[directionNav]; ?>
 					<select id="medialink_nivoslider_directionNav" name="medialink_nivoslider_directionNav">
 						<option <?php if ('true' == $target_nivoslider_directionNav)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_nivoslider_directionNav)echo 'selected="selected"'; ?>>false</option>
@@ -1834,7 +1848,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">imageScaleMethod</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_imageScaleMethod = get_option('medialink_photoswipe')[imageScaleMethod]; ?>
+					<?php $target_photoswipe_imageScaleMethod = $medialink_photoswipe[imageScaleMethod]; ?>
 					<select id="medialink_photoswipe_imageScaleMethod" name="medialink_photoswipe_imageScaleMethod">
 						<option <?php if ('fit' == $target_photoswipe_imageScaleMethod)echo 'selected="selected"'; ?>>fit</option>
 						<option <?php if ('fitNoUpscale' == $target_photoswipe_imageScaleMethod)echo 'selected="selected"'; ?>>fitNoUpscale</option>
@@ -1845,7 +1859,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">trapFocus</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_trapFocus = get_option('medialink_colorbox')[trapFocus]; ?>
+					<?php $target_colorbox_trapFocus = $medialink_colorbox[trapFocus]; ?>
 					<select id="medialink_colorbox_trapFocus" name="medialink_colorbox_trapFocus">
 						<option <?php if ('true' == $target_colorbox_trapFocus)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_trapFocus)echo 'selected="selected"'; ?>>false</option>
@@ -1853,7 +1867,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">directionNavHide</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_directionNavHide = get_option('medialink_nivoslider')[directionNavHide]; ?>
+					<?php $target_nivoslider_directionNavHide = $medialink_nivoslider[directionNavHide]; ?>
 					<select id="medialink_nivoslider_directionNavHide" name="medialink_nivoslider_directionNavHide">
 						<option <?php if ('true' == $target_nivoslider_directionNavHide)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_nivoslider_directionNavHide)echo 'selected="selected"'; ?>>false</option>
@@ -1861,7 +1875,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">preventHide</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_preventHide = get_option('medialink_photoswipe')[preventHide]; ?>
+					<?php $target_photoswipe_preventHide = $medialink_photoswipe[preventHide]; ?>
 					<select id="medialink_photoswipe_preventHide" name="medialink_photoswipe_preventHide">
 						<option <?php if ('true' == $target_photoswipe_preventHide)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_preventHide)echo 'selected="selected"'; ?>>false</option>
@@ -1871,7 +1885,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">fastIframe</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_fastIframe = get_option('medialink_colorbox')[fastIframe]; ?>
+					<?php $target_colorbox_fastIframe = $medialink_colorbox[fastIframe]; ?>
 					<select id="medialink_colorbox_fastIframe" name="medialink_colorbox_fastIframe">
 						<option <?php if ('true' == $target_colorbox_fastIframe)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_fastIframe)echo 'selected="selected"'; ?>>false</option>
@@ -1879,7 +1893,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">pauseOnHover</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_pauseOnHover = get_option('medialink_nivoslider')[pauseOnHover]; ?>
+					<?php $target_nivoslider_pauseOnHover = $medialink_nivoslider[pauseOnHover]; ?>
 					<select id="medialink_nivoslider_pauseOnHover" name="medialink_nivoslider_pauseOnHover">
 						<option <?php if ('true' == $target_nivoslider_pauseOnHover)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_nivoslider_pauseOnHover)echo 'selected="selected"'; ?>>false</option>
@@ -1887,7 +1901,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">backButtonHideEnabled</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_backButtonHideEnabled = get_option('medialink_photoswipe')[backButtonHideEnabled]; ?>
+					<?php $target_photoswipe_backButtonHideEnabled = $medialink_photoswipe[backButtonHideEnabled]; ?>
 					<select id="medialink_photoswipe_backButtonHideEnabled" name="medialink_photoswipe_backButtonHideEnabled">
 						<option <?php if ('true' == $target_photoswipe_backButtonHideEnabled)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_backButtonHideEnabled)echo 'selected="selected"'; ?>>false</option>
@@ -1897,7 +1911,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">preloading</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_preloading = get_option('medialink_colorbox')[preloading]; ?>
+					<?php $target_colorbox_preloading = $medialink_colorbox[preloading]; ?>
 					<select id="medialink_colorbox_preloading" name="medialink_colorbox_preloading">
 						<option <?php if ('true' == $target_colorbox_preloading)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_preloading)echo 'selected="selected"'; ?>>false</option>
@@ -1905,7 +1919,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">manualAdvance</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_manualAdvance = get_option('medialink_nivoslider')[manualAdvance]; ?>
+					<?php $target_nivoslider_manualAdvance = $medialink_nivoslider[manualAdvance]; ?>
 					<select id="medialink_nivoslider_manualAdvance" name="medialink_nivoslider_manualAdvance">
 						<option <?php if ('true' == $target_nivoslider_manualAdvance)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_nivoslider_manualAdvance)echo 'selected="selected"'; ?>>false</option>
@@ -1913,7 +1927,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">captionAndToolbarHide</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarHide = get_option('medialink_photoswipe')[captionAndToolbarHide]; ?>
+					<?php $target_photoswipe_captionAndToolbarHide = $medialink_photoswipe[captionAndToolbarHide]; ?>
 					<select id="medialink_photoswipe_captionAndToolbarHide" name="medialink_photoswipe_captionAndToolbarHide">
 						<option <?php if ('true' == $target_photoswipe_captionAndToolbarHide)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_captionAndToolbarHide)echo 'selected="selected"'; ?>>false</option>
@@ -1923,7 +1937,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">overlayClose</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_overlayClose = get_option('medialink_colorbox')[overlayClose]; ?>
+					<?php $target_colorbox_overlayClose = $medialink_colorbox[overlayClose]; ?>
 					<select id="medialink_colorbox_overlayClose" name="medialink_colorbox_overlayClose">
 						<option <?php if ('true' == $target_colorbox_overlayClose)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_overlayClose)echo 'selected="selected"'; ?>>false</option>
@@ -1931,11 +1945,11 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">prevText</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_prevText" name="medialink_nivoslider_prevText" value="<?php echo get_option('medialink_nivoslider')[prevText] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_prevText" name="medialink_nivoslider_prevText" value="<?php echo $medialink_nivoslider[prevText] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">captionAndToolbarHideOnSwipe</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarHideOnSwipe = get_option('medialink_photoswipe')[captionAndToolbarHideOnSwipe]; ?>
+					<?php $target_photoswipe_captionAndToolbarHideOnSwipe = $medialink_photoswipe[captionAndToolbarHideOnSwipe]; ?>
 					<select id="medialink_photoswipe_captionAndToolbarHideOnSwipe" name="medialink_photoswipe_captionAndToolbarHideOnSwipe">
 						<option <?php if ('true' == $target_photoswipe_captionAndToolbarHideOnSwipe)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_captionAndToolbarHideOnSwipe)echo 'selected="selected"'; ?>>false</option>
@@ -1945,7 +1959,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">escKey</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_escKey = get_option('medialink_colorbox')[escKey]; ?>
+					<?php $target_colorbox_escKey = $medialink_colorbox[escKey]; ?>
 					<select id="medialink_colorbox_escKey" name="medialink_colorbox_escKey">
 						<option <?php if ('true' == $target_colorbox_escKey)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_escKey)echo 'selected="selected"'; ?>>false</option>
@@ -1953,11 +1967,11 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">nextText</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_nextText" name="medialink_nivoslider_nextText" value="<?php echo get_option('medialink_nivoslider')[nextText] ?>" size="10" />
+						<input type="text" id="medialink_nivoslider_nextText" name="medialink_nivoslider_nextText" value="<?php echo $medialink_nivoslider[nextText] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">captionAndToolbarFlipPosition</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarFlipPosition = get_option('medialink_photoswipe')[captionAndToolbarFlipPosition]; ?>
+					<?php $target_photoswipe_captionAndToolbarFlipPosition = $medialink_photoswipe[captionAndToolbarFlipPosition]; ?>
 					<select id="medialink_photoswipe_captionAndToolbarFlipPosition" name="medialink_photoswipe_captionAndToolbarFlipPosition">
 						<option <?php if ('true' == $target_photoswipe_captionAndToolbarFlipPosition)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_captionAndToolbarFlipPosition)echo 'selected="selected"'; ?>>false</option>
@@ -1967,7 +1981,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">arrowKey</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_arrowKey = get_option('medialink_colorbox')[arrowKey]; ?>
+					<?php $target_colorbox_arrowKey = $medialink_colorbox[arrowKey]; ?>
 					<select id="medialink_colorbox_arrowKey" name="medialink_colorbox_arrowKey">
 						<option <?php if ('true' == $target_colorbox_arrowKey)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_arrowKey)echo 'selected="selected"'; ?>>false</option>
@@ -1975,7 +1989,7 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">randomStart</td>
 					<td align="center" valign="middle">
-					<?php $target_nivoslider_randomStart = get_option('medialink_nivoslider')[randomStart]; ?>
+					<?php $target_nivoslider_randomStart = $medialink_nivoslider[randomStart]; ?>
 					<select id="medialink_nivoslider_randomStart" name="medialink_nivoslider_randomStart">
 						<option <?php if ('true' == $target_nivoslider_randomStart)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_nivoslider_randomStart)echo 'selected="selected"'; ?>>false</option>
@@ -1983,13 +1997,13 @@ class MediaLinkAdmin {
 					</td>
 					<td align="center" valign="middle">captionAndToolbarAutoHideDelay</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_captionAndToolbarAutoHideDelay" name="medialink_photoswipe_captionAndToolbarAutoHideDelay" value="<?php echo get_option('medialink_photoswipe')[captionAndToolbarAutoHideDelay] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_captionAndToolbarAutoHideDelay" name="medialink_photoswipe_captionAndToolbarAutoHideDelay" value="<?php echo $medialink_photoswipe[captionAndToolbarAutoHideDelay] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">loop</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_loop = get_option('medialink_colorbox')[loop]; ?>
+					<?php $target_colorbox_loop = $medialink_colorbox[loop]; ?>
 					<select id="medialink_colorbox_loop" name="medialink_colorbox_loop">
 						<option <?php if ('true' == $target_colorbox_loop)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_loop)echo 'selected="selected"'; ?>>false</option>
@@ -1998,17 +2012,17 @@ class MediaLinkAdmin {
 					<td colspan="2" rowspan="27"></td>
 					<td align="center" valign="middle">captionAndToolbarOpacity</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_captionAndToolbarOpacity" name="medialink_photoswipe_captionAndToolbarOpacity" value="<?php echo get_option('medialink_photoswipe')[captionAndToolbarOpacity] ?>" size="10" />
+						<input type="text" id="medialink_photoswipe_captionAndToolbarOpacity" name="medialink_photoswipe_captionAndToolbarOpacity" value="<?php echo $medialink_photoswipe[captionAndToolbarOpacity] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">fadeOut</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_fadeOut" name="medialink_colorbox_fadeOut" value="<?php echo get_option('medialink_colorbox')[fadeOut] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_fadeOut" name="medialink_colorbox_fadeOut" value="<?php echo $medialink_colorbox[fadeOut] ?>" size="10" />
 					</td>
 					<td align="center" valign="middle">captionAndToolbarShowEmptyCaptions</td>
 					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarShowEmptyCaptions = get_option('medialink_photoswipe')[captionAndToolbarShowEmptyCaptions]; ?>
+					<?php $target_photoswipe_captionAndToolbarShowEmptyCaptions = $medialink_photoswipe[captionAndToolbarShowEmptyCaptions]; ?>
 					<select id="medialink_photoswipe_captionAndToolbarShowEmptyCaptions" name="medialink_photoswipe_captionAndToolbarShowEmptyCaptions">
 						<option <?php if ('true' == $target_photoswipe_captionAndToolbarShowEmptyCaptions)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_photoswipe_captionAndToolbarShowEmptyCaptions)echo 'selected="selected"'; ?>>false</option>
@@ -2017,7 +2031,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">closeButton</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_closeButton = get_option('medialink_colorbox')[closeButton]; ?>
+					<?php $target_colorbox_closeButton = $medialink_colorbox[closeButton]; ?>
 					<select id="medialink_colorbox_closeButton" name="medialink_colorbox_closeButton">
 						<option <?php if ('true' == $target_colorbox_closeButton)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_closeButton)echo 'selected="selected"'; ?>>false</option>
@@ -2028,79 +2042,79 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">current</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_current" name="medialink_colorbox_current" value="<?php echo get_option('medialink_colorbox')[current] ?>" size="30" />
+						<input type="text" id="medialink_colorbox_current" name="medialink_colorbox_current" value="<?php echo $medialink_colorbox[current] ?>" size="30" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">previous</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_previous" name="medialink_colorbox_previous" value="<?php echo get_option('medialink_colorbox')[previous] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_previous" name="medialink_colorbox_previous" value="<?php echo $medialink_colorbox[previous] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">next</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_next" name="medialink_colorbox_next" value="<?php echo get_option('medialink_colorbox')[next] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_next" name="medialink_colorbox_next" value="<?php echo $medialink_colorbox[next] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">close</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_close" name="medialink_colorbox_close" value="<?php echo get_option('medialink_colorbox')[close] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_close" name="medialink_colorbox_close" value="<?php echo $medialink_colorbox[close] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">width</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_width" name="medialink_colorbox_width" value="<?php echo get_option('medialink_colorbox')[width] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_width" name="medialink_colorbox_width" value="<?php echo $medialink_colorbox[width] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">height</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_height" name="medialink_colorbox_height" value="<?php echo get_option('medialink_colorbox')[height] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_height" name="medialink_colorbox_height" value="<?php echo $medialink_colorbox[height] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">innerWidth</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_innerWidth" name="medialink_colorbox_innerWidth" value="<?php echo get_option('medialink_colorbox')[innerWidth] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_innerWidth" name="medialink_colorbox_innerWidth" value="<?php echo $medialink_colorbox[innerWidth] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">innerHeight</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_innerHeight" name="medialink_colorbox_innerHeight" value="<?php echo get_option('medialink_colorbox')[innerHeight] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_innerHeight" name="medialink_colorbox_innerHeight" value="<?php echo $medialink_colorbox[innerHeight] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">initialWidth</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_initialWidth" name="medialink_colorbox_initialWidth" value="<?php echo get_option('medialink_colorbox')[initialWidth] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_initialWidth" name="medialink_colorbox_initialWidth" value="<?php echo $medialink_colorbox[initialWidth] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">initialHeight</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_initialHeight" name="medialink_colorbox_initialHeight" value="<?php echo get_option('medialink_colorbox')[initialHeight] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_initialHeight" name="medialink_colorbox_initialHeight" value="<?php echo $medialink_colorbox[initialHeight] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">maxWidth</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_maxWidth" name="medialink_colorbox_maxWidth" value="<?php echo get_option('medialink_colorbox')[maxWidth] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_maxWidth" name="medialink_colorbox_maxWidth" value="<?php echo $medialink_colorbox[maxWidth] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">maxHeight</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_maxHeight" name="medialink_colorbox_maxHeight" value="<?php echo get_option('medialink_colorbox')[maxHeight] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_maxHeight" name="medialink_colorbox_maxHeight" value="<?php echo $medialink_colorbox[maxHeight] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">slideshow</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_slideshow = get_option('medialink_colorbox')[slideshow]; ?>
+					<?php $target_colorbox_slideshow = $medialink_colorbox[slideshow]; ?>
 					<select id="medialink_colorbox_slideshow" name="medialink_colorbox_slideshow">
 						<option <?php if ('true' == $target_colorbox_slideshow)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_slideshow)echo 'selected="selected"'; ?>>false</option>
@@ -2110,13 +2124,13 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">slideshowSpeed</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowSpeed" name="medialink_colorbox_slideshowSpeed" value="<?php echo get_option('medialink_colorbox')[slideshowSpeed] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_slideshowSpeed" name="medialink_colorbox_slideshowSpeed" value="<?php echo $medialink_colorbox[slideshowSpeed] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">slideshowAuto</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_slideshowAuto = get_option('medialink_colorbox')[slideshowAuto]; ?>
+					<?php $target_colorbox_slideshowAuto = $medialink_colorbox[slideshowAuto]; ?>
 					<select id="medialink_colorbox_slideshowAuto" name="medialink_colorbox_slideshowAuto">
 						<option <?php if ('true' == $target_colorbox_slideshowAuto)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_slideshowAuto)echo 'selected="selected"'; ?>>false</option>
@@ -2126,19 +2140,19 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">slideshowStart</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowStart" name="medialink_colorbox_slideshowStart" value="<?php echo get_option('medialink_colorbox')[slideshowStart] ?>" size="20" />
+						<input type="text" id="medialink_colorbox_slideshowStart" name="medialink_colorbox_slideshowStart" value="<?php echo $medialink_colorbox[slideshowStart] ?>" size="20" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">slideshowStop</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowStop" name="medialink_colorbox_slideshowStop" value="<?php echo get_option('medialink_colorbox')[slideshowStop] ?>" size="20" />
+						<input type="text" id="medialink_colorbox_slideshowStop" name="medialink_colorbox_slideshowStop" value="<?php echo $medialink_colorbox[slideshowStop] ?>" size="20" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">fixed</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_fixed = get_option('medialink_colorbox')[fixed]; ?>
+					<?php $target_colorbox_fixed = $medialink_colorbox[fixed]; ?>
 					<select id="medialink_colorbox_fixed" name="medialink_colorbox_fixed">
 						<option <?php if ('true' == $target_colorbox_fixed)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_fixed)echo 'selected="selected"'; ?>>false</option>
@@ -2148,31 +2162,31 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">top</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_top" name="medialink_colorbox_top" value="<?php echo get_option('medialink_colorbox')[top] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_top" name="medialink_colorbox_top" value="<?php echo $medialink_colorbox[top] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">bottom</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_bottom" name="medialink_colorbox_bottom" value="<?php echo get_option('medialink_colorbox')[bottom] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_bottom" name="medialink_colorbox_bottom" value="<?php echo $medialink_colorbox[bottom] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">left</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_left" name="medialink_colorbox_left" value="<?php echo get_option('medialink_colorbox')[left] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_left" name="medialink_colorbox_left" value="<?php echo $medialink_colorbox[left] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">right</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_right" name="medialink_colorbox_right" value="<?php echo get_option('medialink_colorbox')[right] ?>" size="10" />
+						<input type="text" id="medialink_colorbox_right" name="medialink_colorbox_right" value="<?php echo $medialink_colorbox[right] ?>" size="10" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">reposition</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_reposition = get_option('medialink_colorbox')[reposition]; ?>
+					<?php $target_colorbox_reposition = $medialink_colorbox[reposition]; ?>
 					<select id="medialink_colorbox_reposition" name="medialink_colorbox_reposition">
 						<option <?php if ('true' == $target_colorbox_reposition)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_reposition)echo 'selected="selected"'; ?>>false</option>
@@ -2182,7 +2196,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">retinaImage</td>
 					<td align="center" valign="middle">
-					<?php $target_colorbox_retinaImage = get_option('medialink_colorbox')[retinaImage]; ?>
+					<?php $target_colorbox_retinaImage = $medialink_colorbox[retinaImage]; ?>
 					<select id="medialink_colorbox_retinaImage" name="medialink_colorbox_retinaImage">
 						<option <?php if ('true' == $target_colorbox_retinaImage)echo 'selected="selected"'; ?>>true</option>
 						<option <?php if ('false' == $target_colorbox_retinaImage)echo 'selected="selected"'; ?>>false</option>
