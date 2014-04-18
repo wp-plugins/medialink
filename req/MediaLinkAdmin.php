@@ -97,10 +97,10 @@ class MediaLinkAdmin {
 	  <div id="tabs-1">
 		<h2><?php _e('(In the case of image) Easy use', 'medialink'); ?></h2>
 		<p><?php _e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink'); ?></p>
-		<p>&#91;medialink set='album'&#93;</p>
+		<p><code>&#91;medialink set='album'&#93;</code></p>
 		<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
 		<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
-		<p>&#91;medialink set='slideshow'&#93</p>
+		<p><code>&#91;medialink set='slideshow'&#93</code></p>
 		<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
 		
 		<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
@@ -130,7 +130,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>set</b></td>
+		<td align="center" valign="middle">set</td>
 		<td align="center" valign="middle">all</td>
 		<td align="center" valign="middle">album</td>
 		<td align="center" valign="middle">movie</td>
@@ -143,7 +143,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>sort</b></td>
+		<td align="center" valign="middle">sort</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[sort] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[sort] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[sort] ?></td>
@@ -156,37 +156,37 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>effect_pc</b></td>
+		<td align="center" valign="middle">effect_pc</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[effect_pc] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[effect_pc] ?></td>
-		<td colspan="2" bgcolor="#dddddd"></td>
+		<td colspan="2"></td>
 		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_pc] ?></td>
-		<td bgcolor="#dddddd"></td>
+		<td></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 		<div>
-		<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><span style="color:red">WP jQuery Lightbox</span></b><a>
-		<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><span style="color:darkorange">FancyBox for WordPress</span></b><a>
-		<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><span style="color:blue">Simple Colorbox</span></b><a>
-		<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><span style="color:green">WP-Slimbox2</span></b><a>
+		<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><span style="color:red">WP jQuery Lightbox</span><a>
+		<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><span style="color:darkorange">FancyBox for WordPress</span><a>
+		<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><span style="color:blue">Simple Colorbox</span><a>
+		<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><span style="color:green">WP-Slimbox2</span><a>
 		</div>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>effect_sp</b></td>
+		<td align="center" valign="middle">effect_sp</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[effect_sp] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[effect_sp] ?></td>
-		<td colspan="2" bgcolor="#dddddd"></td>
+		<td colspan="2"></td>
 		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_sp] ?></td>
-		<td bgcolor="#dddddd"></td>
+		<td></td>
 		<td align="left" valign="middle">
 		<?php _e('Effects of Smartphone', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>suffix_pc</b></td>
+		<td align="center" valign="middle">suffix_pc</td>
 		<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[suffix_pc] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_pc] ?></td>
@@ -199,29 +199,29 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>suffix_pc2</b></td>
-		<td bgcolor="#dddddd"></td>
+		<td align="center" valign="middle">suffix_pc2</td>
+		<td></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_pc2] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_music[suffix_pc2] ?></td>
-		<td colspan="2" bgcolor="#dddddd"></td>
+		<td colspan="2"></td>
 		<td align="left" valign="middle">
 		<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>suffix_flash</b></td>
-		<td align="center" valign="middle" bgcolor="#dddddd"></td>
+		<td align="center" valign="middle">suffix_flash</td>
+		<td align="center" valign="middle"></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_flash] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_music[suffix_flash] ?></td>
-		<td colspan="2" bgcolor="#dddddd"></td>
+		<td colspan="2"></td>
 		<td align="left" valign="middle">
 		<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>suffix_sp</b></td>
+		<td align="center" valign="middle">suffix_sp</td>
 		<td align="center" valign="middle"><?php echo $medialink_album[suffix_sp] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[suffix_sp] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_music[suffix_sp] ?></td>
@@ -233,7 +233,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>display_pc</b></td>
+		<td align="center" valign="middle">display_pc</td>
 		<td align="center" valign="middle"><?php echo intval($medialink_all[display_pc]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_album[display_pc]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_movie[display_pc]) ?></td>
@@ -246,7 +246,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>display_sp</b></td>
+		<td align="center" valign="middle">display_sp</td>
 		<td align="center" valign="middle"><?php echo intval($medialink_all[display_sp]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_album[display_sp]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_movie[display_sp]) ?></td>
@@ -259,19 +259,19 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>image_show_size</b></td>
+		<td align="center" valign="middle">image_show_size</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[image_show_size] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[image_show_size] ?></td>
-		<td colspan="2" bgcolor="#dddddd"></td>
+		<td colspan="2"></td>
 		<td align="center" valign="middle"><?php echo $medialink_slideshow[image_show_size] ?></td>
-		<td bgcolor="#dddddd"></td>
+		<td></td>
 		<td align="left" valign="middle">
 		<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 		</td>
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>thumbnail</b></td>
+		<td align="center" valign="middle">thumbnail</td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[thumbnail] ?></td>
@@ -284,7 +284,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>include_cat</b></td>
+		<td align="center" valign="middle">include_cat</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[include_cat] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[include_cat] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[include_cat] ?></td>
@@ -297,7 +297,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>exclude_cat</b></td>
+		<td align="center" valign="middle">exclude_cat</td>
 		<td colspan="6" align="center" valign="middle"><?php echo $medialink_exclude[cat] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
@@ -305,7 +305,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>generate_rssfeed</b></td>
+		<td align="center" valign="middle">generate_rssfeed</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[generate_rssfeed] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[generate_rssfeed] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[generate_rssfeed] ?></td>
@@ -318,7 +318,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>rssname</b></td>
+		<td align="center" valign="middle">rssname</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[rssname] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[rssname] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[rssname] ?></td>
@@ -331,7 +331,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>rssmax</b></td>
+		<td align="center" valign="middle">rssmax</td>
 		<td align="center" valign="middle"><?php echo intval($medialink_all[rssmax]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_album[rssmax]) ?></td>
 		<td align="center" valign="middle"><?php echo intval($medialink_movie[rssmax]) ?></td>
@@ -344,7 +344,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>filesize_show</b></td>
+		<td align="center" valign="middle">filesize_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[filesize_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[filesize_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[filesize_show] ?></td>
@@ -357,7 +357,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>stamptime_show</b></td>
+		<td align="center" valign="middle">stamptime_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[stamptime_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[stamptime_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[stamptime_show] ?></td>
@@ -370,7 +370,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>categorylinks_show</b></td>
+		<td align="center" valign="middle">categorylinks_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[categorylinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[categorylinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[categorylinks_show] ?></td>
@@ -383,7 +383,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>pagelinks_show</b></td>
+		<td align="center" valign="middle">pagelinks_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[pagelinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[pagelinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[pagelinks_show] ?></td>
@@ -396,7 +396,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>sortlinks_show</b></td>
+		<td align="center" valign="middle">sortlinks_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[sortlinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[sortlinks_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[sortlinks_show] ?></td>
@@ -409,7 +409,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>searchbox_show</b></td>
+		<td align="center" valign="middle">searchbox_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[searchbox_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[searchbox_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[searchbox_show] ?></td>
@@ -422,7 +422,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>rssicon_show</b></td>
+		<td align="center" valign="middle">rssicon_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[rssicon_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[rssicon_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[rssicon_show] ?></td>
@@ -435,7 +435,7 @@ class MediaLinkAdmin {
 		</tr>
 
 		<tr>
-		<td align="center" valign="middle"><b>credit_show</b></td>
+		<td align="center" valign="middle">credit_show</td>
 		<td align="center" valign="middle"><?php echo $medialink_all[credit_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_album[credit_show] ?></td>
 		<td align="center" valign="middle"><?php echo $medialink_movie[credit_show] ?></td>
@@ -449,7 +449,7 @@ class MediaLinkAdmin {
 
 		<tr>
 		<td align="center" valign="middle" colspan="8">
-		<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
+		<?php _e('Alias read extension : ', 'medialink'); ?>
 		jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
 		</td>
 		</tr>
@@ -467,7 +467,7 @@ class MediaLinkAdmin {
 			</p>
 
 			<h2><?php _e('The default value for the short code attribute', 'medialink') ?></h2>	
-			<table border="1" bgcolor="#dddddd">
+			<table border="1">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
@@ -475,7 +475,7 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle"><?php _e('Description'); ?></td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>set</b></td>
+					<td align="center" valign="middle">set</td>
 					<td align="center" valign="middle">all</td>
 					<td align="center" valign="middle">album</td>
 					<td align="center" valign="middle">movie</td>
@@ -487,7 +487,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>sort</b></td>
+					<td align="center" valign="middle">sort</td>
 					<td align="center" valign="middle">
 					<?php $target_all_sort = $medialink_all[sort]; ?>
 					<select id="medialink_all_sort" name="medialink_all_sort">
@@ -546,7 +546,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>effect_pc</b></td>
+					<td align="center" valign="middle">effect_pc</td>
 					<td align="center" valign="middle">
 					<?php $target_all_effect_pc = $medialink_all[effect_pc]; ?>
 					<select id="medialink_all_effect_pc" name="medialink_all_effect_pc">
@@ -571,15 +571,15 @@ class MediaLinkAdmin {
 					<td align="left" valign="middle">
 						<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
 						<div>
-						<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><b><span style="color:red">WP jQuery Lightbox</span></b><a>
-						<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><b><span style="color:darkorange">FancyBox for WordPress</span></b><a>
-						<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><b><span style="color:blue">Simple Colorbox</span></b><a>
-						<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><b><span style="color:green">WP-Slimbox2</span></b><a>
+						<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><span style="color:red">WP jQuery Lightbox</span><a>
+						<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><span style="color:darkorange">FancyBox for WordPress</span><a>
+						<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><span style="color:blue">Simple Colorbox</span><a>
+						<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><span style="color:green">WP-Slimbox2</span><a>
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>effect_sp</b></td>
+					<td align="center" valign="middle">effect_sp</td>
 					<td align="center" valign="middle">
 					<?php $target_all_effect_sp = $medialink_all[effect_sp]; ?>
 					<select id="medialink_all_effect_sp" name="medialink_all_effect_sp">
@@ -606,7 +606,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>suffix_pc</b></td>
+					<td align="center" valign="middle">suffix_pc</td>
 					<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_pc = $medialink_album[suffix_pc]; ?>
@@ -711,7 +711,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>suffix_pc2</b></td>
+					<td align="center" valign="middle">suffix_pc2</td>
 					<td></td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_pc2 = $medialink_movie[suffix_pc2]; ?>
@@ -745,7 +745,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>suffix_flash</b></td>
+					<td align="center" valign="middle">suffix_flash</td>
 					<td></td>
 					<td align="center" valign="middle">
 					<?php $target_movie_suffix_flash = $medialink_movie[suffix_flash]; ?>
@@ -766,7 +766,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>suffix_sp</b></td>
+					<td align="center" valign="middle">suffix_sp</td>
 					<td align="center" valign="middle">
 					<?php $target_album_suffix_sp = $medialink_album[suffix_sp]; ?>
 					<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
@@ -870,7 +870,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>display_pc</b></td>
+					<td align="center" valign="middle">display_pc</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_all_display_pc" name="medialink_all_display_pc" value="<?php echo intval($medialink_all[display_pc]) ?>" size="3" />
 					</td>
@@ -894,7 +894,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>display_sp</b></td>
+					<td align="center" valign="middle">display_sp</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_all_display_sp" name="medialink_all_display_sp" value="<?php echo intval($medialink_all[display_sp]) ?>" size="3" />
 					</td>
@@ -918,7 +918,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>image_show_size</b></td>
+					<td align="center" valign="middle">image_show_size</td>
 					<td align="center" valign="middle">
 					<?php $target_all_image_show_size = $medialink_all[image_show_size]; ?>
 					<select id="medialink_all_image_show_size" name="medialink_all_image_show_size">
@@ -950,7 +950,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>thumbnail</b></td>
+					<td align="center" valign="middle">thumbnail</td>
 					<td align="center" valign="middle">
 						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 					</td>
@@ -986,7 +986,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>include_cat</b></td>
+					<td align="center" valign="middle">include_cat</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_all_include_cat" name="medialink_all_include_cat" value="<?php echo $medialink_all[include_cat] ?>" size="15" />
 					</td>
@@ -1010,7 +1010,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>exclude_cat</b></td>
+					<td align="center" valign="middle">exclude_cat</td>
 					<td align="center" valign="middle" colspan="6">
 						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo $medialink_exclude[cat] ?>" size="100" />
 					</td>
@@ -1019,7 +1019,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>generate_rssfeed</b></td>
+					<td align="center" valign="middle">generate_rssfeed</td>
 					<td align="center" valign="middle">
 					<?php $target_all_generate_rssfeed = $medialink_all[generate_rssfeed]; ?>
 					<select id="medialink_all_generate_rssfeed" name="medialink_all_generate_rssfeed">
@@ -1067,7 +1067,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>rssname</b></td>
+					<td align="center" valign="middle">rssname</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_all_rssname" name="medialink_all_rssname" value="<?php echo $medialink_all[rssname] ?>" size="15" />
 					</td>
@@ -1091,7 +1091,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>rssmax</b></td>
+					<td align="center" valign="middle">rssmax</td>
 					<td align="center" valign="middle">
 						<input type="text" id="medialink_all_rssmax" name="medialink_all_rssmax" value="<?php echo intval($medialink_all[rssmax]) ?>" size="3" />
 					</td>
@@ -1115,7 +1115,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>filesize_show</b></td>
+					<td align="center" valign="middle">filesize_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_filesize_show = $medialink_all[filesize_show]; ?>
 					<select id="medialink_all_filesize_show" name="medialink_all_filesize_show">
@@ -1163,7 +1163,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>stamptime_show</b></td>
+					<td align="center" valign="middle">stamptime_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_stamptime_show = $medialink_all[stamptime_show]; ?>
 					<select id="medialink_all_stamptime_show" name="medialink_all_stamptime_show">
@@ -1211,7 +1211,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>categorylinks_show</b></td>
+					<td align="center" valign="middle">categorylinks_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_categorylinks_show = $medialink_all[categorylinks_show]; ?>
 					<select id="medialink_all_categorylinks_show" name="medialink_all_categorylinks_show">
@@ -1259,7 +1259,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>pagelinks_show</b></td>
+					<td align="center" valign="middle">pagelinks_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_pagelinks_show = $medialink_all[pagelinks_show]; ?>
 					<select id="medialink_all_pagelinks_show" name="medialink_all_pagelinks_show">
@@ -1307,7 +1307,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>sortlinks_show</b></td>
+					<td align="center" valign="middle">sortlinks_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_sortlinks_show = $medialink_all[sortlinks_show]; ?>
 					<select id="medialink_all_sortlinks_show" name="medialink_all_sortlinks_show">
@@ -1355,7 +1355,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>searchbox_show</b></td>
+					<td align="center" valign="middle">searchbox_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_searchbox_show = $medialink_all[searchbox_show]; ?>
 					<select id="medialink_all_searchbox_show" name="medialink_all_searchbox_show">
@@ -1403,7 +1403,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>rssicon_show</b></td>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_rssicon_show = $medialink_all[rssicon_show]; ?>
 					<select id="medialink_all_rssicon_show" name="medialink_all_rssicon_show">
@@ -1451,7 +1451,7 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>credit_show</b></td>
+					<td align="center" valign="middle">credit_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_credit_show = $medialink_all[credit_show]; ?>
 					<select id="medialink_all_credit_show" name="medialink_all_credit_show">
@@ -1500,7 +1500,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 				<td align="center" valign="middle" colspan="8">
-				<b><?php _e('Alias read extension : ', 'medialink'); ?></b>
+				<?php _e('Alias read extension : ', 'medialink'); ?>
 				jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
 				</td>
 				</tr>
@@ -1520,23 +1520,23 @@ class MediaLinkAdmin {
 			</p>
 
 			<h2><?php _e('The default value for the display size and display color.', 'medialink') ?></h2>	
-			<table border="1" bgcolor="#dddddd">
+			<table border="1">
 			<tbody>
 				<tr>
-					<td align="center" valign="middle" colspan="4"><b>PC</b></td>
-					<td align="center" valign="middle" colspan="4"><b>Smartphone</b></td>
+					<td align="center" valign="middle" colspan="4">PC</td>
+					<td align="center" valign="middle" colspan="4">Smartphone</td>
 					<td></td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle"><b>all</b></td>
-					<td align="center" valign="middle"><b>movie</b></td>
-					<td align="center" valign="middle"><b>music</b></td>
-					<td align="center" valign="middle"><b>document</b></td>
-					<td align="center" valign="middle"><b>all</b></td>
-					<td align="center" valign="middle"><b>movie</b></td>
-					<td align="center" valign="middle"><b>music</b></td>
-					<td align="center" valign="middle"><b>document</b></td>
-					<td align="center" valign="middle"><b><?php _e('Description'); ?></b></td>
+					<td align="center" valign="middle">all</td>
+					<td align="center" valign="middle">movie</td>
+					<td align="center" valign="middle">music</td>
+					<td align="center" valign="middle">document</td>
+					<td align="center" valign="middle">all</td>
+					<td align="center" valign="middle">movie</td>
+					<td align="center" valign="middle">music</td>
+					<td align="center" valign="middle">document</td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle" colspan="2">
@@ -1654,7 +1654,7 @@ class MediaLinkAdmin {
 			</table>
 
 			<h2><?php _e('The default value for User Agent.', 'medialink') ?></h2>	
-			<table border="1" bgcolor="#dddddd">
+			<table border="1">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Generate html', 'medialink'); ?></td>
@@ -1692,7 +1692,7 @@ class MediaLinkAdmin {
 			</p>
 
 			<h2><?php _e('The default value for effects.', 'medialink') ?></h2>	
-			<table border="1" bgcolor="#dddddd">
+			<table border="1">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle" colspan="2">colorbox(<a href="http://www.jacklmoore.com/colorbox/" target="_blank"><font color="red"><?php _e('Description'); ?></font></a>)</td>
