@@ -25,26 +25,47 @@
  */
 class MediaLinkQuickTag {
 
-	function add_quicktag() {
+	function add_quicktag_select(){
 
-		$all = 'MediaLink'.__('AllData', 'medialink');
-		$image = 'MediaLink'.__('Image');
-		$slideshow = 'MediaLink'.__('Slideshow', 'medialink');
-		$video = 'MediaLink'.__('Video');
-		$music = 'MediaLink'.__('Music', 'medialink');
-		$documents = 'MediaLink'.__('Document', 'medialink');
+		$all = __('AllData', 'medialink');
+		$image = __('Image');
+		$slideshow = __('Slideshow', 'medialink');
+		$video = __('Video');
+		$music = __('Music', 'medialink');
+		$documents = __('Document', 'medialink');
+
+$quicktag_add_select = <<<QUICKTAGADDSELECT
+<select id="medialink_select">
+	<option value="">MediaLink</option>
+	<option value="[medialink set='all']">{$all}</option>
+	<option value="[medialink set='album']">{$image}</option>
+	<option value="[medialink set='slideshow']">{$slideshow}</option>
+	<option value="[medialink set='movie']">{$video}</option>
+	<option value="[medialink set='music']">{$music}</option>
+	<option value="[medialink set='document']">{$documents}</option>
+</select>
+QUICKTAGADDSELECT;
+		echo $quicktag_add_select;
+
+	}
+
+	function add_quicktag_button_js() {
 
 $quicktag_add_js = <<<QUICKTAGADDJS
+
+<!-- BEGIN: MediaLink -->
 <script type="text/javascript">
-	QTags.addButton("medialink_all", "{$all}", "[medialink set='all']");
-	QTags.addButton("medialink_album", "{$image}", "[medialink set='album']");
-	QTags.addButton("medialink_slideshow", "{$slideshow}", "[medialink set='slideshow']");
-	QTags.addButton("medialink_movie", "{$video}", "[medialink set='movie']");
-	QTags.addButton("medialink_music", "{$music}", "[medialink set='music']");
-	QTags.addButton("medialink_document", "{$documents}", "[medialink set='document']");
+	jQuery(document).ready(function(){
+		jQuery("#medialink_select").change(function() {
+			send_to_editor(jQuery("#medialink_select :selected").val());
+			return false;
+		});
+	});
 </script>
+<!-- END: MediaLink -->
+
 QUICKTAGADDJS;
-	echo $quicktag_add_js;
+		echo $quicktag_add_js;
 
 	}
 
