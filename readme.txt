@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 4.9
+Stable tag: 5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,8 +28,9 @@ Bundled software and function
 *   HTML5 player (video, music)
 *   FlashPlugin: jQuery SWFObject
 *   Flash player (video, music): Flowplayer Flash, MP3Player (for previous versions of IE8)
-*   Image: Nivo Slider, ColorBox, PhotoSwipe, Swipebox
 *   Create RSS feeds of data (XML). It support to the podcast.
+*   Can be cooperation with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
+*   Can be cooperation with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
 
     [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo5(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo6(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
 
@@ -57,11 +58,14 @@ none
 
 == Screenshots ==
 
-1. `/assets/screenshot-1.png`
-2. `/assets/screenshot-2.png`
-3. `/assets/screenshot-3.png`
+1. Settings 1
+2. Settings 2
 
 == Changelog ==
+
+= 5.0 =
+Can be cooperation with Boxers and Swipers.
+Can be cooperation with Simple NivoSlider.
 
 = 4.9 =
 Fixed css.
@@ -302,6 +306,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 5.0 =
 = 4.9 =
 = 4.8 =
 = 4.7 =
@@ -379,11 +384,7 @@ Please add new Page. Please write a short code in the text field of the Page. Pl
 
 When you view this Page, it is displayed in album mode. It is the result of a search for Media Library. The Settings> Media, determine the size of the thumbnail. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.
 
-In addition, you want to place add an attribute like this in the short code.
-
-[medialink set='slideshow']
-
-When you view this Page, it is displayed in slideshow mode.
+Support the classification of the category. Use the caption of the media library, and are classified.
 
 Customization 1
 

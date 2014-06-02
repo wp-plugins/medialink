@@ -88,10 +88,10 @@ class MediaLinkAdmin {
 	    <li><a href="#tabs-1"><?php _e('How to use', 'medialink'); ?></a></li>
 	    <li><a href="#tabs-2"><?php _e('Settings'); ?>1</a></li>
 		<li><a href="#tabs-3"><?php _e('Settings'); ?>2</a></li>
-		<li><a href="#tabs-4"><?php _e('Settings'); ?>3</a></li>
+		<li><a href="#tabs-4"><?php _e('Effect of Images', 'medialink'); ?></a></li>
 		<li><a href="#tabs-5"><?php _e('Caution:'); ?></a></li>
 	<!--
-		<li><a href="#tabs-6">FAQ</a></li>
+		<li><a href="#tabs-5">FAQ</a></li>
 	 -->
 	  </ul>
 	  <div id="tabs-1">
@@ -99,10 +99,9 @@ class MediaLinkAdmin {
 		<p><?php _e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink'); ?></p>
 		<p><code>&#91;medialink set='album'&#93;</code></p>
 		<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
-		<p><?php _e('In addition, you want to place add an attribute like this in the short code.', 'medialink'); ?></p>
-		<p><code>&#91;medialink set='slideshow'&#93</code></p>
-		<?php _e('When you view this Page, it is displayed in slideshow mode.', 'medialink'); ?></p>
-		
+
+		<p><?php _e('Support the classification of the category. Use the caption of the media library, and are classified.', 'medialink'); ?></p>
+
 		<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
 		<?php _e('MediaLink is also handles video and music and document. If you are dealing with music and video and document, please add the following attributes to the short code.', 'medialink'); ?>
 		<p><div><?php _e("Video set = 'movie'", 'medialink'); ?></div>
@@ -114,8 +113,9 @@ class MediaLinkAdmin {
 		<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div>
 		<p><div><?php _e('* When you move to (WordPress > Appearance > Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.', 'medialink'); ?></div></p>
 
-		<table border="1"><div><strong><?php _e('Customization 2', 'medialink'); ?></strong></div>
+		<div><strong><?php _e('Customization 2', 'medialink'); ?></strong></div>
 		<div><strong><?php _e('Below, I shows the default values and various attributes of the short code.', 'medialink'); ?></strong></div>
+		<table border="1" class="wp-list-table widefat fixed">
 		<tbody>
 		<tr>
 		<td align="center" valign="middle">
@@ -152,36 +152,6 @@ class MediaLinkAdmin {
 		<td align="center" valign="middle"><?php echo $medialink_document[sort] ?></td>
 		<td align="left" valign="middle">
 		<?php _e('Type of Sort', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">effect_pc</td>
-		<td align="center" valign="middle"><?php echo $medialink_all[effect_pc] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album[effect_pc] ?></td>
-		<td colspan="2"></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_pc] ?></td>
-		<td></td>
-		<td align="left" valign="middle">
-		<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
-		<div>
-		<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><span style="color:red">WP jQuery Lightbox</span><a>
-		<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><span style="color:darkorange">FancyBox for WordPress</span><a>
-		<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><span style="color:blue">Simple Colorbox</span><a>
-		<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><span style="color:green">WP-Slimbox2</span><a>
-		</div>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">effect_sp</td>
-		<td align="center" valign="middle"><?php echo $medialink_all[effect_sp] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album[effect_sp] ?></td>
-		<td colspan="2"></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow[effect_sp] ?></td>
-		<td></td>
-		<td align="left" valign="middle">
-		<?php _e('Effects of Smartphone', 'medialink'); ?>
 		</td>
 		</tr>
 
@@ -467,7 +437,7 @@ class MediaLinkAdmin {
 			</p>
 
 			<h2><?php _e('The default value for the short code attribute', 'medialink') ?></h2>	
-			<table border="1">
+			<table border="1" class="wp-list-table widefat fixed">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
@@ -543,66 +513,6 @@ class MediaLinkAdmin {
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Type of Sort', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">effect_pc</td>
-					<td align="center" valign="middle">
-					<?php $target_all_effect_pc = $medialink_all[effect_pc]; ?>
-					<select id="medialink_all_effect_pc" name="medialink_all_effect_pc">
-						<option <?php if ('colorbox' == $target_all_effect_pc)echo 'selected="selected"'; ?>>colorbox</option>
-						<option <?php if ('Lightbox' == $target_all_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_effect_pc = $medialink_album[effect_pc]; ?>
-					<select id="medialink_album_effect_pc" name="medialink_album_effect_pc">
-						<option <?php if ('colorbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>colorbox</option>
-						<option <?php if ('Lightbox' == $target_album_effect_pc)echo 'selected="selected"'; ?>>Lightbox</option>
-					</select>
-					</td>
-					<td colspan="2"></td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_effect_pc = $medialink_slideshow[effect_pc]; ?>
-					<select id="medialink_slideshow_effect_pc" name="medialink_slideshow_effect_pc">
-						<option <?php if ('nivoslider' == $target_slideshow_effect_pc)echo 'selected="selected"'; ?>>nivoslider</option>
-					</select>
-					<td></td>
-					<td align="left" valign="middle">
-						<?php _e('Effects of PC. If you want to use the Lightbox, please install a plugin that is compatible to the Lightbox. I would recommend some plugins below.', 'medialink'); ?>
-						<div>
-						<a href ="http://wordpress.org/plugins/wp-jquery-lightbox/" target="_blank"><span style="color:red">WP jQuery Lightbox</span><a>
-						<a href ="http://wordpress.org/plugins/fancybox-for-wordpress/" target="_blank"><span style="color:darkorange">FancyBox for WordPress</span><a>
-						<a href ="http://wordpress.org/plugins/simple-colorbox/" target="_blank"><span style="color:blue">Simple Colorbox</span><a>
-						<a href ="http://wordpress.org/plugins/wp-slimbox2/" target="_blank"><span style="color:green">WP-Slimbox2</span><a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">effect_sp</td>
-					<td align="center" valign="middle">
-					<?php $target_all_effect_sp = $medialink_all[effect_sp]; ?>
-					<select id="medialink_all_effect_sp" name="medialink_all_effect_sp">
-						<option <?php if ('swipebox' == $target_all_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_effect_sp = $medialink_album[effect_sp]; ?>
-					<select id="medialink_album_effect_sp" name="medialink_album_effect_sp">
-						<option <?php if ('photoswipe' == $target_album_effect_sp)echo 'selected="selected"'; ?>>photoswipe</option>
-						<option <?php if ('swipebox' == $target_album_effect_sp)echo 'selected="selected"'; ?>>swipebox</option>
-					</select>
-					</td>
-					<td colspan="2"></td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_effect_sp = $medialink_slideshow[effect_sp]; ?>
-					<select id="medialink_slideshow_effect_sp" name="medialink_slideshow_effect_sp">
-						<option <?php if ('nivoslider' == $target_slideshow_effect_sp)echo 'selected="selected"'; ?>>nivoslider</option>
-					</select>
-					</td>
-					<td></td>
-					<td align="left" valign="middle">
-						<?php _e('Effects of Smartphone', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -1520,7 +1430,7 @@ class MediaLinkAdmin {
 			</p>
 
 			<h2><?php _e('The default value for the display size and display color.', 'medialink') ?></h2>	
-			<table border="1">
+			<table border="1" class="wp-list-table widefat fixed">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle" colspan="4">PC</td>
@@ -1654,7 +1564,7 @@ class MediaLinkAdmin {
 			</table>
 
 			<h2><?php _e('The default value for User Agent.', 'medialink') ?></h2>	
-			<table border="1">
+			<table border="1" class="wp-list-table widefat fixed">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Generate html', 'medialink'); ?></td>
@@ -1684,539 +1594,22 @@ class MediaLinkAdmin {
 			</p>
 		</div>
 	  </div>
+
 	  <div id="tabs-4">
 		<div class="wrap">
-
-			<p class="submit">
-			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
-			</p>
-
-			<h2><?php _e('The default value for effects.', 'medialink') ?></h2>	
-			<table border="1">
-			<tbody>
-				<tr>
-					<td align="center" valign="middle" colspan="2">colorbox(<a href="http://www.jacklmoore.com/colorbox/" target="_blank"><font color="red"><?php _e('Description'); ?></font></a>)</td>
-					<td align="center" valign="middle" colspan="2">nivoslider(<a href="http://docs.dev7studios.com/jquery-plugins/nivo-slider" target="_blank"><font color="red"><?php _e('Description'); ?></font></a>)</td>
-					<td align="center" valign="middle" colspan="2">photoswipe(<a href="https://github.com/dimsemenov/PhotoSwipe/blob/master/README.md" target="_blank"><font color="red"><?php _e('Description'); ?></font></a>)</td>
-					<td align="center" valign="middle" colspan="2">swipebox(<a href="http://brutaldesign.github.io/swipebox/" target="_blank"><font color="red"><?php _e('Description'); ?></font></a>)</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">transition</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_transition = $medialink_colorbox[transition]; ?>
-					<select id="medialink_colorbox_transition" name="medialink_colorbox_transition">
-						<option <?php if ('elastic' == $target_colorbox_transition)echo 'selected="selected"'; ?>>elastic</option>
-						<option <?php if ('fade' == $target_colorbox_transition)echo 'selected="selected"'; ?>>fade</option>
-						<option <?php if ('none' == $target_colorbox_transition)echo 'selected="selected"'; ?>>none</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">effect</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_effect = $medialink_nivoslider[effect]; ?>
-					<select id="medialink_nivoslider_effect" name="medialink_nivoslider_effect">
-						<option <?php if ('random' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>random</option>
-						<option <?php if ('fold' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>fold</option>
-						<option <?php if ('fade' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>fade</option>
-						<option <?php if ('sliceDown' == $target_nivoslider_effect)echo 'selected="selected"'; ?>>sliceDown</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">fadeInSpeed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_fadeInSpeed" name="medialink_photoswipe_fadeInSpeed" value="<?php echo $medialink_photoswipe[fadeInSpeed] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">hideBarsDelay</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_swipebox_hideBarsDelay" name="medialink_swipebox_hideBarsDelay" value="<?php echo $medialink_swipebox[hideBarsDelay] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">speed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_speed" name="medialink_colorbox_speed" value="<?php echo $medialink_colorbox[speed] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">slices</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_slices" name="medialink_nivoslider_slices" value="<?php echo $medialink_nivoslider[slices] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">fadeOutSpeed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_fadeOutSpeed" name="medialink_photoswipe_fadeOutSpeed" value="<?php echo $medialink_photoswipe[fadeOutSpeed] ?>" size="10" />
-					</td>
-					<td colspan="2" rowspan="40"></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">title</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_title" name="medialink_colorbox_title" value="<?php echo $medialink_colorbox[title] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">boxCols</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_boxCols" name="medialink_nivoslider_boxCols" value="<?php echo $medialink_nivoslider[boxCols] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">slideSpeed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_slideSpeed" name="medialink_photoswipe_slideSpeed" value="<?php echo $medialink_photoswipe[slideSpeed] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">scalePhotos</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_scalePhotos = $medialink_colorbox[scalePhotos]; ?>
-					<select id="medialink_colorbox_scalePhotos" name="medialink_colorbox_scalePhotos">
-						<option <?php if ('true' == $target_colorbox_scalePhotos)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_scalePhotos)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">boxRows</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_boxRows" name="medialink_nivoslider_boxRows" value="<?php echo $medialink_nivoslider[boxRows] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">swipeThreshold</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_swipeThreshold" name="medialink_photoswipe_swipeThreshold" value="<?php echo $medialink_photoswipe[swipeThreshold] ?>" size="10" />
-					</td>
-				<tr>
-					<td align="center" valign="middle">scrolling</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_scrolling = $medialink_colorbox[scrolling]; ?>
-					<select id="medialink_colorbox_scrolling" name="medialink_colorbox_scrolling">
-						<option <?php if ('true' == $target_colorbox_scrolling)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_scrolling)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">animSpeed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_animSpeed" name="medialink_nivoslider_animSpeed" value="<?php echo $medialink_nivoslider[animSpeed] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">swipeTimeThreshold</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_swipeTimeThreshold" name="medialink_photoswipe_swipeTimeThreshold" value="<?php echo $medialink_photoswipe[swipeTimeThreshold] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">opacity</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_opacity" name="medialink_colorbox_opacity" value="<?php echo $medialink_colorbox[opacity] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">pauseTime</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_pauseTime" name="medialink_nivoslider_pauseTime" value="<?php echo $medialink_nivoslider[pauseTime] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">loop</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_loop = $medialink_photoswipe[loop]; ?>
-					<select id="medialink_photoswipe_loop" name="medialink_photoswipe_loop">
-						<option <?php if ('true' == $target_photoswipe_loop)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_loop)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">open</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_open = $medialink_colorbox[open]; ?>
-					<select id="medialink_colorbox_open" name="medialink_colorbox_open">
-						<option <?php if ('true' == $target_colorbox_open)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_open)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">startSlide</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_startSlide" name="medialink_nivoslider_startSlide" value="<?php echo $medialink_nivoslider[startSlide] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">slideshowDelay</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_slideshowDelay" name="medialink_photoswipe_slideshowDelay" value="<?php echo $medialink_photoswipe[slideshowDelay] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">returnFocus</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_returnFocus = $medialink_colorbox[returnFocus]; ?>
-					<select id="medialink_colorbox_returnFocus" name="medialink_colorbox_returnFocus">
-						<option <?php if ('true' == $target_colorbox_returnFocus)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_returnFocus)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">directionNav</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_directionNav = $medialink_nivoslider[directionNav]; ?>
-					<select id="medialink_nivoslider_directionNav" name="medialink_nivoslider_directionNav">
-						<option <?php if ('true' == $target_nivoslider_directionNav)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_nivoslider_directionNav)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">imageScaleMethod</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_imageScaleMethod = $medialink_photoswipe[imageScaleMethod]; ?>
-					<select id="medialink_photoswipe_imageScaleMethod" name="medialink_photoswipe_imageScaleMethod">
-						<option <?php if ('fit' == $target_photoswipe_imageScaleMethod)echo 'selected="selected"'; ?>>fit</option>
-						<option <?php if ('fitNoUpscale' == $target_photoswipe_imageScaleMethod)echo 'selected="selected"'; ?>>fitNoUpscale</option>
-						<option <?php if ('zoom' == $target_photoswipe_imageScaleMethod)echo 'selected="selected"'; ?>>zoom</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">trapFocus</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_trapFocus = $medialink_colorbox[trapFocus]; ?>
-					<select id="medialink_colorbox_trapFocus" name="medialink_colorbox_trapFocus">
-						<option <?php if ('true' == $target_colorbox_trapFocus)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_trapFocus)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">directionNavHide</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_directionNavHide = $medialink_nivoslider[directionNavHide]; ?>
-					<select id="medialink_nivoslider_directionNavHide" name="medialink_nivoslider_directionNavHide">
-						<option <?php if ('true' == $target_nivoslider_directionNavHide)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_nivoslider_directionNavHide)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">preventHide</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_preventHide = $medialink_photoswipe[preventHide]; ?>
-					<select id="medialink_photoswipe_preventHide" name="medialink_photoswipe_preventHide">
-						<option <?php if ('true' == $target_photoswipe_preventHide)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_preventHide)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">fastIframe</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_fastIframe = $medialink_colorbox[fastIframe]; ?>
-					<select id="medialink_colorbox_fastIframe" name="medialink_colorbox_fastIframe">
-						<option <?php if ('true' == $target_colorbox_fastIframe)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_fastIframe)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">pauseOnHover</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_pauseOnHover = $medialink_nivoslider[pauseOnHover]; ?>
-					<select id="medialink_nivoslider_pauseOnHover" name="medialink_nivoslider_pauseOnHover">
-						<option <?php if ('true' == $target_nivoslider_pauseOnHover)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_nivoslider_pauseOnHover)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">backButtonHideEnabled</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_backButtonHideEnabled = $medialink_photoswipe[backButtonHideEnabled]; ?>
-					<select id="medialink_photoswipe_backButtonHideEnabled" name="medialink_photoswipe_backButtonHideEnabled">
-						<option <?php if ('true' == $target_photoswipe_backButtonHideEnabled)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_backButtonHideEnabled)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">preloading</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_preloading = $medialink_colorbox[preloading]; ?>
-					<select id="medialink_colorbox_preloading" name="medialink_colorbox_preloading">
-						<option <?php if ('true' == $target_colorbox_preloading)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_preloading)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">manualAdvance</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_manualAdvance = $medialink_nivoslider[manualAdvance]; ?>
-					<select id="medialink_nivoslider_manualAdvance" name="medialink_nivoslider_manualAdvance">
-						<option <?php if ('true' == $target_nivoslider_manualAdvance)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_nivoslider_manualAdvance)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">captionAndToolbarHide</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarHide = $medialink_photoswipe[captionAndToolbarHide]; ?>
-					<select id="medialink_photoswipe_captionAndToolbarHide" name="medialink_photoswipe_captionAndToolbarHide">
-						<option <?php if ('true' == $target_photoswipe_captionAndToolbarHide)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_captionAndToolbarHide)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">overlayClose</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_overlayClose = $medialink_colorbox[overlayClose]; ?>
-					<select id="medialink_colorbox_overlayClose" name="medialink_colorbox_overlayClose">
-						<option <?php if ('true' == $target_colorbox_overlayClose)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_overlayClose)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">prevText</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_prevText" name="medialink_nivoslider_prevText" value="<?php echo $medialink_nivoslider[prevText] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">captionAndToolbarHideOnSwipe</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarHideOnSwipe = $medialink_photoswipe[captionAndToolbarHideOnSwipe]; ?>
-					<select id="medialink_photoswipe_captionAndToolbarHideOnSwipe" name="medialink_photoswipe_captionAndToolbarHideOnSwipe">
-						<option <?php if ('true' == $target_photoswipe_captionAndToolbarHideOnSwipe)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_captionAndToolbarHideOnSwipe)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">escKey</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_escKey = $medialink_colorbox[escKey]; ?>
-					<select id="medialink_colorbox_escKey" name="medialink_colorbox_escKey">
-						<option <?php if ('true' == $target_colorbox_escKey)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_escKey)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">nextText</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_nivoslider_nextText" name="medialink_nivoslider_nextText" value="<?php echo $medialink_nivoslider[nextText] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">captionAndToolbarFlipPosition</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarFlipPosition = $medialink_photoswipe[captionAndToolbarFlipPosition]; ?>
-					<select id="medialink_photoswipe_captionAndToolbarFlipPosition" name="medialink_photoswipe_captionAndToolbarFlipPosition">
-						<option <?php if ('true' == $target_photoswipe_captionAndToolbarFlipPosition)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_captionAndToolbarFlipPosition)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">arrowKey</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_arrowKey = $medialink_colorbox[arrowKey]; ?>
-					<select id="medialink_colorbox_arrowKey" name="medialink_colorbox_arrowKey">
-						<option <?php if ('true' == $target_colorbox_arrowKey)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_arrowKey)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">randomStart</td>
-					<td align="center" valign="middle">
-					<?php $target_nivoslider_randomStart = $medialink_nivoslider[randomStart]; ?>
-					<select id="medialink_nivoslider_randomStart" name="medialink_nivoslider_randomStart">
-						<option <?php if ('true' == $target_nivoslider_randomStart)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_nivoslider_randomStart)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">captionAndToolbarAutoHideDelay</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_captionAndToolbarAutoHideDelay" name="medialink_photoswipe_captionAndToolbarAutoHideDelay" value="<?php echo $medialink_photoswipe[captionAndToolbarAutoHideDelay] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">loop</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_loop = $medialink_colorbox[loop]; ?>
-					<select id="medialink_colorbox_loop" name="medialink_colorbox_loop">
-						<option <?php if ('true' == $target_colorbox_loop)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_loop)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td colspan="2" rowspan="27"></td>
-					<td align="center" valign="middle">captionAndToolbarOpacity</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_photoswipe_captionAndToolbarOpacity" name="medialink_photoswipe_captionAndToolbarOpacity" value="<?php echo $medialink_photoswipe[captionAndToolbarOpacity] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">fadeOut</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_fadeOut" name="medialink_colorbox_fadeOut" value="<?php echo $medialink_colorbox[fadeOut] ?>" size="10" />
-					</td>
-					<td align="center" valign="middle">captionAndToolbarShowEmptyCaptions</td>
-					<td align="center" valign="middle">
-					<?php $target_photoswipe_captionAndToolbarShowEmptyCaptions = $medialink_photoswipe[captionAndToolbarShowEmptyCaptions]; ?>
-					<select id="medialink_photoswipe_captionAndToolbarShowEmptyCaptions" name="medialink_photoswipe_captionAndToolbarShowEmptyCaptions">
-						<option <?php if ('true' == $target_photoswipe_captionAndToolbarShowEmptyCaptions)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_photoswipe_captionAndToolbarShowEmptyCaptions)echo 'selected="selected"'; ?>>false</option>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">closeButton</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_closeButton = $medialink_colorbox[closeButton]; ?>
-					<select id="medialink_colorbox_closeButton" name="medialink_colorbox_closeButton">
-						<option <?php if ('true' == $target_colorbox_closeButton)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_closeButton)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-					<td colspan="2" rowspan="25"></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">current</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_current" name="medialink_colorbox_current" value="<?php echo $medialink_colorbox[current] ?>" size="30" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">previous</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_previous" name="medialink_colorbox_previous" value="<?php echo $medialink_colorbox[previous] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">next</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_next" name="medialink_colorbox_next" value="<?php echo $medialink_colorbox[next] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">close</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_close" name="medialink_colorbox_close" value="<?php echo $medialink_colorbox[close] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">width</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_width" name="medialink_colorbox_width" value="<?php echo $medialink_colorbox[width] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">height</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_height" name="medialink_colorbox_height" value="<?php echo $medialink_colorbox[height] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">innerWidth</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_innerWidth" name="medialink_colorbox_innerWidth" value="<?php echo $medialink_colorbox[innerWidth] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">innerHeight</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_innerHeight" name="medialink_colorbox_innerHeight" value="<?php echo $medialink_colorbox[innerHeight] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">initialWidth</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_initialWidth" name="medialink_colorbox_initialWidth" value="<?php echo $medialink_colorbox[initialWidth] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">initialHeight</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_initialHeight" name="medialink_colorbox_initialHeight" value="<?php echo $medialink_colorbox[initialHeight] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">maxWidth</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_maxWidth" name="medialink_colorbox_maxWidth" value="<?php echo $medialink_colorbox[maxWidth] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">maxHeight</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_maxHeight" name="medialink_colorbox_maxHeight" value="<?php echo $medialink_colorbox[maxHeight] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">slideshow</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_slideshow = $medialink_colorbox[slideshow]; ?>
-					<select id="medialink_colorbox_slideshow" name="medialink_colorbox_slideshow">
-						<option <?php if ('true' == $target_colorbox_slideshow)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_slideshow)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">slideshowSpeed</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowSpeed" name="medialink_colorbox_slideshowSpeed" value="<?php echo $medialink_colorbox[slideshowSpeed] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">slideshowAuto</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_slideshowAuto = $medialink_colorbox[slideshowAuto]; ?>
-					<select id="medialink_colorbox_slideshowAuto" name="medialink_colorbox_slideshowAuto">
-						<option <?php if ('true' == $target_colorbox_slideshowAuto)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_slideshowAuto)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">slideshowStart</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowStart" name="medialink_colorbox_slideshowStart" value="<?php echo $medialink_colorbox[slideshowStart] ?>" size="20" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">slideshowStop</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_slideshowStop" name="medialink_colorbox_slideshowStop" value="<?php echo $medialink_colorbox[slideshowStop] ?>" size="20" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">fixed</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_fixed = $medialink_colorbox[fixed]; ?>
-					<select id="medialink_colorbox_fixed" name="medialink_colorbox_fixed">
-						<option <?php if ('true' == $target_colorbox_fixed)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_fixed)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">top</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_top" name="medialink_colorbox_top" value="<?php echo $medialink_colorbox[top] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">bottom</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_bottom" name="medialink_colorbox_bottom" value="<?php echo $medialink_colorbox[bottom] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">left</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_left" name="medialink_colorbox_left" value="<?php echo $medialink_colorbox[left] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">right</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_colorbox_right" name="medialink_colorbox_right" value="<?php echo $medialink_colorbox[right] ?>" size="10" />
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">reposition</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_reposition = $medialink_colorbox[reposition]; ?>
-					<select id="medialink_colorbox_reposition" name="medialink_colorbox_reposition">
-						<option <?php if ('true' == $target_colorbox_reposition)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_reposition)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">retinaImage</td>
-					<td align="center" valign="middle">
-					<?php $target_colorbox_retinaImage = $medialink_colorbox[retinaImage]; ?>
-					<select id="medialink_colorbox_retinaImage" name="medialink_colorbox_retinaImage">
-						<option <?php if ('true' == $target_colorbox_retinaImage)echo 'selected="selected"'; ?>>true</option>
-						<option <?php if ('false' == $target_colorbox_retinaImage)echo 'selected="selected"'; ?>>false</option>
-					</select>
-					</td>
-				</tr>
-			</tbody>
-			</table>
-
-			<p class="submit">
-			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
-			</p>
-
+		<h2><?php _e('Effect of Images', 'medialink'); ?></h2>
+			<h3><?php _e('It is possible to work with the following plugins. Please install.', 'medialink'); ?></h3>
+			<li><a href="<?php echo get_admin_url().'plugin-install.php?tab=search&s=Boxers+and+Swipers'; ?>">Boxers and Swipers</a></li>
+			<li><a href="<?php echo get_admin_url().'plugin-install.php?tab=search&s=Simple+NivoSlider'; ?>">Simple NivoSlider</a></li>
+			<h3><?php _e('In addition, offer the following filters. This filter passes the html that is generated.', 'medialink'); ?></h3>
+			<li><code>post_medialink</code></li>
 		</div>
 	  </div>
 
 	  <div id="tabs-5">
 		<div class="wrap">
 	<h3><?php _e('The to playback of video and music, that such as the next, .htaccess may be required to the directory containing the data file by the environment.', 'medialink') ?></h3>
-	<textarea rows="23" cols="100">
+	<textarea readonly rows="23" cols="100">
 AddType video/mp4 mp4 m4v
 AddType video/webm webm
 AddType video/ogg ogv
@@ -2296,8 +1689,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 		$all_tbl = array(
 						'sort' => $_POST['medialink_all_sort'],
-						'effect_pc' => $_POST['medialink_all_effect_pc'],
-						'effect_sp' => $_POST['medialink_all_effect_sp'],
 						'display_pc' => $_POST['medialink_all_display_pc'],
 						'display_sp' => $_POST['medialink_all_display_sp'],
 						'image_show_size' => $_POST['medialink_all_image_show_size'],
@@ -2319,8 +1710,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 		$album_tbl = array(
 						'sort' => $_POST['medialink_album_sort'],
-						'effect_pc' => $_POST['medialink_album_effect_pc'],
-						'effect_sp' => $_POST['medialink_album_effect_sp'],
 						'suffix_pc' => $_POST['medialink_album_suffix_pc'],
 						'suffix_sp' => $_POST['medialink_album_suffix_sp'],
 						'display_pc' => $_POST['medialink_album_display_pc'],
@@ -2391,8 +1780,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 		$slideshow_tbl = array(
 						'sort' => $_POST['medialink_slideshow_sort'],
-						'effect_pc' => $_POST['medialink_slideshow_effect_pc'],
-						'effect_sp' => $_POST['medialink_slideshow_effect_sp'],
 						'suffix_pc' => $_POST['medialink_slideshow_suffix_pc'],
 						'suffix_sp' => $_POST['medialink_slideshow_suffix_sp'],
 						'display_pc' => $_POST['medialink_slideshow_display_pc'],
@@ -2460,95 +1847,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'sp' => stripslashes($_POST['medialink_useragent_sp'])
 						);
 		update_option( 'medialink_useragent', $useragent_tbl );
-
-		$colorbox_tbl = array(
-						'transition' => $_POST['medialink_colorbox_transition'],
-						'speed' => $_POST['medialink_colorbox_speed'],
-						'title' => $_POST['medialink_colorbox_title'],
-						'rel' => 'grouped',
-						'scalePhotos' => $_POST['medialink_colorbox_scalePhotos'],
-						'scrolling' => $_POST['medialink_colorbox_scrolling'],
-						'opacity' => $_POST['medialink_colorbox_opacity'],
-						'open' => $_POST['medialink_colorbox_open'],
-						'returnFocus' => $_POST['medialink_colorbox_returnFocus'],
-						'trapFocus' => $_POST['medialink_colorbox_trapFocus'],
-						'fastIframe' => $_POST['medialink_colorbox_fastIframe'],
-						'preloading' => $_POST['medialink_colorbox_preloading'],
-						'overlayClose' => $_POST['medialink_colorbox_overlayClose'],
-						'escKey' => $_POST['medialink_colorbox_escKey'],
-						'arrowKey' => $_POST['medialink_colorbox_arrowKey'],
-						'loop' => $_POST['medialink_colorbox_loop'],
-						'fadeOut' => $_POST['medialink_colorbox_fadeOut'],
-						'closeButton' => $_POST['medialink_colorbox_closeButton'],
-						'current' => $_POST['medialink_colorbox_current'],
-						'previous' => $_POST['medialink_colorbox_previous'],
-						'next' => $_POST['medialink_colorbox_next'],
-						'close' => $_POST['medialink_colorbox_close'],
-						'width' => $_POST['medialink_colorbox_width'],
-						'height' => $_POST['medialink_colorbox_height'],
-						'innerWidth' => $_POST['medialink_colorbox_innerWidth'],
-						'innerHeight' => $_POST['medialink_colorbox_innerHeight'],
-						'initialWidth' => $_POST['medialink_colorbox_initialWidth'],
-						'initialHeight' => $_POST['medialink_colorbox_initialHeight'],
-						'maxWidth' => $_POST['medialink_colorbox_maxWidth'],
-						'maxHeight' => $_POST['medialink_colorbox_maxHeight'],
-						'slideshow' => $_POST['medialink_colorbox_slideshow'],
-						'slideshowSpeed' => $_POST['medialink_colorbox_slideshowSpeed'],
-						'slideshowAuto' => $_POST['medialink_colorbox_slideshowAuto'],
-						'slideshowStart' => $_POST['medialink_colorbox_slideshowStart'],
-						'slideshowStop' => $_POST['medialink_colorbox_slideshowStop'],
-						'fixed' => $_POST['medialink_colorbox_fixed'],
-						'top' => $_POST['medialink_colorbox_top'],
-						'bottom' => $_POST['medialink_colorbox_bottom'],
-						'left' => $_POST['medialink_colorbox_left'],
-						'right' => $_POST['medialink_colorbox_right'],
-						'reposition' => $_POST['medialink_colorbox_reposition'],
-						'retinaImage' => $_POST['medialink_colorbox_retinaImage']
-						);
-		update_option( 'medialink_colorbox', $colorbox_tbl );
-
-		$nivoslider_tbl = array(
-						'effect' => $_POST['medialink_nivoslider_effect'],
-						'slices' => $_POST['medialink_nivoslider_slices'],
-						'boxCols' => $_POST['medialink_nivoslider_boxCols'],
-						'boxRows' => $_POST['medialink_nivoslider_boxRows'],
-						'animSpeed' => $_POST['medialink_nivoslider_animSpeed'],
-						'pauseTime' => $_POST['medialink_nivoslider_pauseTime'],
-						'startSlide' => $_POST['medialink_nivoslider_startSlide'],
-						'directionNav' => $_POST['medialink_nivoslider_directionNav'],
-						'directionNavHide' => $_POST['medialink_nivoslider_directionNavHide'],
-						'pauseOnHover' => $_POST['medialink_nivoslider_pauseOnHover'],
-						'manualAdvance' => $_POST['medialink_nivoslider_manualAdvance'],
-						'prevText' => $_POST['medialink_nivoslider_prevText'],
-						'nextText' => $_POST['medialink_nivoslider_nextText'],
-						'randomStart' => $_POST['medialink_nivoslider_randomStart']
-						);
-		update_option( 'medialink_nivoslider', $nivoslider_tbl );
-
-		$photoswipe_tbl = array(
-						'fadeInSpeed' => $_POST['medialink_photoswipe_fadeInSpeed'],
-						'fadeOutSpeed' => $_POST['medialink_photoswipe_fadeOutSpeed'],
-						'slideSpeed' => $_POST['medialink_photoswipe_slideSpeed'],
-						'swipeThreshold' => $_POST['medialink_photoswipe_swipeThreshold'],
-						'swipeTimeThreshold' => $_POST['medialink_photoswipe_swipeTimeThreshold'],
-						'loop' => $_POST['medialink_photoswipe_loop'],
-						'slideshowDelay' => $_POST['medialink_photoswipe_slideshowDelay'],
-						'imageScaleMethod' => $_POST['medialink_photoswipe_imageScaleMethod'],
-						'preventHide' => $_POST['medialink_photoswipe_preventHide'],
-						'backButtonHideEnabled' => $_POST['medialink_photoswipe_backButtonHideEnabled'],
-						'captionAndToolbarHide' => $_POST['medialink_photoswipe_captionAndToolbarHide'],
-						'captionAndToolbarHideOnSwipe' => $_POST['medialink_photoswipe_captionAndToolbarHideOnSwipe'],
-						'captionAndToolbarFlipPosition' => $_POST['medialink_photoswipe_captionAndToolbarFlipPosition'],
-						'captionAndToolbarAutoHideDelay' => $_POST['medialink_photoswipe_captionAndToolbarAutoHideDelay'],
-						'captionAndToolbarOpacity' => $_POST['medialink_photoswipe_captionAndToolbarOpacity'],
-						'captionAndToolbarShowEmptyCaptions' => $_POST['medialink_photoswipe_captionAndToolbarShowEmptyCaptions']
-						);
-		update_option( 'medialink_photoswipe', $photoswipe_tbl );
-
-		$swipebox_tbl = array(
-						'hideBarsDelay' => $_POST['medialink_swipebox_hideBarsDelay']
-						);
-		update_option( 'medialink_swipebox', $swipebox_tbl );
 
 	}
 

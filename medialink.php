@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 4.9
+Version: 5.0
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -67,8 +67,6 @@ function medialink_func( $atts, $html = NULL ) {
 	extract(shortcode_atts(array(
         'set' => '',
         'sort' => '',
-        'effect_pc' => '',
-        'effect_sp' => '',
         'include_cat' => '',
         'suffix_pc' => '',
         'suffix_pc2' => '',
@@ -113,9 +111,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$rssdef = false;
 	if ( $set === 'all' ){
 		if( empty($sort) ) { $sort = $medialink_all[sort]; }
-
-		if( empty($effect_pc) ) { $effect_pc = $medialink_all[effect_pc]; }
-		if( empty($effect_sp) ) { $effect_sp = $medialink_all[effect_sp]; }
 		$suffix_pattern_pc = $medialink->extpattern();
 		$suffix_pattern_sp = $medialink->extpattern();
 		$suffix_pattern_pc .= ','.strtoupper($medialink_movie[suffix_pc]).','.strtolower($medialink_movie[suffix_pc]);
@@ -147,8 +142,6 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($credit_show) ) { $credit_show = $medialink_all[credit_show]; }
 	} else if ( $set === 'album' ){
 		if( empty($sort) ) { $sort = $medialink_album[sort]; }
-		if( empty($effect_pc) ) { $effect_pc = $medialink_album[effect_pc]; }
-		if( empty($effect_sp) ) { $effect_sp = $medialink_album[effect_sp]; }
 		if( empty($suffix_pc) ) {
 			if ( $medialink_album[suffix_pc] === 'all' ) {
 				$suffix_pattern_pc = $medialink->extpattern();
@@ -259,8 +252,6 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($credit_show) ) { $credit_show = $medialink_music[credit_show]; }
 	} else if ( $set === 'slideshow' ){
 		if( empty($sort) ) { $sort = $medialink_slideshow[sort]; }
-		if( empty($effect_pc) ) { $effect_pc = $medialink_slideshow[effect_pc]; }
-		if( empty($effect_sp) ) { $effect_sp = $medialink_slideshow[effect_sp]; }
 		if( empty($suffix_pc) ) {
 			if ( $medialink_slideshow[suffix_pc] === 'all' ) {
 				$suffix_pattern_pc = $medialink->extpattern();
@@ -365,11 +356,9 @@ function medialink_func( $atts, $html = NULL ) {
 	$display = NULL;
 	$mode = $medialink->agent_check();
 	if ( $mode === 'pc' ) {
-		$effect = $effect_pc;
 		$suffix_pattern = $suffix_pattern_pc;
 		$display = $display_pc;
 	} else {
-		$effect = $effect_sp;
 		$suffix_pattern = $suffix_pattern_sp;
 		$display = $display_sp;
 	}
@@ -435,7 +424,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->pluginurl = $pluginurl;
 	$medialink->document_root = $document_root;
 	$medialink->mode = $mode;
-	$medialink->effect = $effect;
 	$medialink->rssname = $rssname;
 	$medialink->rssmax = $rssmax;
 	$medialink->sort = $sort;
@@ -733,28 +721,8 @@ FLASHMUSICPLAYER;
 	if ( $mode === 'pc' ) {
 		wp_enqueue_style( 'pc for medialink',  $pluginurl.'/medialink/css/medialink.css' );
 		if ( $set === 'all' ){
-			if ($effect === 'colorbox'){
-				// for COLORBOX
-				wp_enqueue_style( 'colorbox',  $pluginurl.'/medialink/colorbox/colorbox.css' );
-				wp_enqueue_script( 'colorbox', $pluginurl.'/medialink/colorbox/jquery.colorbox-min.js', null, '1.4.37');
-				wp_enqueue_script( 'colorbox-in', $pluginurl.'/medialink/js/colorbox-in.js' );
-			}
 			wp_enqueue_script( 'jQuery SWFObject', $pluginurl.'/medialink/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
 			if( !empty($selectedfilename) ) { $html .= '<h2>'.$selectedfilename.'</h2>'; }
-		} else if ( $set === 'album' || $set === 'slideshow'){
-			if ($effect === 'nivoslider'){
-				// for Nivo Slider
-				wp_enqueue_style( 'nivoslider-theme-def',  $pluginurl.'/medialink/nivo-slider/themes/default/default.css' );
-				wp_enqueue_style( 'nivoslider-theme-light',  $pluginurl.'/medialink/nivo-slider/themes/light/light.css' );
-				wp_enqueue_style( 'nivoslider-theme-dark',  $pluginurl.'/medialink/nivo-slider/themes/dark/dark.css' );
-				wp_enqueue_style( 'nivoslider-theme-bar',  $pluginurl.'/medialink/nivo-slider/themes/bar/bar.css' );
-				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
-				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
-			} else if ($effect === 'colorbox'){
-				// for COLORBOX
-				wp_enqueue_style( 'colorbox',  $pluginurl.'/medialink/colorbox/colorbox.css' );
-				wp_enqueue_script( 'colorbox', $pluginurl.'/medialink/colorbox/jquery.colorbox-min.js', null, '1.4.37');
-			}
 		} else {
 			if ( $set === 'music' ){
 				wp_enqueue_script( 'jQuery SWFObject', $pluginurl.'/medialink/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
@@ -764,39 +732,9 @@ FLASHMUSICPLAYER;
 			}
 		}
 	} else if ( $mode === 'sp') {
-		if ( $set === 'all' ){
-			if ($effect === 'swipebox'){
-				// for Swipebox
-				wp_enqueue_style( 'swipebox-style',  $pluginurl.'/medialink/swipebox/source/swipebox.css' );
-				wp_enqueue_script( 'swipebox' , $pluginurl.'/medialink/swipebox/source/jquery.swipebox.min.js', null, '1.2.1' );
-			}
-		} else if ( $set === 'album' || $set === 'slideshow'){
-			if ($effect === 'nivoslider'){
-				// for Nivo Slider
-				wp_enqueue_style( 'nivoslider-theme-def',  $pluginurl.'/medialink/nivo-slider/themes/default/default.css' );
-				wp_enqueue_style( 'nivoslider-theme-light',  $pluginurl.'/medialink/nivo-slider/themes/light/light.css' );
-				wp_enqueue_style( 'nivoslider-theme-dark',  $pluginurl.'/medialink/nivo-slider/themes/dark/dark.css' );
-				wp_enqueue_style( 'nivoslider-theme-bar',  $pluginurl.'/medialink/nivo-slider/themes/bar/bar.css' );
-				wp_enqueue_style( 'nivoslider',  $pluginurl.'/medialink/nivo-slider/nivo-slider.css' );
-				wp_enqueue_script( 'nivoslider', $pluginurl.'/medialink/nivo-slider/jquery.nivo.slider.pack.js', null, '3.2');
-			} else if ($effect === 'photoswipe'){
-				// for PhotoSwipe
-				wp_enqueue_style( 'photoswipe',  $pluginurl.'/medialink/photoswipe/photoswipe.css' );
-				wp_enqueue_script( 'sji' , $pluginurl.'/medialink/photoswipe/lib/simple-inheritance.min.js', null );
-				wp_enqueue_script( 'photoswipe' , $pluginurl.'/medialink/photoswipe/code-photoswipe-1.0.11.min.js', null, '1.0.11' );
-			} else if ($effect === 'swipebox'){
-				// for Swipebox
-				wp_enqueue_style( 'swipebox-style',  $pluginurl.'/medialink/swipebox/source/swipebox.css' );
-				wp_enqueue_script( 'swipebox' , $pluginurl.'/medialink/swipebox/source/jquery.swipebox.min.js', null, '1.2.1' );
-			}
-		}
 		// for smartphone
 		wp_enqueue_style( 'smartphone for medialink',  $pluginurl.'/medialink/css/medialink_sp.css' );
 	}
-	include_once dirname(__FILE__).'/inc/MediaLinkAddJs.php';
-	$medialinkaddjs = new MediaLinkAddJs();
-	$medialinkaddjs->effect = $effect;
-	add_action('wp_footer', array($medialinkaddjs, 'add_js'));
 
 	if ( !empty($fparam) ) {
 		if ( $mode === 'pc' && wp_ext2type(end(explode('.', $fparam))) === 'video' ) {
@@ -823,34 +761,12 @@ FLASHMUSICPLAYER;
 	$searchform_end = NULL;
 	$rssfeeds_icon = NULL;
 	if ( $set === 'album' || $set === 'slideshow' ){
-		if ($effect === 'nivoslider'){
-			// for Nivo Slider
-			$linkfiles_begin = '<div class="slider-wrapper theme-default"><div class="slider-wrapper"><div id="slidernivo" class="nivoSlider">';
-			$linkfiles_end = '</div></div></div><br clear=all>';
-		} else if ($effect === 'colorbox' && $mode ==='pc'){
-			// for COLORBOX
-			$linkfiles_begin = '<ul class = "medialink">';
-			$linkfiles_end = '</ul><br clear=all>';
-		} else if ($effect === 'photoswipe' && $mode === 'sp'){
-			// for PhotoSwipe
-			$linkfiles_begin = '<div id="Gallery" class="medialinkthumb">';
-			$linkfiles_end = '</div>';
-		} else if ($effect === 'swipebox' && $mode === 'sp'){
-			// for Swipebox
-			$linkfiles_begin = '<div id="Gallery" class="medialinkthumb">';
-			$linkfiles_end = '</div>';
-		} else if ($effect === 'Lightbox' && $mode === 'pc'){
-			// for Lightbox
+		if ($mode === 'pc'){
 			$linkfiles_begin = '<div class = "medialink">';
 			$linkfiles_end = '</div><br clear=all>';
-		} else {
-			if ($mode === 'pc'){
-				$linkfiles_begin = '<div class = "medialink">';
-				$linkfiles_end = '</div><br clear=all>';
-			} else if ($mode === 'sp'){
-				$linkfiles_begin = '<div class="medialinkthumb">';
-				$linkfiles_end = '</div>';
-			}
+		} else if ($mode === 'sp'){
+			$linkfiles_begin = '<div class="medialinkthumb">';
+			$linkfiles_end = '</div>';
 		}
 		if ( $mode === 'pc' ) {
 			$categoryselectbox_begin = '<div align="right">';
@@ -949,6 +865,8 @@ FLASHMUSICPLAYER;
 	if ( $credit_show === 'Show' ) {
 		$html .= '<div align = "right"><a href="http://wordpress.org/plugins/medialink/"><span style="font-size : xx-small">by MediaLink</span></a></div>';
 	}
+
+	$html = apply_filters( 'post_medialink', $html );
 
 	return $html;
 

@@ -68,11 +68,11 @@ msgstr ""
 "ディアライブラリを検索した結果です"
 
 msgid ""
-"In addition, you want to place add an attribute like this in the short code."
-msgstr "また、以下の様にショートコードに属性値を追加してみます。"
-
-msgid "When you view this Page, it is displayed in slideshow mode."
-msgstr "この固定ページを更新し表示すると、スライドショーモードで表示されます。"
+"Support the classification of the category. Use the caption of the media "
+"library, and are classified."
+msgstr ""
+"カテゴリの分類をサポートしています。メディアライブラリのキャプションを使用し"
+"て分類します。"
 
 msgid "Customization 1"
 msgstr "カスタマイズ１"
@@ -126,13 +126,6 @@ msgid ""
 msgstr ""
 "all（混合データ）,album（画像）,movie（動画）,music（音楽）,slideshow（画"
 "像）,document（文書）の６つのみ"
-
-msgid ""
-"Effects of PC. If you want to use the Lightbox, please install a plugin that "
-"is compatible to the Lightbox. I would recommend some plugins below."
-msgstr ""
-"PCでのエフェクト。Lightboxを使用する場合は、Lightboxに互換性のあるプラグイン"
-"をインストールしてください。私は以下のいくつかのプラグインをお勧めします。"
 
 msgid "Effects of Smartphone"
 msgstr "スマートフォンでのエフェクト"
@@ -315,9 +308,6 @@ msgstr "ファイルサイズ"
 msgid "Date Time"
 msgstr "日付時刻"
 
-msgid "The default value for effects."
-msgstr "エフェクトのデフォルト値"
-
 msgid "AllData"
 msgstr "混在データ"
 
@@ -336,3 +326,15 @@ msgid ""
 msgstr ""
 "音楽とビデオの拡張子は、それぞれの設定(set='music',set='movie')に従います。そ"
 "れ以外は、全てのデータを読み込みます。"
+
+msgid "Effect of Images"
+msgstr "画像のエフェクト"
+
+msgid "It is possible to work with the following plugins. Please install."
+msgstr "以下のプラグインと連携します。インストールしてください。"
+
+msgid ""
+"In addition, offer the following filters. This filter passes the html that "
+"is generated."
+msgstr ""
+"また、次のフィルタを提供します。このフィルタは、生成されるHTMLを渡します。"

@@ -36,7 +36,6 @@ class MediaLink {
 	public $pluginurl;
 	public $set;
 	public $mode;
-	public $effect;
 	public $page;
 	public $maxpage;
 	public $rssname;
@@ -193,7 +192,6 @@ class MediaLink {
 	 * @param	string	$thumblink
 	 * @param	string	$largemediumlink
 	 * @param	string	$mode
-	 * @param	string	$effect
 	 * @return	string	$linkfile
 	 * @since	1.0
 	 */
@@ -244,25 +242,13 @@ class MediaLink {
 		$linkfile = NULL;
 		if ( $ext2type === 'image' ) {
 			if ( $this->set === 'all' ) {
-				if ($this->effect === 'colorbox' && $this->mode === 'pc'){ // for colorbox
-					$linkfile = '<li><a class="medialink" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
-				} else if ($this->effect === 'swipebox' && $this->mode === 'sp'){ // for Swipebox
-					$linkfile = '<li><a rel="medialinkthumb" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
-				} else if ($this->effect === 'Lightbox' && $this->mode === 'pc'){ // for Lightbox
-					$linkfile = '<li><a href="'.$imgshowlink.'" rel="lightbox[medialink]" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
-				}
+				$linkfile = '<li><a href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.$titlename.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
 			} else {
 				$thumblink = '<img src="'.$thumblink.'" alt="'.$titlename.$fileinfo.'" title="'.$titlename.$fileinfo.'">';
-				if ($this->effect === 'nivoslider'){ // for nivoslider
+				if ($this->set === 'slideshow'){
 					$linkfile = '<img src="'.$imgshowlink.'" alt="'.$titlename.'" title="'.$titlename.$fileinfo.'">';
-				} else if ($this->effect === 'colorbox' && $this->mode === 'pc'){ // for colorbox
-					$linkfile = '<a class="medialink" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
-				} else if ($this->effect === 'photoswipe' && $this->mode === 'sp'){ // for Photoswipe
-					$linkfile = '<li><a rel="external" href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a></li>';
-				} else if ($this->effect === 'swipebox' && $this->mode === 'sp'){ // for Swipebox
-					$linkfile = '<li><a rel="medialinkthumb" href="'.$imgshowlink.'" class="swipebox" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a></li>';
-				} else if ($this->effect === 'Lightbox' && $this->mode === 'pc'){ // for Lightbox
-					$linkfile = '<a href="'.$imgshowlink.'" rel="lightbox[medialink]" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
+				} else {
+					$linkfile = '<a href="'.$imgshowlink.'" title="'.$titlename.$fileinfo.'">'.$thumblink.'</a>';
 				}
 			}
 		}else{
@@ -460,7 +446,10 @@ class MediaLink {
 //RSS Feed
 $xml_begin = <<<XMLBEGIN
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+<rss
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:content="http://purl.org/rss/1.0/modules/content/"
+ version="2.0">
 <channel>
 <title>{$xml_title}</title>
 

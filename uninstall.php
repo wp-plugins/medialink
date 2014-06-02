@@ -7,16 +7,12 @@
 	$option_names = array(
 						'medialink_album',
 						'medialink_all',
-						'medialink_colorbox',
 						'medialink_css',
 						'medialink_document',
 						'medialink_exclude',
 						'medialink_movie',
 						'medialink_music',
-						'medialink_nivoslider',
-						'medialink_photoswipe',
 						'medialink_slideshow',
-						'medialink_swipebox',
 						'medialink_useragent'
 					);
 

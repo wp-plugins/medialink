@@ -9,7 +9,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.4\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "prev"
 msgstr ""
@@ -63,11 +62,7 @@ msgid ""
 "You view the Page again. Should see the image to the Page."
 msgstr ""
 
-msgid ""
-"In addition, you want to place add an attribute like this in the short code."
-msgstr ""
-
-msgid "When you view this Page, it is displayed in slideshow mode."
+msgid "Support the classification of the category. Use the caption of the media library, and are classified."
 msgstr ""
 
 msgid "Customization 1"
@@ -114,11 +109,6 @@ msgstr ""
 msgid ""
 "Next only six. all(all data), album(image), movie(video), music(music), "
 "slideshow(image), document(document)"
-msgstr ""
-
-msgid ""
-"Effects of PC. If you want to use the Lightbox, please install a plugin that "
-"is compatible to the Lightbox. I would recommend some plugins below."
 msgstr ""
 
 msgid "Effects of Smartphone"
@@ -292,9 +282,6 @@ msgstr ""
 msgid "Date Time"
 msgstr ""
 
-msgid "The default value for effects."
-msgstr ""
-
 msgid "AllData"
 msgstr ""
 
@@ -310,4 +297,13 @@ msgstr ""
 msgid ""
 "Audio's suffix and Video's suffix is following to the setting(set='music',"
 "set='movie'). Other than that, read all the data."
+msgstr ""
+
+msgid "Effect of Images"
+msgstr ""
+
+msgid "It is possible to work with the following plugins. Please install."
+msgstr ""
+
+msgid "In addition, offer the following filters. This filter passes the html that is generated."
 msgstr ""
