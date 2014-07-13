@@ -55,10 +55,10 @@ class MediaLink {
 
 		$medialink_useragent = get_option('medialink_useragent');
 
-		if(preg_match("{".$medialink_useragent[tb]."}",$user_agent)){
+		if(preg_match("{".$medialink_useragent['tb']."}",$user_agent)){
 			//Tablet
 			$mode = "pc"; 
-		}else if(preg_match("{".$medialink_useragent[sp]."}",$user_agent)){
+		}else if(preg_match("{".$medialink_useragent['sp']."}",$user_agent)){
 			//Smartphone
 			$mode = "sp";
 		}else{
@@ -114,7 +114,8 @@ class MediaLink {
 			foreach ( $attachments as $attachment ) {
 				$title = $attachment->post_title;
 				$caption = $attachment->post_excerpt;
-				$ext = end(explode('.', $attachment->guid));
+				$exts = explode('.', $attachment->guid);
+				$ext = end($exts);
 				$ext2type = wp_ext2type($ext);
 				$suffix = '.'.$ext;
 				if( empty($this->exclude_cat) ) { 
@@ -197,7 +198,8 @@ class MediaLink {
 	 */
 	function print_file($file,$title,$thumblink,$largemediumlink) {
 
-		$ext = end(explode('.', $file));
+		$exts = explode('.', $file);
+		$ext = end($exts);
 		$ext2type = wp_ext2type($ext);
 		$suffix = '.'.$ext;
 
@@ -208,7 +210,7 @@ class MediaLink {
 			}
 			if ( $this->stamptime_show === 'Show' ) {
 				$filestat = stat($this->document_root.$file);
-				date_default_timezone_set(timezone_name_from_abbr(get_the_date(T)));
+				date_default_timezone_set(timezone_name_from_abbr(get_the_date('T')));
 				$stamptime = date("Y-m-d H:i:s",  $filestat['mtime']);
 			}
 			$fileinfo = '['.$stamptime.$filesize.' ]';
@@ -272,7 +274,12 @@ class MediaLink {
 					$permlinkstr = $queryhead.'&'.$permcategoryfolder.'=';
 				}
 
-				$linkfile = '<li>'.$thumblink.'<a href="'.$scriptname.$permlinkstr.$catparam.'&mlp='.$page.'&f='.$fileparam.'&sort='.$_GET['sort'].'">'.$filetitle.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
+				if ( isset($_GET['sort']) ) {
+					$sortparam = $_GET['sort'];
+				} else {
+					$sortparam = NULL;
+				}
+				$linkfile = '<li>'.$thumblink.'<a href="'.$scriptname.$permlinkstr.$catparam.'&mlp='.$page.'&f='.$fileparam.'&sort='.$sortparam.'">'.$filetitle.'<div style="font-size: small;">'.$fileinfo.'</div></a></li>';
 			}
 		}
 
@@ -354,7 +361,8 @@ class MediaLink {
 	 */
 	function xmlitem_read($file, $title, $thumblink, $largemediumlink) {
 
-		$ext = end(explode('.', $file));
+		$exts = explode('.', $file);
+		$ext = end($exts);
 		$ext2type = wp_ext2type($ext);
 		$suffix = '.'.$ext;
 
@@ -363,7 +371,7 @@ class MediaLink {
 		$filesize = filesize($file);
 		$filestat = stat($file);
 
-		date_default_timezone_set(timezone_name_from_abbr(get_the_date(T)));
+		date_default_timezone_set(timezone_name_from_abbr(get_the_date('T')));
 		$stamptime = date(DATE_RSS,  $filestat['mtime']);
 
 		$fparam = mb_convert_encoding(str_replace($this->document_root.'/', "", $file), "UTF8", "auto");
@@ -392,7 +400,7 @@ class MediaLink {
 			} else {
 				$link_url = 'http://'.$servername.$topurl_urlencode.$file.$suffix;
 			}
-			if ( $this->set === 'all' || $this->set === 'slideshow' ) {
+			if ( $this->set === 'all' ) {
 				$img_url = '<a href="'.$link_url.'">'.$thumblink.'"</a>';
 			} else {
 				$img_url = '<a href="'.$link_url.'"><img src = "'.$thumblink.'"></a>';
@@ -565,7 +573,7 @@ XMLEND;
 		}
 
 		$mimes = wp_get_mime_types();
-
+		$extpattern = NULL;
 		foreach ($mimes as $ext => $mime) {
 			if( strpos( $ext, '|' ) ){
 				$exts = explode('|',$ext);

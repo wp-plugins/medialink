@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 5.0
+Version: 5.1
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -36,8 +36,6 @@ Domain Path: /languages
 	add_action('wp_head', array($medialinkregistandheader, 'add_feedlink'));
 	add_action('wp_head', array($medialinkregistandheader, 'add_css'));
 	unset($medialinkregistandheader);
-
-	add_action( 'wp_head', wp_enqueue_script('jquery') );
 
 	require_once( dirname( __FILE__ ) . '/req/MediaLinkAdmin.php' );
 	$medialinkadmin = new MediaLinkAdmin();
@@ -110,43 +108,42 @@ function medialink_func( $atts, $html = NULL ) {
 
 	$rssdef = false;
 	if ( $set === 'all' ){
-		if( empty($sort) ) { $sort = $medialink_all[sort]; }
+		if( empty($sort) ) { $sort = $medialink_all['sort']; }
 		$suffix_pattern_pc = $medialink->extpattern();
 		$suffix_pattern_sp = $medialink->extpattern();
-		$suffix_pattern_pc .= ','.strtoupper($medialink_movie[suffix_pc]).','.strtolower($medialink_movie[suffix_pc]);
-		$suffix_movie_pc2 = $medialink_movie[suffix_pc2];
-		$suffix_movie_flash = $medialink_movie[suffix_flash];
-		$suffix_pattern_sp .= ','.strtoupper($medialink_movie[suffix_sp]).','.strtolower($medialink_movie[suffix_sp]);
-		$suffix_pattern_pc .= ','.strtoupper($medialink_music[suffix_pc]).','.strtolower($medialink_music[suffix_pc]);
-		$suffix_music_pc2 = $medialink_music[suffix_pc2];
-		$suffix_music_flash = $medialink_music[suffix_flash];
-		$suffix_pattern_sp .= ','.strtoupper($medialink_music[suffix_sp]).','.strtolower($medialink_music[suffix_sp]);
-		if( empty($display_pc) ) { $display_pc = intval($medialink_all[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_all[display_sp]); }
-		if( empty($thumbnail) ) { $thumbnail = $medialink_all[thumbnail]; }
-		if( empty($image_show_size) ) { $image_show_size = $medialink_all[image_show_size]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_all[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_all[generate_rssfeed]; }
+		$suffix_pattern_pc .= ','.strtoupper($medialink_movie['suffix_pc']).','.strtolower($medialink_movie['suffix_pc']);
+		$suffix_movie_pc2 = $medialink_movie['suffix_pc2'];
+		$suffix_movie_flash = $medialink_movie['suffix_flash'];
+		$suffix_pattern_sp .= ','.strtoupper($medialink_movie['suffix_sp']).','.strtolower($medialink_movie['suffix_sp']);
+		$suffix_pattern_pc .= ','.strtoupper($medialink_music['suffix_pc']).','.strtolower($medialink_music['suffix_pc']);
+		$suffix_music_pc2 = $medialink_music['suffix_pc2'];
+		$suffix_music_flash = $medialink_music['suffix_flash'];
+		$suffix_pattern_sp .= ','.strtoupper($medialink_music['suffix_sp']).','.strtolower($medialink_music['suffix_sp']);
+		if( empty($display_pc) ) { $display_pc = intval($medialink_all['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_all['display_sp']); }
+		if( empty($image_show_size) ) { $image_show_size = $medialink_all['image_show_size']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_all['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_all['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_all[rssname];
+			$rssname = $medialink_all['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_all[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_all[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_all[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_all[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_all[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_all[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_all[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_all[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_all[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_all['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_all['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_all['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_all['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_all['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_all['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_all['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_all['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_all['credit_show']; }
 	} else if ( $set === 'album' ){
-		if( empty($sort) ) { $sort = $medialink_album[sort]; }
+		if( empty($sort) ) { $sort = $medialink_album['sort']; }
 		if( empty($suffix_pc) ) {
-			if ( $medialink_album[suffix_pc] === 'all' ) {
+			if ( $medialink_album['suffix_pc'] === 'all' ) {
 				$suffix_pattern_pc = $medialink->extpattern();
 			} else {
-				$suffix_pattern_pc = strtoupper($medialink_album[suffix_pc]).','.strtolower($medialink_album[suffix_pc]);
+				$suffix_pattern_pc = strtoupper($medialink_album['suffix_pc']).','.strtolower($medialink_album['suffix_pc']);
 			}
 		} else {
 			if ( $suffix_pc === 'all' ) {
@@ -156,10 +153,10 @@ function medialink_func( $atts, $html = NULL ) {
 			}
 		}
 		if( empty($suffix_sp) ) {
-			if ( $medialink_album[suffix_sp] === 'all' ) {
+			if ( $medialink_album['suffix_sp'] === 'all' ) {
 				$suffix_pattern_sp = $medialink->extpattern();
 			} else {
-				$suffix_pattern_sp = strtoupper($medialink_album[suffix_sp]).','.strtolower($medialink_album[suffix_sp]);
+				$suffix_pattern_sp = strtoupper($medialink_album['suffix_sp']).','.strtolower($medialink_album['suffix_sp']);
 			}
 		} else {
 			if ( $suffix_sp === 'all' ) {
@@ -168,95 +165,95 @@ function medialink_func( $atts, $html = NULL ) {
 				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
 			}
 		}
-		if( empty($display_pc) ) { $display_pc = intval($medialink_album[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_album[display_sp]); }
-		if( empty($image_show_size) ) { $image_show_size = $medialink_album[image_show_size]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_album[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_album[generate_rssfeed]; }
+		if( empty($display_pc) ) { $display_pc = intval($medialink_album['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_album['display_sp']); }
+		if( empty($image_show_size) ) { $image_show_size = $medialink_album['image_show_size']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_album['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_album['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_album[rssname];
+			$rssname = $medialink_album['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_album[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_album[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_album[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_album[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_album[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_album[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_album[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_album[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_album[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_album['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_album['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_album['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_album['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_album['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_album['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_album['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_album['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_album['credit_show']; }
 	} else if ( $set === 'movie' ){
-		if( empty($sort) ) { $sort = $medialink_movie[sort]; }
+		if( empty($sort) ) { $sort = $medialink_movie['sort']; }
 		if( empty($suffix_pc) ) {
-			$suffix_pattern_pc = strtoupper($medialink_movie[suffix_pc]).','.strtolower($medialink_movie[suffix_pc]);
+			$suffix_pattern_pc = strtoupper($medialink_movie['suffix_pc']).','.strtolower($medialink_movie['suffix_pc']);
 		} else {
 			$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
 		}
-		if( empty($suffix_pc2) ) { $suffix_pc2 = $medialink_movie[suffix_pc2]; }
-		if( empty($suffix_flash) ) { $suffix_flash = $medialink_movie[suffix_flash]; }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = $medialink_movie['suffix_pc2']; }
+		if( empty($suffix_flash) ) { $suffix_flash = $medialink_movie['suffix_flash']; }
 		if( empty($suffix_sp) ) {
-			$suffix_pattern_sp = strtoupper($medialink_movie[suffix_sp]).','.strtolower($medialink_movie[suffix_sp]);
+			$suffix_pattern_sp = strtoupper($medialink_movie['suffix_sp']).','.strtolower($medialink_movie['suffix_sp']);
 		} else {
 			$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
 		}
-		if( empty($display_pc) ) { $display_pc = intval($medialink_movie[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_movie[display_sp]); }
-		if( empty($thumbnail) ) { $thumbnail = $medialink_movie[thumbnail]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_movie[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_movie[generate_rssfeed]; }
+		if( empty($display_pc) ) { $display_pc = intval($medialink_movie['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_movie['display_sp']); }
+		if( empty($thumbnail) ) { $thumbnail = $medialink_movie['thumbnail']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_movie['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_movie['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_movie[rssname];
+			$rssname = $medialink_movie['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_movie[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_movie[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_movie[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_movie[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_movie[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_movie[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_movie[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_movie[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_movie[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_movie['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_movie['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_movie['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_movie['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_movie['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_movie['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_movie['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_movie['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_movie['credit_show']; }
 	} else if ( $set === 'music' ){
-		if( empty($sort) ) { $sort = $medialink_music[sort]; }
+		if( empty($sort) ) { $sort = $medialink_music['sort']; }
 		if( empty($suffix_pc) ) {
-			$suffix_pattern_pc = strtoupper($medialink_music[suffix_pc]).','.strtolower($medialink_music[suffix_pc]);
+			$suffix_pattern_pc = strtoupper($medialink_music['suffix_pc']).','.strtolower($medialink_music['suffix_pc']);
 		} else {
 			$suffix_pattern_pc = strtoupper($suffix_pc).','.strtolower($suffix_pc);
 		}
-		if( empty($suffix_pc2) ) { $suffix_pc2 = $medialink_music[suffix_pc2]; }
-		if( empty($suffix_flash) ) { $suffix_flash = $medialink_music[suffix_flash]; }
+		if( empty($suffix_pc2) ) { $suffix_pc2 = $medialink_music['suffix_pc2']; }
+		if( empty($suffix_flash) ) { $suffix_flash = $medialink_music['suffix_flash']; }
 		if( empty($suffix_sp) ) {
-			$suffix_pattern_sp = strtoupper($medialink_music[suffix_sp]).','.strtolower($medialink_music[suffix_sp]);
+			$suffix_pattern_sp = strtoupper($medialink_music['suffix_sp']).','.strtolower($medialink_music['suffix_sp']);
 		} else {
 			$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
 		}
-		if( empty($display_pc) ) { $display_pc = intval($medialink_music[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_music[display_sp]); }
-		if( empty($thumbnail) ) { $thumbnail = $medialink_music[thumbnail]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_music[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_music[generate_rssfeed]; }
+		if( empty($display_pc) ) { $display_pc = intval($medialink_music['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_music['display_sp']); }
+		if( empty($thumbnail) ) { $thumbnail = $medialink_music['thumbnail']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_music['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_music['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_music[rssname];
+			$rssname = $medialink_music['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_music[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_music[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_music[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_music[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_music[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_music[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_music[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_music[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_music[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_music['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_music['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_music['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_music['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_music['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_music['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_music['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_music['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_music['credit_show']; }
 	} else if ( $set === 'slideshow' ){
-		if( empty($sort) ) { $sort = $medialink_slideshow[sort]; }
+		if( empty($sort) ) { $sort = $medialink_slideshow['sort']; }
 		if( empty($suffix_pc) ) {
-			if ( $medialink_slideshow[suffix_pc] === 'all' ) {
+			if ( $medialink_slideshow['suffix_pc'] === 'all' ) {
 				$suffix_pattern_pc = $medialink->extpattern();
 			} else {
-				$suffix_pattern_pc = strtoupper($medialink_slideshow[suffix_pc]).','.strtolower($medialink_slideshow[suffix_pc]);
+				$suffix_pattern_pc = strtoupper($medialink_slideshow['suffix_pc']).','.strtolower($medialink_slideshow['suffix_pc']);
 			}
 		} else {
 			if ( $suffix_pc === 'all' ) {
@@ -266,10 +263,10 @@ function medialink_func( $atts, $html = NULL ) {
 			}
 		}
 		if( empty($suffix_sp) ) {
-			if ( $medialink_slideshow[suffix_sp] === 'all' ) {
+			if ( $medialink_slideshow['suffix_sp'] === 'all' ) {
 				$suffix_pattern_sp = $medialink->extpattern();
 			} else {
-				$suffix_pattern_sp = strtoupper($medialink_slideshow[suffix_sp]).','.strtolower($medialink_slideshow[suffix_sp]);
+				$suffix_pattern_sp = strtoupper($medialink_slideshow['suffix_sp']).','.strtolower($medialink_slideshow['suffix_sp']);
 			}
 		} else {
 			if ( $suffix_sp === 'all' ) {
@@ -278,31 +275,31 @@ function medialink_func( $atts, $html = NULL ) {
 				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
 			}
 		}
-		if( empty($display_pc) ) { $display_pc = intval($medialink_slideshow[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_slideshow[display_sp]); }
-		if( empty($image_show_size) ) { $image_show_size = $medialink_slideshow[image_show_size]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_slideshow[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_slideshow[generate_rssfeed]; }
+		if( empty($display_pc) ) { $display_pc = intval($medialink_slideshow['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_slideshow['display_sp']); }
+		if( empty($image_show_size) ) { $image_show_size = $medialink_slideshow['image_show_size']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_slideshow['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_slideshow['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_slideshow[rssname];
+			$rssname = $medialink_slideshow['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_slideshow[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_slideshow[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_slideshow[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_slideshow[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_slideshow[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_slideshow[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_slideshow[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_slideshow[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_slideshow[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_slideshow['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_slideshow['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_slideshow['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_slideshow['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_slideshow['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_slideshow['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_slideshow['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_slideshow['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_slideshow['credit_show']; }
 	} else if ( $set === 'document' ){
-		if( empty($sort) ) { $sort = $medialink_document[sort]; }
+		if( empty($sort) ) { $sort = $medialink_document['sort']; }
 		if( empty($suffix_pc) ) {
-			if ( $medialink_document[suffix_pc] === 'all' ) {
+			if ( $medialink_document['suffix_pc'] === 'all' ) {
 				$suffix_pattern_pc = $medialink->extpattern();
 			} else {
-				$suffix_pattern_pc = strtoupper($medialink_document[suffix_pc]).','.strtolower($medialink_document[suffix_pc]);
+				$suffix_pattern_pc = strtoupper($medialink_document['suffix_pc']).','.strtolower($medialink_document['suffix_pc']);
 			}
 		} else {
 			if ( $suffix_pc === 'all' ) {
@@ -312,10 +309,10 @@ function medialink_func( $atts, $html = NULL ) {
 			}
 		}
 		if( empty($suffix_sp) ) {
-			if ( $medialink_document[suffix_sp] === 'all' ) {
+			if ( $medialink_document['suffix_sp'] === 'all' ) {
 				$suffix_pattern_sp = $medialink->extpattern();
 			} else {
-				$suffix_pattern_sp = strtoupper($medialink_document[suffix_sp]).','.strtolower($medialink_document[suffix_sp]);
+				$suffix_pattern_sp = strtoupper($medialink_document['suffix_sp']).','.strtolower($medialink_document['suffix_sp']);
 			}
 		} else {
 			if ( $suffix_sp === 'all' ) {
@@ -324,27 +321,27 @@ function medialink_func( $atts, $html = NULL ) {
 				$suffix_pattern_sp = strtoupper($suffix_sp).','.strtolower($suffix_sp);
 			}
 		}
-		if( empty($display_pc) ) { $display_pc = intval($medialink_document[display_pc]); }
-		if( empty($display_sp) ) { $display_sp = intval($medialink_document[display_sp]); }
-		if( empty($thumbnail) ) { $thumbnail = $medialink_document[thumbnail]; }
-		if( empty($include_cat) ) { $include_cat = $medialink_document[include_cat]; }
-		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_document[generate_rssfeed]; }
+		if( empty($display_pc) ) { $display_pc = intval($medialink_document['display_pc']); }
+		if( empty($display_sp) ) { $display_sp = intval($medialink_document['display_sp']); }
+		if( empty($thumbnail) ) { $thumbnail = $medialink_document['thumbnail']; }
+		if( empty($include_cat) ) { $include_cat = $medialink_document['include_cat']; }
+		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_document['generate_rssfeed']; }
 		if( empty($rssname) ) {
-			$rssname = $medialink_document[rssname];
+			$rssname = $medialink_document['rssname'];
 			$rssdef = true;
 		}
-		if( empty($rssmax) ) { $rssmax = intval($medialink_document[rssmax]); }
-		if( empty($filesize_show) ) { $filesize_show = $medialink_document[filesize_show]; }
-		if( empty($stamptime_show) ) { $stamptime_show = $medialink_document[stamptime_show]; }
-		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_document[categorylinks_show]; }
-		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_document[pagelinks_show]; }
-		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_document[sortlinks_show]; }
-		if( empty($searchbox_show) ) { $searchbox_show = $medialink_document[searchbox_show]; }
-		if( empty($rssicon_show) ) { $rssicon_show = $medialink_document[rssicon_show]; }
-		if( empty($credit_show) ) { $credit_show = $medialink_document[credit_show]; }
+		if( empty($rssmax) ) { $rssmax = intval($medialink_document['rssmax']); }
+		if( empty($filesize_show) ) { $filesize_show = $medialink_document['filesize_show']; }
+		if( empty($stamptime_show) ) { $stamptime_show = $medialink_document['stamptime_show']; }
+		if( empty($categorylinks_show) ) { $categorylinks_show = $medialink_document['categorylinks_show']; }
+		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_document['pagelinks_show']; }
+		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_document['sortlinks_show']; }
+		if( empty($searchbox_show) ) { $searchbox_show = $medialink_document['searchbox_show']; }
+		if( empty($rssicon_show) ) { $rssicon_show = $medialink_document['rssicon_show']; }
+		if( empty($credit_show) ) { $credit_show = $medialink_document['credit_show']; }
 	}
 	if ( empty($exclude_cat) ) {
-		$exclude_cat = $medialink_exclude[cat];
+		$exclude_cat = $medialink_exclude['cat'];
 	}
 
 	$wp_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', get_bloginfo('wpurl')).'/';
@@ -399,8 +396,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$categoryselectall = __('all', 'medialink');
 	$categoryselectbutton = __('Select', 'medialink');
 
-	$displayprev = mb_convert_encoding($displayprev, "UTF-8", "auto");
-	$displaynext = mb_convert_encoding($displaynext, "UTF-8", "auto");
 	$sortnamenew = mb_convert_encoding($sortnamenew, "UTF-8", "auto");
 	$sortnameold = mb_convert_encoding($sortnameold, "UTF-8", "auto");
 	$sortnamedes = mb_convert_encoding($sortnamedes, "UTF-8", "auto");
@@ -463,6 +458,7 @@ function medialink_func( $atts, $html = NULL ) {
 	}
 	$postmimes = array_unique($postmimes);
 	$mimepattern_count = 0;
+	$postmimepattern = NULL;
 	foreach ( $postmimes as $postmime ) {
 		if ( $mimepattern_count == 0 ) {
 			$postmimepattern .= $postmime;
@@ -479,9 +475,7 @@ function medialink_func( $atts, $html = NULL ) {
 		'numberposts' => -1,
 		'orderby' => $sort_key,
 		'order' => $sort_order,
-		's' => $search,
-		'post_status' => null,
-		'post_parent' => $post->ID
+		's' => $search
 		); 
 
 	$attachments = get_posts($args);
@@ -519,6 +513,7 @@ function medialink_func( $atts, $html = NULL ) {
 	}
 
 	$categories = array_unique($categories);
+	$linkcategories = NULL;
 	foreach ($categories as $linkcategory) {
 		$linkcategory = mb_convert_encoding(str_replace($document_root."/", "", $linkcategory), "UTF-8", "auto");
 		if($catparam === $linkcategory){
@@ -575,7 +570,8 @@ function medialink_func( $atts, $html = NULL ) {
 	if (!empty($fparam)) {
 		$prevfile = $topurl.'/'.str_replace("%2F","/",urlencode($fparam));
 	}
-	$prevfile_nosuffix = str_replace('.'.end(explode('.', $prevfile)), "", $prevfile);
+	$prevfiles = explode('.', $prevfile);
+	$prevfile_nosuffix = str_replace('.'.end($prevfiles), "", $prevfile);
 
 	$sortnamenew = mb_convert_encoding($sortnamenew, "UTF-8", "auto");
 	$sortnameold = mb_convert_encoding($sortnameold, "UTF-8", "auto");
@@ -638,7 +634,7 @@ $searchform = <<<SEARCHFORM
 </form>
 SEARCHFORM;
 
-list($movie_container_w, $movie_container_h) = explode( 'x', $medialink_movie[container] );
+list($movie_container_w, $movie_container_h) = explode( 'x', $medialink_movie['container'] );
 
 //MoviePlayerContainer
 $movieplayercontainer = <<<MOVIEPLAYERCONTAINER
@@ -720,6 +716,7 @@ FLASHMUSICPLAYER;
 
 	if ( $mode === 'pc' ) {
 		wp_enqueue_style( 'pc for medialink',  $pluginurl.'/medialink/css/medialink.css' );
+		wp_enqueue_script( 'jquery' );
 		if ( $set === 'all' ){
 			wp_enqueue_script( 'jQuery SWFObject', $pluginurl.'/medialink/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
 			if( !empty($selectedfilename) ) { $html .= '<h2>'.$selectedfilename.'</h2>'; }
@@ -734,16 +731,19 @@ FLASHMUSICPLAYER;
 	} else if ( $mode === 'sp') {
 		// for smartphone
 		wp_enqueue_style( 'smartphone for medialink',  $pluginurl.'/medialink/css/medialink_sp.css' );
+		wp_enqueue_script( 'jquery' );
 	}
 
+	$fparamexts = explode('.', $fparam);
+	$fparamext = end($fparamexts);
 	if ( !empty($fparam) ) {
-		if ( $mode === 'pc' && wp_ext2type(end(explode('.', $fparam))) === 'video' ) {
+		if ( $mode === 'pc' && wp_ext2type($fparamext) === 'video' ) {
 			if(preg_match("/MSIE 9\.0/", $_SERVER['HTTP_USER_AGENT'])){
 				$html .= $movieplayercontainerIE9;
 			} else {
 				$html .= $movieplayercontainer;
 			}
-		} else if ( $mode === 'pc' && wp_ext2type(end(explode('.', $fparam))) === 'audio' ) {
+		} else if ( $mode === 'pc' && wp_ext2type($fparamext) === 'audio' ) {
 			$html .= $flashmusicplayer;
 			$html .= $musicplayercontainer;
 		}

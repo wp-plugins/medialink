@@ -33,7 +33,6 @@ class MediaLinkRegistAndHeader {
 							'display_pc' => 8, 	
 							'display_sp' => 6,
 							'image_show_size' => 'Full',
-							'thumbnail' => '-'.get_option('thumbnail_size_w').'x'.get_option('thumbnail_size_h'),
 							'include_cat' => '',
 							'generate_rssfeed' => 'on',
 							'rssname' => 'medialink_all_feed',
@@ -58,7 +57,6 @@ class MediaLinkRegistAndHeader {
 							'display_pc' => 20, 	
 							'display_sp' => 9,
 							'image_show_size' => 'Full',
-							'thumbnail' => '-'.get_option('thumbnail_size_w').'x'.get_option('thumbnail_size_h'),
 							'include_cat' => '',
 							'generate_rssfeed' => 'on',
 							'rssname' => 'medialink_album_feed',
@@ -136,7 +134,6 @@ class MediaLinkRegistAndHeader {
 								'display_pc' => 10,
 								'display_sp' => 10,
 								'image_show_size' => 'Full',
-								'thumbnail' => '-'.get_option('thumbnail_size_w').'x'.get_option('thumbnail_size_h'),
 								'include_cat' => '',
 								'generate_rssfeed' => 'on',
 								'rssname' => 'medialink_slideshow_feed',
@@ -227,12 +224,12 @@ class MediaLinkRegistAndHeader {
 		$wp_uploads_path = str_replace('http://'.$_SERVER["SERVER_NAME"], '', $wp_uploads['baseurl']);
 		$documentrootname = $_SERVER['DOCUMENT_ROOT'];
 		$servername = 'http://'.$_SERVER['HTTP_HOST'];
-		$xml_all = $wp_uploads_path.'/'.$medialink_all[rssname].'.xml';
-		$xml_album = $wp_uploads_path.'/'.$medialink_album[rssname].'.xml';
-		$xml_movie = $wp_uploads_path.'/'.$medialink_movie[rssname].'.xml';
-		$xml_music = $wp_uploads_path.'/'.$medialink_music[rssname].'.xml';
-		$xml_slideshow = $wp_uploads_path.'/'.$medialink_slideshow[rssname].'.xml';
-		$xml_document = $wp_uploads_path.'/'.$medialink_document[rssname].'.xml';
+		$xml_all = $wp_uploads_path.'/'.$medialink_all['rssname'].'.xml';
+		$xml_album = $wp_uploads_path.'/'.$medialink_album['rssname'].'.xml';
+		$xml_movie = $wp_uploads_path.'/'.$medialink_movie['rssname'].'.xml';
+		$xml_music = $wp_uploads_path.'/'.$medialink_music['rssname'].'.xml';
+		$xml_slideshow = $wp_uploads_path.'/'.$medialink_slideshow['rssname'].'.xml';
+		$xml_document = $wp_uploads_path.'/'.$medialink_document['rssname'].'.xml';
 
 		echo '<!-- Start Medialink feed -->'."\n";
 		if (file_exists($documentrootname.$xml_all)) {
@@ -271,15 +268,15 @@ class MediaLinkRegistAndHeader {
 
 		$medialink_css = get_option('medialink_css');
 
-		list($listthumbsize_w, $listthumbsize_h) = explode('x', $medialink_css[pc_listthumbsize]);
-		$pc_linkstrcolor = $medialink_css[pc_linkstrcolor];
-		$pc_linkbackcolor = $medialink_css[pc_linkbackcolor];
-		$sp_navstrcolor = $medialink_css[sp_navstrcolor];
-		$sp_navbackcolor = $medialink_css[sp_navbackcolor];
-		$sp_navpartitionlinecolor = $medialink_css[sp_navpartitionlinecolor];
-		$sp_listbackcolor = $medialink_css[sp_listbackcolor];
-		$sp_listarrowcolor = $medialink_css[sp_listarrowcolor];
-		$sp_listpartitionlinecolor = $medialink_css[sp_listpartitionlinecolor];
+		list($listthumbsize_w, $listthumbsize_h) = explode('x', $medialink_css['pc_listthumbsize']);
+		$pc_linkstrcolor = $medialink_css['pc_linkstrcolor'];
+		$pc_linkbackcolor = $medialink_css['pc_linkbackcolor'];
+		$sp_navstrcolor = $medialink_css['sp_navstrcolor'];
+		$sp_navbackcolor = $medialink_css['sp_navbackcolor'];
+		$sp_navpartitionlinecolor = $medialink_css['sp_navpartitionlinecolor'];
+		$sp_listbackcolor = $medialink_css['sp_listbackcolor'];
+		$sp_listarrowcolor = $medialink_css['sp_listarrowcolor'];
+		$sp_listpartitionlinecolor = $medialink_css['sp_listpartitionlinecolor'];
 
 	// CSS PC
 $medialink_add_css_pc = <<<MEDIALINKADDCSSPC
@@ -347,7 +344,7 @@ MEDIALINKADDMETAIEEMULATION;
 	 */
 	function delete_old_versions_wp_options(){
 
-
+		$delete_old_options = FALSE;
 		if ( get_option('medialink_album_sort') || get_option('medialink_colorbox') ) {
 			$delete_old_options = TRUE;
 		}
