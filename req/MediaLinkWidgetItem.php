@@ -63,7 +63,6 @@ class MediaLinkWidgetItem extends WP_Widget {
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
-			echo '<table>';
 			if ($checkbox1) {
 				?>
 				<div>
@@ -145,7 +144,6 @@ class MediaLinkWidgetItem extends WP_Widget {
 				</div>
 				<?php
 			}
-			echo '</table>';
 			echo $after_widget;
 		}
 	}
