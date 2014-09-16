@@ -253,15 +253,17 @@ class MediaLink {
 		$new_query4 = add_query_arg( array('mlp' => $this->maxpage, 'sort' => $sortparam, 'mlacv' => $archives), $query );
 
 		$linkpages = NULL;
-		$displayprev = __('prev', 'medialink');
-		$displaynext = __('next', 'medialink');
+		$displayfirst = __('first page', 'medialink');
+		$displayprev = __('previous page', 'medialink');
+		$displaynext = __('next page', 'medialink');
+		$displaylast = __('last page', 'medialink');
 		if( $this->maxpage > 1 ){
 			if( $this->page == 1 ){
-				$linkpages = $this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaynext.'" href="'.$new_query4.'">&raquo;</a>';
+				$linkpages = $this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
 			}else if( $this->page == $this->maxpage ){
-				$linkpages = '<a title="'.$displayprev.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage;
+				$linkpages = '<a title="'.$displayfirst.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage;
 			}else{
-				$linkpages = '<a title="'.$displayprev.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaynext.'" href="'.$new_query4.'">&raquo;</a>';
+				$linkpages = '<a title="'.$displayfirst.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
 			}
 		}
 

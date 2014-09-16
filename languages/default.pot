@@ -10,10 +10,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.7\n"
 
-msgid "prev"
+msgid "first page"
 msgstr ""
 
-msgid "next"
+msgid "previous page"
+msgstr ""
+
+msgid "next page"
+msgstr ""
+
+msgid "last page"
 msgstr ""
 
 msgid "New"
@@ -43,9 +49,6 @@ msgstr ""
 msgid "Default all settings"
 msgstr ""
 
-msgid "The default value for the short code attribute"
-msgstr ""
-
 msgid "(In the case of image) Easy use"
 msgstr ""
 
@@ -60,11 +63,6 @@ msgid ""
 "of the thumbnail. The default value of MediaLink, width 80, height 80. "
 "Please set its value. In the Media> Add New, please drag and drop the image. "
 "You view the Page again. Should see the image to the Page."
-msgstr ""
-
-msgid ""
-"Support the classification of the category. Use the caption of the media "
-"library, and are classified."
 msgstr ""
 
 msgid ""
@@ -107,12 +105,6 @@ msgid ""
 "slideshow(image), document(document)"
 msgstr ""
 
-msgid "Effects of Smartphone"
-msgstr ""
-
-msgid "Full path to the top directory containing the data"
-msgstr ""
-
 msgid "extension"
 msgstr ""
 
@@ -135,9 +127,6 @@ msgid "Syndication feeds show the most recent (Use to widget)"
 msgstr ""
 
 msgid "Size and color."
-msgstr ""
-
-msgid "Size of the movie container."
 msgstr ""
 
 msgid "Size of the thumbnail size for Video and Music"
@@ -176,10 +165,6 @@ msgid ""
 "* When you move to (WordPress > Appearance > Widgets), there is a widget "
 "MediaLinkRssFeed. If you place you can set this to display the sidebar link "
 "the RSS feed."
-msgstr ""
-
-msgid ""
-"Flash extension. Flash Player to be used when a HTML5 player does not work."
 msgstr ""
 
 msgid "Alias read extension : "

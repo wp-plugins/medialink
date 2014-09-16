@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 6.0
+Version: 6.1
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -34,7 +34,6 @@ Domain Path: /languages
 	$medialinkregistandheader = new MediaLinkRegistAndHeader();
 	add_action('admin_init', array($medialinkregistandheader, 'register_settings'));
 	add_action('admin_init', array($medialinkregistandheader, 'delete_old_versions_wp_options'));
-	add_action('wp_head', array($medialinkregistandheader, 'add_meta'), 0);
 	add_action('wp_head', array($medialinkregistandheader, 'add_feedlink'));
 	add_action('wp_head', array($medialinkregistandheader, 'add_css'));
 	unset($medialinkregistandheader);
@@ -71,7 +70,6 @@ function medialink_func( $atts, $html = NULL ) {
         'sort' => '',
         'suffix' => '',
         'suffix_2' => '',
-		'suffix_flash' => '',
         'display' => '',
         'image_show_size' => '',
         'thumbnail'  => '',
@@ -112,9 +110,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($sort) ) { $sort = $medialink_all['sort']; }
 		$suffix_pattern = $medialink->extpattern();
 		$suffix_pattern .= ','.strtoupper($medialink_movie['suffix']).','.strtolower($medialink_movie['suffix']);
-		$suffix_movie_flash = $medialink_movie['suffix_flash'];
 		$suffix_pattern .= ','.strtoupper($medialink_music['suffix']).','.strtolower($medialink_music['suffix']);
-		$suffix_music_flash = $medialink_music['suffix_flash'];
 		if( empty($display) ) { $display = intval($medialink_all['display']); }
 		if( empty($image_show_size) ) { $image_show_size = $medialink_all['image_show_size']; }
 		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_all['generate_rssfeed']; }
@@ -170,7 +166,6 @@ function medialink_func( $atts, $html = NULL ) {
 			$suffix_pattern = strtoupper($suffix).','.strtolower($suffix);
 		}
 		if( empty($suffix_2) ) { $suffix_2 = $medialink_movie['suffix_2']; }
-		if( empty($suffix_flash) ) { $suffix_flash = $medialink_movie['suffix_flash']; }
 		if( empty($display) ) { $display = intval($medialink_movie['display']); }
 		if( empty($thumbnail) ) { $thumbnail = $medialink_movie['thumbnail']; }
 		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_movie['generate_rssfeed']; }
@@ -195,7 +190,6 @@ function medialink_func( $atts, $html = NULL ) {
 			$suffix_pattern = strtoupper($suffix).','.strtolower($suffix);
 		}
 		if( empty($suffix_2) ) { $suffix_2 = $medialink_music['suffix_2']; }
-		if( empty($suffix_flash) ) { $suffix_flash = $medialink_music['suffix_flash']; }
 		if( empty($display) ) { $display = intval($medialink_music['display']); }
 		if( empty($thumbnail) ) { $thumbnail = $medialink_music['thumbnail']; }
 		if( empty($generate_rssfeed) ) { $generate_rssfeed = $medialink_music['generate_rssfeed']; }
@@ -282,7 +276,6 @@ function medialink_func( $atts, $html = NULL ) {
 
 	if ( $set === 'movie' || $set === 'music' ) {
 		$suffix_2 =  '.'.$suffix_2;
-		$suffix_flash = '.'.$suffix_flash;
 	}
 
 	$archiveparam = NULL;
@@ -293,19 +286,17 @@ function medialink_func( $atts, $html = NULL ) {
 		$archiveparam = $_GET['mlacv'];	//archives
 	}
 	if (!empty($_GET['f'])){
-		$fparam = urldecode($_GET['f']);	//files
+		$fparam = $_GET['f'];			//files
 	}
 	if (!empty($_GET['mlp'])){
-		$page = $_GET['mlp'];				//pages
+		$page = $_GET['mlp'];			//pages
 	}
 	if (!empty($_GET['mls'])){
-		$search = urldecode($_GET['mls']);	//search word
+		$search = $_GET['mls'];			//search word
 	}
 	if (!empty($_GET['sort'])){
-		$sort = $_GET['sort'];				//sort
+		$sort = $_GET['sort'];			//sort
 	}
-//	$fparam = mb_convert_encoding($fparam, "UTF-8", "auto");
-//	$search = mb_convert_encoding($search, "UTF-8", "auto");
 
 	$medialink->thumbnail = $thumbnail;
 	$medialink->image_show_size = $image_show_size;
@@ -454,66 +445,20 @@ $searchform = <<<SEARCHFORM
 </form>
 SEARCHFORM;
 
-list($movie_container_w, $movie_container_h) = explode( 'x', $medialink_css['container'] );
-
 //MoviePlayerContainer
 $movieplayercontainer = <<<MOVIEPLAYERCONTAINER
 <div id="PlayerContainer-medialink">
-<video controls style="border" height="{$movie_container_h}" width="{$movie_container_w}" autoplay onclick="this.play()">
+<video controls autoplay style="width: 100%;">
 <source src="{$prevfile}">
 <source src="{$prevfile_nosuffix}{$suffix_2}">
-<object>
-<embed
-  type="application/x-shockwave-flash"
-  width="{$movie_container_w}"
-  height="{$movie_container_h}"
-  bgcolor="#000000"
-  src="{MEDIALINK_PLUGIN_URL}/flowplayer/flowplayer-3.2.15.swf"
-  allowFullScreen="true"
-  flashvars='config={
-    "clip":{
-      "url":"{$prevfile_nosuffix}{$suffix_flash}",
-      "urlEncoding":true,
-      "scaling":"fit",
-      "autoPlay":true,
-      "autoBuffering":true
-    }
-  }'
->
-</object>
 </video>
 </div>
 MOVIEPLAYERCONTAINER;
 
-//MoviePlayerContainerIE9
-$movieplayercontainerIE9 = <<<MOVIEPLAYERCONTAINERIE9
-<div id="PlayerContainer-medialink">
-<object>
-<embed
-  type="application/x-shockwave-flash"
-  width="{$movie_container_w}"
-  height="{$movie_container_h}"
-  bgcolor="#000000"
-  src="{MEDIALINK_PLUGIN_URL}/flowplayer/flowplayer-3.2.15.swf"
-  allowFullScreen="true"
-  flashvars='config={
-    "clip":{
-      "url":"{$prevfile_nosuffix}{$suffix_flash}",
-      "urlEncoding":true,
-      "scaling":"fit",
-      "autoPlay":true,
-      "autoBuffering":true
-    }
-  }'
->
-</object>
-</div>
-MOVIEPLAYERCONTAINERIE9;
-
 //MusicPlayerContainer
 $musicplayercontainer = <<<MUSICPLAYERCONTAINER
 <div id="PlayerContainer-medialink">
-<audio controls style="border" autoplay onclick="this.play()">
+<audio controls autoplay>
 <source src="{$prevfile}">
 <source src="{$prevfile_nosuffix}{$suffix_2}">
 <div id="FlashContainer"></div>
@@ -521,28 +466,11 @@ $musicplayercontainer = <<<MUSICPLAYERCONTAINER
 </div>
 MUSICPLAYERCONTAINER;
 
-//FlashMusicPlayer
-$flashmusicplayer = <<<FLASHMUSICPLAYER
-<script type="text/javascript">
-jQuery(document).ready(
-function () {
-jQuery('#FlashContainer').flash(
-{swf: '{MEDIALINK_PLUGIN_URL}/player_mp3/player_mp3.swf',width: '200',height: '20',
-flashvars: {
-mp3: '{$prevfile_nosuffix}{$suffix_flash}',
-autoplay: '1'},allowFullScreen: 'true',allowScriptAccess: 'always'});});
-</script>
-FLASHMUSICPLAYER;
-
 	wp_enqueue_style( 'for medialink',  MEDIALINK_PLUGIN_URL.'/css/medialink.css' );
 	wp_enqueue_script( 'jquery' );
 	if ( $set === 'all' ){
-		wp_enqueue_script( 'jQuery SWFObject', MEDIALINK_PLUGIN_URL.'/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
 		if( !empty($selectedfilename) ) { $html .= '<h2>'.$selectedfilename.'</h2>'; }
 	} else {
-		if ( $set === 'music' ){
-			wp_enqueue_script( 'jQuery SWFObject', MEDIALINK_PLUGIN_URL.'/jqueryswf/jquery.swfobject.1-1-1.min.js', null, '1.1.1' );
-		}
 		if ( $set <> 'document' && !empty($selectedfilename) ){
 			$html .= '<h2>'.$selectedfilename.'</h2>';
 		}
@@ -552,13 +480,8 @@ FLASHMUSICPLAYER;
 	$fparamext = end($fparamexts);
 	if ( !empty($fparam) ) {
 		if ( wp_ext2type($fparamext) === 'video' ) {
-			if(preg_match("/MSIE 9\.0/", $_SERVER['HTTP_USER_AGENT'])){
-				$html .= $movieplayercontainerIE9;
-			} else {
-				$html .= $movieplayercontainer;
-			}
+			$html .= $movieplayercontainer;
 		} else if ( wp_ext2type($fparamext) === 'audio' ) {
-			$html .= $flashmusicplayer;
 			$html .= $musicplayercontainer;
 		}
 	}

@@ -79,19 +79,13 @@ class MediaLinkAdmin {
 
 		$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH).'?page=MediaLink';
 
-		$medialink_album = get_option('medialink_album');
 		$medialink_all = get_option('medialink_all');
-		$medialink_colorbox = get_option('medialink_colorbox');
-		$medialink_css = get_option('medialink_css');
-		$medialink_document = get_option('medialink_document');
-		$medialink_exclude = get_option('medialink_exclude');
+		$medialink_album = get_option('medialink_album');
 		$medialink_movie = get_option('medialink_movie');
 		$medialink_music = get_option('medialink_music');
-		$medialink_nivoslider = get_option('medialink_nivoslider');
-		$medialink_photoswipe = get_option('medialink_photoswipe');
 		$medialink_slideshow = get_option('medialink_slideshow');
-		$medialink_swipebox = get_option('medialink_swipebox');
-		$medialink_useragent = get_option('medialink_useragent');
+		$medialink_document = get_option('medialink_document');
+		$medialink_css = get_option('medialink_css');
 
 		?>
 
@@ -181,7 +175,7 @@ class MediaLinkAdmin {
 				</tr>
 				<tr>
 					<td align="center" valign="middle">suffix</td>
-					<td align="left" valign="top" rowspan="3" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
+					<td align="left" valign="top" rowspan="2"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="left" valign="middle">
 						<?php _e('extension', 'medialink'); ?>
 					</td>
@@ -190,12 +184,6 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">suffix_2</td>
 					<td align="left" valign="middle">
 						<?php _e('second extension. Second candidate when working with html5', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">suffix_flash</td>
-					<td align="left" valign="middle">
-						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -709,19 +697,6 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle">suffix_flash</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_suffix_flash = $medialink_movie['suffix_flash']; ?>
-					<select id="medialink_movie_suffix_flash" name="medialink_movie_suffix_flash">
-						<option <?php if ('mp4' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>mp4</option>
-						<option <?php if ('flv' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>flv</option>
-					</select>
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
 					<td align="center" valign="middle">display</td>
 					<td align="center" valign="middle">
 						<input type="text" style="width: 100%;" id="medialink_movie_display" name="medialink_movie_display" value="<?php echo intval($medialink_movie['display']) ?>" />
@@ -746,9 +721,9 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">generate_rssfeed</td>
 					<td align="center" valign="middle">
+					<?php $target_movie_generate_rssfeed = $medialink_movie['generate_rssfeed']; ?>
 					<select id="medialink_movie_generate_rssfeed" name="medialink_movie_generate_rssfeed">
 						<option <?php if ('on' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-					<?php $target_movie_generate_rssfeed = $medialink_movie['generate_rssfeed']; ?>
 						<option <?php if ('off' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
@@ -974,18 +949,6 @@ class MediaLinkAdmin {
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('second extension. Second candidate when working with html5', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">suffix_flash</td>
-					<td align="center" valign="middle">
-					<?php $target_music_suffix_flash = $medialink_music['suffix_flash']; ?>
-					<select id="medialink_music_suffix_flash" name="medialink_music_suffix_flash">
-						<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
-					</select>
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -1690,33 +1653,6 @@ class MediaLinkAdmin {
 
 			<div style="padding:10px;border:#CCC 2px solid; margin:0 0 20px 0">
 				<div style="display:block">
-					<?php _e('Size of the movie container.', 'medialink') ?>
-				</div>
-				<div style="display:block;padding:20px 0">
-					<?php $target_css_container = $medialink_css['container']; ?>
-					<select id="medialink_css_container" name="medialink_css_container">
-						<option <?php if ('256x144' == $target_css_container)echo 'selected="selected"'; ?>>256x144</option>
-						<option <?php if ('320x240' == $target_css_container)echo 'selected="selected"'; ?>>320x240</option>
-						<option <?php if ('384x288' == $target_css_container)echo 'selected="selected"'; ?>>384x288</option>
-						<option <?php if ('448x336' == $target_css_container)echo 'selected="selected"'; ?>>448x336</option>
-						<option <?php if ('512x288' == $target_css_container)echo 'selected="selected"'; ?>>512x288</option>
-						<option <?php if ('512x384' == $target_css_container)echo 'selected="selected"'; ?>>512x384</option>
-						<option <?php if ('576x432' == $target_css_container)echo 'selected="selected"'; ?>>576x432</option>
-						<option <?php if ('640x480' == $target_css_container)echo 'selected="selected"'; ?>>640x480</option>
-						<option <?php if ('704x528' == $target_css_container)echo 'selected="selected"'; ?>>704x528</option>
-						<option <?php if ('768x432' == $target_css_container)echo 'selected="selected"'; ?>>768x432</option>
-						<option <?php if ('768x576' == $target_css_container)echo 'selected="selected"'; ?>>768x576</option>
-						<option <?php if ('832x624' == $target_css_container)echo 'selected="selected"'; ?>>832x624</option>
-						<option <?php if ('896x672' == $target_css_container)echo 'selected="selected"'; ?>>896x672</option>
-						<option <?php if ('960x720' == $target_css_container)echo 'selected="selected"'; ?>>960x720</option>
-						<option <?php if ('1024x576' == $target_css_container)echo 'selected="selected"'; ?>>1024x576</option>
-						<option <?php if ('1280x720' == $target_css_container)echo 'selected="selected"'; ?>>1280x720</option>
-					</select>
-				</div>
-			</div>
-
-			<div style="margin:20px 0; padding:10px; border:#CCC 2px solid">
-				<div style="display:block">
 					<?php _e('Size of the thumbnail size for Video and Music', 'medialink') ?>
 				</div>
 				<div style="display:block;padding:20px 0">
@@ -1777,7 +1713,6 @@ class MediaLinkAdmin {
 AddType video/mp4 mp4 m4v
 AddType video/webm webm
 AddType video/ogg ogv
-AddType video/x-flv flv
 AddType audio/mpeg mp3 m4a m4b
 AddType audio/ogg ogg oga
 AddType audio/midi mid midi
@@ -1889,7 +1824,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'sort' => 'new',
 						'suffix' => 'mp4',
 						'suffix_2' => 'ogv',
-						'suffix_flash' => 'mp4',
 						'display' => 8,
 						'thumbnail' => '',
 						'generate_rssfeed' => 'on',
@@ -1908,7 +1842,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'sort' => 'new',
 						'suffix' => 'mp3',
 						'suffix_2' => 'ogg',
-						'suffix_flash' => 'mp3',
 						'display' => 8,
 						'thumbnail' => '',
 						'generate_rssfeed' => 'on',
@@ -1958,7 +1891,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'credit_show' => 'Show'
 					);
 		$css_reset_tbl = array(
-						'container' => '512x384',
 						'listthumbsize' => '40x40',
 						'linkstrcolor' => '#000000',
 						'linkbackcolor' => '#f6efe2'
@@ -2031,7 +1963,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 									'sort' => $_POST['medialink_movie_sort'],
 									'suffix' => $_POST['medialink_movie_suffix'],
 									'suffix_2' => $_POST['medialink_movie_suffix_2'],
-									'suffix_flash' => $_POST['medialink_movie_suffix_flash'],
 									'display' => $_POST['medialink_movie_display'],
 									'thumbnail' => $_POST['medialink_movie_thumbnail'],
 									'generate_rssfeed' => $_POST['medialink_movie_generate_rssfeed'],
@@ -2057,7 +1988,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 									'sort' => $_POST['medialink_music_sort'],
 									'suffix' => $_POST['medialink_music_suffix'],
 									'suffix_2' => $_POST['medialink_music_suffix_2'],
-									'suffix_flash' => $_POST['medialink_music_suffix_flash'],
 									'display' => $_POST['medialink_music_display'],
 									'thumbnail' => $_POST['medialink_music_thumbnail'],
 									'generate_rssfeed' => $_POST['medialink_music_generate_rssfeed'],
@@ -2128,7 +2058,6 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 					update_option( 'medialink_css', $css_reset_tbl );
 				} else {
 					$css_tbl = array(
-									'container' => $_POST['medialink_css_container'],
 									'listthumbsize' => $_POST['medialink_css_listthumbsize'],
 									'linkstrcolor' => $_POST['medialink_css_linkstrcolor'],
 									'linkbackcolor' => $_POST['medialink_css_linkbackcolor']

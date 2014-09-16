@@ -1,10 +1,10 @@
 === MediaLink ===
 Contributors: Katsushi Kawamori
 Donate link: http://gallerylink.nyanko.org/medialink/
-Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
+Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 6.0
+Stable tag: 6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,6 @@ You write and use short codes to page.
 Bundled software and function
 
 *   HTML5 player (video, music)
-*   FlashPlugin: jQuery SWFObject
-*   Flash player (video, music): Flowplayer Flash, MP3Player (for previous versions of IE8)
 *   Create RSS feeds of data (XML). It support to the podcast.
 *   Work with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
 *   Work with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
@@ -59,6 +57,13 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.1 =
+Stopped the support of Flash.
+Fixed the problem of size of video container.
+Fixed the problem of playing video.
+Fixed the problem of playing music.
+Change /languages.
 
 = 6.0 =
 Adopt Responsive design. 
@@ -316,6 +321,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.1 =
 = 6.0 =
 = 5.3 =
 = 5.2 =

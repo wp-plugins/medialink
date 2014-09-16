@@ -11,11 +11,17 @@ msgstr ""
 "X-Generator: Poedit 1.6.7\n"
 "Language: ja\n"
 
-msgid "prev"
+msgid "first page"
+msgstr "最初のページ"
+
+msgid "previous page"
 msgstr "前のページ"
 
-msgid "next"
+msgid "next page"
 msgstr "次のページ"
+
+msgid "last page"
+msgstr "最後のページ"
 
 msgid "New"
 msgstr "新着順"
@@ -24,10 +30,10 @@ msgid "Old"
 msgstr "古い順"
 
 msgid "Des"
-msgstr "文字降順"
+msgstr "降順"
 
 msgid "Asc"
-msgstr "文字昇順"
+msgstr "昇順"
 
 msgid "Search"
 msgstr "検索"
@@ -43,9 +49,6 @@ msgstr "使い方"
 
 msgid "Default all settings"
 msgstr "すべての設定をデフォルト"
-
-msgid "The default value for the short code attribute"
-msgstr "ショートコード属性のデフォルト値"
 
 msgid "(In the case of image) Easy use"
 msgstr "簡単な使い方（画像の場合）"
@@ -66,13 +69,6 @@ msgid ""
 msgstr ""
 "この固定ページを更新し表示すると、アルバムモードで表示されます。これは、メ"
 "ディアライブラリを検索した結果です"
-
-msgid ""
-"Support the classification of the category. Use the caption of the media "
-"library, and are classified."
-msgstr ""
-"カテゴリの分類をサポートしています。メディアライブラリのキャプションを使用し"
-"て分類します。"
 
 msgid ""
 "MediaLink is also handles video and music and document. If you are dealing "
@@ -121,12 +117,6 @@ msgstr ""
 "all（混合データ）,album（画像）,movie（動画）,music（音楽）,slideshow（画"
 "像）,document（文書）の６つのみ"
 
-msgid "Effects of Smartphone"
-msgstr "スマートフォンでのエフェクト"
-
-msgid "Full path to the top directory containing the data"
-msgstr "データのあるトップディレクトリのフルパス"
-
 msgid "extension"
 msgstr "拡張子"
 
@@ -152,9 +142,6 @@ msgstr "RSSフィードの表示数(ウィジェットに使用します)"
 
 msgid "Size and color."
 msgstr "サイズや色"
-
-msgid "Size of the movie container."
-msgstr "動画コンテナサイズ"
 
 msgid "Size of the thumbnail size for Video and Music"
 msgstr "動画と音楽のサムネイルサイズ"
@@ -198,11 +185,6 @@ msgstr ""
 "※（ワードプレス > 外観 ＞ ウィジェット）に移動すると、ウィジェット"
 "MediaLinkRssFeedがあります。これを設定して配置すると、RSSフィードのリンクをサ"
 "イドバーに表示します。"
-
-msgid ""
-"Flash extension. Flash Player to be used when a HTML5 player does not work."
-msgstr ""
-"Flashの拡張子。HTML5プレーヤーが動作しない場合Flash Playerが使用される。"
 
 msgid "Alias read extension : "
 msgstr "読み込み拡張子のエイリアス : "

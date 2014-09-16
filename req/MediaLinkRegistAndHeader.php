@@ -73,7 +73,6 @@ class MediaLinkRegistAndHeader {
 							'sort' => 'new',
 							'suffix' => 'mp4',
 							'suffix_2' => 'ogv',
-							'suffix_flash' => 'mp4',
 							'display' => 8,
 							'thumbnail' => '',
 							'generate_rssfeed' => 'on',
@@ -96,7 +95,6 @@ class MediaLinkRegistAndHeader {
 							'sort' => 'new',
 							'suffix' => 'mp3',
 							'suffix_2' => 'ogg',
-							'suffix_flash' => 'mp3',
 							'display' => 8,
 							'thumbnail' => '',
 							'generate_rssfeed' => 'on',
@@ -158,7 +156,6 @@ class MediaLinkRegistAndHeader {
 
 		if ( !get_option('medialink_css') ) {
 			$css_tbl = array(
-							'container' => '512x384',
 							'listthumbsize' => '40x40',
 							'linkstrcolor' => '#000000',
 							'linkbackcolor' => '#f6efe2'
@@ -174,12 +171,12 @@ class MediaLinkRegistAndHeader {
 	 */
 	function add_feedlink(){
 
-		$medialink_album = get_option('medialink_album');
 		$medialink_all = get_option('medialink_all');
-		$medialink_document = get_option('medialink_document');
+		$medialink_album = get_option('medialink_album');
 		$medialink_movie = get_option('medialink_movie');
 		$medialink_music = get_option('medialink_music');
 		$medialink_slideshow = get_option('medialink_slideshow');
+		$medialink_document = get_option('medialink_document');
 
 		$wp_uploads = wp_upload_dir();
 
@@ -245,22 +242,6 @@ $medialink_add_css = <<<MEDIALINKADDCSS
 MEDIALINKADDCSS;
 
 		echo $medialink_add_css;
-
-	}
-
-	/* ==================================================
-	 * For IE
-	 * @since	2.6
-	 */
-	function add_meta(){
-
-$medialink_add_meta_ie_emulation = <<<MEDIALINKADDMETAIEEMULATION
-<!-- Start Medialink meta -->
-<meta http-equiv="x-ua-compatible" content="IE=9" />
-<!-- End Medialink meta -->
-MEDIALINKADDMETAIEEMULATION;
-
-		echo $medialink_add_meta_ie_emulation;
 
 	}
 
