@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,flash,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 5.3
+Stable tag: 6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,17 +20,14 @@ In the media uploader, you may not be able to upload by the environment of serve
 
 You write and use short codes to page.
 
-Support the classification of the category.
-Use the caption of the media library, and are classified.
-
 Bundled software and function
 
 *   HTML5 player (video, music)
 *   FlashPlugin: jQuery SWFObject
 *   Flash player (video, music): Flowplayer Flash, MP3Player (for previous versions of IE8)
 *   Create RSS feeds of data (XML). It support to the podcast.
-*   Can be cooperation with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
-*   Can be cooperation with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
+*   Work with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
+*   Work with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
 
     [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo5(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo6(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
 
@@ -62,6 +59,10 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.0 =
+Adopt Responsive design. 
+Stop using category, adopting the archive.
 
 = 5.3 =
 Fixed of problem of display for rss feed icon.
@@ -315,6 +316,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.0 =
 = 5.3 =
 = 5.2 =
 = 5.1 =
@@ -396,10 +398,6 @@ Please add new Page. Please write a short code in the text field of the Page. Pl
 
 When you view this Page, it is displayed in album mode. It is the result of a search for Media Library. The Settings> Media, determine the size of the thumbnail. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.
 
-Support the classification of the category. Use the caption of the media library, and are classified.
-
-Customization 1
-
 MediaLink is also handles video and music and document. If you are dealing with music and video and document, please add the following attributes to the short code.
 
 Video set='movie'
@@ -416,8 +414,3 @@ Mix of data set = 'all'
 
 * When you move to (WordPress > Appearance> Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.
 
-Customization 2
-
-Specify various attributes value to the short code, MediaLink can change the representation.
-
-* (WordPress > Settings > MediaLink > How to use)

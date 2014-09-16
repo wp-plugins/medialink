@@ -12,8 +12,7 @@
 						'medialink_exclude',
 						'medialink_movie',
 						'medialink_music',
-						'medialink_slideshow',
-						'medialink_useragent'
+						'medialink_slideshow'
 					);
 
 	// For Single site

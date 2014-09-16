@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.7\n"
 "Language: ja\n"
 
 msgid "prev"
@@ -41,8 +41,8 @@ msgstr "選択"
 msgid "How to use"
 msgstr "使い方"
 
-msgid "Default settings"
-msgstr "デフォルト設定"
+msgid "Default all settings"
+msgstr "すべての設定をデフォルト"
 
 msgid "The default value for the short code attribute"
 msgstr "ショートコード属性のデフォルト値"
@@ -73,9 +73,6 @@ msgid ""
 msgstr ""
 "カテゴリの分類をサポートしています。メディアライブラリのキャプションを使用し"
 "て分類します。"
-
-msgid "Customization 1"
-msgstr "カスタマイズ１"
 
 msgid ""
 "MediaLink is also handles video and music and document. If you are dealing "
@@ -110,9 +107,6 @@ msgstr ""
 "※（ワードプレス > 設定 > 一般 タイムゾーン）でUTC以外のお住まいの地域を指定し"
 "てください。 RSSフィードの正確な時刻表示のためです。"
 
-msgid "Customization 2"
-msgstr "カスタマイズ２"
-
 msgid ""
 "Below, I shows the default values and various attributes of the short code."
 msgstr "以下に、ショートコードの各種属性とデフォルト値を示します。"
@@ -133,26 +127,14 @@ msgstr "スマートフォンでのエフェクト"
 msgid "Full path to the top directory containing the data"
 msgstr "データのあるトップディレクトリのフルパス"
 
-msgid "extension of PC."
-msgstr "PCの拡張子"
+msgid "extension"
+msgstr "拡張子"
 
-msgid "second extension on the PC. Second candidate when working with html5"
-msgstr "PCの第２拡張子。動画や音楽をhtml5で扱う場合の第２候補。"
+msgid "second extension. Second candidate when working with html5"
+msgstr "第２拡張子。動画や音楽をhtml5で扱う場合の第２候補。"
 
-msgid "extension of Smartphone"
-msgstr "スマートフォンの拡張子"
-
-msgid "extension of Japanese mobile phone"
-msgstr "携帯の拡張子"
-
-msgid "File Display per page(PC)"
-msgstr "１ページの表示数PC"
-
-msgid "File Display per page(Smartphone)"
-msgstr "１ページの表示数スマートフォン"
-
-msgid "File Display per page(Japanese mobile phone)"
-msgstr "１ページの表示数携帯"
+msgid "File Display per page"
+msgstr "１ページの表示数"
 
 msgid ""
 "(album, slideshow) thumbnail suffix name. (movie, music, document) The icon "
@@ -162,20 +144,14 @@ msgstr ""
 "album,slideshowはサムネイル接尾名。movie,music,documentは、iconと指定した場合"
 "にアイコンを表示し、何も指定しなければサムネイル表示をしません。"
 
-msgid "Category you want to include. Only one."
-msgstr "指定カテゴリ。１つだけ指定します。"
-
-msgid "Category you want to exclude. More than one, specified separated by |."
-msgstr "除外するカテゴリ。複数の場合は、|で区切って指定します。"
-
 msgid "The name of the RSS feed file (Use to widget)"
 msgstr "RSSフィードファイルの名前(ウィジェットに使用します)"
 
 msgid "Syndication feeds show the most recent (Use to widget)"
 msgstr "RSSフィードの表示数(ウィジェットに使用します)"
 
-msgid "The default value for the display size and display color."
-msgstr "表示色や表示サイズのデフォルト値"
+msgid "Size and color."
+msgstr "サイズや色"
 
 msgid "Size of the movie container."
 msgstr "動画コンテナサイズ"
@@ -188,27 +164,6 @@ msgstr "背景色"
 
 msgid "Text color"
 msgstr "文字色"
-
-msgid "Width of the list"
-msgstr "リストの幅"
-
-msgid "Color of the arrow"
-msgstr "矢印色"
-
-msgid "Background color of the list"
-msgstr "リストの背景色"
-
-msgid "Background color of the partition line in the list"
-msgstr "リストの仕切線の背景色"
-
-msgid "Background color of the navigation"
-msgstr "ナビゲーションの背景色"
-
-msgid "Background color of the partition line in the navigation"
-msgstr "ナビゲーションの仕切線の背景色"
-
-msgid "Text color navigation"
-msgstr "ナビゲーションの文字色"
 
 msgid ""
 "The to playback of video and music, that such as the next, .htaccess may be "
@@ -245,16 +200,15 @@ msgstr ""
 "イドバーに表示します。"
 
 msgid ""
-"Flash extension on the PC. Flash Player to be used when a HTML5 player does "
-"not work."
+"Flash extension. Flash Player to be used when a HTML5 player does not work."
 msgstr ""
-"PCのFlashの拡張子。HTML5プレーヤーが動作しない場合Flash Playerが使用される。"
+"Flashの拡張子。HTML5プレーヤーが動作しない場合Flash Playerが使用される。"
 
 msgid "Alias read extension : "
 msgstr "読み込み拡張子のエイリアス : "
 
-msgid "Selectbox of categories."
-msgstr "カテゴリーのセレクトボックス"
+msgid "Selectbox of archives."
+msgstr "アーカイブのセレクトボックス"
 
 msgid "Navigation of page."
 msgstr "ページネーション"
@@ -287,20 +241,8 @@ msgstr "RSSフィードの生成"
 msgid "Type of Sort"
 msgstr "ソートの種類"
 
-msgid "The default value for User Agent."
-msgstr "ユーザーエージェントのデフォルト値"
-
 msgid "Generate html"
 msgstr "htmlの生成"
-
-msgid "for Pc or Tablet"
-msgstr "Pcあるいはタブレット用"
-
-msgid "for Smartphone"
-msgstr "スマートフォン用"
-
-msgid "| Specify separated by. Regular expression is possible."
-msgstr "| で区切って指定します。正規表現が可能です。"
 
 msgid "File size"
 msgstr "ファイルサイズ"
@@ -311,11 +253,17 @@ msgstr "日付時刻"
 msgid "AllData"
 msgstr "混在データ"
 
-msgid "Slideshow"
-msgstr "スライドショー"
+msgid "Album"
+msgstr "アルバム"
+
+msgid "Video"
+msgstr "動画"
 
 msgid "Music"
 msgstr "音楽"
+
+msgid "Slideshow"
+msgstr "スライドショー"
 
 msgid "Document"
 msgstr "文書"

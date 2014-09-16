@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.7\n"
 
 msgid "prev"
 msgstr ""
@@ -40,7 +40,7 @@ msgstr ""
 msgid "How to use"
 msgstr ""
 
-msgid "Default settings"
+msgid "Default all settings"
 msgstr ""
 
 msgid "The default value for the short code attribute"
@@ -62,10 +62,9 @@ msgid ""
 "You view the Page again. Should see the image to the Page."
 msgstr ""
 
-msgid "Support the classification of the category. Use the caption of the media library, and are classified."
-msgstr ""
-
-msgid "Customization 1"
+msgid ""
+"Support the classification of the category. Use the caption of the media "
+"library, and are classified."
 msgstr ""
 
 msgid ""
@@ -96,9 +95,6 @@ msgid ""
 "than UTC. For accurate time display of RSS feed."
 msgstr ""
 
-msgid "Customization 2"
-msgstr ""
-
 msgid ""
 "Below, I shows the default values and various attributes of the short code."
 msgstr ""
@@ -117,25 +113,13 @@ msgstr ""
 msgid "Full path to the top directory containing the data"
 msgstr ""
 
-msgid "extension of PC."
+msgid "extension"
 msgstr ""
 
-msgid "second extension on the PC. Second candidate when working with html5"
+msgid "second extension. Second candidate when working with html5"
 msgstr ""
 
-msgid "extension of Smartphone"
-msgstr ""
-
-msgid "extension of Japanese mobile phone"
-msgstr ""
-
-msgid "File Display per page(PC)"
-msgstr ""
-
-msgid "File Display per page(Smartphone)"
-msgstr ""
-
-msgid "File Display per page(Japanese mobile phone)"
+msgid "File Display per page"
 msgstr ""
 
 msgid ""
@@ -144,19 +128,13 @@ msgid ""
 "specify anything."
 msgstr ""
 
-msgid "Category you want to include. Only one."
-msgstr ""
-
-msgid "Category you want to exclude. More than one, specified separated by |."
-msgstr ""
-
 msgid "The name of the RSS feed file (Use to widget)"
 msgstr ""
 
 msgid "Syndication feeds show the most recent (Use to widget)"
 msgstr ""
 
-msgid "The default value for the display size and display color."
+msgid "Size and color."
 msgstr ""
 
 msgid "Size of the movie container."
@@ -169,27 +147,6 @@ msgid "Background color"
 msgstr ""
 
 msgid "Text color"
-msgstr ""
-
-msgid "Width of the list"
-msgstr ""
-
-msgid "Color of the arrow"
-msgstr ""
-
-msgid "Background color of the list"
-msgstr ""
-
-msgid "Background color of the partition line in the list"
-msgstr ""
-
-msgid "Background color of the navigation"
-msgstr ""
-
-msgid "Background color of the partition line in the navigation"
-msgstr ""
-
-msgid "Text color navigation"
 msgstr ""
 
 msgid ""
@@ -222,14 +179,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Flash extension on the PC. Flash Player to be used when a HTML5 player does "
-"not work."
+"Flash extension. Flash Player to be used when a HTML5 player does not work."
 msgstr ""
 
 msgid "Alias read extension : "
 msgstr ""
 
-msgid "Selectbox of categories."
+msgid "Selectbox of archives."
 msgstr ""
 
 msgid "Navigation of page."
@@ -261,19 +217,7 @@ msgstr ""
 msgid "Type of Sort"
 msgstr ""
 
-msgid "The default value for User Agent."
-msgstr ""
-
 msgid "Generate html"
-msgstr ""
-
-msgid "for Pc or Tablet"
-msgstr ""
-
-msgid "for Smartphone"
-msgstr ""
-
-msgid "| Specify separated by. Regular expression is possible."
 msgstr ""
 
 msgid "File size"
@@ -285,10 +229,16 @@ msgstr ""
 msgid "AllData"
 msgstr ""
 
-msgid "Slideshow"
+msgid "Album"
+msgstr ""
+
+msgid "Video"
 msgstr ""
 
 msgid "Music"
+msgstr ""
+
+msgid "Slideshow"
 msgstr ""
 
 msgid "Document"
@@ -305,5 +255,7 @@ msgstr ""
 msgid "It is possible to work with the following plugins. Please install."
 msgstr ""
 
-msgid "In addition, offer the following filters. This filter passes the html that is generated."
+msgid ""
+"In addition, offer the following filters. This filter passes the html that "
+"is generated."
 msgstr ""

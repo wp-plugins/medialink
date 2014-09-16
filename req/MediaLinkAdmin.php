@@ -44,6 +44,24 @@ class MediaLinkAdmin {
 		add_options_page( 'MediaLink Options', 'MediaLink', 'manage_options', 'MediaLink', array($this, 'plugin_options') );
 	}
 
+	/* ==================================================
+	 * Add Css and Script
+	 * @since	2.0
+	 */
+	function load_custom_wp_admin_style() {
+		wp_enqueue_style( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/css/responsive-tabs.css' );
+		wp_enqueue_style( 'jquery-responsiveTabs-style', MEDIALINK_PLUGIN_URL.'/css/style.css' );
+		wp_enqueue_script('jquery');
+		wp_enqueue_script( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/js/jquery.responsiveTabs.min.js' );
+	}
+
+	/* ==================================================
+	 * Add Script on footer
+	 * @since	2.0
+	 */
+	function load_custom_wp_admin_style2() {
+		echo $this->add_jscss();
+	}
 
 	/* ==================================================
 	 * Settings page
@@ -55,14 +73,10 @@ class MediaLinkAdmin {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		$pluginurl = plugins_url($path='',$scheme=null);
+		if( !empty($_POST) ) {
+			$this->options_updated(intval($_POST['medialink_admin_tabs']));
+		}
 
-		wp_enqueue_style( 'jquery-ui-tabs', $pluginurl.'/medialink/css/jquery-ui.css' );
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_script( 'jquery-ui-tabs-in', $pluginurl.'/medialink/js/jquery-ui-tabs-in.js' );
-
-		if( !empty($_POST) ) { $this->options_updated(); }
 		$scriptname = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH).'?page=MediaLink';
 
 		$medialink_album = get_option('medialink_album');
@@ -84,26 +98,28 @@ class MediaLinkAdmin {
 		<div class="wrap">
 		<h2>MediaLink</h2>
 
-	<div id="tabs">
+	<div id="medialink-admin-tabs">
 	  <ul>
-	    <li><a href="#tabs-1"><?php _e('How to use', 'medialink'); ?></a></li>
-	    <li><a href="#tabs-2"><?php _e('Settings'); ?>1</a></li>
-		<li><a href="#tabs-3"><?php _e('Settings'); ?>2</a></li>
-		<li><a href="#tabs-4"><?php _e('Effect of Images', 'medialink'); ?></a></li>
-		<li><a href="#tabs-5"><?php _e('Caution:'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-1"><?php _e('How to use', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-2"><?php _e('Settings'); ?> <?php _e('AllData', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-3"><?php _e('Settings'); ?> <?php _e('Album', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-4"><?php _e('Settings'); ?> <?php _e('Video', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-5"><?php _e('Settings'); ?> <?php _e('Music', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-6"><?php _e('Settings'); ?> <?php _e('Slideshow', 'medialink'); ?></a></li>
+	    <li><a href="#medialink-admin-tabs-7"><?php _e('Settings'); ?> <?php _e('Document', 'medialink'); ?></a></li>
+		<li><a href="#medialink-admin-tabs-8"><?php _e('Settings'); ?> <?php _e('Size and color.', 'medialink') ?></a></li>
+		<li><a href="#medialink-admin-tabs-9"><?php _e('Effect of Images', 'medialink'); ?></a></li>
+		<li><a href="#medialink-admin-tabs-10"><?php _e('Caution:'); ?></a></li>
 	<!--
-		<li><a href="#tabs-5">FAQ</a></li>
+		<li><a href="#medialink-admin-tabs-11">FAQ</a></li>
 	 -->
 	  </ul>
-	  <div id="tabs-1">
+	  <div id="medialink-admin-tabs-1">
 		<h2><?php _e('(In the case of image) Easy use', 'medialink'); ?></h2>
 		<p><?php _e('Please add new Page. Please write a short code in the text field of the Page. Please go in Text mode this task.', 'medialink'); ?></p>
 		<p><code>&#91;medialink set='album'&#93;</code></p>
 		<p><?php _e('When you view this Page, it is displayed in album mode. This is the result of the search of the media library. The Settings> Media, determine the size of the thumbnail. The default value of MediaLink, width 80, height 80. Please set its value. In the Media> Add New, please drag and drop the image. You view the Page again. Should see the image to the Page.', 'medialink'); ?></p>
 
-		<p><?php _e('Support the classification of the category. Use the caption of the media library, and are classified.', 'medialink'); ?></p>
-
-		<p><div><strong><?php _e('Customization 1', 'medialink'); ?></strong></div>
 		<?php _e('MediaLink is also handles video and music and document. If you are dealing with music and video and document, please add the following attributes to the short code.', 'medialink'); ?>
 		<p><div><?php _e("Video set = 'movie'", 'medialink'); ?></div>
 		<div><?php _e("Music set = 'music'", 'medialink'); ?></div>
@@ -114,345 +130,36 @@ class MediaLinkAdmin {
 		<p><div><?php _e('* (WordPress > Settings > General Timezone) Please specify your area other than UTC. For accurate time display of RSS feed.', 'medialink'); ?></div>
 		<p><div><?php _e('* When you move to (WordPress > Appearance > Widgets), there is a widget MediaLinkRssFeed. If you place you can set this to display the sidebar link the RSS feed.', 'medialink'); ?></div></p>
 
-		<div><strong><?php _e('Customization 2', 'medialink'); ?></strong></div>
-		<div><strong><?php _e('Below, I shows the default values and various attributes of the short code.', 'medialink'); ?></strong></div>
-		<table border="1" class="wp-list-table widefat fixed">
-		<tbody>
-		<tr>
-		<td align="center" valign="middle">
-		<?php _e('Attribute', 'medialink'); ?>
-		</td>
-		<td colspan="6" align="center" valign="middle">
-		<?php _e('Default'); ?>
-		</td>
-		<td align="center" valign="middle">
-		<?php _e('Description'); ?>
-		</td>
-		</tr>
+		<form method="post" action="<?php echo $scriptname; ?>">
+			<input type="hidden" name="medialink_admin_tabs" value="1" />
+			<p class="submit">
+				<input type="submit" name="Default" value="<?php _e('Default all settings', 'medialink') ?>" />
+			</p>
+		</form>
 
-		<tr>
-		<td align="center" valign="middle">set</td>
-		<td align="center" valign="middle">all</td>
-		<td align="center" valign="middle">album</td>
-		<td align="center" valign="middle">movie</td>
-		<td align="center" valign="middle">music</td>
-		<td align="center" valign="middle">slideshow</td>
-		<td align="center" valign="middle">document</td>
-		<td align="left" valign="middle">
-		<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">sort</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['sort'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['sort'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['sort'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['sort'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['sort'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['sort'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Type of Sort', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">suffix_pc</td>
-		<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['suffix_pc'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['suffix_pc'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['suffix_pc'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['suffix_pc'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['suffix_pc'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('extension of PC.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">suffix_pc2</td>
-		<td></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['suffix_pc2'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['suffix_pc2'] ?></td>
-		<td colspan="2"></td>
-		<td align="left" valign="middle">
-		<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">suffix_flash</td>
-		<td align="center" valign="middle"></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['suffix_flash'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['suffix_flash'] ?></td>
-		<td colspan="2"></td>
-		<td align="left" valign="middle">
-		<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">suffix_sp</td>
-		<td align="center" valign="middle"><?php echo $medialink_album['suffix_sp'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['suffix_sp'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['suffix_sp'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['suffix_sp'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['suffix_sp'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('extension of Smartphone', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">display_pc</td>
-		<td align="center" valign="middle"><?php echo intval($medialink_all['display_pc']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_album['display_pc']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_movie['display_pc']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_music['display_pc']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_slideshow['display_pc']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_document['display_pc']) ?></td>
-		<td align="left" valign="middle">
-		<?php _e('File Display per page(PC)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">display_sp</td>
-		<td align="center" valign="middle"><?php echo intval($medialink_all['display_sp']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_album['display_sp']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_movie['display_sp']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_music['display_sp']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_slideshow['display_sp']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_document['display_sp']) ?></td>
-		<td align="left" valign="middle">
-		<?php _e('File Display per page(Smartphone)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">image_show_size</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['image_show_size'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['image_show_size'] ?></td>
-		<td colspan="2"></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['image_show_size'] ?></td>
-		<td></td>
-		<td align="left" valign="middle">
-		<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">thumbnail</td>
-		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
-		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['thumbnail'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['thumbnail'] ?></td>
-		<td align="center" valign="middle">-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['thumbnail'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">include_cat</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['include_cat'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['include_cat'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['include_cat'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['include_cat'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['include_cat'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['include_cat'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Category you want to include. Only one.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">exclude_cat</td>
-		<td colspan="6" align="center" valign="middle"><?php echo $medialink_exclude['cat'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">generate_rssfeed</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['generate_rssfeed'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['generate_rssfeed'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['generate_rssfeed'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['generate_rssfeed'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['generate_rssfeed'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['generate_rssfeed'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Generation of RSS feed.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">rssname</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['rssname'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['rssname'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['rssname'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['rssname'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['rssname'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['rssname'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">rssmax</td>
-		<td align="center" valign="middle"><?php echo intval($medialink_all['rssmax']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_album['rssmax']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_movie['rssmax']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_music['rssmax']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_slideshow['rssmax']) ?></td>
-		<td align="center" valign="middle"><?php echo intval($medialink_document['rssmax']) ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">filesize_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['filesize_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['filesize_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['filesize_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['filesize_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['filesize_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['filesize_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('File size', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">stamptime_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['stamptime_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['stamptime_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['stamptime_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['stamptime_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['stamptime_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['stamptime_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Date Time', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">categorylinks_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['categorylinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['categorylinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['categorylinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['categorylinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['categorylinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['categorylinks_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Selectbox of categories.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">pagelinks_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['pagelinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['pagelinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['pagelinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['pagelinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['pagelinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['pagelinks_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Navigation of page.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">sortlinks_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['sortlinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['sortlinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['sortlinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['sortlinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['sortlinks_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['sortlinks_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Navigation of sort.', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">searchbox_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['searchbox_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['searchbox_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['searchbox_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['searchbox_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['searchbox_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['searchbox_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Search box', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">rssicon_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['rssicon_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['rssicon_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['rssicon_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['rssicon_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['rssicon_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['rssicon_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('RSS Icon', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle">credit_show</td>
-		<td align="center" valign="middle"><?php echo $medialink_all['credit_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_album['credit_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_movie['credit_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_music['credit_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_slideshow['credit_show'] ?></td>
-		<td align="center" valign="middle"><?php echo $medialink_document['credit_show'] ?></td>
-		<td align="left" valign="middle">
-		<?php _e('Credit', 'medialink'); ?>
-		</td>
-		</tr>
-
-		<tr>
-		<td align="center" valign="middle" colspan="8">
-		<?php _e('Alias read extension : ', 'medialink'); ?>
-		jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
-		</td>
-		</tr>
-
-		</tbody>
-		</table>
 	  </div>
 
-	<form method="post" action="<?php echo $scriptname; ?>">
-	  <div id="tabs-2">
+	  <div id="medialink-admin-tabs-2">
 		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-2'; ?>">
 
 			<p class="submit">
 			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
 			</p>
 
-			<h2><?php _e('The default value for the short code attribute', 'medialink') ?></h2>	
+			<h2><?php _e('Settings'); ?> <?php _e('AllData', 'medialink'); ?></h2>	
 			<table border="1" class="wp-list-table widefat fixed">
 			<tbody>
 				<tr>
 					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
-					<td align="center" valign="middle" colspan=6><?php _e('Default'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
 					<td align="center" valign="middle"><?php _e('Description'); ?></td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">set</td>
 					<td align="center" valign="middle">all</td>
-					<td align="center" valign="middle">album</td>
-					<td align="center" valign="middle">movie</td>
-					<td align="center" valign="middle">music</td>
-					<td align="center" valign="middle">slideshow</td>
-					<td align="center" valign="middle">document</td>
 					<td align="left" valign="middle">
 					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
 					</td>
@@ -467,365 +174,37 @@ class MediaLinkAdmin {
 						<option <?php if ('des' == $target_all_sort)echo 'selected="selected"'; ?>>des</option>
 						<option <?php if ('asc' == $target_all_sort)echo 'selected="selected"'; ?>>asc</option>
 					</select>
-					</td>					<td align="center" valign="middle">
-					<?php $target_album_sort = $medialink_album['sort']; ?>
-					<select id="medialink_album_sort" name="medialink_album_sort">
-						<option <?php if ('new' == $target_album_sort)echo 'selected="selected"'; ?>>new</option>
-						<option <?php if ('old' == $target_album_sort)echo 'selected="selected"'; ?>>old</option>
-						<option <?php if ('des' == $target_album_sort)echo 'selected="selected"'; ?>>des</option>
-						<option <?php if ('asc' == $target_album_sort)echo 'selected="selected"'; ?>>asc</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_sort = $medialink_movie['sort']; ?>
-					<select id="medialink_movie_sort" name="medialink_movie_sort">
-						<option <?php if ('new' == $target_movie_sort)echo 'selected="selected"'; ?>>new</option>
-						<option <?php if ('old' == $target_movie_sort)echo 'selected="selected"'; ?>>old</option>
-						<option <?php if ('des' == $target_movie_sort)echo 'selected="selected"'; ?>>des</option>
-						<option <?php if ('asc' == $target_movie_sort)echo 'selected="selected"'; ?>>asc</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_sort = $medialink_music['sort']; ?>
-					<select id="medialink_music_sort" name="medialink_music_sort">
-						<option <?php if ('new' == $target_music_sort)echo 'selected="selected"'; ?>>new</option>
-						<option <?php if ('old' == $target_music_sort)echo 'selected="selected"'; ?>>old</option>
-						<option <?php if ('des' == $target_music_sort)echo 'selected="selected"'; ?>>des</option>
-						<option <?php if ('asc' == $target_music_sort)echo 'selected="selected"'; ?>>asc</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_sort = $medialink_slideshow['sort']; ?>
-					<select id="medialink_slideshow_sort" name="medialink_slideshow_sort">
-						<option <?php if ('new' == $target_slideshow_sort)echo 'selected="selected"'; ?>>new</option>
-						<option <?php if ('old' == $target_slideshow_sort)echo 'selected="selected"'; ?>>old</option>
-						<option <?php if ('des' == $target_slideshow_sort)echo 'selected="selected"'; ?>>des</option>
-						<option <?php if ('asc' == $target_slideshow_sort)echo 'selected="selected"'; ?>>asc</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_sort = $medialink_document['sort']; ?>
-					<select id="medialink_document_sort" name="medialink_document_sort">
-						<option <?php if ('new' == $target_document_sort)echo 'selected="selected"'; ?>>new</option>
-						<option <?php if ('old' == $target_document_sort)echo 'selected="selected"'; ?>>old</option>
-						<option <?php if ('des' == $target_document_sort)echo 'selected="selected"'; ?>>des</option>
-						<option <?php if ('asc' == $target_document_sort)echo 'selected="selected"'; ?>>asc</option>
-					</select>
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Type of Sort', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle">suffix_pc</td>
-					<td align="left" valign="top" rowspan="4" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
-					<td align="center" valign="middle">
-					<?php $target_album_suffix_pc = $medialink_album['suffix_pc']; ?>
-					<select id="medialink_album_suffix_pc" name="medialink_album_suffix_pc">
-						<option <?php if ('all' == $target_album_suffix_pc)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('image');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_album_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_suffix_pc = $medialink_movie['suffix_pc']; ?>
-					<select id="medialink_movie_suffix_pc" name="medialink_movie_suffix_pc">
-						<?php
-							$exts = $this->exts('video');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_movie_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_suffix_pc = $medialink_music['suffix_pc']; ?>
-					<select id="medialink_music_suffix_pc" name="medialink_music_suffix_pc">
-						<?php
-							$exts = $this->exts('audio');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_music_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_suffix_pc = $medialink_slideshow['suffix_pc']; ?>
-					<select id="medialink_slideshow_suffix_pc" name="medialink_slideshow_suffix_pc">
-						<option <?php if ('all' == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('image');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_slideshow_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_suffix_pc = $medialink_document['suffix_pc']; ?>
-					<select id="medialink_document_suffix_pc" name="medialink_document_suffix_pc">
-						<option <?php if ('all' == $target_document_suffix_pc)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('document');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('spreadsheet');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('interactive');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('text');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('archive');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('code');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_pc)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
+					<td align="center" valign="middle">suffix</td>
+					<td align="left" valign="top" rowspan="3" width="180"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="left" valign="middle">
-						<?php _e('extension of PC.', 'medialink'); ?>
+						<?php _e('extension', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle">suffix_pc2</td>
-					<td></td>
-					<td align="center" valign="middle">
-					<?php $target_movie_suffix_pc2 = $medialink_movie['suffix_pc2']; ?>
-					<select id="medialink_movie_suffix_pc2" name="medialink_movie_suffix_pc2">
-						<?php
-							$exts = $this->exts('video');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_movie_suffix_pc2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_suffix_pc2 = $medialink_music['suffix_pc2']; ?>
-					<select id="medialink_music_suffix_pc2" name="medialink_music_suffix_pc2">
-						<?php
-							$exts = $this->exts('audio');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_music_suffix_pc2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td colspan="2"></td>
+					<td align="center" valign="middle">suffix_2</td>
 					<td align="left" valign="middle">
-						<?php _e('second extension on the PC. Second candidate when working with html5', 'medialink'); ?>
+						<?php _e('second extension. Second candidate when working with html5', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">suffix_flash</td>
-					<td></td>
-					<td align="center" valign="middle">
-					<?php $target_movie_suffix_flash = $medialink_movie['suffix_flash']; ?>
-					<select id="medialink_movie_suffix_flash" name="medialink_movie_suffix_flash">
-						<option <?php if ('mp4' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>mp4</option>
-						<option <?php if ('flv' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>flv</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_suffix_flash = $medialink_music['suffix_flash']; ?>
-					<select id="medialink_music_suffix_flash" name="medialink_music_suffix_flash">
-						<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
-					</select>
-					</td>
-					<td colspan="2"></td>
 					<td align="left" valign="middle">
-						<?php _e('Flash extension on the PC. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
+						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle">suffix_sp</td>
+					<td align="center" valign="middle">display</td>
 					<td align="center" valign="middle">
-					<?php $target_album_suffix_sp = $medialink_album['suffix_sp']; ?>
-					<select id="medialink_album_suffix_sp" name="medialink_album_suffix_sp">
-						<option <?php if ('all' == $target_album_suffix_sp)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('image');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_album_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_suffix_sp = $medialink_movie['suffix_sp']; ?>
-					<select id="medialink_movie_suffix_sp" name="medialink_movie_suffix_sp">
-						<?php
-							$exts = $this->exts('video');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_movie_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_suffix_sp = $medialink_music['suffix_sp']; ?>
-					<select id="medialink_music_suffix_sp" name="medialink_music_suffix_sp">
-						<?php
-							$exts = $this->exts('audio');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_music_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_suffix_sp = $medialink_slideshow['suffix_sp']; ?>
-					<select id="medialink_slideshow_suffix_sp" name="medialink_slideshow_suffix_sp">
-						<option <?php if ('all' == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('image');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_slideshow_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_suffix_sp = $medialink_document['suffix_sp']; ?>
-					<select id="medialink_document_suffix_sp" name="medialink_document_suffix_sp">
-						<option <?php if ('all' == $target_document_suffix_sp)echo 'selected="selected"'; ?>>all</option>
-						<?php
-							$exts = $this->exts('document');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('spreadsheet');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('interactive');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('text');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('archive');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-							$exts = $this->exts('code');
-							foreach ( $exts as $ext ) {
-								?>
-								<option <?php if ($ext == $target_document_suffix_sp)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
-								<?php
-							}
-						?>
-					</select>
+						<input type="text" style="width: 100%;" id="medialink_all_display" name="medialink_all_display" value="<?php echo intval($medialink_all['display']) ?>" />
 					</td>
 					<td align="left" valign="middle">
-						<?php _e('extension of Smartphone', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">display_pc</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_display_pc" name="medialink_all_display_pc" value="<?php echo intval($medialink_all['display_pc']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_display_pc" name="medialink_album_display_pc" value="<?php echo intval($medialink_album['display_pc']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_display_pc" name="medialink_movie_display_pc" value="<?php echo intval($medialink_movie['display_pc']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_display_pc" name="medialink_music_display_pc" value="<?php echo intval($medialink_music['display_pc']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_display_pc" name="medialink_slideshow_display_pc" value="<?php echo intval($medialink_slideshow['display_pc']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_display_pc" name="medialink_document_display_pc" value="<?php echo intval($medialink_document['display_pc']) ?>" size="3" />
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('File Display per page(PC)', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">display_sp</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_display_sp" name="medialink_all_display_sp" value="<?php echo intval($medialink_all['display_sp']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_display_sp" name="medialink_album_display_sp" value="<?php echo intval($medialink_album['display_sp']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_display_sp" name="medialink_movie_display_sp" value="<?php echo intval($medialink_movie['display_sp']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_display_sp" name="medialink_music_display_sp" value="<?php echo intval($medialink_music['display_sp']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_display_sp" name="medialink_slideshow_display_sp" value="<?php echo intval($medialink_slideshow['display_sp']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_display_sp" name="medialink_document_display_sp" value="<?php echo intval($medialink_document['display_sp']) ?>" size="3" />
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('File Display per page(Smartphone)', 'medialink') ?>
+						<?php _e('File Display per page', 'medialink') ?>
 					</td>
 				</tr>
 				<tr>
@@ -838,24 +217,6 @@ class MediaLinkAdmin {
 						<option <?php if ('Large' == $target_all_image_show_size)echo 'selected="selected"'; ?>>Large</option>
 					</select>
 					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_image_show_size = $medialink_album['image_show_size']; ?>
-					<select id="medialink_album_image_show_size" name="medialink_album_image_show_size">
-						<option <?php if ('Full' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Full</option>
-						<option <?php if ('Medium' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
-						<option <?php if ('Large' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Large</option>
-					</select>
-					</td>
-					<td colspan="2"></td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_image_show_size = $medialink_slideshow['image_show_size']; ?>
-					<select id="medialink_slideshow_image_show_size" name="medialink_slideshow_image_show_size">
-						<option <?php if ('Full' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Full</option>
-						<option <?php if ('Medium' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
-						<option <?php if ('Large' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Large</option>
-					</select>
-					</td>
-					<td></td>
 					<td align="left" valign="middle">
 						<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
 					</td>
@@ -865,68 +226,8 @@ class MediaLinkAdmin {
 					<td align="center" valign="middle">
 						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
 					</td>
-					<td align="center" valign="middle">
-						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_thumbnail = $medialink_movie['thumbnail']; ?>
-					<select id="medialink_movie_thumbnail" name="medialink_movie_thumbnail">
-						<option <?php if ('' == $target_movie_thumbnail)echo 'selected="selected"'; ?>></option>
-						<option <?php if ('icon' == $target_movie_thumbnail)echo 'selected="selected"'; ?>>icon</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_thumbnail = $medialink_music['thumbnail']; ?>
-					<select id="medialink_music_thumbnail" name="medialink_music_thumbnail">
-						<option <?php if ('' == $target_music_thumbnail)echo 'selected="selected"'; ?>></option>
-						<option <?php if ('icon' == $target_music_thumbnail)echo 'selected="selected"'; ?>>icon</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_thumbnail = $medialink_document['thumbnail']; ?>
-					<select id="medialink_document_thumbnail" name="medialink_document_thumbnail">
-						<option <?php if ('' == $target_document_thumbnail)echo 'selected="selected"'; ?>></option>
-						<option <?php if ('icon' == $target_document_thumbnail)echo 'selected="selected"'; ?>>icon</option>
-					</select>
-					</td>
 					<td align="left" valign="middle">
 						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">include_cat</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_include_cat" name="medialink_all_include_cat" value="<?php echo $medialink_all['include_cat'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_include_cat" name="medialink_album_include_cat" value="<?php echo $medialink_album['include_cat'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_include_cat" name="medialink_movie_include_cat" value="<?php echo $medialink_movie['include_cat'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_include_cat" name="medialink_music_include_cat" value="<?php echo $medialink_music['include_cat'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_include_cat" name="medialink_slideshow_include_cat" value="<?php echo $medialink_slideshow['include_cat'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_include_cat" name="medialink_document_include_cat" value="<?php echo $medialink_document['include_cat'] ?>" size="15" />
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('Category you want to include. Only one.', 'medialink'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">exclude_cat</td>
-					<td align="center" valign="middle" colspan="6">
-						<input type="text" id="medialink_exclude_cat" name="medialink_exclude_cat" value="<?php echo $medialink_exclude['cat'] ?>" size="100" />
-					</td>
-					<td align="left" valign="middle">
-						<?php _e('Category you want to exclude. More than one, specified separated by |.', 'medialink'); ?>
 					</td>
 				</tr>
 				<tr>
@@ -938,41 +239,6 @@ class MediaLinkAdmin {
 						<option <?php if ('off' == $target_all_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
 					</select>
 					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_generate_rssfeed = $medialink_album['generate_rssfeed']; ?>
-					<select id="medialink_album_generate_rssfeed" name="medialink_album_generate_rssfeed">
-						<option <?php if ('on' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-						<option <?php if ('off' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_generate_rssfeed = $medialink_movie['generate_rssfeed']; ?>
-					<select id="medialink_movie_generate_rssfeed" name="medialink_movie_generate_rssfeed">
-						<option <?php if ('on' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-						<option <?php if ('off' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_generate_rssfeed = $medialink_music['generate_rssfeed']; ?>
-					<select id="medialink_music_generate_rssfeed" name="medialink_music_generate_rssfeed">
-						<option <?php if ('on' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-						<option <?php if ('off' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_generate_rssfeed = $medialink_slideshow['generate_rssfeed']; ?>
-					<select id="medialink_slideshow_generate_rssfeed" name="medialink_slideshow_generate_rssfeed">
-						<option <?php if ('on' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-						<option <?php if ('off' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_generate_rssfeed = $medialink_document['generate_rssfeed']; ?>
-					<select id="medialink_document_generate_rssfeed" name="medialink_document_generate_rssfeed">
-						<option <?php if ('on' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
-						<option <?php if ('off' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
-					</select>
-					</td>
 					<td align="left" valign="middle">
 					<?php _e('Generation of RSS feed.', 'medialink') ?>
 					</td>
@@ -980,22 +246,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">rssname</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_rssname" name="medialink_all_rssname" value="<?php echo $medialink_all['rssname'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_rssname" name="medialink_album_rssname" value="<?php echo $medialink_album['rssname'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_rssname" name="medialink_movie_rssname" value="<?php echo $medialink_movie['rssname'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo $medialink_music['rssname'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo $medialink_slideshow['rssname'] ?>" size="15" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_rssname" name="medialink_document_rssname" value="<?php echo $medialink_document['rssname'] ?>" size="15" />
+						<input type="text" style="width: 100%;" id="medialink_all_rssname" name="medialink_all_rssname" value="<?php echo $medialink_all['rssname'] ?>" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
@@ -1004,22 +255,7 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">rssmax</td>
 					<td align="center" valign="middle">
-						<input type="text" id="medialink_all_rssmax" name="medialink_all_rssmax" value="<?php echo intval($medialink_all['rssmax']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_album_rssmax" name="medialink_album_rssmax" value="<?php echo intval($medialink_album['rssmax']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_movie_rssmax" name="medialink_movie_rssmax" value="<?php echo intval($medialink_movie['rssmax']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval($medialink_music['rssmax']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval($medialink_slideshow['rssmax']) ?>" size="3" />
-					</td>
-					<td align="center" valign="middle">
-						<input type="text" id="medialink_document_rssmax" name="medialink_document_rssmax" value="<?php echo intval($medialink_document['rssmax']) ?>" size="3" />
+						<input type="text" style="width: 100%;" id="medialink_all_rssmax" name="medialink_all_rssmax" value="<?php echo intval($medialink_all['rssmax']) ?>" />
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
@@ -1032,41 +268,6 @@ class MediaLinkAdmin {
 					<select id="medialink_all_filesize_show" name="medialink_all_filesize_show">
 						<option <?php if ('Show' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_filesize_show = $medialink_album['filesize_show']; ?>
-					<select id="medialink_album_filesize_show" name="medialink_album_filesize_show">
-						<option <?php if ('Show' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_filesize_show = $medialink_movie['filesize_show']; ?>
-					<select id="medialink_movie_filesize_show" name="medialink_movie_filesize_show">
-						<option <?php if ('Show' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_filesize_show = $medialink_music['filesize_show']; ?>
-					<select id="medialink_music_filesize_show" name="medialink_music_filesize_show">
-						<option <?php if ('Show' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_filesize_show = $medialink_slideshow['filesize_show']; ?>
-					<select id="medialink_slideshow_filesize_show" name="medialink_slideshow_filesize_show">
-						<option <?php if ('Show' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_filesize_show = $medialink_document['filesize_show']; ?>
-					<select id="medialink_document_filesize_show" name="medialink_document_filesize_show">
-						<option <?php if ('Show' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -1082,91 +283,21 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_all_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_stamptime_show = $medialink_album['stamptime_show']; ?>
-					<select id="medialink_album_stamptime_show" name="medialink_album_stamptime_show">
-						<option <?php if ('Show' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_stamptime_show = $medialink_movie['stamptime_show']; ?>
-					<select id="medialink_movie_stamptime_show" name="medialink_movie_stamptime_show">
-						<option <?php if ('Show' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_stamptime_show = $medialink_music['stamptime_show']; ?>
-					<select id="medialink_music_stamptime_show" name="medialink_music_stamptime_show">
-						<option <?php if ('Show' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_stamptime_show = $medialink_slideshow['stamptime_show']; ?>
-					<select id="medialink_slideshow_stamptime_show" name="medialink_slideshow_stamptime_show">
-						<option <?php if ('Show' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_stamptime_show = $medialink_document['stamptime_show']; ?>
-					<select id="medialink_document_stamptime_show" name="medialink_document_stamptime_show">
-						<option <?php if ('Show' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
 					<td align="left" valign="middle">
 					<?php _e('Date Time', 'medialink') ?>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="middle">categorylinks_show</td>
+					<td align="center" valign="middle">archiveslinks_show</td>
 					<td align="center" valign="middle">
-					<?php $target_all_categorylinks_show = $medialink_all['categorylinks_show']; ?>
-					<select id="medialink_all_categorylinks_show" name="medialink_all_categorylinks_show">
-						<option <?php if ('Show' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_all_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_categorylinks_show = $medialink_album['categorylinks_show']; ?>
-					<select id="medialink_album_categorylinks_show" name="medialink_album_categorylinks_show">
-						<option <?php if ('Show' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_categorylinks_show = $medialink_movie['categorylinks_show']; ?>
-					<select id="medialink_movie_categorylinks_show" name="medialink_movie_categorylinks_show">
-						<option <?php if ('Show' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_categorylinks_show = $medialink_music['categorylinks_show']; ?>
-					<select id="medialink_music_categorylinks_show" name="medialink_music_categorylinks_show">
-						<option <?php if ('Show' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_categorylinks_show = $medialink_slideshow['categorylinks_show']; ?>
-					<select id="medialink_slideshow_categorylinks_show" name="medialink_slideshow_categorylinks_show">
-						<option <?php if ('Show' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_categorylinks_show = $medialink_document['categorylinks_show']; ?>
-					<select id="medialink_document_categorylinks_show" name="medialink_document_categorylinks_show">
-						<option <?php if ('Show' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_categorylinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					<?php $target_all_archiveslinks_show = $medialink_all['archiveslinks_show']; ?>
+					<select id="medialink_all_archiveslinks_show" name="medialink_all_archiveslinks_show">
+						<option <?php if ('Show' == $target_all_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_all_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
-					<?php _e('Selectbox of categories.', 'medialink') ?>
+					<?php _e('Selectbox of archives.', 'medialink') ?>
 					</td>
 				</tr>
 				<tr>
@@ -1176,41 +307,6 @@ class MediaLinkAdmin {
 					<select id="medialink_all_pagelinks_show" name="medialink_all_pagelinks_show">
 						<option <?php if ('Show' == $target_all_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_pagelinks_show = $medialink_album['pagelinks_show']; ?>
-					<select id="medialink_album_pagelinks_show" name="medialink_album_pagelinks_show">
-						<option <?php if ('Show' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_pagelinks_show = $medialink_movie['pagelinks_show']; ?>
-					<select id="medialink_movie_pagelinks_show" name="medialink_movie_pagelinks_show">
-						<option <?php if ('Show' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_pagelinks_show = $medialink_music['pagelinks_show']; ?>
-					<select id="medialink_music_pagelinks_show" name="medialink_music_pagelinks_show">
-						<option <?php if ('Show' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_pagelinks_show = $medialink_slideshow['pagelinks_show']; ?>
-					<select id="medialink_slideshow_pagelinks_show" name="medialink_slideshow_pagelinks_show">
-						<option <?php if ('Show' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_pagelinks_show = $medialink_document['pagelinks_show']; ?>
-					<select id="medialink_document_pagelinks_show" name="medialink_document_pagelinks_show">
-						<option <?php if ('Show' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -1226,41 +322,6 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_all_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_sortlinks_show = $medialink_album['sortlinks_show']; ?>
-					<select id="medialink_album_sortlinks_show" name="medialink_album_sortlinks_show">
-						<option <?php if ('Show' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_sortlinks_show = $medialink_movie['sortlinks_show']; ?>
-					<select id="medialink_movie_sortlinks_show" name="medialink_movie_sortlinks_show">
-						<option <?php if ('Show' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_sortlinks_show = $medialink_music['sortlinks_show']; ?>
-					<select id="medialink_music_sortlinks_show" name="medialink_music_sortlinks_show">
-						<option <?php if ('Show' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_sortlinks_show = $medialink_slideshow['sortlinks_show']; ?>
-					<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
-						<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_sortlinks_show = $medialink_document['sortlinks_show']; ?>
-					<select id="medialink_document_sortlinks_show" name="medialink_document_sortlinks_show">
-						<option <?php if ('Show' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
 					<td align="left" valign="middle">
 					<?php _e('Navigation of sort.', 'medialink') ?>
 					</td>
@@ -1272,41 +333,6 @@ class MediaLinkAdmin {
 					<select id="medialink_all_searchbox_show" name="medialink_all_searchbox_show">
 						<option <?php if ('Show' == $target_all_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
 						<option <?php if ('Hide' == $target_all_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_searchbox_show = $medialink_album['searchbox_show']; ?>
-					<select id="medialink_album_searchbox_show" name="medialink_album_searchbox_show">
-						<option <?php if ('Show' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_searchbox_show = $medialink_movie['searchbox_show']; ?>
-					<select id="medialink_movie_searchbox_show" name="medialink_movie_searchbox_show">
-						<option <?php if ('Show' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_searchbox_show = $medialink_music['searchbox_show']; ?>
-					<select id="medialink_music_searchbox_show" name="medialink_music_searchbox_show">
-						<option <?php if ('Show' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_searchbox_show = $medialink_slideshow['searchbox_show']; ?>
-					<select id="medialink_slideshow_searchbox_show" name="medialink_slideshow_searchbox_show">
-						<option <?php if ('Show' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_document_searchbox_show = $medialink_document['searchbox_show']; ?>
-					<select id="medialink_document_searchbox_show" name="medialink_document_searchbox_show">
-						<option <?php if ('Show' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
 					<td align="left" valign="middle">
@@ -1322,6 +348,245 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_all_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="left" valign="middle">
+					<?php _e('RSS Icon', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">credit_show</td>
+					<td align="center" valign="middle">
+					<?php $target_all_credit_show = $medialink_all['credit_show']; ?>
+					<select id="medialink_all_credit_show" name="medialink_all_credit_show">
+						<option <?php if ('Show' == $target_all_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_all_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Credit', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+				<td align="center" valign="middle" colspan="3">
+				<?php _e('Alias read extension : ', 'medialink'); ?>
+				jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
+				</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="2" />
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			</p>
+
+			</form>
+
+		</div>
+	  </div>
+
+	  <div id="medialink-admin-tabs-3">
+		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-3'; ?>">
+
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
+			</p>
+
+			<h2><?php _e('Settings'); ?> <?php _e('Album', 'medialink'); ?></h2>	
+			<table border="1" class="wp-list-table widefat fixed">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">set</td>
+					<td align="center" valign="middle">album</td>
+					<td align="left" valign="middle">
+					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sort</td>
+					<td align="center" valign="middle">
+					<?php $target_album_sort = $medialink_album['sort']; ?>
+					<select id="medialink_album_sort" name="medialink_album_sort">
+						<option <?php if ('new' == $target_album_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_album_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_album_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_album_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix</td>
+					<td align="center" valign="middle">
+					<?php $target_album_suffix = $medialink_album['suffix']; ?>
+					<select id="medialink_album_suffix" name="medialink_album_suffix">
+						<option <?php if ('all' == $target_album_suffix)echo 'selected="selected"'; ?>>all</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_album_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">display</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_album_display" name="medialink_album_display" value="<?php echo intval($medialink_album['display']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('File Display per page', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">image_show_size</td>
+					<td align="center" valign="middle">
+					<?php $target_album_image_show_size = $medialink_album['image_show_size']; ?>
+					<select id="medialink_album_image_show_size" name="medialink_album_image_show_size">
+						<option <?php if ('Full' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Full</option>
+						<option <?php if ('Medium' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
+						<option <?php if ('Large' == $target_album_image_show_size)echo 'selected="selected"'; ?>>Large</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">thumbnail</td>
+					<td align="center" valign="middle">
+						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">generate_rssfeed</td>
+					<td align="center" valign="middle">
+					<?php $target_album_generate_rssfeed = $medialink_album['generate_rssfeed']; ?>
+					<select id="medialink_album_generate_rssfeed" name="medialink_album_generate_rssfeed">
+						<option <?php if ('on' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+						<option <?php if ('off' == $target_album_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Generation of RSS feed.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssname</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" style="width: 100%;" id="medialink_album_rssname" name="medialink_album_rssname" value="<?php echo $medialink_album['rssname'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssmax</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_album_rssmax" name="medialink_album_rssmax" value="<?php echo intval($medialink_album['rssmax']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">filesize_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_filesize_show = $medialink_album['filesize_show']; ?>
+					<select id="medialink_album_filesize_show" name="medialink_album_filesize_show">
+						<option <?php if ('Show' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">stamptime_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_stamptime_show = $medialink_album['stamptime_show']; ?>
+					<select id="medialink_album_stamptime_show" name="medialink_album_stamptime_show">
+						<option <?php if ('Show' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">archiveslinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_archiveslinks_show = $medialink_album['archiveslinks_show']; ?>
+					<select id="medialink_album_archiveslinks_show" name="medialink_album_archiveslinks_show">
+						<option <?php if ('Show' == $target_album_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Selectbox of archives.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">pagelinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_pagelinks_show = $medialink_album['pagelinks_show']; ?>
+					<select id="medialink_album_pagelinks_show" name="medialink_album_pagelinks_show">
+						<option <?php if ('Show' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of page.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sortlinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_sortlinks_show = $medialink_album['sortlinks_show']; ?>
+					<select id="medialink_album_sortlinks_show" name="medialink_album_sortlinks_show">
+						<option <?php if ('Show' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of sort.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">searchbox_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_searchbox_show = $medialink_album['searchbox_show']; ?>
+					<select id="medialink_album_searchbox_show" name="medialink_album_searchbox_show">
+						<option <?php if ('Show' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Search box', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_album_rssicon_show = $medialink_album['rssicon_show']; ?>
 					<select id="medialink_album_rssicon_show" name="medialink_album_rssicon_show">
@@ -1329,6 +594,267 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_album_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="left" valign="middle">
+					<?php _e('RSS Icon', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">credit_show</td>
+					<td align="center" valign="middle">
+					<?php $target_album_credit_show = $medialink_album['credit_show']; ?>
+					<select id="medialink_album_credit_show" name="medialink_album_credit_show">
+						<option <?php if ('Show' == $target_album_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Credit', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+				<td align="center" valign="middle" colspan="3">
+				<?php _e('Alias read extension : ', 'medialink'); ?>
+				jpg=(jpg|jpeg|jpe)
+				</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="3" />
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			</p>
+
+			</form>
+
+		</div>
+	  </div>
+
+	  <div id="medialink-admin-tabs-4">
+		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-4'; ?>">
+
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
+			</p>
+
+			<h2><?php _e('Settings'); ?> <?php _e('Video', 'medialink'); ?></h2>	
+			<table border="1" class="wp-list-table widefat fixed">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">set</td>
+					<td align="center" valign="middle">movie</td>
+					<td align="left" valign="middle">
+					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sort</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_sort = $medialink_movie['sort']; ?>
+					<select id="medialink_movie_sort" name="medialink_movie_sort">
+						<option <?php if ('new' == $target_movie_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_movie_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_movie_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_movie_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_suffix = $medialink_movie['suffix']; ?>
+					<select id="medialink_movie_suffix" name="medialink_movie_suffix">
+						<?php
+							$exts = $this->exts('video');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_movie_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_2</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_suffix_2 = $medialink_movie['suffix_2']; ?>
+					<select id="medialink_movie_suffix_2" name="medialink_movie_suffix_2">
+						<?php
+							$exts = $this->exts('video');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_movie_suffix_2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('second extension. Second candidate when working with html5', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_flash</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_suffix_flash = $medialink_movie['suffix_flash']; ?>
+					<select id="medialink_movie_suffix_flash" name="medialink_movie_suffix_flash">
+						<option <?php if ('mp4' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>mp4</option>
+						<option <?php if ('flv' == $target_movie_suffix_flash)echo 'selected="selected"'; ?>>flv</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">display</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_movie_display" name="medialink_movie_display" value="<?php echo intval($medialink_movie['display']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('File Display per page', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">thumbnail</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_thumbnail = $medialink_movie['thumbnail']; ?>
+					<select id="medialink_movie_thumbnail" name="medialink_movie_thumbnail">
+						<option <?php if ('' == $target_movie_thumbnail)echo 'selected="selected"'; ?>></option>
+						<option <?php if ('icon' == $target_movie_thumbnail)echo 'selected="selected"'; ?>>icon</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">generate_rssfeed</td>
+					<td align="center" valign="middle">
+					<select id="medialink_movie_generate_rssfeed" name="medialink_movie_generate_rssfeed">
+						<option <?php if ('on' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+					<?php $target_movie_generate_rssfeed = $medialink_movie['generate_rssfeed']; ?>
+						<option <?php if ('off' == $target_movie_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Generation of RSS feed.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssname</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_movie_rssname" name="medialink_movie_rssname" value="<?php echo $medialink_movie['rssname'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssmax</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_movie_rssmax" name="medialink_movie_rssmax" value="<?php echo intval($medialink_movie['rssmax']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">filesize_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_filesize_show = $medialink_movie['filesize_show']; ?>
+					<select id="medialink_movie_filesize_show" name="medialink_movie_filesize_show">
+						<option <?php if ('Show' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">stamptime_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_stamptime_show = $medialink_movie['stamptime_show']; ?>
+					<select id="medialink_movie_stamptime_show" name="medialink_movie_stamptime_show">
+						<option <?php if ('Show' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">archiveslinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_archiveslinks_show = $medialink_movie['archiveslinks_show']; ?>
+					<select id="medialink_movie_archiveslinks_show" name="medialink_movie_archiveslinks_show">
+						<option <?php if ('Show' == $target_movie_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Selectbox of archives.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">pagelinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_pagelinks_show = $medialink_movie['pagelinks_show']; ?>
+					<select id="medialink_movie_pagelinks_show" name="medialink_movie_pagelinks_show">
+						<option <?php if ('Show' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of page.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sortlinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_sortlinks_show = $medialink_movie['sortlinks_show']; ?>
+					<select id="medialink_movie_sortlinks_show" name="medialink_movie_sortlinks_show">
+						<option <?php if ('Show' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of sort.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">searchbox_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_searchbox_show = $medialink_movie['searchbox_show']; ?>
+					<select id="medialink_movie_searchbox_show" name="medialink_movie_searchbox_show">
+						<option <?php if ('Show' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Search box', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_movie_rssicon_show = $medialink_movie['rssicon_show']; ?>
 					<select id="medialink_movie_rssicon_show" name="medialink_movie_rssicon_show">
@@ -1336,6 +862,265 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_movie_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="left" valign="middle">
+					<?php _e('RSS Icon', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">credit_show</td>
+					<td align="center" valign="middle">
+					<?php $target_movie_credit_show = $medialink_movie['credit_show']; ?>
+					<select id="medialink_movie_credit_show" name="medialink_movie_credit_show">
+						<option <?php if ('Show' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Credit', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+				<td align="center" valign="middle" colspan="3">
+				<?php _e('Alias read extension : ', 'medialink'); ?>
+				mp4=(mp4|m4v)
+				</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="4" />
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			</p>
+
+			</form>
+
+		</div>
+	  </div>
+
+	  <div id="medialink-admin-tabs-5">
+		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-5'; ?>">
+
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
+			</p>
+
+			<h2><?php _e('Settings'); ?> <?php _e('Music', 'medialink'); ?></h2>	
+			<table border="1" class="wp-list-table widefat fixed">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">set</td>
+					<td align="center" valign="middle">music</td>
+					<td align="left" valign="middle">
+					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sort</td>
+					<td align="center" valign="middle">
+					<?php $target_music_sort = $medialink_music['sort']; ?>
+					<select id="medialink_music_sort" name="medialink_music_sort">
+						<option <?php if ('new' == $target_music_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_music_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_music_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_music_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix</td>
+					<td align="center" valign="middle">
+					<?php $target_music_suffix = $medialink_music['suffix']; ?>
+					<select id="medialink_music_suffix" name="medialink_music_suffix">
+						<?php
+							$exts = $this->exts('audio');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_music_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_2</td>
+					<td align="center" valign="middle">
+					<?php $target_music_suffix_2 = $medialink_music['suffix_2']; ?>
+					<select id="medialink_music_suffix_2" name="medialink_music_suffix_2">
+						<?php
+							$exts = $this->exts('audio');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_music_suffix_2)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('second extension. Second candidate when working with html5', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_flash</td>
+					<td align="center" valign="middle">
+					<?php $target_music_suffix_flash = $medialink_music['suffix_flash']; ?>
+					<select id="medialink_music_suffix_flash" name="medialink_music_suffix_flash">
+						<option <?php if ('mp3' == $target_music_suffix_flash)echo 'selected="selected"'; ?>>mp3</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Flash extension. Flash Player to be used when a HTML5 player does not work.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">display</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_music_display" name="medialink_music_display" value="<?php echo intval($medialink_music['display']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('File Display per page', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">thumbnail</td>
+					<td align="center" valign="middle">
+					<?php $target_music_thumbnail = $medialink_music['thumbnail']; ?>
+					<select id="medialink_music_thumbnail" name="medialink_music_thumbnail">
+						<option <?php if ('' == $target_music_thumbnail)echo 'selected="selected"'; ?>></option>
+						<option <?php if ('icon' == $target_music_thumbnail)echo 'selected="selected"'; ?>>icon</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">generate_rssfeed</td>
+					<td align="center" valign="middle">
+					<?php $target_music_generate_rssfeed = $medialink_music['generate_rssfeed']; ?>
+					<select id="medialink_music_generate_rssfeed" name="medialink_music_generate_rssfeed">
+						<option <?php if ('on' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+						<option <?php if ('off' == $target_music_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Generation of RSS feed.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssname</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_music_rssname" name="medialink_music_rssname" value="<?php echo $medialink_music['rssname'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssmax</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_music_rssmax" name="medialink_music_rssmax" value="<?php echo intval($medialink_music['rssmax']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">filesize_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_filesize_show = $medialink_music['filesize_show']; ?>
+					<select id="medialink_music_filesize_show" name="medialink_music_filesize_show">
+						<option <?php if ('Show' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">stamptime_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_stamptime_show = $medialink_music['stamptime_show']; ?>
+					<select id="medialink_music_stamptime_show" name="medialink_music_stamptime_show">
+						<option <?php if ('Show' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">archiveslinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_archiveslinks_show = $medialink_music['archiveslinks_show']; ?>
+					<select id="medialink_music_archiveslinks_show" name="medialink_music_archiveslinks_show">
+						<option <?php if ('Show' == $target_music_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Selectbox of archives.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">pagelinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_pagelinks_show = $medialink_music['pagelinks_show']; ?>
+					<select id="medialink_music_pagelinks_show" name="medialink_music_pagelinks_show">
+						<option <?php if ('Show' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of page.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sortlinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_sortlinks_show = $medialink_music['sortlinks_show']; ?>
+					<select id="medialink_music_sortlinks_show" name="medialink_music_sortlinks_show">
+						<option <?php if ('Show' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of sort.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">searchbox_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_searchbox_show = $medialink_music['searchbox_show']; ?>
+					<select id="medialink_music_searchbox_show" name="medialink_music_searchbox_show">
+						<option <?php if ('Show' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Search box', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_music_rssicon_show = $medialink_music['rssicon_show']; ?>
 					<select id="medialink_music_rssicon_show" name="medialink_music_rssicon_show">
@@ -1343,6 +1128,245 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_music_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="left" valign="middle">
+					<?php _e('RSS Icon', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">credit_show</td>
+					<td align="center" valign="middle">
+					<?php $target_music_credit_show = $medialink_music['credit_show']; ?>
+					<select id="medialink_music_credit_show" name="medialink_music_credit_show">
+						<option <?php if ('Show' == $target_music_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_music_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Credit', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+				<td align="center" valign="middle" colspan="3">
+				<?php _e('Alias read extension : ', 'medialink'); ?>
+				mp3=(mp3|m4a|m4b) ogg=(ogg|oga)
+				</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="5" />
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			</p>
+
+			</form>
+
+		</div>
+	  </div>
+
+	  <div id="medialink-admin-tabs-6">
+		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-6'; ?>">
+
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
+			</p>
+
+			<h2><?php _e('Settings'); ?> <?php _e('Slideshow', 'medialink'); ?></h2>	
+			<table border="1" class="wp-list-table widefat fixed">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">set</td>
+					<td align="center" valign="middle">slideshow</td>
+					<td align="left" valign="middle">
+					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sort</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_sort = $medialink_slideshow['sort']; ?>
+					<select id="medialink_slideshow_sort" name="medialink_slideshow_sort">
+						<option <?php if ('new' == $target_slideshow_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_slideshow_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_slideshow_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_slideshow_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_suffix = $medialink_slideshow['suffix']; ?>
+					<select id="medialink_slideshow_suffix" name="medialink_slideshow_suffix">
+						<option <?php if ('all' == $target_slideshow_suffix)echo 'selected="selected"'; ?>>all</option>
+						<?php
+							$exts = $this->exts('image');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_slideshow_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">display</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_slideshow_display" name="medialink_slideshow_display" value="<?php echo intval($medialink_slideshow['display']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('File Display per page', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">image_show_size</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_image_show_size = $medialink_slideshow['image_show_size']; ?>
+					<select id="medialink_slideshow_image_show_size" name="medialink_slideshow_image_show_size">
+						<option <?php if ('Full' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Full</option>
+						<option <?php if ('Medium' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Medium</option>
+						<option <?php if ('Large' == $target_slideshow_image_show_size)echo 'selected="selected"'; ?>>Large</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Size of the image display. (Media Settings > Image Size)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">thumbnail</td>
+					<td align="center" valign="middle">
+						-<?php echo get_option('thumbnail_size_w') ?>x<?php echo get_option('thumbnail_size_h') ?>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">generate_rssfeed</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_generate_rssfeed = $medialink_slideshow['generate_rssfeed']; ?>
+					<select id="medialink_slideshow_generate_rssfeed" name="medialink_slideshow_generate_rssfeed">
+						<option <?php if ('on' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+						<option <?php if ('off' == $target_slideshow_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Generation of RSS feed.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssname</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_slideshow_rssname" name="medialink_slideshow_rssname" value="<?php echo $medialink_slideshow['rssname'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssmax</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_slideshow_rssmax" name="medialink_slideshow_rssmax" value="<?php echo intval($medialink_slideshow['rssmax']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">filesize_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_filesize_show = $medialink_slideshow['filesize_show']; ?>
+					<select id="medialink_slideshow_filesize_show" name="medialink_slideshow_filesize_show">
+						<option <?php if ('Show' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">stamptime_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_stamptime_show = $medialink_slideshow['stamptime_show']; ?>
+					<select id="medialink_slideshow_stamptime_show" name="medialink_slideshow_stamptime_show">
+						<option <?php if ('Show' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">archiveslinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_archiveslinks_show = $medialink_slideshow['archiveslinks_show']; ?>
+					<select id="medialink_slideshow_archiveslinks_show" name="medialink_slideshow_archiveslinks_show">
+						<option <?php if ('Show' == $target_slideshow_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Selectbox of archives.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">pagelinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_pagelinks_show = $medialink_slideshow['pagelinks_show']; ?>
+					<select id="medialink_slideshow_pagelinks_show" name="medialink_slideshow_pagelinks_show">
+						<option <?php if ('Show' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of page.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sortlinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_sortlinks_show = $medialink_slideshow['sortlinks_show']; ?>
+					<select id="medialink_slideshow_sortlinks_show" name="medialink_slideshow_sortlinks_show">
+						<option <?php if ('Show' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of sort.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">searchbox_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_searchbox_show = $medialink_slideshow['searchbox_show']; ?>
+					<select id="medialink_slideshow_searchbox_show" name="medialink_slideshow_searchbox_show">
+						<option <?php if ('Show' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Search box', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_rssicon_show = $medialink_slideshow['rssicon_show']; ?>
 					<select id="medialink_slideshow_rssicon_show" name="medialink_slideshow_rssicon_show">
@@ -1350,6 +1374,265 @@ class MediaLinkAdmin {
 						<option <?php if ('Hide' == $target_slideshow_rssicon_show)echo 'selected="selected"'; ?>>Hide</option>
 					</select>
 					</td>
+					<td align="left" valign="middle">
+					<?php _e('RSS Icon', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">credit_show</td>
+					<td align="center" valign="middle">
+					<?php $target_slideshow_credit_show = $medialink_slideshow['credit_show']; ?>
+					<select id="medialink_slideshow_credit_show" name="medialink_slideshow_credit_show">
+						<option <?php if ('Show' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Credit', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+				<td align="center" valign="middle" colspan="3">
+				<?php _e('Alias read extension : ', 'medialink'); ?>
+				jpg=(jpg|jpeg|jpe)
+				</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="6" />
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			</p>
+
+			</form>
+
+		</div>
+	  </div>
+
+	  <div id="medialink-admin-tabs-7">
+		<div class="wrap">
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-7'; ?>">
+
+			<p class="submit">
+			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
+			</p>
+
+			<h2><?php _e('Settings'); ?> <?php _e('Document', 'medialink'); ?></h2>	
+			<table border="1" class="wp-list-table widefat fixed">
+			<tbody>
+				<tr>
+					<td align="center" valign="middle"><?php _e('Attribute', 'medialink'); ?></td>
+					<td align="center" valign="middle"><?php _e('Value'); ?></td>
+					<td align="center" valign="middle"><?php _e('Description'); ?></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">set</td>
+					<td align="center" valign="middle">document</td>
+					<td align="left" valign="middle">
+					<?php _e('Next only six. all(all data), album(image), movie(video), music(music), slideshow(image), document(document)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sort</td>
+					<td align="center" valign="middle">
+					<?php $target_document_sort = $medialink_document['sort']; ?>
+					<select id="medialink_document_sort" name="medialink_document_sort">
+						<option <?php if ('new' == $target_document_sort)echo 'selected="selected"'; ?>>new</option>
+						<option <?php if ('old' == $target_document_sort)echo 'selected="selected"'; ?>>old</option>
+						<option <?php if ('des' == $target_document_sort)echo 'selected="selected"'; ?>>des</option>
+						<option <?php if ('asc' == $target_document_sort)echo 'selected="selected"'; ?>>asc</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Type of Sort', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix</td>
+					<td align="center" valign="middle">
+					<?php $target_document_suffix = $medialink_document['suffix']; ?>
+					<select id="medialink_document_suffix" name="medialink_document_suffix">
+						<option <?php if ('all' == $target_document_suffix)echo 'selected="selected"'; ?>>all</option>
+						<?php
+							$exts = $this->exts('document');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('spreadsheet');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('interactive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('text');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('archive');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+							$exts = $this->exts('code');
+							foreach ( $exts as $ext ) {
+								?>
+								<option <?php if ($ext == $target_document_suffix)echo 'selected="selected"'; ?>><?php echo $ext ?></option>
+								<?php
+							}
+						?>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">display</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_document_display" name="medialink_document_display" value="<?php echo intval($medialink_document['display']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('File Display per page', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">thumbnail</td>
+					<td align="center" valign="middle">
+					<?php $target_document_thumbnail = $medialink_document['thumbnail']; ?>
+					<select id="medialink_document_thumbnail" name="medialink_document_thumbnail">
+						<option <?php if ('' == $target_document_thumbnail)echo 'selected="selected"'; ?>></option>
+						<option <?php if ('icon' == $target_document_thumbnail)echo 'selected="selected"'; ?>>icon</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('(album, slideshow) thumbnail suffix name. (movie, music, document) The icon is displayed if you specify icon. The thumbnail no display if you do not specify anything.', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">generate_rssfeed</td>
+					<td align="center" valign="middle">
+					<?php $target_document_generate_rssfeed = $medialink_document['generate_rssfeed']; ?>
+					<select id="medialink_document_generate_rssfeed" name="medialink_document_generate_rssfeed">
+						<option <?php if ('on' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>on</option>
+						<option <?php if ('off' == $target_document_generate_rssfeed)echo 'selected="selected"'; ?>>off</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Generation of RSS feed.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssname</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_document_rssname" name="medialink_document_rssname" value="<?php echo $medialink_document['rssname'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('The name of the RSS feed file (Use to widget)', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssmax</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_document_rssmax" name="medialink_document_rssmax" value="<?php echo intval($medialink_document['rssmax']) ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Syndication feeds show the most recent (Use to widget)', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">filesize_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_filesize_show = $medialink_document['filesize_show']; ?>
+					<select id="medialink_document_filesize_show" name="medialink_document_filesize_show">
+						<option <?php if ('Show' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_filesize_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('File size', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">stamptime_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_stamptime_show = $medialink_document['stamptime_show']; ?>
+					<select id="medialink_document_stamptime_show" name="medialink_document_stamptime_show">
+						<option <?php if ('Show' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_stamptime_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Date Time', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">archiveslinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_archiveslinks_show = $medialink_document['archiveslinks_show']; ?>
+					<select id="medialink_document_archiveslinks_show" name="medialink_document_archiveslinks_show">
+						<option <?php if ('Show' == $target_document_archiveslinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_archiveslinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Selectbox of archives.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">pagelinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_pagelinks_show = $medialink_document['pagelinks_show']; ?>
+					<select id="medialink_document_pagelinks_show" name="medialink_document_pagelinks_show">
+						<option <?php if ('Show' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_pagelinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of page.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">sortlinks_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_sortlinks_show = $medialink_document['sortlinks_show']; ?>
+					<select id="medialink_document_sortlinks_show" name="medialink_document_sortlinks_show">
+						<option <?php if ('Show' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_sortlinks_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Navigation of sort.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">searchbox_show</td>
+					<td align="center" valign="middle">
+					<?php $target_document_searchbox_show = $medialink_document['searchbox_show']; ?>
+					<select id="medialink_document_searchbox_show" name="medialink_document_searchbox_show">
+						<option <?php if ('Show' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_document_searchbox_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">
+					<?php _e('Search box', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">rssicon_show</td>
 					<td align="center" valign="middle">
 					<?php $target_document_rssicon_show = $medialink_document['rssicon_show']; ?>
 					<select id="medialink_document_rssicon_show" name="medialink_document_rssicon_show">
@@ -1364,41 +1647,6 @@ class MediaLinkAdmin {
 				<tr>
 					<td align="center" valign="middle">credit_show</td>
 					<td align="center" valign="middle">
-					<?php $target_all_credit_show = $medialink_all['credit_show']; ?>
-					<select id="medialink_all_credit_show" name="medialink_all_credit_show">
-						<option <?php if ('Show' == $target_all_credit_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_all_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_album_credit_show = $medialink_album['credit_show']; ?>
-					<select id="medialink_album_credit_show" name="medialink_album_credit_show">
-						<option <?php if ('Show' == $target_album_credit_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_album_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_movie_credit_show = $medialink_movie['credit_show']; ?>
-					<select id="medialink_movie_credit_show" name="medialink_movie_credit_show">
-						<option <?php if ('Show' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_movie_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_music_credit_show = $medialink_music['credit_show']; ?>
-					<select id="medialink_music_credit_show" name="medialink_music_credit_show">
-						<option <?php if ('Show' == $target_music_credit_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_music_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
-					<?php $target_slideshow_credit_show = $medialink_slideshow['credit_show']; ?>
-					<select id="medialink_slideshow_credit_show" name="medialink_slideshow_credit_show">
-						<option <?php if ('Show' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Show</option>
-						<option <?php if ('Hide' == $target_slideshow_credit_show)echo 'selected="selected"'; ?>>Hide</option>
-					</select>
-					</td>
-					<td align="center" valign="middle">
 					<?php $target_document_credit_show = $medialink_document['credit_show']; ?>
 					<select id="medialink_document_credit_show" name="medialink_document_credit_show">
 						<option <?php if ('Show' == $target_document_credit_show)echo 'selected="selected"'; ?>>Show</option>
@@ -1410,193 +1658,108 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
-				<td align="center" valign="middle" colspan="8">
+				<td align="center" valign="middle" colspan="3">
 				<?php _e('Alias read extension : ', 'medialink'); ?>
-				jpg=(jpg|jpeg|jpe) mp4=(mp4|m4v) mp3=(mp3|m4a|m4b) ogg=(ogg|oga) xls=(xla|xlt|xlw) ppt=(pot|pps)
+				xls=(xla|xlt|xlw) ppt=(pot|pps)
 				</td>
 				</tr>
 			</tbody>
 			</table>
+
+			<input type="hidden" name="medialink_admin_tabs" value="7" />
 			<p class="submit">
 			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
 			</p>
+
+			</form>
+
 		</div>
 	  </div>
 
-	  <div id="tabs-3">
+	  <div id="medialink-admin-tabs-8">
 		<div class="wrap">
 
+			<h2><?php _e('Settings'); ?> <?php _e('Size and color.', 'medialink') ?></h2>	
+
+			<form method="post" action="<?php echo $scriptname.'#medialink-admin-tabs-8'; ?>">
+
 			<p class="submit">
 			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+			  <input type="submit" name="Default" value="<?php _e('Default') ?>" />
 			</p>
 
-			<h2><?php _e('The default value for the display size and display color.', 'medialink') ?></h2>	
-			<table border="1" class="wp-list-table widefat fixed">
-			<tbody>
-				<tr>
-					<td align="center" valign="middle" colspan="4">PC</td>
-					<td align="center" valign="middle" colspan="4">Smartphone</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle">all</td>
-					<td align="center" valign="middle">movie</td>
-					<td align="center" valign="middle">music</td>
-					<td align="center" valign="middle">document</td>
-					<td align="center" valign="middle">all</td>
-					<td align="center" valign="middle">movie</td>
-					<td align="center" valign="middle">music</td>
-					<td align="center" valign="middle">document</td>
-					<td align="center" valign="middle"><?php _e('Description'); ?></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle" colspan="2">
-					<?php $target_movie_container = $medialink_movie['container']; ?>
-					<select id="medialink_movie_container" name="medialink_movie_container">
-						<option <?php if ('256x144' == $target_movie_container)echo 'selected="selected"'; ?>>256x144</option>
-						<option <?php if ('320x240' == $target_movie_container)echo 'selected="selected"'; ?>>320x240</option>
-						<option <?php if ('384x288' == $target_movie_container)echo 'selected="selected"'; ?>>384x288</option>
-						<option <?php if ('448x336' == $target_movie_container)echo 'selected="selected"'; ?>>448x336</option>
-						<option <?php if ('512x288' == $target_movie_container)echo 'selected="selected"'; ?>>512x288</option>
-						<option <?php if ('512x384' == $target_movie_container)echo 'selected="selected"'; ?>>512x384</option>
-						<option <?php if ('576x432' == $target_movie_container)echo 'selected="selected"'; ?>>576x432</option>
-						<option <?php if ('640x480' == $target_movie_container)echo 'selected="selected"'; ?>>640x480</option>
-						<option <?php if ('704x528' == $target_movie_container)echo 'selected="selected"'; ?>>704x528</option>
-						<option <?php if ('768x432' == $target_movie_container)echo 'selected="selected"'; ?>>768x432</option>
-						<option <?php if ('768x576' == $target_movie_container)echo 'selected="selected"'; ?>>768x576</option>
-						<option <?php if ('832x624' == $target_movie_container)echo 'selected="selected"'; ?>>832x624</option>
-						<option <?php if ('896x672' == $target_movie_container)echo 'selected="selected"'; ?>>896x672</option>
-						<option <?php if ('960x720' == $target_movie_container)echo 'selected="selected"'; ?>>960x720</option>
-						<option <?php if ('1024x576' == $target_movie_container)echo 'selected="selected"'; ?>>1024x576</option>
-						<option <?php if ('1280x720' == $target_movie_container)echo 'selected="selected"'; ?>>1280x720</option>
-					</select>
-					</td>
-					<td colspan="6"></td>
-					<td align="left" valign="middle">
+			<div style="padding:10px;border:#CCC 2px solid; margin:0 0 20px 0">
+				<div style="display:block">
 					<?php _e('Size of the movie container.', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle" colspan="8">
-					<?php $target_css_pc_listthumbsize = $medialink_css['pc_listthumbsize']; ?>
-					<select id="medialink_css_pc_listthumbsize" name="medialink_css_pc_listthumbsize">
-						<option <?php if ('40x40' == $target_css_pc_listthumbsize)echo 'selected="selected"'; ?>>40x40</option>
-						<option <?php if ('60x60' == $target_css_pc_listthumbsize)echo 'selected="selected"'; ?>>60x60</option>
-						<option <?php if ('80x80' == $target_css_pc_listthumbsize)echo 'selected="selected"'; ?>>80x80</option>
+				</div>
+				<div style="display:block;padding:20px 0">
+					<?php $target_css_container = $medialink_css['container']; ?>
+					<select id="medialink_css_container" name="medialink_css_container">
+						<option <?php if ('256x144' == $target_css_container)echo 'selected="selected"'; ?>>256x144</option>
+						<option <?php if ('320x240' == $target_css_container)echo 'selected="selected"'; ?>>320x240</option>
+						<option <?php if ('384x288' == $target_css_container)echo 'selected="selected"'; ?>>384x288</option>
+						<option <?php if ('448x336' == $target_css_container)echo 'selected="selected"'; ?>>448x336</option>
+						<option <?php if ('512x288' == $target_css_container)echo 'selected="selected"'; ?>>512x288</option>
+						<option <?php if ('512x384' == $target_css_container)echo 'selected="selected"'; ?>>512x384</option>
+						<option <?php if ('576x432' == $target_css_container)echo 'selected="selected"'; ?>>576x432</option>
+						<option <?php if ('640x480' == $target_css_container)echo 'selected="selected"'; ?>>640x480</option>
+						<option <?php if ('704x528' == $target_css_container)echo 'selected="selected"'; ?>>704x528</option>
+						<option <?php if ('768x432' == $target_css_container)echo 'selected="selected"'; ?>>768x432</option>
+						<option <?php if ('768x576' == $target_css_container)echo 'selected="selected"'; ?>>768x576</option>
+						<option <?php if ('832x624' == $target_css_container)echo 'selected="selected"'; ?>>832x624</option>
+						<option <?php if ('896x672' == $target_css_container)echo 'selected="selected"'; ?>>896x672</option>
+						<option <?php if ('960x720' == $target_css_container)echo 'selected="selected"'; ?>>960x720</option>
+						<option <?php if ('1024x576' == $target_css_container)echo 'selected="selected"'; ?>>1024x576</option>
+						<option <?php if ('1280x720' == $target_css_container)echo 'selected="selected"'; ?>>1280x720</option>
 					</select>
-					</td>
-					<td align="left" valign="middle">
+				</div>
+			</div>
+
+			<div style="margin:20px 0; padding:10px; border:#CCC 2px solid">
+				<div style="display:block">
 					<?php _e('Size of the thumbnail size for Video and Music', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_pc_linkbackcolor" name="medialink_css_pc_linkbackcolor" value="<?php echo $medialink_css['pc_linkbackcolor'] ?>" size="10" />
-					</td>
-					<td colspan="4"></td>
-					<td align="left" valign="middle">
+				</div>
+				<div style="display:block;padding:20px 0">
+					<?php $target_css_listthumbsize = $medialink_css['listthumbsize']; ?>
+					<select id="medialink_css_listthumbsize" name="medialink_css_listthumbsize">
+						<option <?php if ('40x40' == $target_css_listthumbsize)echo 'selected="selected"'; ?>>40x40</option>
+						<option <?php if ('60x60' == $target_css_listthumbsize)echo 'selected="selected"'; ?>>60x60</option>
+						<option <?php if ('80x80' == $target_css_listthumbsize)echo 'selected="selected"'; ?>>80x80</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin:20px 0; padding:10px; border:#CCC 2px solid">
+				<div style="display:block">
 					<?php _e('Background color', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_pc_linkstrcolor" name="medialink_css_pc_linkstrcolor" value="<?php echo $medialink_css['pc_linkstrcolor'] ?>" size="10" />
-					</td>
-					<td colspan="4"></td>
-					<td align="left" valign="middle">
+				</div>
+				<div style="display:block;padding:20px 0">
+					<input type="text" style="width: 100%;" id="medialink_css_linkbackcolor" name="medialink_css_linkbackcolor" value="<?php echo $medialink_css['linkbackcolor'] ?>" size="10" />
+				</div>
+			</div>
+
+			<div style="margin:20px 0; padding:10px; border:#CCC 2px solid">
+				<div style="display:block">
 					<?php _e('Text color', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listarrowcolor" name="medialink_css_sp_listarrowcolor" value="<?php echo $medialink_css['sp_listarrowcolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Color of the arrow', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listbackcolor" name="medialink_css_sp_listbackcolor" value="<?php echo $medialink_css['sp_listbackcolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Background color of the list', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_listpartitionlinecolor" name="medialink_css_sp_listpartitionlinecolor" value="<?php echo $medialink_css['sp_listpartitionlinecolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Background color of the partition line in the list', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navbackcolor" name="medialink_css_sp_navbackcolor" value="<?php echo $medialink_css['sp_navbackcolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Background color of the navigation', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navpartitionlinecolor" name="medialink_css_sp_navpartitionlinecolor" value="<?php echo $medialink_css['sp_navpartitionlinecolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Background color of the partition line in the navigation', 'medialink') ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4"></td>
-					<td align="center" valign="middle" colspan="4">
-						<input type="text" id="medialink_css_sp_navstrcolor" name="medialink_css_sp_navstrcolor" value="<?php echo $medialink_css['sp_navstrcolor'] ?>" size="10" />
-					</td>
-					<td align="left" valign="middle">
-					<?php _e('Text color navigation', 'medialink') ?>
-					</td>
-				</tr>
-			</tbody>
-			</table>
+				</div>
+				<div style="display:block;padding:20px 0">
+					<input type="text" style="width: 100%;" id="medialink_css_linkstrcolor" name="medialink_css_linkstrcolor" value="<?php echo $medialink_css['linkstrcolor'] ?>" size="10" />
+				</div>
+			</div>
 
-			<h2><?php _e('The default value for User Agent.', 'medialink') ?></h2>	
-			<table border="1" class="wp-list-table widefat fixed">
-			<tbody>
-				<tr>
-					<td align="center" valign="middle"><?php _e('Generate html', 'medialink'); ?></td>
-					<td align="center" valign="middle"><?php _e('Default'); ?></td>
-					<td align="center" valign="middle"><?php _e('Description'); ?></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle"><?php _e('for Pc or Tablet', 'medialink'); ?></td>
-					<td align="center" valign="middle">
-						<textarea id="medialink_useragent_tb" name="medialink_useragent_tb" rows="4" cols="120"><?php echo $medialink_useragent['tb'] ?></textarea>
+			<div style="clear:both"></div>
 
-					</td>
-					<td align="left" valign="middle" rowspan="2"><?php _e('| Specify separated by. Regular expression is possible.', 'medialink'); ?></td>
-				</tr>
-				<tr>
-					<td align="center" valign="middle"><?php _e('for Smartphone', 'medialink'); ?></td>
-					<td align="center" valign="middle">
-						<textarea id="medialink_useragent_sp" name="medialink_useragent_sp" rows="4" cols="120"><?php echo $medialink_useragent['sp'] ?></textarea>
-
-					</td>
-				</tr>
-			</tbody>
-			</table>
-
+			<input type="hidden" name="medialink_admin_tabs" value="8" />
 			<p class="submit">
 			  <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
 			</p>
+
+			</form>
+
 		</div>
 	  </div>
 
-	  <div id="tabs-4">
+	  <div id="medialink-admin-tabs-9">
 		<div class="wrap">
 		<h2><?php _e('Effect of Images', 'medialink'); ?></h2>
 			<h3><?php _e('It is possible to work with the following plugins. Please install.', 'medialink'); ?></h3>
@@ -1607,10 +1770,10 @@ class MediaLinkAdmin {
 		</div>
 	  </div>
 
-	  <div id="tabs-5">
+	  <div id="medialink-admin-tabs-10">
 		<div class="wrap">
 	<h3><?php _e('The to playback of video and music, that such as the next, .htaccess may be required to the directory containing the data file by the environment.', 'medialink') ?></h3>
-	<textarea readonly rows="23" cols="100">
+	<textarea readonly rows="23" style="width: 100%;">
 AddType video/mp4 mp4 m4v
 AddType video/webm webm
 AddType video/ogg ogv
@@ -1639,7 +1802,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 	  </div>
 
 	<!--
-	  <div id="tabs-6">
+	  <div id="medialink-admin-tabs-11">
 		<div class="wrap">
 		<h2>FAQ</h2>
 
@@ -1684,168 +1847,321 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 	/* ==================================================
 	 * Update wp_options table.
+	 * @param	string	$tabs
 	 * @since	4.4
 	 */
-	function options_updated(){
+	function options_updated($tabs){
 
-		$all_tbl = array(
-						'sort' => $_POST['medialink_all_sort'],
-						'display_pc' => $_POST['medialink_all_display_pc'],
-						'display_sp' => $_POST['medialink_all_display_sp'],
-						'image_show_size' => $_POST['medialink_all_image_show_size'],
-						'include_cat' => $_POST['medialink_all_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_all_generate_rssfeed'],
-						'rssname' => $_POST['medialink_all_rssname'],
-						'rssmax' => $_POST['medialink_all_rssmax'],
-						'filesize_show' => $_POST['medialink_all_filesize_show'],
-						'stamptime_show' => $_POST['medialink_all_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_all_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_all_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_all_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_all_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_all_rssicon_show'],
-						'credit_show' => $_POST['medialink_all_credit_show']
+		$all_reset_tbl = array(
+						'sort' => 'new',
+						'display' => 8, 	
+						'image_show_size' => 'Full',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_all_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Show',
+						'pagelinks_show' => 'Show',
+						'sortlinks_show' => 'Show',
+						'searchbox_show' => 'Show',
+						'rssicon_show' => 'Show',
+						'credit_show' => 'Show'
 					);
-		update_option( 'medialink_all', $all_tbl );
-
-		$album_tbl = array(
-						'sort' => $_POST['medialink_album_sort'],
-						'suffix_pc' => $_POST['medialink_album_suffix_pc'],
-						'suffix_sp' => $_POST['medialink_album_suffix_sp'],
-						'display_pc' => $_POST['medialink_album_display_pc'],
-						'display_sp' => $_POST['medialink_album_display_sp'],
-						'image_show_size' => $_POST['medialink_album_image_show_size'],
-						'include_cat' => $_POST['medialink_album_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_album_generate_rssfeed'],
-						'rssname' => $_POST['medialink_album_rssname'],
-						'rssmax' => $_POST['medialink_album_rssmax'],
-						'filesize_show' => $_POST['medialink_album_filesize_show'],
-						'stamptime_show' => $_POST['medialink_album_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_album_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_album_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_album_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_album_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_album_rssicon_show'],
-						'credit_show' => $_POST['medialink_album_credit_show']
+		$album_reset_tbl = array(
+						'sort' => 'new',
+						'suffix' => 'all',
+						'display' => 20, 	
+						'image_show_size' => 'Full',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_album_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Show',
+						'pagelinks_show' => 'Show',
+						'sortlinks_show' => 'Show',
+						'searchbox_show' => 'Show',
+						'rssicon_show' => 'Show',
+						'credit_show' => 'Show'
 					);
-		update_option( 'medialink_album', $album_tbl );
+		$movie_reset_tbl = array(
+						'sort' => 'new',
+						'suffix' => 'mp4',
+						'suffix_2' => 'ogv',
+						'suffix_flash' => 'mp4',
+						'display' => 8,
+						'thumbnail' => '',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_movie_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Show',
+						'pagelinks_show' => 'Show',
+						'sortlinks_show' => 'Show',
+						'searchbox_show' => 'Show',
+						'rssicon_show' => 'Show',
+						'credit_show' => 'Show'
+					);
+		$music_reset_tbl = array(
+						'sort' => 'new',
+						'suffix' => 'mp3',
+						'suffix_2' => 'ogg',
+						'suffix_flash' => 'mp3',
+						'display' => 8,
+						'thumbnail' => '',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_music_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Show',
+						'pagelinks_show' => 'Show',
+						'sortlinks_show' => 'Show',
+						'searchbox_show' => 'Show',
+						'rssicon_show' => 'Show',
+						'credit_show' => 'Show'
+					);
+		$slideshow_reset_tbl = array(
+						'sort' => 'new',
+						'suffix' => 'all',
+						'display' => 10,
+						'image_show_size' => 'Full',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_slideshow_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Hide',
+						'pagelinks_show' => 'Hide',
+						'sortlinks_show' => 'Hide',
+						'searchbox_show' => 'Hide',
+						'rssicon_show' => 'Hide',
+						'credit_show' => 'Show'
+					);
+		$document_reset_tbl = array(
+						'sort' => 'new',
+						'suffix' => 'all',
+						'display' => 20,
+						'thumbnail' => 'icon',
+						'generate_rssfeed' => 'on',
+						'rssname' => 'medialink_document_feed',
+						'rssmax' => 10,
+						'filesize_show' => 'Show',
+						'stamptime_show' => 'Show',
+						'archiveslinks_show' => 'Show',
+						'pagelinks_show' => 'Show',
+						'sortlinks_show' => 'Show',
+						'searchbox_show' => 'Show',
+						'rssicon_show' => 'Show',
+						'credit_show' => 'Show'
+					);
+		$css_reset_tbl = array(
+						'container' => '512x384',
+						'listthumbsize' => '40x40',
+						'linkstrcolor' => '#000000',
+						'linkbackcolor' => '#f6efe2'
+					);
 
-		$movie_tbl = array(
-						'sort' => $_POST['medialink_movie_sort'],
-						'suffix_pc' => $_POST['medialink_movie_suffix_pc'],
-						'suffix_pc2' => $_POST['medialink_movie_suffix_pc2'],
-						'suffix_flash' => $_POST['medialink_movie_suffix_flash'],
-						'suffix_sp' => $_POST['medialink_movie_suffix_sp'],
-						'display_pc' => $_POST['medialink_movie_display_pc'],
-						'display_sp' => $_POST['medialink_movie_display_sp'],
-						'thumbnail' => $_POST['medialink_movie_thumbnail'],
-						'include_cat' => $_POST['medialink_movie_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_movie_generate_rssfeed'],
-						'rssname' => $_POST['medialink_movie_rssname'],
-						'rssmax' => $_POST['medialink_movie_rssmax'],
-						'container' => $_POST['medialink_movie_container'],
-						'filesize_show' => $_POST['medialink_movie_filesize_show'],
-						'stamptime_show' => $_POST['medialink_movie_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_movie_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_movie_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_movie_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_movie_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_movie_rssicon_show'],
-						'credit_show' => $_POST['medialink_movie_credit_show']
-						);
-		update_option( 'medialink_movie', $movie_tbl );
+		switch ($tabs) {
+			case 1:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_all', $all_reset_tbl );
+					update_option( 'medialink_album', $album_reset_tbl );
+					update_option( 'medialink_movie', $movie_reset_tbl );
+					update_option( 'medialink_music', $music_reset_tbl );
+					update_option( 'medialink_slideshow', $slideshow_reset_tbl );
+					update_option( 'medialink_document', $document_reset_tbl );
+					update_option( 'medialink_css', $css_reset_tbl );
+				}
+				break;
+			case 2:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_all', $all_reset_tbl );
+				} else {
+					$all_tbl = array(
+									'sort' => $_POST['medialink_all_sort'],
+									'display' => $_POST['medialink_all_display'],
+									'image_show_size' => $_POST['medialink_all_image_show_size'],
+									'generate_rssfeed' => $_POST['medialink_all_generate_rssfeed'],
+									'rssname' => $_POST['medialink_all_rssname'],
+									'rssmax' => $_POST['medialink_all_rssmax'],
+									'filesize_show' => $_POST['medialink_all_filesize_show'],
+									'stamptime_show' => $_POST['medialink_all_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_all_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_all_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_all_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_all_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_all_rssicon_show'],
+									'credit_show' => $_POST['medialink_all_credit_show']
+								);
+					update_option( 'medialink_all', $all_tbl );
+				}
+				break;
+			case 3:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_album', $album_reset_tbl );
+				} else {
+					$album_tbl = array(
+									'sort' => $_POST['medialink_album_sort'],
+									'suffix' => $_POST['medialink_album_suffix'],
+									'display' => $_POST['medialink_album_display'],
+									'image_show_size' => $_POST['medialink_album_image_show_size'],
+									'generate_rssfeed' => $_POST['medialink_album_generate_rssfeed'],
+									'rssname' => $_POST['medialink_album_rssname'],
+									'rssmax' => $_POST['medialink_album_rssmax'],
+									'filesize_show' => $_POST['medialink_album_filesize_show'],
+									'stamptime_show' => $_POST['medialink_album_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_album_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_album_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_album_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_album_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_album_rssicon_show'],
+									'credit_show' => $_POST['medialink_album_credit_show']
+								);
+					update_option( 'medialink_album', $album_tbl );
+				}
+				break;
+			case 4:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_movie', $movie_reset_tbl );
+				} else {
+					$movie_tbl = array(
+									'sort' => $_POST['medialink_movie_sort'],
+									'suffix' => $_POST['medialink_movie_suffix'],
+									'suffix_2' => $_POST['medialink_movie_suffix_2'],
+									'suffix_flash' => $_POST['medialink_movie_suffix_flash'],
+									'display' => $_POST['medialink_movie_display'],
+									'thumbnail' => $_POST['medialink_movie_thumbnail'],
+									'generate_rssfeed' => $_POST['medialink_movie_generate_rssfeed'],
+									'rssname' => $_POST['medialink_movie_rssname'],
+									'rssmax' => $_POST['medialink_movie_rssmax'],
+									'filesize_show' => $_POST['medialink_movie_filesize_show'],
+									'stamptime_show' => $_POST['medialink_movie_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_movie_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_movie_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_movie_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_movie_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_movie_rssicon_show'],
+									'credit_show' => $_POST['medialink_movie_credit_show']
+								);
+					update_option( 'medialink_movie', $movie_tbl );
+				}
+				break;
+			case 5:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_music', $music_reset_tbl );
+				} else {
+					$music_tbl = array(
+									'sort' => $_POST['medialink_music_sort'],
+									'suffix' => $_POST['medialink_music_suffix'],
+									'suffix_2' => $_POST['medialink_music_suffix_2'],
+									'suffix_flash' => $_POST['medialink_music_suffix_flash'],
+									'display' => $_POST['medialink_music_display'],
+									'thumbnail' => $_POST['medialink_music_thumbnail'],
+									'generate_rssfeed' => $_POST['medialink_music_generate_rssfeed'],
+									'rssname' => $_POST['medialink_music_rssname'],
+									'rssmax' => $_POST['medialink_music_rssmax'],
+									'filesize_show' => $_POST['medialink_music_filesize_show'],
+									'stamptime_show' => $_POST['medialink_music_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_music_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_music_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_music_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_music_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_music_rssicon_show'],
+									'credit_show' => $_POST['medialink_music_credit_show']
+								);
+					update_option( 'medialink_music', $music_tbl );
+				}
+				break;
+			case 6:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_slideshow', $slideshow_reset_tbl );
+				} else {
+					$slideshow_tbl = array(
+									'sort' => $_POST['medialink_slideshow_sort'],
+									'suffix' => $_POST['medialink_slideshow_suffix'],
+									'display' => $_POST['medialink_slideshow_display'],
+									'image_show_size' => $_POST['medialink_slideshow_image_show_size'],
+									'generate_rssfeed' => $_POST['medialink_slideshow_generate_rssfeed'],
+									'rssname' => $_POST['medialink_slideshow_rssname'],
+									'rssmax' => $_POST['medialink_slideshow_rssmax'],
+									'filesize_show' => $_POST['medialink_slideshow_filesize_show'],
+									'stamptime_show' => $_POST['medialink_slideshow_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_slideshow_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_slideshow_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_slideshow_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_slideshow_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_slideshow_rssicon_show'],
+									'credit_show' => $_POST['medialink_slideshow_credit_show']
+								);
+					update_option( 'medialink_slideshow', $slideshow_tbl );
+				}
+				break;
+			case 7:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_document', $document_reset_tbl );
+				} else {
+					$document_tbl = array(
+									'sort' => $_POST['medialink_document_sort'],
+									'suffix' => $_POST['medialink_document_suffix'],
+									'display' => $_POST['medialink_document_display'],
+									'thumbnail' => $_POST['medialink_document_thumbnail'],
+									'generate_rssfeed' => $_POST['medialink_document_generate_rssfeed'],
+									'rssname' => $_POST['medialink_document_rssname'],
+									'rssmax' => $_POST['medialink_document_rssmax'],
+									'filesize_show' => $_POST['medialink_document_filesize_show'],
+									'stamptime_show' => $_POST['medialink_document_stamptime_show'],
+									'archiveslinks_show' => $_POST['medialink_document_archiveslinks_show'],
+									'pagelinks_show' => $_POST['medialink_document_pagelinks_show'],
+									'sortlinks_show' => $_POST['medialink_document_sortlinks_show'],
+									'searchbox_show' => $_POST['medialink_document_searchbox_show'],
+									'rssicon_show' => $_POST['medialink_document_rssicon_show'],
+									'credit_show' => $_POST['medialink_document_credit_show']
+								);
+					update_option( 'medialink_document', $document_tbl );
+				}
+				break;
+			case 8:
+				if ( !empty($_POST['Default']) ) {
+					update_option( 'medialink_css', $css_reset_tbl );
+				} else {
+					$css_tbl = array(
+									'container' => $_POST['medialink_css_container'],
+									'listthumbsize' => $_POST['medialink_css_listthumbsize'],
+									'linkstrcolor' => $_POST['medialink_css_linkstrcolor'],
+									'linkbackcolor' => $_POST['medialink_css_linkbackcolor']
+								);
+					update_option( 'medialink_css', $css_tbl );
+				}
+				break;
+		}
 
-		$music_tbl = array(
-						'sort' => $_POST['medialink_music_sort'],
-						'suffix_pc' => $_POST['medialink_music_suffix_pc'],
-						'suffix_pc2' => $_POST['medialink_music_suffix_pc2'],
-						'suffix_flash' => $_POST['medialink_music_suffix_flash'],
-						'suffix_sp' => $_POST['medialink_music_suffix_sp'],
-						'display_pc' => $_POST['medialink_music_display_pc'],
-						'display_sp' => $_POST['medialink_music_display_sp'],
-						'thumbnail' => $_POST['medialink_music_thumbnail'],
-						'include_cat' => $_POST['medialink_music_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_music_generate_rssfeed'],
-						'rssname' => $_POST['medialink_music_rssname'],
-						'rssmax' => $_POST['medialink_music_rssmax'],
-						'filesize_show' => $_POST['medialink_music_filesize_show'],
-						'stamptime_show' => $_POST['medialink_music_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_music_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_music_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_music_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_music_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_music_rssicon_show'],
-						'credit_show' => $_POST['medialink_music_credit_show']
-						);
-		update_option( 'medialink_music', $music_tbl );
+	}
 
-		$slideshow_tbl = array(
-						'sort' => $_POST['medialink_slideshow_sort'],
-						'suffix_pc' => $_POST['medialink_slideshow_suffix_pc'],
-						'suffix_sp' => $_POST['medialink_slideshow_suffix_sp'],
-						'display_pc' => $_POST['medialink_slideshow_display_pc'],
-						'display_sp' => $_POST['medialink_slideshow_display_sp'],
-						'image_show_size' => $_POST['medialink_slideshow_image_show_size'],
-						'include_cat' => $_POST['medialink_slideshow_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_slideshow_generate_rssfeed'],
-						'rssname' => $_POST['medialink_slideshow_rssname'],
-						'rssmax' => $_POST['medialink_slideshow_rssmax'],
-						'filesize_show' => $_POST['medialink_slideshow_filesize_show'],
-						'stamptime_show' => $_POST['medialink_slideshow_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_slideshow_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_slideshow_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_slideshow_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_slideshow_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_slideshow_rssicon_show'],
-						'credit_show' => $_POST['medialink_slideshow_credit_show']
-						);
-		update_option( 'medialink_slideshow', $slideshow_tbl );
+	/* ==================================================
+	 * Add js css
+	 * @since	2.0
+	 */
+	function add_jscss(){
 
-		$document_tbl = array(
-						'sort' => $_POST['medialink_document_sort'],
-						'suffix_pc' => $_POST['medialink_document_suffix_pc'],
-						'suffix_sp' => $_POST['medialink_document_suffix_sp'],
-						'display_pc' => $_POST['medialink_document_display_pc'],
-						'display_sp' => $_POST['medialink_document_display_sp'],
-						'thumbnail' => $_POST['medialink_document_thumbnail'],
-						'include_cat' => $_POST['medialink_document_include_cat'],
-						'generate_rssfeed' => $_POST['medialink_document_generate_rssfeed'],
-						'rssname' => $_POST['medialink_document_rssname'],
-						'rssmax' => $_POST['medialink_document_rssmax'],
-						'filesize_show' => $_POST['medialink_document_filesize_show'],
-						'stamptime_show' => $_POST['medialink_document_stamptime_show'],
-						'categorylinks_show' => $_POST['medialink_document_categorylinks_show'],
-						'pagelinks_show' => $_POST['medialink_document_pagelinks_show'],
-						'sortlinks_show' => $_POST['medialink_document_sortlinks_show'],
-						'searchbox_show' => $_POST['medialink_document_searchbox_show'],
-						'rssicon_show' => $_POST['medialink_document_rssicon_show'],
-						'credit_show' => $_POST['medialink_document_credit_show']
-						);
-		update_option( 'medialink_document', $document_tbl );
+// JS
+$medialink_add_jscss = <<<MEDIALINK
 
-		$exclude_tbl = array(
-						'cat' => stripslashes($_POST['medialink_exclude_cat'])
-						);
-		update_option( 'medialink_exclude', $exclude_tbl );
+<!-- BEGIN: MediaLink -->
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery('#medialink-admin-tabs').responsiveTabs({
+			startCollapsed: 'accordion'
+		});
+	});
+</script>
+<!-- END: MEDIALINK -->
 
-		$css_tbl = array(
-						'pc_listthumbsize' => $_POST['medialink_css_pc_listthumbsize'],
-						'pc_linkstrcolor' => $_POST['medialink_css_pc_linkstrcolor'],
-						'pc_linkbackcolor' => $_POST['medialink_css_pc_linkbackcolor'],
-						'sp_navstrcolor' => $_POST['medialink_css_sp_navstrcolor'],
-						'sp_navbackcolor' => $_POST['medialink_css_sp_navbackcolor'],
-						'sp_navpartitionlinecolor' => $_POST['medialink_css_sp_navpartitionlinecolor'],
-						'sp_listbackcolor' => $_POST['medialink_css_sp_listbackcolor'],
-						'sp_listarrowcolor' => $_POST['medialink_css_sp_listarrowcolor'],
-						'sp_listpartitionlinecolor' => $_POST['medialink_css_sp_listpartitionlinecolor']
-						);
-		update_option( 'medialink_css', $css_tbl );
+MEDIALINK;
 
-		$useragent_tbl = array(
-						'tb' => stripslashes($_POST['medialink_useragent_tb']),
-						'sp' => stripslashes($_POST['medialink_useragent_sp'])
-						);
-		update_option( 'medialink_useragent', $useragent_tbl );
+		return $medialink_add_jscss;
 
 	}
 
