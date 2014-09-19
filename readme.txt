@@ -4,11 +4,11 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 6.1
+Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-MediaLink outputs as a gallery from the media library(image and music and video and document). Support the classification of the category.
+MediaLink outputs as a gallery from the media library(image and music and video and document).
 
 == Description ==
 
@@ -57,6 +57,9 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.2 =
+Removed unnecessary code.
 
 = 6.1 =
 Stopped the support of Flash.
@@ -321,6 +324,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.2 =
 = 6.1 =
 = 6.0 =
 = 5.3 =
