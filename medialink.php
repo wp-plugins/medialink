@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 6.2
+Version: 6.3
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -513,9 +513,17 @@ MUSICPLAYERCONTAINER;
 	$searchform_begin = '<div align="center">';
 	$searchform_end = '</div>';
 
-	$html .= $linkfiles_begin;
-	$html .= $linkfiles;
-	$html .= $linkfiles_end;
+	$simplemasonry_apply = get_post_meta( get_the_ID(), 'simplemasonry_apply' );
+	if ($set === 'album' && class_exists('SimpleMasonry') && !empty($simplemasonry_apply) && $simplemasonry_apply[0] === 'true'){
+		// for Simple Masonry Gallery http://wordpress.org/plugins/simple-masonry-gallery/
+		$html = apply_filters( 'album_medialink', $linkfiles );
+	} else if ($set === 'slideshow'){
+		$html = apply_filters( 'slideshow_medialink', $linkfiles );
+	} else {
+		$html .= $linkfiles_begin;
+		$html .= $linkfiles;
+		$html .= $linkfiles_end;
+	}
 
 	if ( $archiveslinks_show === 'Show' ) {
 		$html .= $archiveselectbox_begin;

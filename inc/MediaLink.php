@@ -189,8 +189,14 @@ class MediaLink {
 				$linkfile = '<li><a href="'.$imgshowlink.'" title="'.$title.$metadata.'">'.$thumblink.$title.'<div style="font-size: small;">'.$metadata.'</div></a></li>';
 			} else {
 				$thumblink = '<img src="'.$thumblink.'" alt="'.$title.$metadata.'" title="'.$title.$metadata.'">';
-				if ($this->set === 'slideshow'){
+				$simplenivoslider_apply = get_post_meta( get_the_ID(), 'simplenivoslider_apply' );
+				$simplemasonry_apply = get_post_meta( get_the_ID(), 'simplemasonry_apply' );
+				if ($this->set === 'slideshow' && class_exists('SimpleNivoSlider') && !empty($simplenivoslider_apply) && $simplenivoslider_apply[0] === 'true'){
+					// for Simple Nivo Slider http://wordpress.org/plugins/simple-nivoslider/
 					$linkfile = '<img src="'.$imgshowlink.'" alt="'.$title.'" title="'.$title.$metadata.'">';
+				} else if ($this->set === 'album' && class_exists('SimpleMasonry') && !empty($simplemasonry_apply) && $simplemasonry_apply[0] === 'true'){
+					// for Simple Masonry Gallery http://wordpress.org/plugins/simple-masonry-gallery/
+					$linkfile = '<a href="'.$imgshowlink.'" title="'.$title.$metadata.'"><img src="'.$imgshowlink.'" alt="'.$title.'" title="'.$title.$metadata.'"></a>';
 				} else {
 					$linkfile = '<a href="'.$imgshowlink.'" title="'.$title.$metadata.'">'.$thumblink.'</a>';
 				}

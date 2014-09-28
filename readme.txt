@@ -4,7 +4,7 @@ Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 6.2
+Stable tag: 6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,10 +24,11 @@ Bundled software and function
 
 *   HTML5 player (video, music)
 *   Create RSS feeds of data (XML). It support to the podcast.
-*   Work with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
-*   Work with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
+*   Works with [Boxers and Swipers](http://wordpress.org/plugins/boxers-and-swipers/).
+*   Works with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
+*   Works with [Simple Masonry Gallery](http://wordpress.org/plugins/simple-masonry-gallery/).
 
-    [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo4(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo5(Slideshow)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo6(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
+    [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Images with Simple Masonry Gallery)](http://gallerylink.nyanko.org/medialink/masonry/):::[Demo4(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo5(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo6(Slideshow with Simple NivoSlider)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo7(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
 
 Translators
 
@@ -57,6 +58,10 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.3 =
+Fixed the problem of with Simple NivoSlider.
+Works with Simple Masonry Gallery.
 
 = 6.2 =
 Removed unnecessary code.
@@ -324,6 +329,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.3 =
 = 6.2 =
 = 6.1 =
 = 6.0 =
