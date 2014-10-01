@@ -1701,6 +1701,7 @@ class MediaLinkAdmin {
 			<h3><?php _e('It is possible to work with the following plugins. Please install.', 'medialink'); ?></h3>
 			<li><a href="<?php echo get_admin_url().'plugin-install.php?tab=search&s=Boxers+and+Swipers'; ?>">Boxers and Swipers</a></li>
 			<li><a href="<?php echo get_admin_url().'plugin-install.php?tab=search&s=Simple+NivoSlider'; ?>">Simple NivoSlider</a></li>
+			<li><a href="<?php echo get_admin_url().'plugin-install.php?tab=search&s=Simple+Masonry+Gallery'; ?>">Simple Masonry Gallery</a></li>
 			<h3><?php _e('In addition, offer the following filters. This filter passes the html that is generated.', 'medialink'); ?></h3>
 			<li><code>post_medialink</code></li>
 		</div>
