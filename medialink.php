@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 6.4
+Version: 6.5
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -467,7 +467,7 @@ $musicplayercontainer = <<<MUSICPLAYERCONTAINER
 MUSICPLAYERCONTAINER;
 
 	wp_enqueue_style( 'for medialink',  MEDIALINK_PLUGIN_URL.'/css/medialink.css' );
-	wp_enqueue_script( 'jquery' );
+
 	if ( $set === 'all' ){
 		if( !empty($selectedfilename) ) { $html .= '<h2>'.$selectedfilename.'</h2>'; }
 	} else {
