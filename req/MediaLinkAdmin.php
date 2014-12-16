@@ -2081,11 +2081,9 @@ $medialink_add_jscss = <<<MEDIALINK
 
 <!-- BEGIN: MediaLink -->
 <script type="text/javascript">
-	jQuery(document).ready(function () {
-		jQuery('#medialink-admin-tabs').responsiveTabs({
-			startCollapsed: 'accordion'
-		});
-	});
+jQuery('#medialink-admin-tabs').responsiveTabs({
+  startCollapsed: 'accordion'
+});
 </script>
 <!-- END: MEDIALINK -->
 
