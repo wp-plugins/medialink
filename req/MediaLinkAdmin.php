@@ -276,6 +276,23 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
+					<td align="center" valign="middle">exif_show</td>
+					<td align="center" valign="middle">
+					<?php
+					if ( empty($medialink_all['exif_show']) ) {
+						$target_all_exif_show = 'Hide';
+					} else {
+						$target_all_exif_show = $medialink_all['exif_show'];
+					}
+					?>
+					<select id="medialink_all_exif_show" name="medialink_all_exif_show">
+						<option <?php if ('Show' == $target_all_exif_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_all_exif_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">Exif</td>
+				</tr>
+				<tr>
 					<td align="center" valign="middle">archiveslinks_show</td>
 					<td align="center" valign="middle">
 					<?php $target_all_archiveslinks_show = $medialink_all['archiveslinks_show']; ?>
@@ -520,6 +537,23 @@ class MediaLinkAdmin {
 					<td align="left" valign="middle">
 					<?php _e('Date Time', 'medialink') ?>
 					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">exif_show</td>
+					<td align="center" valign="middle">
+					<?php
+					if ( empty($medialink_album['exif_show']) ) {
+						$target_album_exif_show = 'Hide';
+					} else {
+						$target_album_exif_show = $medialink_album['exif_show'];
+					}
+					?>
+					<select id="medialink_album_exif_show" name="medialink_album_exif_show">
+						<option <?php if ('Show' == $target_album_exif_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_album_exif_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">Exif</td>
 				</tr>
 				<tr>
 					<td align="center" valign="middle">archiveslinks_show</td>
@@ -1277,6 +1311,23 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
+					<td align="center" valign="middle">exif_show</td>
+					<td align="center" valign="middle">
+					<?php
+					if ( empty($medialink_slideshow['exif_show']) ) {
+						$target_slideshow_exif_show = 'Hide';
+					} else {
+						$target_slideshow_exif_show = $medialink_slideshow['exif_show'];
+					}
+					?>
+					<select id="medialink_slideshow_exif_show" name="medialink_slideshow_exif_show">
+						<option <?php if ('Show' == $target_slideshow_exif_show)echo 'selected="selected"'; ?>>Show</option>
+						<option <?php if ('Hide' == $target_slideshow_exif_show)echo 'selected="selected"'; ?>>Hide</option>
+					</select>
+					</td>
+					<td align="left" valign="middle">Exif</td>
+				</tr>
+				<tr>
 					<td align="center" valign="middle">archiveslinks_show</td>
 					<td align="center" valign="middle">
 					<?php $target_slideshow_archiveslinks_show = $medialink_slideshow['archiveslinks_show']; ?>
@@ -1797,6 +1848,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'rssmax' => 10,
 						'filesize_show' => 'Show',
 						'stamptime_show' => 'Show',
+						'exif_show' => 'Show',
 						'archiveslinks_show' => 'Show',
 						'pagelinks_show' => 'Show',
 						'sortlinks_show' => 'Show',
@@ -1814,6 +1866,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'rssmax' => 10,
 						'filesize_show' => 'Show',
 						'stamptime_show' => 'Show',
+						'exif_show' => 'Show',
 						'archiveslinks_show' => 'Show',
 						'pagelinks_show' => 'Show',
 						'sortlinks_show' => 'Show',
@@ -1867,6 +1920,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 						'rssmax' => 10,
 						'filesize_show' => 'Show',
 						'stamptime_show' => 'Show',
+						'exif_show' => 'Show',
 						'archiveslinks_show' => 'Hide',
 						'pagelinks_show' => 'Hide',
 						'sortlinks_show' => 'Hide',
@@ -1922,6 +1976,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 									'rssmax' => $_POST['medialink_all_rssmax'],
 									'filesize_show' => $_POST['medialink_all_filesize_show'],
 									'stamptime_show' => $_POST['medialink_all_stamptime_show'],
+									'exif_show' => $_POST['medialink_all_exif_show'],
 									'archiveslinks_show' => $_POST['medialink_all_archiveslinks_show'],
 									'pagelinks_show' => $_POST['medialink_all_pagelinks_show'],
 									'sortlinks_show' => $_POST['medialink_all_sortlinks_show'],
@@ -1946,6 +2001,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 									'rssmax' => $_POST['medialink_album_rssmax'],
 									'filesize_show' => $_POST['medialink_album_filesize_show'],
 									'stamptime_show' => $_POST['medialink_album_stamptime_show'],
+									'exif_show' => $_POST['medialink_album_exif_show'],
 									'archiveslinks_show' => $_POST['medialink_album_archiveslinks_show'],
 									'pagelinks_show' => $_POST['medialink_album_pagelinks_show'],
 									'sortlinks_show' => $_POST['medialink_album_sortlinks_show'],
@@ -2020,6 +2076,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 									'rssmax' => $_POST['medialink_slideshow_rssmax'],
 									'filesize_show' => $_POST['medialink_slideshow_filesize_show'],
 									'stamptime_show' => $_POST['medialink_slideshow_stamptime_show'],
+									'exif_show' => $_POST['medialink_slideshow_exif_show'],
 									'archiveslinks_show' => $_POST['medialink_slideshow_archiveslinks_show'],
 									'pagelinks_show' => $_POST['medialink_slideshow_pagelinks_show'],
 									'sortlinks_show' => $_POST['medialink_slideshow_sortlinks_show'],

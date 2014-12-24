@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 6.6
+Version: 6.7
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://gallerylink.nyanko.org/medialink/
@@ -78,6 +78,7 @@ function medialink_func( $atts, $html = NULL ) {
         'rssmax'  => '',
         'filesize_show'  => '',
         'stamptime_show'  => '',
+        'exif_show'  => '',
         'archiveslinks_show'  => '',
         'pagelinks_show'  => '',
         'sortlinks_show'  => '',
@@ -121,6 +122,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssmax) ) { $rssmax = intval($medialink_all['rssmax']); }
 		if( empty($filesize_show) ) { $filesize_show = $medialink_all['filesize_show']; }
 		if( empty($stamptime_show) ) { $stamptime_show = $medialink_all['stamptime_show']; }
+		if( empty($exif_show) && !empty($medialink_all['exif_show']) ) { $exif_show = $medialink_all['exif_show']; }
 		if( empty($archiveslinks_show) ) { $archiveslinks_show = $medialink_all['archiveslinks_show']; }
 		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_all['pagelinks_show']; }
 		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_all['sortlinks_show']; }
@@ -152,6 +154,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssmax) ) { $rssmax = intval($medialink_album['rssmax']); }
 		if( empty($filesize_show) ) { $filesize_show = $medialink_album['filesize_show']; }
 		if( empty($stamptime_show) ) { $stamptime_show = $medialink_album['stamptime_show']; }
+		if( empty($exif_show) && !empty($medialink_album['exif_show']) ) { $exif_show = $medialink_album['exif_show']; }
 		if( empty($archiveslinks_show) ) { $archiveslinks_show = $medialink_album['archiveslinks_show']; }
 		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_album['pagelinks_show']; }
 		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_album['sortlinks_show']; }
@@ -231,6 +234,7 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($rssmax) ) { $rssmax = intval($medialink_slideshow['rssmax']); }
 		if( empty($filesize_show) ) { $filesize_show = $medialink_slideshow['filesize_show']; }
 		if( empty($stamptime_show) ) { $stamptime_show = $medialink_slideshow['stamptime_show']; }
+		if( empty($exif_show) && !empty($medialink_slideshow['exif_show']) ) { $exif_show = $medialink_slideshow['exif_show']; }
 		if( empty($archiveslinks_show) ) { $archiveslinks_show = $medialink_slideshow['archiveslinks_show']; }
 		if( empty($pagelinks_show) ) { $pagelinks_show = $medialink_slideshow['pagelinks_show']; }
 		if( empty($sortlinks_show) ) { $sortlinks_show = $medialink_slideshow['sortlinks_show']; }
@@ -312,6 +316,7 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink->sort = $sort;
 	$medialink->filesize_show = $filesize_show;
 	$medialink->stamptime_show = $stamptime_show;
+	$medialink->exif_show = $exif_show;
 
 	$files = array();
 	$titles = array();

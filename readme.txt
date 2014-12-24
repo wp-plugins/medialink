@@ -3,8 +3,8 @@ Contributors: Katsushi Kawamori
 Donate link: http://gallerylink.nyanko.org/medialink/
 Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
-Tested up to: 4.0.1
-Stable tag: 6.6
+Tested up to: 4.1
+Stable tag: 6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.7 =
+Supports display of Exif.
 
 = 6.6 =
 Fixed a problem of Java Script for admin screen.
@@ -338,6 +341,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.7 =
 = 6.6 =
 = 6.5 =
 = 6.4 =

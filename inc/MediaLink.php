@@ -38,6 +38,7 @@ class MediaLink {
 	public $sort;
 	public $filesize_show;
 	public $stamptime_show;
+	public $exif_show;
 
 	/* ==================================================
 	 * @param	array	$attachments
@@ -88,18 +89,58 @@ class MediaLink {
 				$view_datetime = NULL;
 				$view_file_size = NULL;
 				$length = NULL;
+				$exifdata = NULL;
 				$metadata = NULL;
-				if ( $this->filesize_show === 'Show' || $this->stamptime_show === 'Show' ) {
+				if ( $this->filesize_show === 'Show' || $this->stamptime_show === 'Show' || $this->exif_show === 'Show' ) {
 					if ( $this->filesize_show === 'Show' ) {
-						$view_file_size = '&nbsp;&nbsp;'.size_format($file_size);
+						$view_file_size = ' '.size_format($file_size);
 						if ( $ext2type === 'audio' || $ext2type === 'video' && isset( $attachment_metadata['length_formatted']) ) {
-							$length = '&nbsp;&nbsp;'.$attachment_metadata['length_formatted'];
+							$length = ' '.$attachment_metadata['length_formatted'];
 						}
 					}
 					if ( $this->stamptime_show === 'Show' ) {
 						$view_datetime = $datetime;
 					}
-					$metadata = $view_datetime.$view_file_size.$length;
+					if ( $this->exif_show === 'Show' ) {
+						if ( $ext2type === 'image' ) {
+							$exifdatas = wp_get_attachment_metadata( $attachment->ID, FALSE );
+							if ( $exifdatas ) {
+								if ( $exifdatas['image_meta']['title'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['title'];
+								}
+								if ( $exifdatas['image_meta']['credit'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['credit'];
+								}
+								if ( $exifdatas['image_meta']['camera'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['camera'];
+								}
+								if ( $exifdatas['image_meta']['caption'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['caption'];
+								}
+								$exif_ux_time = $exifdatas['image_meta']['created_timestamp'];
+								if ( !empty($exif_ux_time) ) {
+									$exifdata .= ' '.date_i18n( "Y-m-d H:i:s", $exif_ux_time, FALSE );
+								}
+								if ( $exifdatas['image_meta']['copyright'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['copyright'];
+								}
+								if ( $exifdatas['image_meta']['aperture'] ) {
+									$exifdata .= ' f/'.$exifdatas['image_meta']['aperture'];
+								}
+								if ( $exifdatas['image_meta']['shutter_speed'] ) {
+									$shutter = 1 / $exifdatas['image_meta']['shutter_speed'];
+									$exifdata .= ' 1/'.$shutter.'s';
+								}
+								if ( $exifdatas['image_meta']['iso'] ) {
+									$exifdata .= ' ISO-'.$exifdatas['image_meta']['iso'];
+								}
+								if ( $exifdatas['image_meta']['focal_length'] ) {
+									$exifdata .= ' '.$exifdatas['image_meta']['focal_length'].'mm';
+								}
+							}
+						}
+					}
+					$metadata = $view_datetime.$view_file_size.$length.$exifdata;
 				}
 
 				$thumblink = NULL;
@@ -265,11 +306,11 @@ class MediaLink {
 		$displaylast = __('last page', 'medialink');
 		if( $this->maxpage > 1 ){
 			if( $this->page == 1 ){
-				$linkpages = $this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
+				$linkpages = $this->page.'/'.$this->maxpage.'<a class="next" title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
 			}else if( $this->page == $this->maxpage ){
 				$linkpages = '<a title="'.$displayfirst.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage;
 			}else{
-				$linkpages = '<a title="'.$displayfirst.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage.'<a title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
+				$linkpages = '<a title="'.$displayfirst.'" href="'.$new_query1.'">&laquo;</a> <a title="'.$displayprev.'" href="'.$new_query2.'">&lsaquo;</a>'.$this->page.'/'.$this->maxpage.'<a class="next" title="'.$displaynext.'" href="'.$new_query3.'">&rsaquo;</a> <a title="'.$displaylast.'" href="'.$new_query4.'">&raquo;</a>';
 			}
 		}
 
