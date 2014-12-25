@@ -128,8 +128,12 @@ class MediaLink {
 									$exifdata .= ' f/'.$exifdatas['image_meta']['aperture'];
 								}
 								if ( $exifdatas['image_meta']['shutter_speed'] ) {
-									$shutter = 1 / $exifdatas['image_meta']['shutter_speed'];
-									$exifdata .= ' 1/'.$shutter.'s';
+									if ( $exifdatas['image_meta']['shutter_speed'] < 1 ) {
+										$shutter = round( 1 / $exifdatas['image_meta']['shutter_speed'] );
+										$exifdata .= ' 1/'.$shutter.'sec';
+									} else {
+										$exifdata .= ' '.$exifdatas['image_meta']['shutter_speed'].'sec';
+									}
 								}
 								if ( $exifdatas['image_meta']['iso'] ) {
 									$exifdata .= ' ISO-'.$exifdatas['image_meta']['iso'];
