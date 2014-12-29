@@ -99,7 +99,7 @@ class MediaLink {
 						}
 					}
 					if ( $this->stamptime_show === 'Show' ) {
-						$view_datetime = $datetime;
+						$view_datetime = ' '.$datetime;
 					}
 					if ( $this->exif_show === 'Show' ) {
 						if ( $ext2type === 'image' ) {
