@@ -1,10 +1,10 @@
 === MediaLink ===
 Contributors: Katsushi Kawamori
-Donate link: http://gallerylink.nyanko.org/medialink/
+Donate link: http://pledgie.com/campaigns/28307
 Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 4.1
-Stable tag: 6.9
+Stable tag: 6.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,12 +28,12 @@ Bundled software and function
 *   Works with [Simple NivoSlider](http://wordpress.org/plugins/simple-nivoslider/).
 *   Works with [Simple Masonry Gallery](http://wordpress.org/plugins/simple-masonry-gallery/).
 
-    [Demo1(All Data)](http://gallerylink.nyanko.org/medialink/all-data/):::[Demo2(Images)](http://gallerylink.nyanko.org/medialink/album/):::[Demo3(Images with Simple Masonry Gallery)](http://gallerylink.nyanko.org/medialink/masonry/):::[Demo4(Video)](http://gallerylink.nyanko.org/medialink/movie/):::[Demo5(Music)](http://gallerylink.nyanko.org/medialink/music/):::[Demo6(Slideshow with Simple NivoSlider)](http://gallerylink.nyanko.org/medialink/slideshow/):::[Demo7(Documents)](http://gallerylink.nyanko.org/medialink/documents/)
+    [Demo1(All Data)](http://riverforest-wp.info/medialink-all-data/):::[Demo2(Images)](http://riverforest-wp.info/medialink-album/):::[Demo3(Images with Simple Masonry Gallery)](http://riverforest-wp.info/medialink-masonry/):::[Demo4(Video)](http://riverforest-wp.info/medialink-movie/):::[Demo5(Music)](http://riverforest-wp.info/medialink-music/):::[Demo6(Slideshow with Simple NivoSlider)](http://riverforest-wp.info/medialink-slideshow/):::[Demo7(Documents)](http://riverforest-wp.info/medialink-documents/)
 
 Translators
 
 *   Serbo-Croatian (sr_RS) - Borisa Djuraskovic. I want to thank Borisa Djuraskovic and his [company](http://www.webhostinghub.com).
-*   Japanese (ja) - [Katsushi Kawamori](http://gallerylink.nyanko.org/medialink/)
+*   Japanese (ja) - [Katsushi Kawamori](http://riverforest-wp.info/)
 
 == Installation ==
 
@@ -58,6 +58,12 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 6.10 =
+Add screen of donate.
+Change the display of the message.
+Change readme.txt.
+Change /languages.
 
 = 6.9 =
 Fixed a problem of display of title.
@@ -347,6 +353,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 6.10 =
 = 6.9 =
 = 6.8 =
 = 6.7 =
