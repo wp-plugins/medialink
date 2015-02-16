@@ -10,6 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.7\n"
 
+msgid "MediaLink outputs as a gallery from the media library(image and music and video and document)."
+msgstr ""
+
 msgid "first page"
 msgstr ""
 

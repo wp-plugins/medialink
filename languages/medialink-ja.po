@@ -11,6 +11,13 @@ msgstr ""
 "X-Generator: Poedit 1.6.7\n"
 "Language: ja\n"
 
+msgid ""
+"MediaLink outputs as a gallery from the media library(image and music and "
+"video and document)."
+msgstr ""
+"メディアライブラリ（画像や音楽やビデオや文書）からギャラリーとして出力しま"
+"す。"
+
 msgid "first page"
 msgstr "最初のページ"
 

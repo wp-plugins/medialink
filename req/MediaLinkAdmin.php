@@ -104,8 +104,9 @@ class MediaLinkAdmin {
 		<li><a href="#medialink-admin-tabs-8"><?php _e('Settings'); ?> <?php _e('Size and color.', 'medialink') ?></a></li>
 		<li><a href="#medialink-admin-tabs-9"><?php _e('Effect of Images', 'medialink'); ?></a></li>
 		<li><a href="#medialink-admin-tabs-10"><?php _e('Caution:'); ?></a></li>
+		<li><a href="#medialink-admin-tabs-11"><?php _e('Donate to this plugin &#187;'); ?></a></li>
 	<!--
-		<li><a href="#medialink-admin-tabs-11">FAQ</a></li>
+		<li><a href="#medialink-admin-tabs-12">FAQ</a></li>
 	 -->
 	  </ul>
 	  <div id="medialink-admin-tabs-1">
@@ -1786,10 +1787,19 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 	</textarea>
 
 		</div>
+
 	  </div>
+		<div id="medialink-admin-tabs-11">
+		  <div class="wrap">
+			<h3><?php _e('I need a donation. This is because, I want to continue the development and support of plugins.', 'medialink'); ?></h3>
+			<div align="right">Katsushi Kawamori</div>
+			<h3 style="float: left;"><?php _e('Donate to this plugin &#187;'); ?></h3>
+<a href='https://pledgie.com/campaigns/28307' target="_blank"><img alt='Click here to lend your support to: Various Plugins for WordPress and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/28307.png?skin_name=chrome' border='0' ></a>
+		  </div>
+		</div>
 
 	<!--
-	  <div id="medialink-admin-tabs-11">
+	  <div id="medialink-admin-tabs-12">
 		<div class="wrap">
 		<h2>FAQ</h2>
 
