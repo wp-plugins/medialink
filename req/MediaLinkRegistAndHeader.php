@@ -27,9 +27,13 @@ class MediaLinkRegistAndHeader {
 	 */
 	function register_settings(){
 
+		$plugin_datas = get_file_data( MEDIALINK_PLUGIN_BASE_DIR.'/medialink.php', array('version' => 'Version') );
+		$plugin_version = floatval($plugin_datas['version']);
+
 		if ( !get_option('medialink_all') ) {
 			$all_tbl = array(
 							'sort' => 'new',
+							'suffix_exclude' => '',
 							'display' => 8, 	
 							'image_show_size' => 'Full',
 							'generate_rssfeed' => 'on',
@@ -46,12 +50,36 @@ class MediaLinkRegistAndHeader {
 							'credit_show' => 'Show'
 							);
 			update_option( 'medialink_all', $all_tbl );
+		} else {
+			if ( $plugin_version < 7.0 ) {
+				$medialink_all = get_option('medialink_all');
+				$all_tbl = array(
+							'sort' => $medialink_all['sort'],
+							'suffix_exclude' => '',
+							'display' => $medialink_all['display'],
+							'image_show_size' => $medialink_all['image_show_size'],
+							'generate_rssfeed' => $medialink_all['generate_rssfeed'],
+							'rssname' => $medialink_all['rssname'],
+							'rssmax' => $medialink_all['rssmax'],
+							'filesize_show' => $medialink_all['filesize_show'],
+							'stamptime_show' => $medialink_all['stamptime_show'],
+							'exif_show' => $medialink_all['exif_show'],
+							'archiveslinks_show' => $medialink_all['archiveslinks_show'],
+							'pagelinks_show' => $medialink_all['pagelinks_show'],
+							'sortlinks_show' => $medialink_all['sortlinks_show'],
+							'searchbox_show' => $medialink_all['searchbox_show'],
+							'rssicon_show' => $medialink_all['rssicon_show'],
+							'credit_show' => $medialink_all['credit_show']
+							);
+				update_option( 'medialink_all', $all_tbl );
+			}
 		}
 
 		if ( !get_option('medialink_album') ) {
 			$album_tbl = array(
 							'sort' => 'new',
 							'suffix' => 'all',
+							'suffix_exclude' => '',
 							'display' => 20, 	
 							'image_show_size' => 'Full',
 							'generate_rssfeed' => 'on',
@@ -68,6 +96,30 @@ class MediaLinkRegistAndHeader {
 							'credit_show' => 'Show'
 							);
 			update_option( 'medialink_album', $album_tbl );
+		} else {
+			if ( $plugin_version < 7.0 ) {
+				$medialink_album = get_option('medialink_album');
+				$album_tbl = array(
+							'sort' => $medialink_album['sort'],
+							'suffix' => $medialink_album['suffix'],
+							'suffix_exclude' => '',
+							'display' => $medialink_album['display'],
+							'image_show_size' => $medialink_album['image_show_size'],
+							'generate_rssfeed' => $medialink_album['generate_rssfeed'],
+							'rssname' => $medialink_album['rssname'],
+							'rssmax' => $medialink_album['rssmax'],
+							'filesize_show' => $medialink_album['filesize_show'],
+							'stamptime_show' => $medialink_album['stamptime_show'],
+							'exif_show' => $medialink_album['exif_show'],
+							'archiveslinks_show' => $medialink_album['archiveslinks_show'],
+							'pagelinks_show' => $medialink_album['pagelinks_show'],
+							'sortlinks_show' => $medialink_album['sortlinks_show'],
+							'searchbox_show' => $medialink_album['searchbox_show'],
+							'rssicon_show' => $medialink_album['rssicon_show'],
+							'credit_show' => $medialink_album['credit_show']
+							);
+				update_option( 'medialink_album', $album_tbl );
+			}
 		}
 
 		if ( !get_option('medialink_movie') ) {
@@ -116,45 +168,94 @@ class MediaLinkRegistAndHeader {
 
 		if ( !get_option('medialink_slideshow') ) {
 			$slideshow_tbl = array(
-								'sort' => 'new',
-								'suffix' => 'all',
-								'display' => 10,
-								'image_show_size' => 'Full',
-								'generate_rssfeed' => 'on',
-								'rssname' => 'medialink_slideshow_feed',
-								'rssmax' => 10,
-								'filesize_show' => 'Show',
-								'stamptime_show' => 'Show',
-								'exif_show' => 'Show',
-								'archiveslinks_show' => 'Hide',
-								'pagelinks_show' => 'Hide',
-								'sortlinks_show' => 'Hide',
-								'searchbox_show' => 'Hide',
-								'rssicon_show' => 'Hide',
-								'credit_show' => 'Show'
+							'sort' => 'new',
+							'suffix' => 'all',
+							'suffix_exclude' => '',
+							'display' => 10,
+							'image_show_size' => 'Full',
+							'generate_rssfeed' => 'on',
+							'rssname' => 'medialink_slideshow_feed',
+							'rssmax' => 10,
+							'filesize_show' => 'Show',
+							'stamptime_show' => 'Show',
+							'exif_show' => 'Show',
+							'archiveslinks_show' => 'Hide',
+							'pagelinks_show' => 'Hide',
+							'sortlinks_show' => 'Hide',
+							'searchbox_show' => 'Hide',
+							'rssicon_show' => 'Hide',
+							'credit_show' => 'Show'
 							);
 			update_option( 'medialink_slideshow', $slideshow_tbl );
+		} else {
+			if ( $plugin_version < 7.0 ) {
+				$medialink_slideshow = get_option('medialink_slideshow');
+				$slideshow_tbl = array(
+							'sort' => $medialink_slideshow['sort'],
+							'suffix' => $medialink_slideshow['suffix'],
+							'suffix_exclude' => '',
+							'display' => $medialink_slideshow['display'],
+							'image_show_size' => $medialink_slideshow['image_show_size'],
+							'generate_rssfeed' => $medialink_slideshow['generate_rssfeed'],
+							'rssname' => $medialink_slideshow['rssname'],
+							'rssmax' => $medialink_slideshow['rssmax'],
+							'filesize_show' => $medialink_slideshow['filesize_show'],
+							'stamptime_show' => $medialink_slideshow['stamptime_show'],
+							'exif_show' => $medialink_slideshow['exif_show'],
+							'archiveslinks_show' => $medialink_slideshow['archiveslinks_show'],
+							'pagelinks_show' => $medialink_slideshow['pagelinks_show'],
+							'sortlinks_show' => $medialink_slideshow['sortlinks_show'],
+							'searchbox_show' => $medialink_slideshow['searchbox_show'],
+							'rssicon_show' => $medialink_slideshow['rssicon_show'],
+							'credit_show' => $medialink_slideshow['credit_show']
+							);
+				update_option( 'medialink_slideshow', $slideshow_tbl );
+			}
 		}
 
 		if ( !get_option('medialink_document') ) {
 			$document_tbl = array(
-								'sort' => 'new',
-								'suffix' => 'all',
-								'display' => 20,
-								'thumbnail' => 'icon',
-								'generate_rssfeed' => 'on',
-								'rssname' => 'medialink_document_feed',
-								'rssmax' => 10,
-								'filesize_show' => 'Show',
-								'stamptime_show' => 'Show',
-								'archiveslinks_show' => 'Show',
-								'pagelinks_show' => 'Show',
-								'sortlinks_show' => 'Show',
-								'searchbox_show' => 'Show',
-								'rssicon_show' => 'Show',
-								'credit_show' => 'Show'
+							'sort' => 'new',
+							'suffix' => 'all',
+							'suffix_exclude' => '',
+							'display' => 20,
+							'thumbnail' => 'icon',
+							'generate_rssfeed' => 'on',
+							'rssname' => 'medialink_document_feed',
+							'rssmax' => 10,
+							'filesize_show' => 'Show',
+							'stamptime_show' => 'Show',
+							'archiveslinks_show' => 'Show',
+							'pagelinks_show' => 'Show',
+							'sortlinks_show' => 'Show',
+							'searchbox_show' => 'Show',
+							'rssicon_show' => 'Show',
+							'credit_show' => 'Show'
 							);
 			update_option( 'medialink_document', $document_tbl );
+		} else {
+			if ( $plugin_version < 7.0 ) {
+				$medialink_document = get_option('medialink_document');
+				$document_tbl = array(
+							'sort' => $medialink_document['sort'],
+							'suffix' => $medialink_document['suffix'],
+							'suffix_exclude' => '',
+							'display' => $medialink_document['display'],
+							'thumbnail' => $medialink_document['thumbnail'],
+							'generate_rssfeed' => $medialink_document['generate_rssfeed'],
+							'rssname' => $medialink_document['rssname'],
+							'rssmax' => $medialink_document['rssmax'],
+							'filesize_show' => $medialink_document['filesize_show'],
+							'stamptime_show' => $medialink_document['stamptime_show'],
+							'archiveslinks_show' => $medialink_document['archiveslinks_show'],
+							'pagelinks_show' => $medialink_document['pagelinks_show'],
+							'sortlinks_show' => $medialink_document['sortlinks_show'],
+							'searchbox_show' => $medialink_document['searchbox_show'],
+							'rssicon_show' => $medialink_document['rssicon_show'],
+							'credit_show' => $medialink_document['credit_show']
+							);
+				update_option( 'medialink_document', $document_tbl );
+			}
 		}
 
 		if ( !get_option('medialink_css') ) {

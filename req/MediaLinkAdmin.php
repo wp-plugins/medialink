@@ -175,6 +175,16 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
+					<td align="center" valign="middle">suffix_exclude</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_all_suffix_exclude" name="medialink_all_suffix_exclude" value="<?php echo $medialink_all['suffix_exclude'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Exclude extension.', 'medialink') ?>
+						<?php _e('Regular expression is possible.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
 					<td align="center" valign="middle">suffix</td>
 					<td align="left" valign="top" rowspan="2"><?php _e("Audio's suffix and Video's suffix is following to the setting(set='music',set='movie'). Other than that, read all the data.", 'medialink'); ?></td>
 					<td align="left" valign="middle">
@@ -448,6 +458,16 @@ class MediaLinkAdmin {
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_exclude</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_album_suffix_exclude" name="medialink_album_suffix_exclude" value="<?php echo $medialink_album['suffix_exclude'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Exclude extension.', 'medialink') ?>
+						<?php _e('Regular expression is possible.', 'medialink') ?>
 					</td>
 				</tr>
 				<tr>
@@ -1223,6 +1243,16 @@ class MediaLinkAdmin {
 					</td>
 				</tr>
 				<tr>
+					<td align="center" valign="middle">suffix_exclude</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_slideshow_suffix_exclude" name="medialink_slideshow_suffix_exclude" value="<?php echo $medialink_slideshow['suffix_exclude'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Exclude extension.', 'medialink') ?>
+						<?php _e('Regular expression is possible.', 'medialink') ?>
+					</td>
+				</tr>
+				<tr>
 					<td align="center" valign="middle">display</td>
 					<td align="center" valign="middle">
 						<input type="text" style="width: 100%;" id="medialink_slideshow_display" name="medialink_slideshow_display" value="<?php echo intval($medialink_slideshow['display']) ?>" />
@@ -1513,6 +1543,16 @@ class MediaLinkAdmin {
 					</td>
 					<td align="left" valign="middle">
 						<?php _e('extension', 'medialink'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">suffix_exclude</td>
+					<td align="center" valign="middle">
+						<input type="text" style="width: 100%;" id="medialink_document_suffix_exclude" name="medialink_document_suffix_exclude" value="<?php echo $medialink_document['suffix_exclude'] ?>" />
+					</td>
+					<td align="left" valign="middle">
+						<?php _e('Exclude extension.', 'medialink') ?>
+						<?php _e('Regular expression is possible.', 'medialink') ?>
 					</td>
 				</tr>
 				<tr>
@@ -1851,6 +1891,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 
 		$all_reset_tbl = array(
 						'sort' => 'new',
+						'suffix_exclude' => '',
 						'display' => 8, 	
 						'image_show_size' => 'Full',
 						'generate_rssfeed' => 'on',
@@ -1869,6 +1910,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 		$album_reset_tbl = array(
 						'sort' => 'new',
 						'suffix' => 'all',
+						'suffix_exclude' => '',
 						'display' => 20, 	
 						'image_show_size' => 'Full',
 						'generate_rssfeed' => 'on',
@@ -1923,6 +1965,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 		$slideshow_reset_tbl = array(
 						'sort' => 'new',
 						'suffix' => 'all',
+						'suffix_exclude' => '',
 						'display' => 10,
 						'image_show_size' => 'Full',
 						'generate_rssfeed' => 'on',
@@ -1941,6 +1984,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 		$document_reset_tbl = array(
 						'sort' => 'new',
 						'suffix' => 'all',
+						'suffix_exclude' => '',
 						'display' => 20,
 						'thumbnail' => 'icon',
 						'generate_rssfeed' => 'on',
@@ -1981,6 +2025,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 				} else {
 					$all_tbl = array(
 									'sort' => $_POST['medialink_all_sort'],
+									'suffix_exclude' => $_POST['medialink_all_suffix_exclude'],
 									'display' => $_POST['medialink_all_display'],
 									'image_show_size' => $_POST['medialink_all_image_show_size'],
 									'generate_rssfeed' => $_POST['medialink_all_generate_rssfeed'],
@@ -2008,6 +2053,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 					$album_tbl = array(
 									'sort' => $_POST['medialink_album_sort'],
 									'suffix' => $_POST['medialink_album_suffix'],
+									'suffix_exclude' => $_POST['medialink_album_suffix_exclude'],
 									'display' => $_POST['medialink_album_display'],
 									'image_show_size' => $_POST['medialink_album_image_show_size'],
 									'generate_rssfeed' => $_POST['medialink_album_generate_rssfeed'],
@@ -2089,6 +2135,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 					$slideshow_tbl = array(
 									'sort' => $_POST['medialink_slideshow_sort'],
 									'suffix' => $_POST['medialink_slideshow_suffix'],
+									'suffix_exclude' => $_POST['medialink_slideshow_suffix_exclude'],
 									'display' => $_POST['medialink_slideshow_display'],
 									'image_show_size' => $_POST['medialink_slideshow_image_show_size'],
 									'generate_rssfeed' => $_POST['medialink_slideshow_generate_rssfeed'],
@@ -2116,6 +2163,7 @@ AddType application/vnd.ms-powerpoint.slide.macroEnabled.12 sldm
 					$document_tbl = array(
 									'sort' => $_POST['medialink_document_sort'],
 									'suffix' => $_POST['medialink_document_suffix'],
+									'suffix_exclude' => $_POST['medialink_document_suffix_exclude'],
 									'display' => $_POST['medialink_document_display'],
 									'thumbnail' => $_POST['medialink_document_thumbnail'],
 									'generate_rssfeed' => $_POST['medialink_document_generate_rssfeed'],

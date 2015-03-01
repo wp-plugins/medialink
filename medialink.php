@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 6.11
+Version: 7.0
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://riverforest-wp.info/
@@ -70,6 +70,7 @@ function medialink_func( $atts, $html = NULL ) {
         'set' => '',
         'sort' => '',
         'suffix' => '',
+		'suffix_exclude' => '',
         'suffix_2' => '',
         'display' => '',
         'image_show_size' => '',
@@ -101,7 +102,6 @@ function medialink_func( $atts, $html = NULL ) {
 	$medialink_album = get_option('medialink_album');
 	$medialink_all = get_option('medialink_all');
 	$medialink_document = get_option('medialink_document');
-	$medialink_exclude = get_option('medialink_exclude');
 	$medialink_movie = get_option('medialink_movie');
 	$medialink_music = get_option('medialink_music');
 	$medialink_slideshow = get_option('medialink_slideshow');
@@ -110,7 +110,8 @@ function medialink_func( $atts, $html = NULL ) {
 	$rssdef = false;
 	if ( $set === 'all' ){
 		if( empty($sort) ) { $sort = $medialink_all['sort']; }
-		$suffix_pattern = $medialink->extpattern();
+		if( empty($suffix_exclude) ) { $suffix_exclude = $medialink_all['suffix_exclude']; }
+		$suffix_pattern = $medialink->extpattern($suffix_exclude);
 		$suffix_pattern .= ','.strtoupper($medialink_movie['suffix']).','.strtolower($medialink_movie['suffix']);
 		$suffix_pattern .= ','.strtoupper($medialink_music['suffix']).','.strtolower($medialink_music['suffix']);
 		if( empty($display) ) { $display = intval($medialink_all['display']); }
@@ -132,15 +133,16 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($credit_show) ) { $credit_show = $medialink_all['credit_show']; }
 	} else if ( $set === 'album' ){
 		if( empty($sort) ) { $sort = $medialink_album['sort']; }
+		if( empty($suffix_exclude) ) { $suffix_exclude = $medialink_album['suffix_exclude']; }
 		if( empty($suffix) ) {
 			if ( $medialink_album['suffix'] === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($medialink_album['suffix']).','.strtolower($medialink_album['suffix']);
 			}
 		} else {
 			if ( $suffix === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($suffix).','.strtolower($suffix);
 			}
@@ -212,15 +214,16 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($credit_show) ) { $credit_show = $medialink_music['credit_show']; }
 	} else if ( $set === 'slideshow' ){
 		if( empty($sort) ) { $sort = $medialink_slideshow['sort']; }
+		if( empty($suffix_exclude) ) { $suffix_exclude = $medialink_slideshow['suffix_exclude']; }
 		if( empty($suffix) ) {
 			if ( $medialink_slideshow['suffix'] === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($medialink_slideshow['suffix']).','.strtolower($medialink_slideshow['suffix']);
 			}
 		} else {
 			if ( $suffix === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($suffix).','.strtolower($suffix);
 			}
@@ -244,15 +247,16 @@ function medialink_func( $atts, $html = NULL ) {
 		if( empty($credit_show) ) { $credit_show = $medialink_slideshow['credit_show']; }
 	} else if ( $set === 'document' ){
 		if( empty($sort) ) { $sort = $medialink_document['sort']; }
+		if( empty($suffix_exclude) ) { $suffix_exclude = $medialink_document['suffix_exclude']; }
 		if( empty($suffix) ) {
 			if ( $medialink_document['suffix'] === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($medialink_document['suffix']).','.strtolower($medialink_document['suffix']);
 			}
 		} else {
 			if ( $suffix === 'all' ) {
-				$suffix_pattern = $medialink->extpattern();
+				$suffix_pattern = $medialink->extpattern($suffix_exclude);
 			} else {
 				$suffix_pattern = strtoupper($suffix).','.strtolower($suffix);
 			}

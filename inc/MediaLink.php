@@ -567,11 +567,11 @@ XMLEND;
 	}
 
 	/* ==================================================
-	 * @param	none
+	 * @param	$suffix_exclude
 	 * @return	string	$extpattern
 	 * @since	4.2
 	 */
-	function extpattern(){
+	function extpattern($suffix_exclude){
 
 		if ( $this->set === 'all' ) {
 			$searchtype = 'image|document|spreadsheet|interactive|text|archive|code';
@@ -588,12 +588,18 @@ XMLEND;
 				$exts = explode('|',$ext);
 				foreach ( $exts as $ext2 ) {
 					if( preg_match( "/".$searchtype."/", wp_ext2type($ext2) ) ) {
-						$extpattern .= $ext2.','.strtoupper($ext2).',';
+						if ( !empty($suffix_exclude) && preg_match( "/".$suffix_exclude."/i", $ext2 ) ) {
+						} else {
+							$extpattern .= $ext2.','.strtoupper($ext2).',';
+						}
 					}
 				}
 			} else {
 				if( preg_match("/".$searchtype."/", wp_ext2type($ext) ) ) {
-					$extpattern .= $ext.','.strtoupper($ext).',';
+					if ( !empty($suffix_exclude) && preg_match( "/".$suffix_exclude."/i", $ext ) ) {
+					} else {
+						$extpattern .= $ext.','.strtoupper($ext).',';
+					}
 				}
 			}
 		}

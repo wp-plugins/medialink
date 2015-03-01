@@ -281,3 +281,9 @@ msgid ""
 "support of plugins."
 msgstr ""
 "私はプラグインの開発とサポートを継続させるために寄付を必要としています。"
+
+msgid "Exclude extension."
+msgstr "除外する拡張子。"
+
+msgid "Regular expression is possible."
+msgstr "正規表現が可能です。"
