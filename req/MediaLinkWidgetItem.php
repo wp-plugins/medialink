@@ -24,8 +24,13 @@
  * @since	1.12
  */
 class MediaLinkWidgetItem extends WP_Widget {
-	function MediaLinkWidgetItem() {
-		parent::WP_Widget(false, $name = 'MediaLinkRssFeed');
+
+	function __construct() {
+		parent::__construct(
+			'MediaLinkWidgetItem', // Base ID
+			__( 'MediaLinkRssFeed' ), // Name
+			array( 'description' => __( 'Entries of RSS feed from MediaLink.', 'medialink'), ) // Args
+		);
 	}
 
 	function widget($args, $instance) {
