@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 7.1
+Version: 7.2
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://riverforest-wp.info/

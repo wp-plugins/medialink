@@ -71,6 +71,7 @@ class MediaLink {
 				$ext = end($exts);
 				$ext2type = wp_ext2type($ext);
 
+				$attachment_metadata = array();
 				$attachment_metadata = get_post_meta($attachment->ID, '_wp_attachment_metadata', true);
 				if ( isset( $attachment_metadata['filesize'] ) ) {
 					$file_size = $attachment_metadata['filesize'];
