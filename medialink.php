@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 7.2
+Version: 7.3
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://riverforest-wp.info/
@@ -37,6 +37,7 @@ Domain Path: /languages
 	add_action('admin_init', array($medialinkregistandheader, 'delete_old_versions_wp_options'));
 	add_action('wp_head', array($medialinkregistandheader, 'add_feedlink'));
 	add_action('wp_head', array($medialinkregistandheader, 'add_css'));
+	add_action('wp_print_styles', array($medialinkregistandheader, 'load_styles'));
 	unset($medialinkregistandheader);
 
 	require_once( MEDIALINK_PLUGIN_BASE_DIR . '/req/MediaLinkAdmin.php' );
@@ -564,11 +565,7 @@ MUSICPLAYERCONTAINER;
 		$xml_title =  get_bloginfo('name').' | '.get_the_title();
 
 		$rssfeed_url = $topurl.'/'.$rssname.'.xml';
-		if ( $set === "album" || $set === "slideshow" || $set === "document" ) {
-			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.MEDIALINK_PLUGIN_URL.'/icon/rssfeeds.png"></a></div>';
-		} else {
-			$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'"><img src="'.MEDIALINK_PLUGIN_URL.'/icon/podcast.png"></a></div>';
-		}
+		$rssfeeds_icon = '<div align="right"><a href="'.$rssfeed_url.'" class="dashicons dashicons-rss" style="text-decoration: none;"></a></div>';
 		if ( $rssicon_show === 'Show' ) { $html .= $rssfeeds_icon; }
 		if ( $rssdef === false ) {
 			$html .= '<link rel="alternate" type="application/rss+xml" href="'.$rssfeed_url.'" title="'.$xml_title.'" />';

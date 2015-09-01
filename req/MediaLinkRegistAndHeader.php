@@ -350,6 +350,14 @@ MEDIALINKADDCSS;
 	}
 
 	/* ==================================================
+	 * Load Dashicons
+	 * @since	7.3
+	 */
+	function load_styles() {
+		wp_enqueue_style('dashicons');
+	}
+
+	/* ==================================================
 	 * Delete wp_options table of old version.
 	 * @since	4.4
 	 */

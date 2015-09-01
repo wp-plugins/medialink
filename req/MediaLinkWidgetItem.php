@@ -61,15 +61,15 @@ class MediaLinkWidgetItem extends WP_Widget {
 		$xml6 = '/'.$medialink_music['rssname'].'.xml';
 		$xml7 = '/'.$medialink_slideshow['rssname'].'.xml';
 		$xml8 = '/'.$medialink_document['rssname'].'.xml';
+		$iconclass =  'class="dashicons dashicons-rss" style="text-decoration: none;"';
 		if ($title) {
 			echo $before_widget;
 			echo $before_title . $title . $after_title;
 			if ($checkbox1) {
 				?>
-				<div>
-				<a href="<?php echo bloginfo('rss2_url'); ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/rssfeeds.png">
-				<?php echo bloginfo('name'); ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo bloginfo('rss2_url'); ?>" <?php echo $iconclass; ?>></a>
+				<?php echo bloginfo('name'); ?>
 				</div>
 				<?php
 			}
@@ -77,10 +77,9 @@ class MediaLinkWidgetItem extends WP_Widget {
 				$xmldata2 = @simplexml_load_file($xmlurl2);
 				if ( !empty($xmldata2) ) {
 					?>
-					<div>
-					<a href="<?php echo bloginfo('comments_rss2_url'); ?>">
-					<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/rssfeeds.png">
-					<?php echo $xmldata2->channel->title; ?></a>
+					<div style="font-size:x-small;">
+					<a href="<?php echo bloginfo('comments_rss2_url'); ?>" <?php echo $iconclass; ?>></a>
+					<?php echo $xmldata2->channel->title; ?>
 					</div>
 					<?php
 				}
@@ -88,60 +87,54 @@ class MediaLinkWidgetItem extends WP_Widget {
 			if ($checkbox3 && file_exists($wp_uploads['basedir'].$xml3)) {
 				$xmldata3 = simplexml_load_file($wp_uploads['baseurl'].$xml3);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml3; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/podcast.png">
-				<?php echo $xmldata3->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml3; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata3->channel->title; ?>
 				</div>
 				<?php
 			}
 			if ($checkbox4 && file_exists($wp_uploads['basedir'].$xml4)) {
 				$xmldata4 = simplexml_load_file($wp_uploads['baseurl'].$xml4);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml4; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/rssfeeds.png">
-				<?php echo $xmldata4->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml4; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata4->channel->title; ?>
 				</div>
 				<?php
 			}
 			if ($checkbox5 && file_exists($wp_uploads['basedir'].$xml5)) {
 				$xmldata5 = simplexml_load_file($wp_uploads['baseurl'].$xml5);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml5; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/podcast.png">
-				<?php echo $xmldata5->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml5; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata5->channel->title; ?>
 				</div>
 				<?php
 			}
 			if ($checkbox6 && file_exists($wp_uploads['basedir'].$xml6)) {
 				$xmldata6 = simplexml_load_file($wp_uploads['baseurl'].$xml6);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml6; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/podcast.png">
-				<?php echo $xmldata6->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml6; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata6->channel->title; ?>
 				</div>
 				<?php
 			}
 			if ($checkbox7 && file_exists($wp_uploads['basedir'].$xml7)) {
 				$xmldata7 = simplexml_load_file($wp_uploads['baseurl'].$xml7);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml7; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/rssfeeds.png">
-				<?php echo $xmldata7->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml7; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata7->channel->title; ?>
 				</div>
 				<?php
 			}
 			if ($checkbox8 && file_exists($wp_uploads['basedir'].$xml8)) {
 				$xmldata8 = simplexml_load_file($wp_uploads['baseurl'].$xml8);
 				?>
-				<div>
-				<a href="<?php echo $wp_uploads['baseurl'].$xml8; ?>">
-				<img src="<?php echo MEDIALINK_PLUGIN_URL ?>/icon/rssfeeds.png">
-				<?php echo $xmldata8->channel->title; ?></a>
+				<div style="font-size:x-small;">
+				<a href="<?php echo $wp_uploads['baseurl'].$xml8; ?>" <?php echo $iconclass; ?>></a>
+				<?php echo $xmldata8->channel->title; ?>
 				</div>
 				<?php
 			}
