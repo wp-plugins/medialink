@@ -2,7 +2,7 @@
 /*
 Plugin Name: MediaLink
 Plugin URI: http://wordpress.org/plugins/medialink/
-Version: 7.3
+Version: 7.31
 Description: MediaLink outputs as a gallery from the media library(image and music and video and document).
 Author: Katsushi Kawamori
 Author URI: http://riverforest-wp.info/
@@ -36,7 +36,7 @@ Domain Path: /languages
 	add_action('admin_init', array($medialinkregistandheader, 'register_settings'));
 	add_action('admin_init', array($medialinkregistandheader, 'delete_old_versions_wp_options'));
 	add_action('wp_head', array($medialinkregistandheader, 'add_feedlink'));
-	add_action('wp_head', array($medialinkregistandheader, 'add_css'));
+	add_filter('the_content', array($medialinkregistandheader, 'select_add_footer'));
 	add_action('wp_print_styles', array($medialinkregistandheader, 'load_styles'));
 	unset($medialinkregistandheader);
 

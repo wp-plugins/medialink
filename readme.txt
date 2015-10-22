@@ -4,7 +4,7 @@ Donate link: http://pledgie.com/campaigns/28307
 Tags: audio,feed,feeds,gallery,html5,image,images,list,music,photo,photos,picture,pictures,rss,shortcode,video,xml
 Requires at least: 3.0.1
 Tested up to: 4.3
-Stable tag: 7.3
+Stable tag: 7.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ none
 2. Settings 2
 
 == Changelog ==
+
+= 7.31 =
+Javascript and CSS will be loaded only to the required page.
 
 = 7.3 =
 Change feed icon.
@@ -371,6 +374,7 @@ Change readme.txt
 
 == Upgrade Notice ==
 
+= 7.31 =
 = 7.3 =
 = 7.2 =
 = 7.1 =

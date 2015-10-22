@@ -50,6 +50,7 @@ QUICKTAGADDSELECT;
 	}
 
 	function add_quicktag_button_js() {
+		if ($this->is_my_plugin_screen()) {
 
 $quicktag_add_js = <<<QUICKTAGADDJS
 
@@ -65,8 +66,22 @@ $quicktag_add_js = <<<QUICKTAGADDJS
 <!-- END: MediaLink -->
 
 QUICKTAGADDJS;
-		echo $quicktag_add_js;
+			echo $quicktag_add_js;
 
+		}
+	}
+
+	/* ==================================================
+	 * For only admin style
+	 * @since	7.31
+	 */
+	function is_my_plugin_screen() {
+		$screen = get_current_screen();
+		if ( $screen->post_type === 'post' || $screen->post_type === 'page' ) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 }

@@ -49,10 +49,12 @@ class MediaLinkAdmin {
 	 * @since	2.0
 	 */
 	function load_custom_wp_admin_style() {
-		wp_enqueue_style( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/css/responsive-tabs.css' );
-		wp_enqueue_style( 'jquery-responsiveTabs-style', MEDIALINK_PLUGIN_URL.'/css/style.css' );
-		wp_enqueue_script('jquery');
-		wp_enqueue_script( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/js/jquery.responsiveTabs.min.js' );
+		if ($this->is_my_plugin_screen()) {
+			wp_enqueue_style( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/css/responsive-tabs.css' );
+			wp_enqueue_style( 'jquery-responsiveTabs-style', MEDIALINK_PLUGIN_URL.'/css/style.css' );
+			wp_enqueue_script('jquery');
+			wp_enqueue_script( 'jquery-responsiveTabs', MEDIALINK_PLUGIN_URL.'/js/jquery.responsiveTabs.min.js' );
+		}
 	}
 
 	/* ==================================================
@@ -60,7 +62,22 @@ class MediaLinkAdmin {
 	 * @since	2.0
 	 */
 	function load_custom_wp_admin_style2() {
-		echo $this->add_jscss();
+		if ($this->is_my_plugin_screen()) {
+			echo $this->add_jscss();
+		}
+	}
+
+	/* ==================================================
+	 * For only admin style
+	 * @since	7.31
+	 */
+	function is_my_plugin_screen() {
+		$screen = get_current_screen();
+		if (is_object($screen) && $screen->id == 'settings_page_MediaLink') {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 	/* ==================================================

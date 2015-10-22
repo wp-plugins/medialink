@@ -321,6 +321,21 @@ class MediaLinkRegistAndHeader {
 	}
 
 	/* ==================================================
+	* @param	string	$contents
+	* @return	string	$contents
+	* @since	7.31
+	*/
+	function select_add_footer($contents){
+
+		if ( strstr($contents, '[medialink') ) {
+			add_action( 'wp_footer', array($this, 'add_css') );
+		}
+
+		return $contents;
+
+	}
+
+	/* ==================================================
 	 * Settings CSS
 	 * @since	1.9
 	 */
@@ -334,6 +349,7 @@ class MediaLinkRegistAndHeader {
 
 	// CSS
 $medialink_add_css = <<<MEDIALINKADDCSS
+
 <!-- Start Medialink CSS -->
 <style type="text/css">
 .medialink-pages .medialink-links a { background: {$linkbackcolor}; }
@@ -343,6 +359,7 @@ $medialink_add_css = <<<MEDIALINKADDCSS
 .medialink-list ul li img{ width: {$listthumbsize_w}px; height: {$listthumbsize_h}px; }
 </style>
 <!-- End Medialink CSS -->
+
 MEDIALINKADDCSS;
 
 		echo $medialink_add_css;
